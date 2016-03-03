@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>1261511529</fileChecksum>
+  <configuration>
+    <name>DZ10_Debug</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>DZ10_Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>FX15_Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\startup_MK60DZ10.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\system_MK60DZ10.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\vectors.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Exe\vcan_Kinetis.out</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_conf.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\main.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\OLED.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\VCAN_key.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_it.o</file>
+      <file>$PROJ_DIR$\..\..\App\Inc\MK60_it.h</file>
+      <file>$PROJ_DIR$\..\..\App\MK60_conf.c</file>
+      <file>$PROJ_DIR$\..\..\App\main.c</file>
+      <file>$PROJ_DIR$\..\..\App\Inc\MK60_conf.h</file>
+      <file>$PROJ_DIR$\..\..\App\MK60_it.c</file>
+      <file>$PROJ_DIR$\..\..\App\Inc\OLED.c</file>
+      <file>$PROJ_DIR$\..\..\App\Inc\oled.h</file>
+      <file>$PROJ_DIR$\..\..\App\Inc\PORT_cfg.h</file>
+      <file>$PROJ_DIR$\..\..\Board\src\VCAN_key.c</file>
+      <file>$PROJ_DIR$\..\..\Board\src\VCAN_LED.C</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\misc.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_DWT.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_flash.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_gpio.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_lptmr.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_mcg.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_PIT.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_port.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_SysTick.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_uart.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\MK60_wdog.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\vectors.c</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\IAR\startup_MK60DZ10.s</file>
+      <file>$PROJ_DIR$\..\..\Chip\src\IAR\system_MK60DZ10.c</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\VCAN_LED.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\misc.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_DWT.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_PIT.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_SysTick.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_port.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_mcg.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_lptmr.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_gpio.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_flash.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_uart.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Obj\MK60_wdog.o</file>
+      <file>$PROJ_DIR$\FX15_Debug\Exe\vcan_Kinetis.hex</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 3</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\FX15_Debug\Exe\vcan_Kinetis.out</name>
+      <outputs>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 45</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\MK60_conf.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 4</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\MK60_it.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 8</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\Inc\OLED.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_key.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 7</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_LED.C</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 33</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\misc.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 34</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_DWT.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 35</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_flash.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 42</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_gpio.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 41</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_lptmr.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 40</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_mcg.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 39</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_PIT.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_port.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 38</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_SysTick.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 37</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_uart.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 43</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_wdog.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 44</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\vectors.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 2</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\IAR\startup_MK60DZ10.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 0</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Chip\src\IAR\system_MK60DZ10.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 1</file>
+        </tool>
+      </outputs>
+    </file>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>FX15_Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+
