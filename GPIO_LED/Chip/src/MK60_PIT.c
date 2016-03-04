@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -13,8 +13,6 @@
  * @version    v5.0
  * @date       2013-08-23
  */
-
-
 #include "common.h"
 #include  "MK60_PIT.h"     //周期中断计时器
 
@@ -24,11 +22,11 @@
  *  @param      cnt         定时中断时间(单位为bus时钟周期)
  *  @since      v5.0
  *  Sample usage:
-                    pit_init(PIT0, 1000);                          //定时 1000 个bus时钟 后中断
-                    set_vector_handler(PIT0_VECTORn,pit_hander);   // 设置中断复位函数到中断向量表里
-                    enable_irq(PIT0_IRQn);                         // 使能LPTMR中断
+                pit_init(PIT0, 1000);                          //定时 1000 个bus时钟 后中断
+                set_vector_handler(PIT0_VECTORn,pit_hander);   // 设置中断服务函数到中断向量表里
+                enable_irq(PIT0_IRQn);                         // 使能PIT中断
  */
-void pit_init(PITn pitn, uint32 cnt)
+void pit_init(PITn_e pitn, uint32 cnt)
 {
     //PIT 用的是 Bus Clock 总线频率
     //溢出计数 = 总线频率 * 时间
@@ -63,7 +61,7 @@ void pit_init(PITn pitn, uint32 cnt)
  *  Sample usage:
                     pit_delay(PIT0, 1000);                         //延时 1000 个bus时钟
  */
-void pit_delay(PITn pitn, uint32 cnt)
+void pit_delay(PITn_e pitn, uint32 cnt)
 {
     //PIT 用的是 Bus Clock 总线频率
     //溢出计数 = 总线频率 * 时间
@@ -98,7 +96,7 @@ void pit_delay(PITn pitn, uint32 cnt)
  *  Sample usage:
                     pit_time_start(PIT0);                          //PIT0计时开始
  */
-void pit_time_start(PITn pitn)
+void pit_time_start(PITn_e pitn)
 {
     //PIT 用的是 Bus Clock 总线频率
     //溢出计数 = 总线频率 * 时间
@@ -125,9 +123,13 @@ void pit_time_start(PITn pitn)
  *  @param      PITn        模块号（PIT0~PIT3）
  *  @since      v5.0
  *  Sample usage:
-                        pit_time_get(PIT0);                         //获取 PITn计时时间
+                        uint32 time = pit_time_get(PIT0);                         //获取 PITn计时时间
+                        if(time != ~0)       //没超时
+                        {
+                            printf("\n计时时间为：%d us",time*1000/bus_clk_khz);
+                        }
  */
-uint32 pit_time_get(PITn pitn)
+uint32 pit_time_get(PITn_e pitn)
 {
     uint32 val;
 
@@ -148,13 +150,13 @@ uint32 pit_time_get(PITn pitn)
 }
 
 /*!
- *  @brief      关闭 pit 计时
+ *  @brief      关闭 pit
  *  @param      PITn        模块号（PIT0~PIT3）
  *  @since      v5.0
  *  Sample usage:
-                        pit_time_get(PIT0);                         //获取 PITn计时时间
+                        pit_close(PIT0);                         //关闭PIT
  */
-void pit_time_close(PITn pitn)
+void pit_close(PITn_e pitn)
 {
     PIT_Flag_Clear(pitn);                                       //清中断标志位
     PIT_TCTRL(pitn) &= ~ PIT_TCTRL_TEN_MASK;                    //禁止PITn定时器（用于清空计数值）

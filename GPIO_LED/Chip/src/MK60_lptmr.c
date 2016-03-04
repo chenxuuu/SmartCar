@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -24,7 +24,7 @@
  *  @param      count       LPTMR脉冲比较值
  *  @param      LPT_CFG     LPTMR脉冲计数方式：上升沿计数或下降沿计数
  *  @since      v5.0
- *  Sample usage:       lptmr_pulse_init(LPT0_ALT1,0xFFFF,LPT_Rising);     // LPTMR 脉冲捕捉，捕捉0xFFFF后触发中断请求（需要开中断才执行中断复位函数），上升沿捕捉
+ *  Sample usage:       lptmr_pulse_init(LPT0_ALT1,0xFFFF,LPT_Rising);     // LPTMR 脉冲计数，计数0xFFFF后触发中断请求（需要开中断才执行中断服务函数），上升沿捕捉
  */
 void lptmr_pulse_init(LPT0_ALTn altn, uint16 count, LPT_CFG cfg)
 {
@@ -168,7 +168,7 @@ void lptmr_delay_ms(uint16 ms)
  *  @since      v5.0
  *  Sample usage:
                     lptmr_timing_ms(32);                                // LPTMR 定时 32ms
-                    set_vector_handler(LPTimer_VECTORn,lptmr_hander);   // 设置中断复位函数到中断向量表里
+                    set_vector_handler(LPTimer_VECTORn,lptmr_hander);   // 设置中断服务函数到中断向量表里
                     enable_irq(LPTimer_IRQn);                           // 使能LPTMR中断
  */
 void lptmr_timing_ms(uint16 ms)
@@ -265,7 +265,7 @@ void lptmr_delay_us(uint16 us)
  *  @since      v5.0
  *  Sample usage:
                     lptmr_timing_us(32);     // LPTMR 定时32us
-                    set_vector_handler(LPTimer_VECTORn,lptmr_hander);   // 设置中断复位函数到中断向量表里
+                    set_vector_handler(LPTimer_VECTORn,lptmr_hander);   // 设置中断服务函数到中断向量表里
                     enable_irq(LPTimer_IRQn);                           // 使能LPTMR中断
  */
 void lptmr_timing_us(uint16 us)

@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -224,7 +224,11 @@ typedef enum
     Reserved114_IRQn                = 98,       // 保留 interrupt 114
     Reserved115_IRQn                = 99,       // 保留 interrupt 115
     Reserved116_IRQn                = 100,      // 保留 interrupt 116
+#ifdef MK60F15
+    FTM3_IRQn                       = 101,      // FX FTM3   interrupt 117
+#else
     Reserved117_IRQn                = 101,      // 保留 interrupt 117
+#endif
     Reserved118_IRQn                = 102,      // 保留 interrupt 118
     Reserved119_IRQn                = 103,      // 保留 interrupt 119
 } IRQn_t, IRQn_Type;
@@ -349,7 +353,12 @@ typedef enum
     Reserved114_VECTORn                 ,       // 保留 interrupt 114
     Reserved115_VECTORn                 ,       // 保留 interrupt 115
     Reserved116_VECTORn                 ,       // 保留 interrupt 116
+#ifdef MK60F15
+    FTM3__VECTORn                       = 101,      // FX FTM3   interrupt 117
+#else
     Reserved117_VECTORn                 ,       // 保留 interrupt 117
+#endif
+
     Reserved118_VECTORn                 ,       // 保留 interrupt 118
     Reserved119_VECTORn                 ,       // 保留 interrupt 119
 } VECTORn_t;

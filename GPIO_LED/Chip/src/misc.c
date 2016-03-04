@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -36,7 +36,7 @@ void write_vtor (int vtor)
 
 
 /*!
- *  @brief      设置中断向量表里的中断复位函数
+ *  @brief      设置中断向量表里的中断服务函数
  *  @since      v5.0
  *  @warning    只有中断向量表位于icf指定的RAM区域时，此函数才有效
  *  Sample usage:       set_vector_handler(UART3_RX_TX_VECTORn , uart3_handler);    //把 uart3_handler 函数添加到中断向量表

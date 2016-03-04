@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -40,7 +40,7 @@
  * 定义 PLL 超频 频率 (不同的平台，有不同的超频配置)
  * 
  * 如果对超频配置不熟悉，可以看如下帖子:
- * K60 KL26 主频和总线频率的关系 - 智能车资料区 - 山外初学123论坛 
+ * K60 KL26 主频和总线频率的关系 - 智能车资料区 - 山外论坛 
  * http://www.vcan123.com/forum.php?mod=viewthread&tid=81&page=1&extra=#pid419
  */
 #if defined(MK60DZ10)			//以下为 MK60DZ10 的超频配置
@@ -93,7 +93,7 @@
 #define     DELAY()         lptmr_delay_ms(500)
 #define     DELAY_MS(ms)    lptmr_delay_ms(ms)
 #define     DELAY_US(us)    lptmr_delay_us(us)
-#elif   1
+#elif   0
 #include "MK60_pit.h"
 #define DELAY()         pit_delay_ms(PIT3,500)
 #define DELAY_MS(ms)    pit_delay_ms(PIT3,ms)

@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -35,13 +35,19 @@
 typedef     uint32                  FLASH_WRITE_TYPE;       //flash_write 函数写入 的数据类型
 
 
-#elif defined(MK60F15)
+#elif defined(MK60FX15)
 #define     FLASH_SECTOR_SIZE       (4*1024)                //扇区大小 为 4k 字节
 #define     FLASH_SECTOR_NUM        (128)                   //扇区数
 
 #define     FLASH_ALIGN_ADDR        8                       //地址对齐整数倍
 typedef     uint64                  FLASH_WRITE_TYPE;       //flash_write 函数写入 的数据类型
 
+#elif defined(MK60FN15)
+#define     FLASH_SECTOR_SIZE       (4*1024)                //扇区大小 为 4k 字节
+#define     FLASH_SECTOR_NUM        (256)                   //扇区数
+
+#define     FLASH_ALIGN_ADDR        8                       //地址对齐整数倍
+typedef     uint64                  FLASH_WRITE_TYPE;       //flash_write 函数写入 的数据类型
 #endif
 
 

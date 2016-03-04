@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -10,8 +10,8 @@
  * @file       MK60_flash.c
  * @brief      flash函数库
  * @author     山外科技
- * @version    v5.1
- * @date       2014-04-25
+ * @version    v5.2
+ * @date       2014-10-09
  */
 
 
@@ -177,6 +177,7 @@ __RAMFUNC void flash_init(void)
                      |  FTFE_FSTAT_FPVIOL_MASK      // 非法访问保护标志位(写1清0)
                     );
 #endif
+    DELAY_MS(10);
 }
 
 /*!
@@ -329,10 +330,10 @@ __RAMFUNC uint8 flash_write_buf(uint16 sector_num, uint16 offset, uint16 cnt, ui
         // 设置 高32位数据
         data = *(uint32 *)(buf+4);
 
-        FDATA0 = ((Dtype *)&data)->B[3];                    // 设置写入数据
-        FDATA1 = ((Dtype *)&data)->B[2];
-        FDATA2 = ((Dtype *)&data)->B[1];
-        FDATA3 = ((Dtype *)&data)->B[0];
+        FDATA4 = ((Dtype *)&data)->B[3];                    // 设置写入数据
+        FDATA5 = ((Dtype *)&data)->B[2];
+        FDATA6 = ((Dtype *)&data)->B[1];
+        FDATA7 = ((Dtype *)&data)->B[0];
 #endif
 
         if(flash_cmd() == 0)

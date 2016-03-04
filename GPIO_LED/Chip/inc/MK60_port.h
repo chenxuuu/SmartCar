@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -110,10 +110,10 @@ extern void  port_init         (PTXn_e , uint32 cfg);   //PORT初始化(配置 MUX 复
 extern void  port_init_NoALT   (PTXn_e , uint32 cfg);   //PORT初始化(不改变 MUX 复用功能)
 
 
-/*      中断复位函数模版    */
-extern void porta_handler(void);                        //中断复位函数，仅供参考（需用户自行实现）
+/*      中断服务函数模版    */
+extern void porta_handler(void);                        //中断服务函数，仅供参考（需用户自行实现）
 
-//如下函数可用在 PORT 中断复位函数里，func就是对应管脚的中断复位函数
+//如下函数可用在 PORT 中断服务函数里，func就是对应管脚的中断服务函数
 //具体用法可参考 porta_handler
 #define PORT_FUNC(X,num,func)       do{                                     \
                                         if(PORT##X##_ISFR & (1 << num))     \

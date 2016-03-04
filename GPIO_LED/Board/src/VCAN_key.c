@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -34,7 +34,7 @@ PTXn_e KEY_PTxn[KEY_MAX] = {PTD10, PTD14, PTD11, PTD12, PTD7, PTD13, PTC14, PTC1
  *  @brief      初始化key端口(key 小于 KEY_MAX 时初始化 对应端口，否则初始化全部端口)
  *  @param      KEY_e    KEY编号
  *  @since      v5.0
- *  Sample usage:       KEY_init (KEY_U);    //初始化 KEY_U
+ *  Sample usage:       key_init (KEY_U);    //初始化 KEY_U
  */
 void    key_init(KEY_e key)
 {
@@ -210,7 +210,7 @@ uint8 get_key_msg(KEY_MSG_t *keymsg)
 /*!
  *  @brief      定时检测key状态
  *  @since      v5.0
- *  @note       此函数需要放入 定时中断复位函数里，定时10ms执行一次
+ *  @note       此函数需要放入 定时中断服务函数里，定时10ms执行一次
  */
 void key_IRQHandler(void)
 {

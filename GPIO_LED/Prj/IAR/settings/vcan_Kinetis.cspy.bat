@@ -19,6 +19,6 @@
 @REM 
 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\common\bin\cspybat" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armproc.dll" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armsim2.dll"  %1 --plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armbat.dll" --backend -B "--endian=little" "--cpu=ARM7TDMI" "--fpu=None" "--semihosting" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\common\bin\cspybat" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armproc.dll" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armjlink.dll"  %1 --plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armbat.dll" --macro "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\config\debugger\Freescale\Trace_Kxx.dmac" --flash_loader "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\config\flashloader\Freescale\FlashK60Fxxx128K.board" --backend -B "--endian=little" "--cpu=Cortex-M4" "--fpu=None" "-p" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\CONFIG\debugger\Freescale\MK60FN1M0xxx15.ddf" "--drv_verify_download" "--semihosting=none" "--device=MK60FN1M0xxx15" "--drv_communication=USB0" "--jlink_speed=auto" "--jlink_initial_speed=32" "--jlink_reset_strategy=0,3" "--drv_catch_exceptions=0x000" "--drv_swo_clock_setup=72000000,0,2000000" 
 
 

@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -48,22 +48,22 @@ extern void     lptmr_timing_us(uint16 ms);     //定时(us)
 
 /*        用于计时           */
 extern void     lptmr_time_start_ms(void);      //开始计时(ms)
-extern uint32   lptmr_time_get_ms(void);        //获取计时时间 
+extern uint32   lptmr_time_get_ms(void);        //获取计时时间
 
 extern void     lptmr_time_start_us(void);      //开始计时(ns)
-extern uint32   lptmr_time_get_us(void);        //获取计时时间 
+extern uint32   lptmr_time_get_us(void);        //获取计时时间
 
 extern void     lptmr_time_close();             //关闭计时器
 
 
 /*       用于脉冲计数        */
-extern void     lptmr_pulse_init  (LPT0_ALTn, uint16 count, LPT_CFG);   //计数器初始化设置
+extern void     lptmr_pulse_init  (LPT0_ALTn, uint16 count, LPT_CFG);   //脉冲计数器初始化设置
 extern uint16   lptmr_pulse_get   (void);                               //获取计数值
 extern void     lptmr_pulse_clean (void);                               //清空计数值
 
 
-/*      中断复位函数模版    */
-extern void lptmr_test_handler(void);                                       //中断复位函数，仅供参考（需用户自行实现）
+/*      中断服务函数模版    */
+extern void lptmr_test_handler(void);                                       //中断服务函数，仅供参考（需用户自行实现）
 
 
 #endif /* __MK60_LPTMR_H__ */

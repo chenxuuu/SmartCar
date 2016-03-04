@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -28,8 +28,8 @@ extern void    systick_delay_ms(uint32 ms);
 
 /*       用于定时           */
 extern void systick_timing(uint32 time);
-#define systick_timing_ms(ms)               systick_timing(ms * SYSTICK_CLK_KHZ);        //延时 ms
-#define systick_timing_us(us)               systick_timing(us * SYSTICK_CLK_KHZ/1000);   //延时 us
-#define systick_timing_ns(ns)               systick_timing(ns * SYSTICK_CLK_KHZ/1000000);//延时 ns
+#define systick_timing_ms(ms)               systick_timing(ms * SYSTICK_CLK_KHZ);        //定时 us
+#define systick_timing_us(us)               systick_timing(us * SYSTICK_CLK_KHZ/1000);   //定时 us
+#define systick_timing_ns(ns)               systick_timing(ns * SYSTICK_CLK_KHZ/1000000);//定时 ns
 
 

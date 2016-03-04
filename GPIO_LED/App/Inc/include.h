@@ -21,4 +21,5 @@
 
 
 
+#include  "VCAN_computer.h"     //多功能调试助手
 #endif  //__INCLUDE_H__

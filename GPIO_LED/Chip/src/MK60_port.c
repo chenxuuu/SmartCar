@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -59,7 +59,6 @@ void  port_init_NoALT(PTXn_e ptxn, uint32 cfg)
     PORT_PCR_REG(PORTX_BASE(ptxn), PTn(ptxn)) = cfg;            // 复用功能 , 确定触发模式 ,开启上拉或下拉电阻
 }
 
-
 /*!
  *  @brief      PORTA的参考中断服务函数
  *  @since      v5.0
@@ -83,6 +82,6 @@ void porta_handler(void)
     }
 
     //假设 PTA7 需要执行的用户任务函数为 func() ，则可以直接调用如下宏定义：
-    //PORT_FUNC(PORTA,7,func);
+    //PORT_FUNC(A,7,func);
     //这个宏的作用与上面 PTA6 的效果是一样的，只不过是简化了用户的输入
 }

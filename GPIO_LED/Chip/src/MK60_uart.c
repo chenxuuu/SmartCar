@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -10,8 +10,8 @@
  * @file       MK60_uart.c
  * @brief      uart串口函数
  * @author     山外科技
- * @version    v5.0
- * @date       2013-06-26
+ * @version    v5.2
+ * @date       2014-10-09
  */
 
 
@@ -26,8 +26,8 @@ UART_MemMapPtr UARTN[UART_MAX] = {UART0_BASE_PTR, UART1_BASE_PTR, UART2_BASE_PTR
  *  @param      UARTn_e       模块号（UART0~UART5）
  *  @param      baud        波特率，如9600、19200、56000、115200等
  *  @since      v5.0
- *  @note       UART所用的管脚在 vcan_drivers_cfg.h 里进行配置，
-                printf所用的管脚和波特率在 k60_vcan.h 里进行配置
+ *  @note       UART所用的管脚在 App\Inc\PORT_cfg.h 里进行配置，
+                printf所用的管脚和波特率在 App\Inc\MK60_conf.h 里进行配置
  *  Sample usage:       uart_init (UART3, 9600);        //初始化串口3，波特率为9600
  */
 void uart_init (UARTn_e uratn, uint32 baud)
@@ -42,42 +42,26 @@ void uart_init (UARTn_e uratn, uint32 baud)
     case UART0:
         SIM_SCGC4 |= SIM_SCGC4_UART0_MASK;      //使能 UART0 时钟
 
-        if(UART0_RX == PTA1)
+        if(UART0_RX_PIN == PTA1)
         {
-            port_init( PTA1, ALT2);             //在PTA1上使能UART0_RXD
+            port_init( UART0_RX_PIN, ALT2);
         }
-        else if(UART0_RX == PTA15)
+        else if((UART0_RX_PIN == PTA15) || (UART0_RX_PIN == PTB16) || (UART0_RX_PIN == PTD6)  )
         {
-            port_init( PTA15, ALT3);            //在PTA15上使能UART0_RXD
-        }
-        else if(UART0_RX == PTB16)
-        {
-            port_init( PTB16, ALT3);            //在PTB16上使能UART0_RXD
-        }
-        else if(UART0_RX == PTD6)
-        {
-            port_init( PTD6, ALT3);             //在PTD6上使能UART0_RXD
+            port_init( UART0_RX_PIN, ALT3);
         }
         else
         {
             ASSERT(0);                           //上诉条件都不满足，直接断言失败了，设置管脚有误？
         }
 
-        if(UART0_TX == PTA2)
+        if(UART0_TX_PIN == PTA2)
         {
-            port_init( PTA2, ALT2);             //在PTA2上使能UART0_RXD
+            port_init( UART0_TX_PIN, ALT2);
         }
-        else if(UART0_TX == PTA14)
+        else if((UART0_TX_PIN == PTA14) || (UART0_TX_PIN == PTB17) || (UART0_TX_PIN == PTD7) )
         {
-            port_init( PTA14, ALT3);            //在PTA14上使能UART0_RXD
-        }
-        else if(UART0_TX == PTB17)
-        {
-            port_init( PTB17, ALT3);            //在PTB17上使能UART0_RXD
-        }
-        else if(UART0_TX == PTD7)
-        {
-            port_init( PTD7, ALT3);             //在PTD7上使能UART0_RXD
+            port_init( UART0_TX_PIN, ALT3);
         }
         else
         {
@@ -89,26 +73,18 @@ void uart_init (UARTn_e uratn, uint32 baud)
     case UART1:
         SIM_SCGC4 |= SIM_SCGC4_UART1_MASK;
 
-        if(UART1_RX == PTC3)
+        if((UART1_RX_PIN == PTC3) || (UART1_RX_PIN == PTE1))
         {
-            port_init( PTC3, ALT3);             //在PTC3上使能UART1_RXD
-        }
-        else if(UART1_RX == PTE1)
-        {
-            port_init( PTE1, ALT3);             //在PTE1上使能UART1_RXD
+            port_init( UART1_RX_PIN, ALT3);
         }
         else
         {
             ASSERT(0);                           //上诉条件都不满足，直接断言失败了，设置管脚有误？
         }
 
-        if(UART1_TX == PTC4)
+        if((UART1_TX_PIN == PTC4) || (UART1_TX_PIN == PTE0))
         {
-            port_init( PTC4, ALT3);             //在PTC4上使能UART1_RXD
-        }
-        else if(UART1_TX == PTE0)
-        {
-            port_init( PTE0, ALT3);             //在PTE0上使能UART1_RXD
+            port_init( UART1_TX_PIN, ALT3);
         }
         else
         {
@@ -119,41 +95,42 @@ void uart_init (UARTn_e uratn, uint32 baud)
 
     case UART2:
         SIM_SCGC4 |= SIM_SCGC4_UART2_MASK;
-        port_init( PTD3, ALT3);                 //在PTD3上使能UART2_TXD功能
-        port_init( PTD2, ALT3);                 //在PTD2上使能UART2_RXD
-        break;
-
-    case UART3:
-        SIM_SCGC4 |= SIM_SCGC4_UART3_MASK;
-
-        if(UART3_RX == PTB10)
+        if(UART2_TX_PIN == PTD3)
         {
-            port_init( PTB10, ALT3);              //在PTB10上使能UART3_RXD
-        }
-        else if(UART3_RX == PTC16)
-        {
-            port_init( PTC16, ALT3);             //在PTC16上使能UART3_RXD
-        }
-        else if(UART3_RX == PTE5)
-        {
-            port_init( PTE5, ALT3);             //在PTE5上使能UART3_RXD
+            port_init( UART2_TX_PIN, ALT3);
         }
         else
         {
             ASSERT(0);                           //上诉条件都不满足，直接断言失败了，设置管脚有误？
         }
 
-        if(UART3_TX == PTB11)
+
+        if(UART2_RX_PIN == PTD2)
         {
-            port_init( PTB11, ALT3);             //在PTB11上使能UART3_RXD
+            port_init( UART2_RX_PIN, ALT3);
         }
-        else if(UART3_TX == PTC17)
+        else
         {
-            port_init( PTC17, ALT3);            //在PTC17上使能UART3_RXD
+            ASSERT(0);                           //上诉条件都不满足，直接断言失败了，设置管脚有误？
         }
-        else if(UART3_TX == PTE4)
+
+        break;
+
+    case UART3:
+        SIM_SCGC4 |= SIM_SCGC4_UART3_MASK;
+
+        if((UART3_RX_PIN == PTB10)|| (UART3_RX_PIN == PTC16) || (UART3_RX_PIN == PTE5) )
         {
-            port_init( PTE4, ALT3);             //在PTE4上使能UART3_RXD
+            port_init( UART3_RX_PIN, ALT3);
+        }
+        else
+        {
+            ASSERT(0);                           //上诉条件都不满足，直接断言失败了，设置管脚有误？
+        }
+
+        if((UART3_TX_PIN == PTB11) || (UART3_TX_PIN == PTC17) || (UART3_TX_PIN == PTE4) )
+        {
+            port_init( UART3_TX_PIN, ALT3);             //在PTB11上使能UART3_RXD
         }
         else
         {
@@ -164,26 +141,18 @@ void uart_init (UARTn_e uratn, uint32 baud)
     case UART4:
         SIM_SCGC1 |= SIM_SCGC1_UART4_MASK;
 
-        if(UART4_RX == PTC14)
+        if((UART4_RX_PIN == PTC14) || (UART4_RX_PIN == PTE25)  )
         {
-            port_init( PTC14, ALT3);            //在PTC14上使能UART4_RXD
-        }
-        else if(UART4_RX == PTE25)
-        {
-            port_init( PTE25, ALT3);            //在PTE25上使能UART4_RXD
+            port_init( UART4_RX_PIN, ALT3);            //在PTC14上使能UART4_RXD
         }
         else
         {
             ASSERT(0);                           //上诉条件都不满足，直接断言失败了，设置管脚有误？
         }
 
-        if(UART4_TX == PTC15)
+        if((UART4_TX_PIN == PTC15) || (UART4_TX_PIN == PTE24)  )
         {
-            port_init( PTC15, ALT3);            //在PTC15上使能UART4_RXD
-        }
-        else if(UART4_TX == PTE24)
-        {
-            port_init( PTE24, ALT3);            //在PTE24上使能UART4_RXD
+            port_init( UART4_TX_PIN, ALT3);
         }
         else
         {
@@ -194,26 +163,18 @@ void uart_init (UARTn_e uratn, uint32 baud)
     case UART5:
         SIM_SCGC1 |= SIM_SCGC1_UART5_MASK;
 
-        if(UART5_RX == PTD8)
+        if((UART5_RX_PIN == PTD8) || (UART5_RX_PIN == PTE9))
         {
-            port_init( PTD8, ALT3);             //在PTD8上使能UART5_RXD
-        }
-        else if(UART5_RX == PTE9)
-        {
-            port_init( PTE9, ALT3);             //在PTE9上使能UART5_RXD
+            port_init( UART5_RX_PIN, ALT3);
         }
         else
         {
             ASSERT(0);                           //上诉条件都不满足，直接断言失败了，设置管脚有误？
         }
 
-        if(UART5_TX == PTD9)
+        if((UART5_TX_PIN == PTD9) ||(UART5_TX_PIN == PTE8))
         {
-            port_init( PTD9, ALT3);             //在PTD9上使能UART5_RXD
-        }
-        else if(UART5_TX == PTE8)
-        {
-            port_init( PTE8, ALT3);             //在PTE8上使能UART5_RXD
+            port_init( UART5_TX_PIN, ALT3);             //在PTD9上使能UART5_RXD
         }
         else
         {
@@ -234,9 +195,9 @@ void uart_init (UARTn_e uratn, uint32 baud)
     //配置成8位无校验模式
     //设置 UART 数据格式、校验方式和停止位位数。通过设置 UART 模块控制寄存器 C1 实现；
     UART_C1_REG(UARTN[uratn]) |= (0
-                                  //| UART_C2_M_MASK                    //9 位或 8 位模式选择 : 0 为 8位 ，1 为 9位（注释了表示0，即8位） （如果是9位，位8在UARTx_C3里）
-                                  //| UART_C2_PE_MASK                   //奇偶校验使能（注释了表示禁用）
-                                  //| UART_C2_PT_MASK                   //校验位类型 : 0 为 偶校验 ，1 为 奇校验
+                                  //| UART_C1_M_MASK                    //9 位或 8 位模式选择 : 0 为 8位 ，1 为 9位（注释了表示0，即8位） （如果是9位，位8在UARTx_C3里）
+                                  //| UART_C1_PE_MASK                   //奇偶校验使能（注释了表示禁用）
+                                  //| UART_C1_PT_MASK                   //校验位类型 : 0 为 偶校验 ，1 为 奇校验
                                  );
 
     //计算波特率，串口0、1使用内核时钟，其它串口使用bus时钟
@@ -298,7 +259,9 @@ void uart_init (UARTn_e uratn, uint32 baud)
  *  @since      v5.0
  *  @note       如果需要查询接收状态，可用 uart_query ，
                 如果需要查询接收数据，可用 uart_querychar
- *  Sample usage:       char ch = uart_getchar (UART3);   //等待接受1个字节，保存到 ch里
+ *  Sample usage:
+                        char ch;
+                        uart_getchar (UART3,&ch);   //等待接受1个字节，保存到 ch里
  */
 void uart_getchar (UARTn_e uratn, char *ch)
 {
@@ -343,7 +306,6 @@ char uart_querychar (UARTn_e uratn, char *ch)
     return 0;                                   //返回0表示接收失败
 }
 
-
 /*!
  *  @brief      查询接收字符串
  *  @param      UARTn_e       模块号（UART0~UART5）
@@ -353,29 +315,36 @@ char uart_querychar (UARTn_e uratn, char *ch)
  *  @since      v5.0
  *  Sample usage:       char str[100];
                         uint32 num;
-                        num = uart_pendstr (UART3,&str,100);
+                        num = uart_querystr (UART3,&str,100);
                         if( num != 0 )
                         {
                             printf("成功接收到%d个字节:%s",num,str);
                         }
  */
-char uart_querystr (UARTn_e uratn, char *str, uint32 max_len)
+uint32 uart_querystr (UARTn_e uratn, char *str, uint32 max_len)
 {
-    uint32 i = 0;
-    while(uart_querychar(uratn, str + i)  )
+    uint32 i = 0,j;
+
+    for(j=0;j<10000;j++)                 // 10000 的作用是延时，可自行根据情况修改
     {
-        if( *(str + i) == NULL )    //接收到字符串结束符
+        while(uart_querychar(uratn, str + i)  )
         {
-            return i;
-        }
+            j=0;
+            if( *(str + i) == NULL )    //接收到字符串结束符
+            {
+                return i;
+            }
 
-        i++;
-        if(i >= max_len)            //超过设定的最大值，退出
-        {
-            return i;
+            i++;
+            if(i >= max_len)            //超过设定的最大值，退出
+            {
+                *(str + i) = 0;     //确保字符串结尾是0x00
+                return i;
+            }
         }
-    };
+    }
 
+    *(str + i) = 0;                     //确保字符串结尾是0x00
     return i;
 }
 
@@ -389,23 +358,26 @@ char uart_querystr (UARTn_e uratn, char *str, uint32 max_len)
  *  @since      v5.0
  *  Sample usage:       char buff[100];
                         uint32 num;
-                        num = uart_pendbuff (UART3,&buff,100);
+                        num = uart_querybuff (UART3,&buff,100);
                         if( num != 0 )
                         {
                             printf("成功接收到%d个字节:%s",num,buff);
                         }
  */
-char uart_querybuff (UARTn_e uratn, char *buff, uint32 max_len)
+uint32 uart_querybuff (UARTn_e uratn, char *buff, uint32 max_len)
 {
-    uint32 i = 0;
-    while(uart_querychar(uratn, buff + i)  )
+    uint32 i = 0,j;
+    for(j=0;j<10000;j++)                 // 10000 的作用是延时，可自行根据情况修改
     {
-        i++;
-        if(i >= max_len)            //超过设定的最大值，退出
+        while(uart_querychar(uratn, buff + i)  )
         {
-            return i;
+            i++;
+            if(i >= max_len)            //超过设定的最大值，退出
+            {
+                return i;
+            }
         }
-    };
+    }
 
     return i;
 }

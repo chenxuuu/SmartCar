@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -10,14 +10,15 @@
  * @file       system_MK60DZ10.c
  * @brief      系统启动相关函数
  * @author     山外科技
- * @version    v5.0
- * @date       2013-07-02
+ * @version    v5.2
+ * @date       2014-10-09
  */
 
 #include "common.h"
 #include "system_MK60DZ10.h"
 #include "MK60_uart.h"
 #include "MK60_wdog.h"
+#include "MK60_gpio.h"
 
 
 
@@ -43,6 +44,8 @@ void start(void)
 
     //为了防止 main 函数 里 复用了 下载口，导致 下载失败，此处增加 按下 KEY_A 就进入死循环
     SRART_CHECK();
+
+    gpio_init(PTA4,GPO,1);  //初始化为输出1，即 禁用了 NMI 中断
 
     main();             // 执行用户主函数
 

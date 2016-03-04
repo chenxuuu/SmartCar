@@ -2,7 +2,7 @@
  *     COPYRIGHT NOTICE
  *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     技术讨论：山外初学论坛 http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
  *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
  *     修改内容时必须保留山外科技的版权声明。
@@ -18,7 +18,7 @@
 #ifndef __VECTORS_H
 #define __VECTORS_H     1
 
-extern void default_isr(void);                  //定义默认中断复位函数
+extern void default_isr(void);                  //定义默认中断服务函数
 
 typedef void (*vector_entry)(void);             //定义中断向量表的函数类型
 
