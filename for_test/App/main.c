@@ -17,7 +17,7 @@
 #include "common.h"
 #include "include.h"
 
-float dj=0;
+float pwmc=0;
 
 //uint16 K1,K2,K3,K4,qd=1,distance=30;
 //uint8 ax3=0,ax4=0;
@@ -112,15 +112,7 @@ void main(void)
 //            ftm_pwm_duty(FTM0,FTM_CH2,30);
 //            ftm_pwm_duty(FTM0,FTM_CH5,30);       //改变 占空比 ，K60 输出 PWM 占空比 逐渐增大，电机逐渐 降速
 
-//        for(pwmc=0;pwmc<=1;pwmc+=0.01)
-//        {
-//
-//          SetMotorVoltage(pwmc,pwmc);
-//          //led (LED1,LED_ON);
-//          lptmr_delay_ms(50);
-//          //led (LED1,LED_OFF);
-//          //lptmr_delay_ms(50);
-//        }
+        SetMotorVoltage(-0.1,-0.4);
 //        for(pwmc=0;pwmc>-1;pwmc-=0.1)
 //        {
 //          SetMotorVoltage(pwmc,pwmc);
@@ -135,16 +127,16 @@ void main(void)
 
 //        lptmr_delay_ms(50);
 //     }
-        if(key_check(KEY_U) == KEY_DOWN)
-        {
-            dj+=0.01;
-            control_actuator(dj);
-        }
-        if(key_check(KEY_D) == KEY_DOWN)
-        {
-            dj-=0.01;
-            control_actuator(dj);
-        }
+//        if(key_check(KEY_U) == KEY_DOWN)
+//        {
+//            dj+=0.01;
+//            control_actuator(dj);
+//        }
+//        if(key_check(KEY_D) == KEY_DOWN)
+//        {
+//            dj-=0.01;
+//            control_actuator(dj);
+//        }
 
     }
 }
@@ -156,7 +148,7 @@ void PIT0_IRQHandler(void)
     Draw_BMP(0,0,127,1,head);
     OLED_P14x16Str(36,2,"中国联通");
     //OLED_P14x16Str(0,4,"当前占空比：");
-    Display_number7(0,5,(int16)(dj*100));
+    Display_number7(0,5,(int16)(pwmc*100));
     //OLED_P6x8Str(102,5,"%");
     OLED_P14x16Str(0,6,"菜单");
     OLED_P8x16Str(57,6,"OK");

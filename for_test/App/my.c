@@ -69,7 +69,7 @@ void control_actuator(float Voltage)
 
 /*!
  *  @brief      电机输出函数
- *  @since      v1.1
+ *  @since      v1.2
  *  @note       输入值范围-1～1   浮点型
  *  Sample usage:            SetMotorVoltage(0.1,0.2);    //输出左电机正向0.1，右电机正向0.2
  */
@@ -84,32 +84,25 @@ void SetMotorVoltage(float fLeftVoltage,float fRightVoltage)
     else if(fRightVoltage<-1)
         fRightVoltage=-1;
 
-    int nOut;
     if(fLeftVoltage>0)
     {
 	ftm_pwm_duty(FTM0,FTM_CH2,0);//左轮正向运动PWM占空比为0
-	nOut=(int)(fLeftVoltage*PERIOD);//
-	ftm_pwm_duty(FTM0,FTM_CH3,nOut);//左轮反向运动PWM占空比为nOut
+	ftm_pwm_duty(FTM0,FTM_CH3,(int)(fLeftVoltage*PERIOD));//左轮反向运动PWM占空比为nOut
     }                                                   //左电机正转
     else
     {
 	ftm_pwm_duty(FTM0,FTM_CH3,0);//左轮反向运动PWM占空比为0
-	fLeftVoltage=-fLeftVoltage;
-	nOut=(int)(fLeftVoltage*PERIOD);
-	ftm_pwm_duty(FTM0,FTM_CH2,nOut);//左轮正向运动PWM占空比为nOut
+	ftm_pwm_duty(FTM0,FTM_CH2,(int)(-fLeftVoltage*PERIOD));//左轮正向运动PWM占空比为nOut
     }                                                    //左电机反转
 
     if(fRightVoltage>0)
     {
 	ftm_pwm_duty(FTM0,FTM_CH4,0);//右轮正向运动PWM占空比为0
-	nOut=(int)(fRightVoltage*PERIOD);
-	ftm_pwm_duty(FTM0,FTM_CH5,nOut);//右轮反向运动PWM占空比为nOut
+	ftm_pwm_duty(FTM0,FTM_CH5,(int)(fRightVoltage*PERIOD));//右轮反向运动PWM占空比为nOut
     }                                                     //右电机正转
     else
     {
 	ftm_pwm_duty(FTM0,FTM_CH5,0);//右轮反向运动PWM占空比为0
-	fRightVoltage=-fRightVoltage;
-	nOut=(int)(fRightVoltage*PERIOD);
-	ftm_pwm_duty(FTM0,FTM_CH4,nOut);//右轮正向运动PWM占空比为nOut
+	ftm_pwm_duty(FTM0,FTM_CH4,(int)(-fRightVoltage*PERIOD));//右轮正向运动PWM占空比为nOut
     }                                                     //右电机反转
 }
