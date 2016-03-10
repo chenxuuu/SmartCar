@@ -19,20 +19,6 @@
 #include "MK60_port.h"
 
 
-/********************************   OLDE   ****************************************/
-#define OLED_SCL  PTA15_OUT
-#define OLED_SDA  PTA17_OUT
-#define OLED_RST  PTC15_OUT
-#define OLED_DC   PTA16_OUT
-//#define OLED_CS   PTD4_OUT    接地！
-
-
-#define OLEDPT1 PTA15
-#define OLEDPT2 PTA17
-#define OLEDPT3 PTC15
-#define OLEDPT4 PTA16
-
-
 /**********************************  UART   ***************************************/
 
 //      模块通道    端口          可选范围                          建议

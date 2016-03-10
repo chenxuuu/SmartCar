@@ -17,17 +17,43 @@
 #ifndef __MY_H__
 #define __MY_H__
 
+/*************************************
+                oled
+**************************************/
+#define OLED_SCL  PTA15_OUT       //oled
+#define OLED_SDA  PTA17_OUT
+#define OLED_RST  PTC15_OUT
+#define OLED_DC   PTA16_OUT       //CS接地！
+#define OLEDPT1 PTA15
+#define OLEDPT2 PTA17
+#define OLEDPT3 PTC15
+#define OLEDPT4 PTA16
 
-#define S3010_FTM   FTM3
+/*************************************
+                鹰眼
+**************************************/
+#define CameraPCLK     PT8      //PCLK标志位
+#define CameraPCLKint  PTB8     //PCLK
+
+#define SCCB_SCL       PTB10    //SCCB 管脚配置
+#define SCCB_SDA       PTB11
+
+/*************************************
+                舵机
+**************************************/
+#define S3010_FTM   FTM3                        //舵机通道
 #define S3010_CH    FTM_CH4
 #define S3010_HZ    (100)
-
-
-#define	PERIOD				1000				//电压转换PWM比例
-
 #define control_actuator_center 1380
 #define control_actuator_min 1260
 #define control_actuator_max 1500
+
+/*************************************
+                电机
+**************************************/
+#define	PERIOD				1000				//电压转换PWM比例
+
+
 
 
 void SetMotorVoltage(float fLeftVoltage,float fRightVoltage);

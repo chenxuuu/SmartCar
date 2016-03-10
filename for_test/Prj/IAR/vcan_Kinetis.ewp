@@ -1014,7 +1014,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.50.2.4581</state>
+          <state>6.30.1.53141</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -5586,16 +5586,49 @@
       <name>$PROJ_DIR$\..\..\App\Inc\my.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\App\oled.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\App\Inc\PORT_cfg.h</name>
     </file>
   </group>
   <group>
     <name>Board</name>
     <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_ASCII.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_BMP.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_camera.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\Board\src\VCAN_computer.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\Board\src\vcan_img2sd.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\Board\src\VCAN_key.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_key_event.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_LCD.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_LCD_CH.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_LCD_ILI9341.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_LCD_ST7735R.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_LCD_ST7735S.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\Board\src\VCAN_LED.C</name>
@@ -5605,6 +5638,33 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\Board\src\VCAN_NRF24L0.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_NRF24L0_MSG.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_OV7725_Eagle.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_OV7725_Wolf.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_RTC_count.C</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_SCCB.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\vcan_sd_app.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\Vcan_touch.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_TSL1401.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\VCAN_UI_VAR.c</name>
     </file>
   </group>
   <group>
@@ -5673,10 +5733,10 @@
       <name>$PROJ_DIR$\..\..\Chip\src\MK60_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\Chip\src\MK60_wdog.c</name>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_usb.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\Chip\src\OLED.c</name>
+      <name>$PROJ_DIR$\..\..\Chip\src\MK60_wdog.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\Chip\src\IAR\startup_MK60DZ10.s</name>
@@ -5692,6 +5752,24 @@
     <name>LIB</name>
     <group>
       <name>CMSIS</name>
+    </group>
+    <group>
+      <name>FatFs</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Lib\FatFs\diskio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Lib\FatFs\ff.c</name>
+      </file>
+    </group>
+    <group>
+      <name>USB</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Lib\USB\USB.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\Lib\USB\USB_CDC.c</name>
+      </file>
     </group>
   </group>
 </project>
