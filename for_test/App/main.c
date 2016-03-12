@@ -18,12 +18,14 @@
 #include "include.h"
 
 uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
+uint8 imgsee[CAMERA_SIZE];                             //定义存储接收图像的数组
 uint8 img[CAMERA_W*CAMERA_H];
+uint8 disdelay=0;
+
 
 //函数声明
 void PORTA_IRQHandler();
 void DMA0_IRQHandler();
-
 
 
 /*!
@@ -33,34 +35,58 @@ void DMA0_IRQHandler();
  */
 void  main(void)
 {
-    Site_t site     = {0, 0};                           //显示图像左上角位置
-    Size_t imgsize  = {CAMERA_W, CAMERA_H};             //图像大小
-    Size_t size;                   //显示区域图像大小
-
-    LCD_init();
-    LCD_str            (site,"Cam init ing",FCOLOUR,BCOLOUR);
-
-    size.H = LCD_H;
-    size.W = LCD_W;
+//    Site_t site     = {0, 0};                           //显示图像左上角位置
+//    Size_t imgsize  = {CAMERA_W, CAMERA_H};             //图像大小
+//    Size_t size;                   //显示区域图像大小
+//
+//    LCD_init();
+//    LCD_str            (site,"Cam init ing",FCOLOUR,BCOLOUR);
+//
+//    size.H = LCD_H;
+//    size.W = LCD_W;
 
     camera_init(imgbuff);
-
-    LCD_str            (site,"Cam init OK!",FCOLOUR,BCOLOUR);
+//
+//    LCD_str            (site,"Cam init OK!",FCOLOUR,BCOLOUR);
     //配置中断服务函数
-    set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //设置LPTMR的中断服务函数为 PORTA_IRQHandler
-    set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //设置LPTMR的中断服务函数为 PORTA_IRQHandler
+set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //设置LPTMR的中断服务函数为 PORTA_IRQHandler
+set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //设置LPTMR的中断服务函数为 PORTA_IRQHandler
 
+
+    mk60int();
     while(1)
     {
         camera_get_img();                                   //摄像头获取图像
 
+        //putbmp(imgbuff,imgsee);
+
+        if(disdelay<10)
+        {
+            disdelay++;
+        }
+        else
+        {
+            disdelay=0;
+            img_extract(imgsee,imgbuff,CAMERA_SIZE);
+            Draw_BMP(0,0,80,7,imgsee);
+        }
+
+        //Display_number7(0,0,(int16)(sizeof(imgbuff)));
+
         //黑白摄像头
-        LCD_Img_Binary_Z(site, size, imgbuff, imgsize);
+//        LCD_Img_Binary_Z(site, size, imgbuff, imgsize);
 
 
-        vcan_sendimg(imgbuff,CAMERA_SIZE);
-
+        //vcan_sendimg(imgbuff,CAMERA_SIZE);
     }
+}
+
+void PIT0_IRQHandler(void)
+{
+    uart_putbuff (UART4,imgbuff,CAMERA_SIZE);
+    uart_putbuff (UART4,"ok1111111\n",10);
+    uart_putbuff (UART4,imgsee,CAMERA_SIZE);
+    uart_putbuff (UART4,"ok2222222\n",10);
 }
 
 

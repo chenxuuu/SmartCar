@@ -47,4 +47,6 @@
 #include  "my.h"     //×Ô¼ºµÄ¿â
 #include  "oled.h"   //OLED
 
+#include "port_cfg.h"
+
 #endif  //__INCLUDE_H__

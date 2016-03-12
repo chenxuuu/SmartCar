@@ -6,6 +6,7 @@
 #include "VCAN_NRF24L0.h"
 #include "VCAN_NRF24L0_MSG.h"
 #include "VCAN_TSL1401.h"
+#include "include.h"
 
 /**************************** 变量接收与发送 **********************************/
 

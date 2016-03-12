@@ -19,6 +19,7 @@
 #include "MK60_port.h"
 #include "MK60_dma.h"
 #include "VCAN_camera.h"
+#include "include.h"
 
 #define OV7725_WOLF_Delay_ms(time)  DELAY_MS(time)
 
