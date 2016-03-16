@@ -1,1 +1,19 @@
 场中断和PCLK都接个 150欧下拉电阻来作为滤波电路，增强抗干扰性。
+
+1         2         3         4             5             6             7         8          9          10  
+VCC     X        X        PCLK       X          VSYN          X         X        HREF      GND
+Y0        Y1      Y2      Y3           Y4          Y5             Y6       Y7       SCL        SDA
+
+连接到核心板的管脚是：
+1         2           3         4             5             6            7          8           9              10  
+VCC     X          X         PTA27       X          PTA29       X         X         PTA28      GND
+PTB0    PTB1   PTB2   PTB3     PTB4       PTB5      PTB6    PTB7     PTA26     PTA25
+
+
+1。场中断和PCLK涉及中断处理，需要修改中断函数的配置。 （自己调，这个看能力的，新手不建议修改）
+2。数据口必须是字节对齐的，8位连续的。不连续的话，没法采集。（别问有什么方法可以解决了，没法解决的，只能改成字节对齐的连续8位。能解决的话，就不会提出这样的限制！）
+http://www.vcan123.com/forum.php?mod=viewthread&tid=16&page=1
+
+
+
+

@@ -18,7 +18,8 @@
 #include "include.h"
 
 uint8 imgbuff[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊı×é
-uint8 imgsee[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊı×é
+uint8 imgsee[80][60];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊı×é
+uint8 imgoled[600];
 uint8 img[CAMERA_W*CAMERA_H];
 uint8 disdelay=0;
 
@@ -26,6 +27,80 @@ uint8 disdelay=0;
 //º¯ÊıÉùÃ÷
 void PORTA_IRQHandler();
 void DMA0_IRQHandler();
+
+
+//float solve()
+//{
+//     uint8 i,j;
+//     uint8 result[3][60];
+//     for(i=0;i<60;i++)
+//     {
+//         for(j=3;j<77;j++)
+//         {
+//             if((imgsee[j-3][i]&&imgsee[j-2][i]&&imgsee[j-1][i])&&(!(imgsee[j][i]&&imgsee[j+1][i]&&imgsee[j+2][i])))
+//                 result[0][i]=j;
+//             if((!(imgsee[j-3][i]&&imgsee[j-2][i]&&imgsee[j-1][i]))&&(imgsee[j][i]&&imgsee[j+1][i]&&imgsee[j+2][i]))
+//                 result[2][i]=j;
+//         }
+//     }
+//     for(i=0;i<60;i++)
+//         result[1][i]=(result[0][i]+result[2][i])/2;
+//
+//     return (float)((result[1][55]-result[1][45])+(result[1][45]-result[1][55]))/2;
+//}
+
+
+
+int16 solvecount()
+{
+     uint8 i,j;
+     int16 result=0;
+     for(i=0;i<60;i++)
+     {
+         for(j=0;j<80;j++)
+         {
+             if(imgsee[j][i])
+                 result++;
+         }
+     }
+
+     return result;
+}
+
+
+
+
+//void oledimg(uint8 imgin[],uint8 imgout[])
+//{
+//    int loop=1,count=0;
+//    for(loop=0;loop<600;loop++)
+//    {
+//         if(imgin[count])
+//             imgin[loop]+=128;
+//         count++;
+//         if(imgin[count])
+//             imgin[loop]+=64;
+//         count++;
+//         if(imgin[count])
+//             imgin[loop]+=32;
+//         count++;
+//         if(imgin[count])
+//             imgin[loop]+=16;
+//         count++;
+//         if(imgin[count])
+//             imgin[loop]+=8;
+//         count++;
+//         if(imgin[count])
+//             imgin[loop]+=4;
+//         count++;
+//         if(imgin[count])
+//             imgin[loop]+=2;
+//         count++;
+//         if(imgin[count])
+//             imgin[loop]+=1;
+//         count++;
+//    }
+//}
 
 
 /*!
@@ -60,18 +135,23 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯Ê
 
         //putbmp(imgbuff,imgsee);
 
-        if(disdelay<10)
-        {
-            disdelay++;
-        }
-        else
-        {
-            disdelay=0;
+//        if(disdelay<10)
+//        {
+//            disdelay++;
+//        }
+//        else
+//        {
+//            disdelay=0;
             img_extract(imgsee,imgbuff,CAMERA_SIZE);
-            Draw_BMP(0,0,80,7,imgsee);
-        }
 
-        //Display_number7(0,0,(int16)(sizeof(imgbuff)));
+            //control_actuator(solve());
+            //solve(imgsee)
+//            oledimg(imgsee,imgoled);
+//            Draw_BMP(0,0,80,7,imgoled);
+//        }
+        //Display_number7(0,0,(uint16)imgsee[30][30]);
+
+        Display_number7(0,0,solvecount());
 
         //ºÚ°×ÉãÏñÍ·
 //        LCD_Img_Binary_Z(site, size, imgbuff, imgsize);
@@ -81,13 +161,13 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯Ê
     }
 }
 
-void PIT0_IRQHandler(void)
-{
-    uart_putbuff (UART4,imgbuff,CAMERA_SIZE);
-    uart_putbuff (UART4,"ok1111111\n",10);
-    uart_putbuff (UART4,imgsee,CAMERA_SIZE);
-    uart_putbuff (UART4,"ok2222222\n",10);
-}
+//void PIT0_IRQHandler(void)
+//{
+//    uart_putbuff (UART4,imgbuff,CAMERA_SIZE);
+//    uart_putbuff (UART4,"ok1111111\n",10);
+//    uart_putbuff (UART4,imgsee,CAMERA_SIZE);
+//    uart_putbuff (UART4,"ok2222222\n",10);
+//}
 
 
 /*!

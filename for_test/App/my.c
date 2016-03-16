@@ -33,15 +33,15 @@ void mk60int()
     ftm_pwm_init(S3010_FTM, S3010_CH,S3010_HZ,100);
     control_actuator(0);
 
-    //OLED_Init();    //OLED初始化
+    OLED_Init();    //OLED初始化
 
-    pit_init_ms(PIT0, 1000);                                //初始化PIT0，定时时间为： 10000ms
-    set_vector_handler(PIT0_VECTORn ,PIT0_IRQHandler);      //设置PIT0的中断服务函数为 PIT0_IRQHandler
-    enable_irq (PIT0_IRQn);                                 //使能PIT0中断
+    //pit_init_ms(PIT0, 1000);                                //初始化PIT0，定时时间为： 10000ms
+    //set_vector_handler(PIT0_VECTORn ,PIT0_IRQHandler);      //设置PIT0的中断服务函数为 PIT0_IRQHandler
+    //enable_irq (PIT0_IRQn);                                 //使能PIT0中断
 
-    uart_init(UART4,115200);
+    //uart_init(UART4,115200);
     //set_vector_handler(UART4_RX_TX_VECTORn,uart4_handler);   // 设置中断服务函数到中断向量表里
-    uart_rx_irq_en (UART4);                                 //开串口接收中断
+    //uart_rx_irq_en (UART4);                                 //开串口接收中断
 
     key_init(KEY_U);
     key_init(KEY_D);
