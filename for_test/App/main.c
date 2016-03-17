@@ -51,19 +51,17 @@ void DMA0_IRQHandler();
 
 
 
-int16 solvecount()
+int16 solvecount(uint8 i,uint8 j,uint8 k,uint8 l)
 {
-     uint8 i,j;
      int16 result=0;
-     for(i=0;i<60;i++)
+     for(;i<k;i++)
      {
-         for(j=0;j<80;j++)
+         for(;j<l;j++)
          {
-             if(imgsee[j][i])
+             if(imgsee[i][j])
                  result++;
          }
      }
-
      return result;
 }
 
@@ -151,7 +149,9 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯Ê
 //        }
         //Display_number7(0,0,(uint16)imgsee[30][30]);
 
-        Display_number7(0,0,solvecount());
+        Display_number(0,0,solvecount(0,0,26,20));     Display_number(41,0,solvecount(26,0,52,20));           Display_number(82,0,solvecount(52,0,79,20));
+        Display_number(0,2,solvecount(0,20,26,40));     Display_number(41,2,solvecount(26,20,52,40));           Display_number(82,2,solvecount(52,20,79,40));
+        Display_number(0,4,solvecount(0,40,26,59));     Display_number(41,4,solvecount(26,40,52,59));           Display_number(82,4,solvecount(52,40,79,59));
 
         //ºÚ°×ÉãÏñÍ·
 //        LCD_Img_Binary_Z(site, size, imgbuff, imgsize);
