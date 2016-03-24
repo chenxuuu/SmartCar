@@ -17,6 +17,9 @@
 #include "common.h"
 #include "include.h"
 
+int16 display[3];
+float speed=0.01;
+
 void main(void)
 {
 
@@ -28,9 +31,14 @@ void main(void)
 
     while(1)
     {
-        printf("\n1£º%d",-encoder_get(1));
-        printf("\n2£º%d",encoder_get(2));
-        DELAY_MS(200);
+        display[0]=-encoder_get(1);
+        display[1]=encoder_get(2);
+        display[2]=(int16)(speed*100);
+        vcan_sendware(display,sizeof(display));
+        lptmr_delay_ms(5);
+        SetMotorVoltage(speed,speed);
+        speed+=0.001;
+        if(speed>0.5)speed=0;
     }
 
 }
