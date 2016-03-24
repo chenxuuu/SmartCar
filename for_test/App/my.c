@@ -30,10 +30,13 @@ void mk60int()
     ftm_pwm_init(FTM0, FTM_CH4,10*1000,0);
     ftm_pwm_init(FTM0, FTM_CH5,10*1000,0);
 
+    ftm_quad_init(FTM1);                                    //FTM1 正交解码初始化
+    ftm_quad_init(FTM2);                                    //FTM2 正交解码初始化
+
     ftm_pwm_init(S3010_FTM, S3010_CH,S3010_HZ,100);
     control_actuator(0);
 
-    OLED_Init();    //OLED初始化
+    //OLED_Init();    //OLED初始化
 
     //pit_init_ms(PIT0, 1000);                                //初始化PIT0，定时时间为： 10000ms
     //set_vector_handler(PIT0_VECTORn ,PIT0_IRQHandler);      //设置PIT0的中断服务函数为 PIT0_IRQHandler
@@ -47,12 +50,37 @@ void mk60int()
     key_init(KEY_D);
 }
 
+/*!
+ *  @brief      编码器数值获取函数
+ *  @since      v1.1
+ *  @note       输入值范围1,2   整型
+ *  Sample usage:            encoder=encoder_get(1);    //获取编码器数值，赋给encoder
+ */
+int16 encoder_get(int encoderselect)
+{
+    int16 val;
+    if(encoderselect==1)
+    {
+        val = ftm_quad_get(FTM1);          //获取FTM1 正交解码 的脉冲数(负数表示反方向)
+        ftm_quad_clean(FTM1);
+    }
+    else if(encoderselect==2)
+    {
+        val = ftm_quad_get(FTM2);          //获取FTM2 正交解码 的脉冲数(负数表示反方向)
+        ftm_quad_clean(FTM2);
+    }
+    return val;
+}
+
+
+
 
 /*!
  *  @brief      舵机输出函数
  *  @since      v1.1
  *  @note       输入值范围-1～1   浮点型
  *  Sample usage:            control_actuator(-0.2);    //输出舵机反向0.2
+ *                           control_actuator((float)n);    //输出舵机n
  */
 void control_actuator(float Voltage)
 {

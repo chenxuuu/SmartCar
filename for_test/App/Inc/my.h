@@ -63,6 +63,7 @@
 void SetMotorVoltage(float fLeftVoltage,float fRightVoltage);
 void mk60int();
 void control_actuator(float Voltage);
+int16 encoder_get(int encoderselect);
 
 
 
