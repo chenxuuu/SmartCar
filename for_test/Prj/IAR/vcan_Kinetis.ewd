@@ -513,7 +513,7 @@
         </option>
         <option>
           <name>IjetSelectedCPUBehaviour</name>
-          <state>0</state>
+          <state></state>
         </option>
         <option>
           <name>ICpuName</name>
@@ -574,7 +574,7 @@
         </option>
         <option>
           <name>CCJLinkTCPIP</name>
-          <state>aaa.bbb.ccc.ddd</state>
+          <state>192.168.3.140</state>
         </option>
         <option>
           <name>CCJLinkSpeedRadioV2</name>

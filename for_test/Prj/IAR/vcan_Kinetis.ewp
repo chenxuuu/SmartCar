@@ -5591,6 +5591,12 @@
     <file>
       <name>$PROJ_DIR$\..\..\App\Inc\PORT_cfg.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\process.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\Inc\process.h</name>
+    </file>
   </group>
   <group>
     <name>Board</name>

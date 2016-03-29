@@ -45,6 +45,7 @@
 #include  "VCAN_computer.h"     //多功能调试助手
 
 #include  "my.h"     //自己的库
+#include  "process.h"//处理库
 #include  "oled.h"   //OLED
 
 #include "port_cfg.h"

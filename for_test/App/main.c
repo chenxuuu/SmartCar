@@ -14,34 +14,91 @@
  * @date       2013-08-28
  */
 
-#include "common.h"
 #include "include.h"
 
-int16 display[3];
-float speed=0.01;
+uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
+uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];                             //定义存储接收图像的数组
 
-void main(void)
+//函数声明
+void PORTA_IRQHandler();
+void DMA0_IRQHandler();
+
+
+/*!
+ *  @brief      main函数
+ *  @since      v5.3
+ *  @note       山外摄像头 LCD 测试实验
+ */
+void  main(void)
 {
 
+    camera_init(imgbuff);
+
+    //配置中断服务函数
+set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //设置LPTMR的中断服务函数为 PORTA_IRQHandler
+set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //设置LPTMR的中断服务函数为 PORTA_IRQHandler
+
+
     mk60int();
-
-//    pit_init_ms(PIT0, 500);                                 //初始化PIT0，定时时间为： 1000ms
-//    set_vector_handler(PIT0_VECTORn ,PIT0_IRQHandler);      //设置PIT0的中断服务函数为 PIT0_IRQHandler
-//    enable_irq (PIT0_IRQn);                                 //使能PIT0中断
-
     while(1)
     {
-        display[0]=-encoder_get(1);
-        display[1]=encoder_get(2);
-        display[2]=(int16)(speed*100);
-        vcan_sendware(display,sizeof(display));
-        lptmr_delay_ms(5);
-        SetMotorVoltage(speed,speed);
-        speed+=0.001;
-        if(speed>0.5)speed=0;
+        camera_get_img();                                   //摄像头获取图像
+
+        img_extract(img,imgbuff,CAMERA_SIZE);               //解压到img中
+
+        //vcan_sendimg(imgbuff,CAMERA_SIZE);                  //串口显示
+
+//        printf("\n\n\n%d\n\n",(int)get_camere_left(img,0));
+        android_sendimg(img);
+
     }
+}
+
+//void PIT0_IRQHandler(void)
+//{
+//    uart_putbuff (UART4,imgbuff,CAMERA_SIZE);
+//    uart_putbuff (UART4,"ok1111111\n",10);
+//    uart_putbuff (UART4,imgsee,CAMERA_SIZE);
+//    uart_putbuff (UART4,"ok2222222\n",10);
+//}
+
+
+/*!
+ *  @brief      PORTA中断服务函数
+ *  @since      v5.0
+ */
+void PORTA_IRQHandler()
+{
+    uint8  n;    //引脚号
+    uint32 flag;
+
+    while(!PORTA_ISFR);
+    flag = PORTA_ISFR;
+    PORTA_ISFR  = ~0;                                   //清中断标志位
+
+    n = 29;                                             //场中断
+    if(flag & (1 << n))                                 //PTA29触发中断
+    {
+        camera_vsync();
+    }
+#if ( CAMERA_USE_HREF == 1 )                            //使用行中断
+    n = 28;
+    if(flag & (1 << n))                                 //PTA28触发中断
+    {
+        camera_href();
+    }
+#endif
+
 
 }
 
+/*!
+ *  @brief      DMA0中断服务函数
+ *  @since      v5.0
+ */
+void DMA0_IRQHandler()
+{
+    camera_dma();
+}
 
 

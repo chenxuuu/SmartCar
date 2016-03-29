@@ -1,8 +1,3 @@
-[DebugChecksum]
-Checksum=1247177170
-[Exceptions]
-StopOnUncaught=_ 0
-StopOnThrow=_ 0
 [Stack]
 FillEnabled=0
 OverflowWarningsEnabled=1
@@ -13,15 +8,24 @@ UseTrigger=1
 TriggerName=main
 LimitSize=0
 ByteLimit=50
-[CallStack]
-ShowArgs=0
-[Disassembly]
-MixedMode=1
 [JLinkDriver]
 CStepIntDis=_ 0
 TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000004
+[DebugChecksum]
+Checksum=-530833090
+[Exceptions]
+StopOnUncaught=_ 0
+StopOnThrow=_ 0
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -29,6 +33,9 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
+[Aliases]
+Count=0
+SuppressDialog=0
 [Trace1]
 Enabled=0
 ShowSource=1
@@ -40,10 +47,3 @@ Mode=1
 Graph=0
 Symbiont=0
 Exclusions=
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Count=0
-[Aliases]
-Count=0
-SuppressDialog=0

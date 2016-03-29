@@ -38,8 +38,8 @@
 #define SCCB_SCL       PTB10    //SCCB 管脚配置
 #define SCCB_SDA       PTB11
 
-#define OV7725_EAGLE_W            80                                    //定义摄像头图像宽度
-#define OV7725_EAGLE_H            60                                    //定义摄像头图像高度
+#define OV7725_EAGLE_W            160                                    //定义摄像头图像宽度
+#define OV7725_EAGLE_H            120                                    //定义摄像头图像高度
 
 
 /*************************************
@@ -64,7 +64,7 @@ void SetMotorVoltage(float fLeftVoltage,float fRightVoltage);
 void mk60int();
 void control_actuator(float Voltage);
 int16 encoder_get(int encoderselect);
-
+void android_sendimg(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
 
 
 void PIT0_IRQHandler(void);

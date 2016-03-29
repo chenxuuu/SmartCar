@@ -14,7 +14,6 @@
  * @date       2016-3-7
  */
 
-#include "common.h"
 #include"include.h"
 
 
@@ -49,6 +48,30 @@ void mk60int()
     key_init(KEY_U);
     key_init(KEY_D);
 }
+
+/*!
+ *  @brief      安卓摄像头下位机
+ *  @since      v1.0
+ *  @note       摄像头数组，请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       客户端下载地址：http://pan.baidu.com/s/1eSk85qU
+ *  Sample usage:            android_sendimg(img);    //发送图像
+ */
+void android_sendimg(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
+{
+    int i,j;
+        printf("sfcsfcAB");
+        for(i=OV7725_EAGLE_W;i>0;i--)
+        {
+            for(j=0;j<OV7725_EAGLE_H;j++)
+                if(img[j][i]==0)
+                    printf("0");
+                else
+                    printf("1");
+            printf("B");
+        }
+}
+
+
 
 /*!
  *  @brief      编码器数值获取函数
