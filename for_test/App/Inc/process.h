@@ -8,7 +8,7 @@
  *     修改内容时必须保留晨旭的版权声明。
  *
  * @file       process.h
- * @brief      数据处理头文件
+ * @brief      各种数据处理头文件
  * @author     晨旭
  * @version    v1.0
  * @date       2016-3-29
@@ -16,7 +16,7 @@
 #ifndef __PROCESS_H__
 #define __PROCESS_H__
 
-uint8 get_camere_left(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
+int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
 
 
 

@@ -38,14 +38,14 @@
 #define SCCB_SCL       PTB10    //SCCB 管脚配置
 #define SCCB_SDA       PTB11
 
-#define OV7725_EAGLE_W            160                                    //定义摄像头图像宽度
-#define OV7725_EAGLE_H            120                                    //定义摄像头图像高度
+#define OV7725_EAGLE_W            80                                  //定义摄像头图像宽度
+#define OV7725_EAGLE_H            60                                  //定义摄像头图像高度
 
 
 /*************************************
                 舵机
 **************************************/
-#define S3010_FTM   FTM3                        //舵机通道
+#define S3010_FTM   FTM3                        //舵机通道     需改
 #define S3010_CH    FTM_CH4
 #define S3010_HZ    (100)
 #define control_actuator_center 1380
