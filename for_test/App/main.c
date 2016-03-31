@@ -19,8 +19,6 @@
 uint8 imgbuff[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊý×é
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //¶¨Òå´æ´¢½âÑ¹Í¼ÏñµÄÊý×é
 
-int i,left,right,count,count_temp=0,line=10;
-
 uint16 ware[3];
 
 //º¯ÊýÉùÃ÷
@@ -54,32 +52,35 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯Ê
 
 //        printf("\n\n\n%d\n\n",(int)get_camere_left(img,0));
         //android_sendimg(img);
-        //printf("%d\n",get_camere_center(img,10));
-        left=0;right=0;
-     for(i=2;i<OV7725_EAGLE_W-3;i++)
-     {
-          if( (img[OV7725_EAGLE_H-line][i-2]&&img[OV7725_EAGLE_H-line][i-1]&&img[OV7725_EAGLE_H-line][i]) &&
-             !(img[OV7725_EAGLE_H-line][i+1]||img[OV7725_EAGLE_H-line][i+2]||img[OV7725_EAGLE_H-line][i+3]) )      //Ñ°ÕÒºÚºÚºÚ°×°×°×
-          {
-              left=i;
-              break;
-          }
-     }
-     for(i=OV7725_EAGLE_W-3;i>2;i--)
-     {
-          if( !(img[OV7725_EAGLE_H-line][i-2]||img[OV7725_EAGLE_H-line][i-1]||img[OV7725_EAGLE_H-line][i]) &&
-              (img[OV7725_EAGLE_H-line][i+1]&&img[OV7725_EAGLE_H-line][i+2]&&img[OV7725_EAGLE_H-line][i+3]) )      //Ñ°ÕÒ°×°×°×ºÚºÚºÚ
-          {
-              right=i;
-              break;
-          }
-     }
 
-        ware[0]=(uint16)left;
-        ware[1]=(uint16)right;
-        ware[2]=(uint16)(left+right)/2;
 
-        vcan_sendware(ware,sizeof(ware));
+        //printf("%d\n",get_camere_right(img,10));
+        //printf("%d\n",(int)(40-get_camere_center(img,10)));
+
+        if(get_camere_ok(img))
+        {
+            while(1)
+            {
+                vcan_sendimg(imgbuff,CAMERA_SIZE);
+                SetMotorVoltage(-0.05,-0.05);
+                control_actuator(1);
+            }
+        }
+
+        SetMotorVoltage(0.2,0.2);
+        if( ( ( 40-get_camere_center(img,10) ) < 11 ) && ( (40-get_camere_center(img,10) ) > -11) )
+        {
+            control_actuator(( 40-(float)get_camere_center(img,10) )/7);
+        }else
+        {
+            control_actuator( 40-(float)get_camere_center(img,10) );
+        }
+
+//        ware[0]=(uint16)left;
+//        ware[1]=(uint16)right;
+//        ware[2]=(uint16)(left+right)/2;
+
+//        vcan_sendware(ware,sizeof(ware));
 
     }
 }

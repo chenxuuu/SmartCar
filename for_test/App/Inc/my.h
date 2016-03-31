@@ -38,8 +38,8 @@
 #define SCCB_SCL       PTB10    //SCCB 管脚配置
 #define SCCB_SDA       PTB11
 
-#define OV7725_EAGLE_W            80                                  //定义摄像头图像宽度
-#define OV7725_EAGLE_H            60                                  //定义摄像头图像高度
+#define OV7725_EAGLE_W            80                                 //定义摄像头图像宽度
+#define OV7725_EAGLE_H            60                                 //定义摄像头图像高度
 
 
 /*************************************
@@ -49,7 +49,7 @@
 #define S3010_CH    FTM_CH4
 #define S3010_HZ    (100)
 #define control_actuator_center 1380
-#define control_actuator_min 1260
+#define control_actuator_min 1210
 #define control_actuator_max 1500
 
 /*************************************

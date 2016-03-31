@@ -135,7 +135,7 @@ void ov7725_eagle_get_img()
 reg_s ov7725_eagle_reg[] =
 {
     //¼Ä´æÆ÷£¬¼Ä´æÆ÷Öµ´Î
-    {OV7725_COM4         , 0xC1},
+    {OV7725_COM4         , 0x41},
     {OV7725_CLKRC        , 0x00},
     {OV7725_COM2         , 0x03},
     {OV7725_COM3         , 0xD0},
@@ -203,7 +203,7 @@ reg_s ov7725_eagle_reg[] =
     {OV7725_BDMStep      , 0x03},
     {OV7725_SDE          , 0x04},
     {OV7725_BRIGHT       , 0x00},
-    {OV7725_CNST         , 0xFF},
+    {OV7725_CNST         , 0x70},  //ãÐÖµ
     {OV7725_SIGN         , 0x06},
     {OV7725_UVADJ0       , 0x11},
     {OV7725_UVADJ1       , 0x02},

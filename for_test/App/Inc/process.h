@@ -18,6 +18,12 @@
 
 int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
 
+int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
 
+int get_camere_white_count(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
+
+int get_camere_left(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
+
+int get_camere_right(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
 
 #endif   //__PROCESS_H__
