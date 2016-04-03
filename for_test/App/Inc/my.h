@@ -48,7 +48,7 @@
 #define S3010_FTM   FTM3                        //舵机通道     需改
 #define S3010_CH    FTM_CH4
 #define S3010_HZ    (100)
-#define control_actuator_center 1380
+#define control_actuator_center 1300
 #define control_actuator_min 1210
 #define control_actuator_max 1500
 

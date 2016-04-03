@@ -18,8 +18,9 @@
 
 uint8 imgbuff[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊı×é
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //¶¨Òå´æ´¢½âÑ¹Í¼ÏñµÄÊı×é
-
-uint16 ware[3];
+float speed=0.2,duoji=0;
+char ch;
+int16 ware[4];
 
 //º¯ÊıÉùÃ÷
 void PORTA_IRQHandler();
@@ -28,8 +29,8 @@ void DMA0_IRQHandler();
 
 /*!
  *  @brief      mainº¯Êı
- *  @since      v5.3
- *  @note       É½ÍâÉãÏñÍ· LCD ²âÊÔÊµÑé
+ *  @since
+ *  @note
  */
 void  main(void)
 {
@@ -50,6 +51,7 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯Ê
 
         //vcan_sendimg(imgbuff,CAMERA_SIZE);                  //´®¿ÚÏÔÊ¾
 
+
 //        printf("\n\n\n%d\n\n",(int)get_camere_left(img,0));
         //android_sendimg(img);
 
@@ -62,24 +64,47 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯Ê
             while(1)
             {
                 vcan_sendimg(imgbuff,CAMERA_SIZE);
-                SetMotorVoltage(-0.05,-0.05);
+                SetMotorVoltage(-0.07,-0.07);
                 control_actuator(1);
             }
         }
-
-        SetMotorVoltage(0.2,0.2);
-        if( ( ( 40-get_camere_center(img,10) ) < 11 ) && ( (40-get_camere_center(img,10) ) > -11) )
+        SetMotorVoltage(0.25,0.25);
+        if( get_camere_white_count(img,10) > 10 )
         {
-            control_actuator(( 40-(float)get_camere_center(img,10) )/7);
+            if( ( ( 40-get_camere_center(img,10) ) < 11 ) && ( (40-get_camere_center(img,10) ) > -11) )
+            {
+                control_actuator( ( 40-(float)get_camere_center(img,10) )/11 );
+            }else
+            {
+                control_actuator( 40-(float)get_camere_center(img,10) );
+            }
         }else
         {
-            control_actuator( 40-(float)get_camere_center(img,10) );
+            if( ( ( 40-get_camere_center(img,50) ) < 11 ) && ( (40-get_camere_center(img,50) ) > -11) )
+            {
+                control_actuator( ( 40-(float)get_camere_center(img,50) )/11 );
+            }else
+            {
+                control_actuator( 40-(float)get_camere_center(img,50) );
+            }
         }
+        printf("%d",(int)((( 40-(float)get_camere_center(img,10) )/8)*100));
 
-//        ware[0]=(uint16)left;
-//        ware[1]=(uint16)right;
-//        ware[2]=(uint16)(left+right)/2;
+//        if(uart_querychar (VCAN_PORT, &ch) != 0)                        //²éÑ¯½ÓÊÕ1¸ö×Ö·û
+//        {
+//            if(ch=='a')
+//                duoji-=0.1;
+//
+//        }
 
+//        SetMotorVoltage(speed,speed);
+//        control_actuator(duoji);
+//
+//        ware[0]=encoder_get(1);
+//        ware[1]=encoder_get(2);
+//        ware[2]=(int16)speed*100;
+//        ware[3]=(int16)duoji*100;
+//
 //        vcan_sendware(ware,sizeof(ware));
 
     }
