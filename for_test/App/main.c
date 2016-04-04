@@ -49,6 +49,9 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //…Ë÷√LPTMRµƒ÷–∂œ∑˛ŒÒ∫Ø 
 
         img_extract(img,imgbuff,CAMERA_SIZE);               //Ω‚—πµΩimg÷–
 
+        control_actuator(-1);
+        while(1);
+
         //vcan_sendimg(imgbuff,CAMERA_SIZE);                  //¥Æø⁄œ‘ æ
 
 
@@ -61,11 +64,12 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //…Ë÷√LPTMRµƒ÷–∂œ∑˛ŒÒ∫Ø 
 
         if(get_camere_ok(img))
         {
+            SetMotorVoltage(-0.07,-0.07);
+            control_actuator(1);
             while(1)
             {
                 vcan_sendimg(imgbuff,CAMERA_SIZE);
-                SetMotorVoltage(-0.07,-0.07);
-                control_actuator(1);
+
             }
         }
         SetMotorVoltage(0.25,0.25);
