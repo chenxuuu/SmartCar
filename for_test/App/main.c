@@ -49,8 +49,7 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯Ê
 
         img_extract(img,imgbuff,CAMERA_SIZE);               //½âÑ¹µ½imgÖÐ
 
-        control_actuator(-1);
-        while(1);
+        get_control_deflection(img);
 
         //vcan_sendimg(imgbuff,CAMERA_SIZE);                  //´®¿ÚÏÔÊ¾
 
@@ -62,37 +61,21 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯Ê
         //printf("%d\n",get_camere_right(img,10));
         //printf("%d\n",(int)(40-get_camere_center(img,10)));
 
-        if(get_camere_ok(img))
-        {
-            SetMotorVoltage(-0.07,-0.07);
-            control_actuator(1);
-            while(1)
-            {
-                vcan_sendimg(imgbuff,CAMERA_SIZE);
+//        if(get_camere_ok(img))
+//        {
+//            SetMotorVoltage(-0.07,-0.07);
+//            control_actuator(1);
+//            while(1)
+//            {
+//                vcan_sendimg(imgbuff,CAMERA_SIZE);
+//
+//            }
+//        }
+//        SetMotorVoltage(0.25,0.25);
+//
+//        control_actuator( pow( get_camere_center(img,10), 2)/10 );
 
-            }
-        }
-        SetMotorVoltage(0.25,0.25);
-        if( get_camere_white_count(img,10) > 10 )
-        {
-            if( ( ( 40-get_camere_center(img,10) ) < 11 ) && ( (40-get_camere_center(img,10) ) > -11) )
-            {
-                control_actuator( ( 40-(float)get_camere_center(img,10) )/11 );
-            }else
-            {
-                control_actuator( 40-(float)get_camere_center(img,10) );
-            }
-        }else
-        {
-            if( ( ( 40-get_camere_center(img,50) ) < 11 ) && ( (40-get_camere_center(img,50) ) > -11) )
-            {
-                control_actuator( ( 40-(float)get_camere_center(img,50) )/11 );
-            }else
-            {
-                control_actuator( 40-(float)get_camere_center(img,50) );
-            }
-        }
-        printf("%d",(int)((( 40-(float)get_camere_center(img,10) )/8)*100));
+
 
 //        if(uart_querychar (VCAN_PORT, &ch) != 0)                        //²éÑ¯½ÓÊÕ1¸ö×Ö·û
 //        {

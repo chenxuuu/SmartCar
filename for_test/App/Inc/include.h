@@ -50,4 +50,6 @@
 
 #include "port_cfg.h"
 
+#include "math.h"
+
 #endif  //__INCLUDE_H__

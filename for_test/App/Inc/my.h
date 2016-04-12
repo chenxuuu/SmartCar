@@ -20,14 +20,14 @@
 /*************************************
                 oled
 **************************************/
-#define OLED_SCL  PTA15_OUT       //oled
-#define OLED_SDA  PTA17_OUT
-#define OLED_RST  PTC15_OUT
-#define OLED_DC   PTA16_OUT       //CS接地！
-#define OLEDPT1 PTA15
-#define OLEDPT2 PTA17
-#define OLEDPT3 PTC15
-#define OLEDPT4 PTA16
+#define OLED_SCL  PTA14_OUT       //oled
+#define OLED_SDA  PTA15_OUT
+#define OLED_RST  PTA16_OUT
+#define OLED_DC   PTA17_OUT       //CS接地！
+#define OLEDPT1 PTA14        //SCL  D0
+#define OLEDPT2 PTA15        //SDA  D1
+#define OLEDPT3 PTA16        //RST
+#define OLEDPT4 PTA17        //DC
 
 /*************************************
                 鹰眼
@@ -46,11 +46,13 @@
                 舵机
 **************************************/
 #define S3010_FTM   FTM3                        //舵机通道     需改
-#define S3010_CH    FTM_CH4
+#define S3010_CH    FTM_CH3
 #define S3010_HZ    (100)
-#define control_actuator_center 1370
-#define control_actuator_min 1240
-#define control_actuator_max 1500
+
+//以下数据为二号B车数据
+#define control_actuator_center 1357
+#define control_actuator_min 1217
+#define control_actuator_max 1532
 
 /*************************************
                 电机

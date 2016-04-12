@@ -15,9 +15,15 @@
  */
 #include"include.h"
 
+float get_control_deflection(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
+{
+    return get_camere_center(img,20)-get_camere_center(img,10);
+}
+
+
 /*!
  *  @brief      取中点
- *  @since      v1.0
+ *  @since      v1.1
  *  @note       输入值范围：摄像头数组，请先解压、行数 整型
  *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
  *  @note       行数定义最下面一行为第一行
@@ -25,8 +31,10 @@
  */
 int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
 {
-    return ( get_camere_right(img,line) + get_camere_left(img,line) )/2;
+    return OV7725_EAGLE_W/2 - ( get_camere_right(img,line) + get_camere_left(img,line) )/2;
 }
+
+
 
 
 /*!
@@ -60,7 +68,7 @@ int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 
 
 /*!
- *  @brief      计算一行白点总数
+ *  @brief      计算一行黑点总数
  *  @since      v1.0
  *  @note       输入值范围：摄像头数组，请先解压、行数 整型
  *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);

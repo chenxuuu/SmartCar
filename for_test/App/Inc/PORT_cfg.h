@@ -67,7 +67,7 @@
 #define FTM3_CH0_PIN    PTE5        //PTE5                   PTD0
 #define FTM3_CH1_PIN    PTE6        //PTE6                   PTD1
 #define FTM3_CH2_PIN    PTE7        //PTE7                   PTD2
-#define FTM3_CH3_PIN    PTE8        //PTE8                   PTD3
+#define FTM3_CH3_PIN    PTD3        //PTE8                   PTD3
 #define FTM3_CH4_PIN    PTC8        //PTE9       PTC8
 #define FTM3_CH5_PIN    PTE10       //PTE10      PTC9
 #define FTM3_CH6_PIN    PTE11       //PTE11      PTC10

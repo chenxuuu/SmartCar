@@ -16,6 +16,8 @@
 #ifndef __PROCESS_H__
 #define __PROCESS_H__
 
+float get_control_deflection(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
+
 int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
 
 int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
