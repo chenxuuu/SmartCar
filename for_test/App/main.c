@@ -51,59 +51,11 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯Ê
 
         get_control_deflection(img);
 
-        //vcan_sendimg(imgbuff,CAMERA_SIZE);                  //´®¿ÚÏÔÊ¾
-
-
-//        printf("\n\n\n%d\n\n",(int)get_camere_left(img,0));
-        //android_sendimg(img);
-
-
-        //printf("%d\n",get_camere_right(img,10));
-        //printf("%d\n",(int)(40-get_camere_center(img,10)));
-
-//        if(get_camere_ok(img))
-//        {
-//            SetMotorVoltage(-0.07,-0.07);
-//            control_actuator(1);
-//            while(1)
-//            {
-//                vcan_sendimg(imgbuff,CAMERA_SIZE);
-//
-//            }
-//        }
-//        SetMotorVoltage(0.25,0.25);
-//
-//        control_actuator( pow( get_camere_center(img,10), 2)/10 );
-
-
-
-//        if(uart_querychar (VCAN_PORT, &ch) != 0)                        //²éÑ¯½ÓÊÕ1¸ö×Ö·û
-//        {
-//            if(ch=='a')
-//                duoji-=0.1;
-//
-//        }
-
-//        SetMotorVoltage(speed,speed);
-//        control_actuator(duoji);
-//
-//        ware[0]=encoder_get(1);
-//        ware[1]=encoder_get(2);
-//        ware[2]=(int16)speed*100;
-//        ware[3]=(int16)duoji*100;
-//
-//        vcan_sendware(ware,sizeof(ware));
+        vcan_sendimg(imgbuff,CAMERA_SIZE);                  //´®¿ÚÏÔÊ¾
 
     }
 }
 
-//void PIT0_IRQHandler(void)
-//{
-//    uart_putbuff (UART4,imgbuff,CAMERA_SIZE);
-//    uart_putbuff (UART4,"ok1111111\n",10);
-//    uart_putbuff (UART4,imgsee,CAMERA_SIZE);
-//    uart_putbuff (UART4,"ok2222222\n",10);
-//}
 
 
 /*!
