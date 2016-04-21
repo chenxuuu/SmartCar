@@ -1058,46 +1058,51 @@ void Displayvoid (uint8 x,uint8 y,int16 i)
 //参数：起始点坐标(x,y),x的范围0～127，y为页的范围0～7
 //返回：无
 //==============================================================
-void DisplayFloat(uint8 x,uint8 y,int16 i)
+//void DisplayFloat(uint8 x,uint8 y,int16 i)
+//{
+//      int8 a[6]={0};
+//      if(i<0)
+//      {
+//        a[0]='-';
+//      i=-i;
+//      }
+//      else
+//        a[0]='+';
+//
+//      a[1]=i/10000;
+//      a[2]=i%10000/1000;
+//      a[3]='.';
+//      a[4]=i%1000/100;
+//      a[5]=i%100/10;
+//      for(uint8 j=0;j<6;j++)
+//      {
+//         switch(a[j])
+//         {
+//           case 0:{OLED_P6x8Str(x,y,"0");}break;
+//           case 1:{OLED_P6x8Str(x,y,"1");}break;
+//           case 2:{OLED_P6x8Str(x,y,"2");}break;
+//           case 3:{OLED_P6x8Str(x,y,"3");}break;
+//           case 4:{OLED_P6x8Str(x,y,"4");}break;
+//           case 5:{OLED_P6x8Str(x,y,"5");}break;
+//           case 6:{OLED_P6x8Str(x,y,"6");}break;
+//           case 7:{OLED_P6x8Str(x,y,"7");}break;
+//           case 8:{OLED_P6x8Str(x,y,"8");}break;
+//           case 9:{OLED_P6x8Str(x,y,"9");}break;
+//         case '-':{OLED_P6x8Str(x,y,"-");}break;
+//         case '+':{OLED_P6x8Str(x,y,"+");}break;
+//         case '.':{OLED_P6x8Str(x,y,".");}break;
+//           default:break;
+//          }
+//         x+=5;
+//         if(x==90)
+//           x=20;
+//         }
+//}
+void DisplayFloat(uint8 x,uint8 y,float i)
 {
-      int8 a[6]={0};
-      if(i<0)
-      {
-        a[0]='-';
-      i=-i;
-      }
-      else
-        a[0]='+';
-
-      a[1]=i/10000;
-      a[2]=i%10000/1000;
-      a[3]='.';
-      a[4]=i%1000/100;
-      a[5]=i%100/10;
-      for(uint8 j=0;j<6;j++)
-      {
-         switch(a[j])
-         {
-           case 0:{OLED_P6x8Str(x,y,"0");}break;
-           case 1:{OLED_P6x8Str(x,y,"1");}break;
-           case 2:{OLED_P6x8Str(x,y,"2");}break;
-           case 3:{OLED_P6x8Str(x,y,"3");}break;
-           case 4:{OLED_P6x8Str(x,y,"4");}break;
-           case 5:{OLED_P6x8Str(x,y,"5");}break;
-           case 6:{OLED_P6x8Str(x,y,"6");}break;
-           case 7:{OLED_P6x8Str(x,y,"7");}break;
-           case 8:{OLED_P6x8Str(x,y,"8");}break;
-           case 9:{OLED_P6x8Str(x,y,"9");}break;
-         case '-':{OLED_P6x8Str(x,y,"-");}break;
-         case '+':{OLED_P6x8Str(x,y,"+");}break;
-         case '.':{OLED_P6x8Str(x,y,".");}break;
-           default:break;
-          }
-         x+=5;
-         if(x==90)
-           x=20;
-         }
+    DisplayFloat3(x,y,(int32)(i*1000));
 }
+
 
 //==============================================================
 //函数名： void Draw_BMP(uint8 x,uint8 y)

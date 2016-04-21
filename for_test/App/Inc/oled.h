@@ -7,7 +7,7 @@
 #ifndef _OELD_H
 #define _OELD_H
 
-#include  "MK60_gpio.h" 
+#include  "MK60_gpio.h"
 /********************************************************************/
 /*-----------------------------------------------------------------------
 LCD_init          : OLED≥ı ºªØ
@@ -39,9 +39,9 @@ void OLED_P6x8fig4(unsigned char x,unsigned char y,unsigned short int num);
 void Display_integer3 (uint8 x,uint8 y,int16 i);
 void Display_number (uint8 x,uint8 y,int16 i);
 void DisplayFloat3(uint8 x,uint8 y,int32 i);
- 
+
 void Displayvoid (uint8 x,uint8 y,int16 i);
-void DisplayFloat(uint8 x,uint8 y,int16 i);
+void DisplayFloat(uint8 x,uint8 y,float i);
 /********************************************************************/
 
 #endif

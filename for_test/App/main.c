@@ -21,6 +21,8 @@ uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //¶¨Òå´æ´¢½âÑ¹Í¼ÏñµÄÊı×é
 float speed=0.2,duoji=0;
 char ch;
 int16 ware[4];
+int x[OV7725_EAGLE_H],y[OV7725_EAGLE_W];
+
 
 //º¯ÊıÉùÃ÷
 void PORTA_IRQHandler();
@@ -49,7 +51,10 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯Ê
 
         img_extract(img,imgbuff,CAMERA_SIZE);               //½âÑ¹µ½imgÖĞ
 
-        get_control_deflection(img);
+        x[0]=1;x[1]=2;
+        y[0]=2;y[1]=4;
+
+        DisplayFloat(0,0,fitting_slope(x,y,2));
 
         vcan_sendimg(imgbuff,CAMERA_SIZE);                  //´®¿ÚÏÔÊ¾
 

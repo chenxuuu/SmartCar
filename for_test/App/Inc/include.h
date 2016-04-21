@@ -47,9 +47,12 @@
 #include  "my.h"     //自己的库
 #include  "process.h"//处理库
 #include  "oled.h"   //OLED
+#include  "fitting_slope.h"//拟合求斜率
 
 #include "port_cfg.h"
 
-#include "math.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #endif  //__INCLUDE_H__

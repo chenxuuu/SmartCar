@@ -5565,6 +5565,9 @@
   <group>
     <name>App</name>
     <file>
+      <name>$PROJ_DIR$\..\..\App\fitting_slope.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\App\main.c</name>
     </file>
     <file>
