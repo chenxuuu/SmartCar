@@ -47,6 +47,9 @@ void mk60int()
 
     key_init(KEY_U);
     key_init(KEY_D);
+    key_init(KEY_L);
+    key_init(KEY_R);
+    key_init(KEY_A);
 }
 
 /*!

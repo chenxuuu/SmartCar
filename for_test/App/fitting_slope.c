@@ -100,28 +100,35 @@ float xsb(int n, float *x, float *y, float a)
  *  Sample usage:            fitting_slope(x,y,3)
  */
 
-float fitting_slope(int input_x[OV7725_EAGLE_H],int input_y[OV7725_EAGLE_W],int sum)
+float fitting_slope(int input_x[OV7725_EAGLE_H],int input_y[OV7725_EAGLE_H],int sum)
 {
     int i;
-    float *x, *y;
-    x = (float *)calloc(sum, sizeof(float));
-    if(x == NULL)
-    {
-    	while(1)
-            printf(" x内存分配失败，错误位置：最小二乘法拟合求斜率 ");
-    }
-    y = (float *)calloc(sum, sizeof(float));
-    if(y == NULL)
-    {
-    	while(1)
-            printf(" y内存分配失败，错误位置：最小二乘法拟合求斜率 ");
-    }
+//    float *x, *y;
+//    x = (float *)calloc(sum, sizeof(float));
+//    if(x == NULL)
+//    {
+//    	while(1)
+//            printf("x内存分配失败，错误位置：最小二乘法拟合求斜率\n");
+//    }
+//    y = (float *)calloc(sum, sizeof(float));
+//    if(y == NULL)
+//    {
+//    	while(1)
+//            printf("y内存分配失败，错误位置：最小二乘法拟合求斜率\n");
+//    }
+//    for(i = 0; i < sum; i++)
+//    {
+//    	*(x + i)=(float)input_x[i];
+//    	*(y + i)=(float)input_y[i];
+//    }
+//    return xsa(sum, x, y);
+    float x[OV7725_EAGLE_H] ,y[OV7725_EAGLE_H];
     for(i = 0; i < sum; i++)
     {
     	*(x + i)=(float)input_x[i];
     	*(y + i)=(float)input_y[i];
     }
-    return xsa(sum, x, y);
+    return  xsa(sum, x, y);
 }
 
 /*

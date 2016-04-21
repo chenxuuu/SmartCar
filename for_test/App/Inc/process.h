@@ -16,6 +16,16 @@
 #ifndef __PROCESS_H__
 #define __PROCESS_H__
 
+struct _slope
+{
+	float left;
+	float right;
+    int left_count;
+    int right_count;
+};    //定义左右斜率存储空间，有效点数
+
+void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *slope);
+
 float get_control_deflection(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
 
 int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);

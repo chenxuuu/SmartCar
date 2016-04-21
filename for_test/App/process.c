@@ -15,9 +15,54 @@
  */
 #include"include.h"
 
+/*!
+ *  @brief      求斜率
+ *  @since      v1.0
+ *  @note       输入值范围：摄像头数组，xy点的数组，请先解压、行数 整型
+ *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       无返回值
+ *  Sample usage:            which=get_slope(img,&slope);
+ */
+void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *slope)
+{
+    int i, left,right, left_count=0, right_count=0,
+    left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H];      //定义，不解释，看后面就懂了
+
+    for(i=1;i<OV7725_EAGLE_H-29;i++)    //算高度-30行，待定
+    {
+        left=get_camere_left(img,i);                        //获取最左最右
+        right=get_camere_right(img,i);
+        if(left!=0)                                         //如果未丢线
+        {
+            left_x[left_count]=left-OV7725_EAGLE_W/2;       //保留这个点，存入数组
+            left_y[left_count]=i;
+            left_count++;                                   //计数器加一
+        }
+        if(right!=OV7725_EAGLE_W)                           //同上
+        {
+            right_x[right_count]=right-OV7725_EAGLE_W/2;
+            right_y[right_count]=i;
+            right_count++;
+        }
+    }
+    slope->left=fitting_slope(left_x,left_y,left_count);            //给结构体赋值，输出数据
+    slope->right=fitting_slope(right_x,right_y,right_count);
+    slope->left_count=left_count;
+    slope->right_count=right_count;
+}
+
+/*!
+ *  @brief      舵机处理
+ *  @since      v1.1
+ *  @note       输入值范围：摄像头数组，请先解压、行数 整型
+ *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note
+ *  Sample usage:            get_camere_center(img,1);
+ */
 float get_control_deflection(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
-    return get_camere_center(img,20)-get_camere_center(img,10);
+//    int i,j;
+//    return 0;
 }
 
 
@@ -153,5 +198,5 @@ int get_camere_right(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
             }
         }
     }
-    return 79;
+    return OV7725_EAGLE_W;
 }

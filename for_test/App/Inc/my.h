@@ -38,8 +38,8 @@
 #define SCCB_SCL       PTB10    //SCCB 管脚配置
 #define SCCB_SDA       PTB11
 
-#define OV7725_EAGLE_W            80                                 //定义摄像头图像宽度
-#define OV7725_EAGLE_H            60                                 //定义摄像头图像高度
+#define OV7725_EAGLE_W            160                                 //定义摄像头图像宽度
+#define OV7725_EAGLE_H            120                                 //定义摄像头图像高度
 
 
 /*************************************
@@ -49,11 +49,19 @@
 #define S3010_CH    FTM_CH3
 #define S3010_HZ    (100)
 
-//以下数据为二号B车数据
+#define CAR_NUMBER 1       //定义车号
+
+#if ( CAR_NUMBER == 1 )                            //1A车
+#define control_actuator_center 1400
+#define control_actuator_min 1229
+#define control_actuator_max 1549
+#endif
+
+#if ( CAR_NUMBER == 2 )                            //2B车
 #define control_actuator_center 1357
 #define control_actuator_min 1217
 #define control_actuator_max 1532
-
+#endif
 /*************************************
                 电机
 **************************************/
