@@ -24,15 +24,15 @@
  */
 void mk60int()
 {
-    ftm_pwm_init(FTM0, FTM_CH2,10*1000,0);         //初始化 FTM PWM ，使用 FTM0_CH3，频率为10k ，占空比为 100 / FTM0_PRECISON
-    ftm_pwm_init(FTM0, FTM_CH3,10*1000,0);
-    ftm_pwm_init(FTM0, FTM_CH4,10*1000,0);
-    ftm_pwm_init(FTM0, FTM_CH5,10*1000,0);
+    ftm_pwm_init(FTM0, FTM_CH2, 10 * 1000, 0);     //初始化 FTM PWM ，使用 FTM0_CH3，频率为10k ，占空比为 100 / FTM0_PRECISON
+    ftm_pwm_init(FTM0, FTM_CH3, 10 * 1000, 0);
+    ftm_pwm_init(FTM0, FTM_CH4, 10 * 1000, 0);
+    ftm_pwm_init(FTM0, FTM_CH5, 10 * 1000, 0);
 
     ftm_quad_init(FTM1);                                    //FTM1 正交解码初始化
     ftm_quad_init(FTM2);                                    //FTM2 正交解码初始化
 
-    ftm_pwm_init(S3010_FTM, S3010_CH,S3010_HZ,100);
+    ftm_pwm_init(S3010_FTM, S3010_CH, S3010_HZ, 100);
     control_actuator(0);
 
     OLED_Init();    //OLED初始化
@@ -62,12 +62,12 @@ void mk60int()
  */
 void android_sendimg(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
-    int i,j;
+    int i, j;
     printf("sfcsfcAB");
-    for(i=OV7725_EAGLE_W;i>0;i--)
+    for(i = OV7725_EAGLE_W; i > 0; i--)
     {
-        for(j=0;j<OV7725_EAGLE_H;j++)
-            if(img[j][i]==0)
+        for(j = 0; j < OV7725_EAGLE_H; j++)
+            if(img[j][i] == 0)
                 printf("0");
             else
                 printf("1");
@@ -86,12 +86,12 @@ void android_sendimg(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 int16 encoder_get(int encoderselect)
 {
     int16 val;
-    if(encoderselect==1)
+    if(encoderselect == 1)
     {
         val = ftm_quad_get(FTM1);          //获取FTM1 正交解码 的脉冲数(负数表示反方向)
         ftm_quad_clean(FTM1);
     }
-    else if(encoderselect==2)
+    else if(encoderselect == 2)
     {
         val = ftm_quad_get(FTM2);          //获取FTM2 正交解码 的脉冲数(负数表示反方向)
         ftm_quad_clean(FTM2);
@@ -111,17 +111,18 @@ int16 encoder_get(int encoderselect)
  */
 void control_actuator(float Voltage)
 {
-    if(Voltage>1)
-        Voltage=1;
-    else if(Voltage<-1)
-        Voltage=-1;
+    if(Voltage > 1)
+        Voltage = 1;
+    else if(Voltage < -1)
+        Voltage = -1;
 
-    if(Voltage<0)
+    if(Voltage < 0)
     {
-        ftm_pwm_duty(S3010_FTM, S3010_CH,(int)((control_actuator_center-control_actuator_min)*Voltage+control_actuator_center));
-    }else
+        ftm_pwm_duty(S3010_FTM, S3010_CH, (int)((control_actuator_center - control_actuator_min)*Voltage + control_actuator_center));
+    }
+    else
     {
-        ftm_pwm_duty(S3010_FTM, S3010_CH,(int)((control_actuator_max-control_actuator_center)*Voltage+control_actuator_center));
+        ftm_pwm_duty(S3010_FTM, S3010_CH, (int)((control_actuator_max - control_actuator_center)*Voltage + control_actuator_center));
     }
 }
 
@@ -132,36 +133,36 @@ void control_actuator(float Voltage)
  *  @note       输入值范围-1～1   浮点型
  *  Sample usage:            SetMotorVoltage(0.1,0.2);    //输出左电机正向0.1，右电机正向0.2
  */
-void SetMotorVoltage(float fLeftVoltage,float fRightVoltage)
+void SetMotorVoltage(float fLeftVoltage, float fRightVoltage)
 {
-    if(fLeftVoltage>1)
-        fLeftVoltage=1;
-    else if(fLeftVoltage<-1)
-        fLeftVoltage=-1;
-    if(fRightVoltage>1)
-        fRightVoltage=1;
-    else if(fRightVoltage<-1)
-        fRightVoltage=-1;
+    if(fLeftVoltage > 1)
+        fLeftVoltage = 1;
+    else if(fLeftVoltage < -1)
+        fLeftVoltage = -1;
+    if(fRightVoltage > 1)
+        fRightVoltage = 1;
+    else if(fRightVoltage < -1)
+        fRightVoltage = -1;
 
-    if(fLeftVoltage>0)
+    if(fLeftVoltage > 0)
     {
-	ftm_pwm_duty(FTM0,FTM_CH2,0);//左轮正向运动PWM占空比为0
-	ftm_pwm_duty(FTM0,FTM_CH3,(int)(fLeftVoltage*PERIOD));//左轮反向运动PWM占空比为nOut
+        ftm_pwm_duty(FTM0, FTM_CH2, 0); //左轮正向运动PWM占空比为0
+        ftm_pwm_duty(FTM0, FTM_CH3, (int)(fLeftVoltage * PERIOD)); //左轮反向运动PWM占空比为nOut
     }                                                   //左电机正转
     else
     {
-	ftm_pwm_duty(FTM0,FTM_CH3,0);//左轮反向运动PWM占空比为0
-	ftm_pwm_duty(FTM0,FTM_CH2,(int)(-fLeftVoltage*PERIOD));//左轮正向运动PWM占空比为nOut
+        ftm_pwm_duty(FTM0, FTM_CH3, 0); //左轮反向运动PWM占空比为0
+        ftm_pwm_duty(FTM0, FTM_CH2, (int)(-fLeftVoltage * PERIOD)); //左轮正向运动PWM占空比为nOut
     }                                                    //左电机反转
 
-    if(fRightVoltage>0)
+    if(fRightVoltage > 0)
     {
-	ftm_pwm_duty(FTM0,FTM_CH4,0);//右轮正向运动PWM占空比为0
-	ftm_pwm_duty(FTM0,FTM_CH5,(int)(fRightVoltage*PERIOD));//右轮反向运动PWM占空比为nOut
+        ftm_pwm_duty(FTM0, FTM_CH4, 0); //右轮正向运动PWM占空比为0
+        ftm_pwm_duty(FTM0, FTM_CH5, (int)(fRightVoltage * PERIOD)); //右轮反向运动PWM占空比为nOut
     }                                                     //右电机正转
     else
     {
-	ftm_pwm_duty(FTM0,FTM_CH5,0);//右轮反向运动PWM占空比为0
-	ftm_pwm_duty(FTM0,FTM_CH4,(int)(-fRightVoltage*PERIOD));//右轮正向运动PWM占空比为nOut
+        ftm_pwm_duty(FTM0, FTM_CH5, 0); //右轮反向运动PWM占空比为0
+        ftm_pwm_duty(FTM0, FTM_CH4, (int)(-fRightVoltage * PERIOD)); //右轮正向运动PWM占空比为nOut
     }                                                     //右电机反转
 }

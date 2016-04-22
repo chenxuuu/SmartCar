@@ -21,48 +21,50 @@
  *  @note       输入值范围：摄像头数组，xy点的数组，请先解压、行数 整型
  *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
  *  @note       无返回值
- *  Sample usage:            which=get_slope(img,&slope);
+ *  Sample usage:           get_slope(img,&slope);
  */
-void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *slope)
+void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 {
-    int i, left,right, left_count=0, right_count=0,
-    left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H];      //定义，不解释，看后面就懂了
+    int i, left, right, left_count = 0, right_count = 0,
+        left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H];      //定义，不解释，看后面就懂了
 
-    for(i=1;i<OV7725_EAGLE_H-29;i++)    //算高度-30行，待定
+    for(i = 1; i < OV7725_EAGLE_H - 29; i++) //算高度-30行，待定
     {
-        left=get_camere_left(img,i);                        //获取最左最右
-        right=get_camere_right(img,i);
-        if(left!=0)                                         //如果未丢线
+        if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
+            break;
+        left = get_camere_left(img, i);                     //获取最左最右
+        right = get_camere_right(img, i);
+        if(left != 0)                                       //如果未丢线
         {
-            left_x[left_count]=left-OV7725_EAGLE_W/2;       //保留这个点，存入数组
-            left_y[left_count]=i;
+            left_x[left_count] = left - OV7725_EAGLE_W / 2; //保留这个点，存入数组
+            left_y[left_count] = i;
             left_count++;                                   //计数器加一
         }
-        if(right!=OV7725_EAGLE_W)                           //同上
+        if(right != OV7725_EAGLE_W)                         //同上
         {
-            right_x[right_count]=right-OV7725_EAGLE_W/2;
-            right_y[right_count]=i;
+            right_x[right_count] = right - OV7725_EAGLE_W / 2;
+            right_y[right_count] = i;
             right_count++;
         }
     }
-    slope->left=fitting_slope(left_x,left_y,left_count);            //给结构体赋值，输出数据
-    slope->right=fitting_slope(right_x,right_y,right_count);
-    slope->left_count=left_count;
-    slope->right_count=right_count;
+    slope->left = fitting_slope(left_x, left_y, left_count);        //给结构体赋值，输出数据
+    slope->right = fitting_slope(right_x, right_y, right_count);
+    slope->left_count = left_count;
+    slope->right_count = right_count;
 }
 
 /*!
  *  @brief      舵机处理
  *  @since      v1.1
- *  @note       输入值范围：摄像头数组，请先解压、行数 整型
- *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       输入值范围：struct _slope *slope
  *  @note
- *  Sample usage:            get_camere_center(img,1);
+ *  @note
+ *  Sample usage:       get_control_deflection(&slope);
  */
-float get_control_deflection(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
+float get_control_deflection(struct _slope *slope)
 {
-//    int i,j;
-//    return 0;
+    //    int i,j;
+    return 0;
 }
 
 
@@ -74,9 +76,9 @@ float get_control_deflection(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
  *  @note       行数定义最下面一行为第一行
  *  Sample usage:            get_camere_center(img,1);
  */
-int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
+int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
 {
-    return OV7725_EAGLE_W/2 - ( get_camere_right(img,line) + get_camere_left(img,line) )/2;
+    return OV7725_EAGLE_W / 2 - ( get_camere_right(img, line) + get_camere_left(img, line) ) / 2;
 }
 
 
@@ -88,24 +90,25 @@ int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
  *  @note       输入值范围：摄像头数组，请先解压
  *  @note       返回值为1即为不能开
  *  @note       本函数待修改优化，目前仅能在未加偏振片时判断出来
- *  Sample usage:           if(get_camere_ok(img))
-                            {
-                                while(1)
-                                {
-                                    vcan_sendimg(imgbuff,CAMERA_SIZE);
-                                    SetMotorVoltage(-0.05,-0.05);
-                                    control_actuator(1);
-                                }
-                            }
+ *  Sample usage:
+if(get_camere_ok(img))
+{
+    while(1)
+    {
+        vcan_sendimg(imgbuff, CAMERA_SIZE);
+        SetMotorVoltage(-0.05, -0.05);
+        control_actuator(1);
+    }
+}
  */
 int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
-    int count=0,i;
-    for(i=0;i<OV7725_EAGLE_W-1;i++)
+    int count = 0, i;
+    for(i = 0; i < OV7725_EAGLE_W - 1; i++)
     {
-        if(img[OV7725_EAGLE_H-10][i]==0 && img[OV7725_EAGLE_H-10][i+1]==255)
+        if(img[OV7725_EAGLE_H - 10][i] == 0 && img[OV7725_EAGLE_H - 10][i + 1] == 255)
             count++;
-        if(count>3)
+        if(count > 3)
             return 1;
     }
     return 0;
@@ -120,12 +123,12 @@ int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
  *  @note       行数定义最下面一行为第一行
  *  Sample usage:            get_camere_white_count(img,10);
  */
-int get_camere_white_count(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
+int get_camere_white_count(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
 {
-    int count=0,i;
-    for(i=OV7725_EAGLE_W;i>0;i--)
+    int count = 0, i;
+    for(i = OV7725_EAGLE_W; i > 0; i--)
     {
-        if(img[OV7725_EAGLE_H-line][i]==255)
+        if(img[OV7725_EAGLE_H - line][i] == 255)
         {
             count++;
         }
@@ -142,23 +145,24 @@ int get_camere_white_count(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
  *  @note       行数定义最下面一行为第一行
  *  Sample usage:            get_camere_left(img,1);
  */
-int get_camere_left(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
+int get_camere_left(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
 {
     int i;
-    if(img[OV7725_EAGLE_H-line][OV7725_EAGLE_W/2]==255)
+    if(img[OV7725_EAGLE_H - line][OV7725_EAGLE_W / 2] == 255)
     {
-        for(i=OV7725_EAGLE_W/2;i>0;i--)
+        for(i = OV7725_EAGLE_W / 2; i > 0; i--)
         {
-            if(img[OV7725_EAGLE_H-line][i]==0)
+            if(img[OV7725_EAGLE_H - line][i] == 0)
             {
                 return i;
             }
         }
-    }else
+    }
+    else
     {
-        for(i=OV7725_EAGLE_W/2;i<OV7725_EAGLE_W-1;i++)
+        for(i = OV7725_EAGLE_W / 2; i < OV7725_EAGLE_W - 1; i++)
         {
-            if(img[OV7725_EAGLE_H-line][i]==255)
+            if(img[OV7725_EAGLE_H - line][i] == 255)
             {
                 return i;
             }
@@ -176,23 +180,24 @@ int get_camere_left(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
  *  @note       行数定义最下面一行为第一行
  *  Sample usage:            get_camere_right(img,1);
  */
-int get_camere_right(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line)
+int get_camere_right(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
 {
     int i;
-    if(img[OV7725_EAGLE_H-line][OV7725_EAGLE_W/2]==255)
+    if(img[OV7725_EAGLE_H - line][OV7725_EAGLE_W / 2] == 255)
     {
-        for(i=OV7725_EAGLE_W/2;i<OV7725_EAGLE_W;i++)
+        for(i = OV7725_EAGLE_W / 2; i < OV7725_EAGLE_W; i++)
         {
-            if(img[OV7725_EAGLE_H-line][i]==0)
+            if(img[OV7725_EAGLE_H - line][i] == 0)
             {
                 return i;
             }
         }
-    }else
+    }
+    else
     {
-        for(i=OV7725_EAGLE_W/2;i>0;i--)
+        for(i = OV7725_EAGLE_W / 2; i > 0; i--)
         {
-            if(img[OV7725_EAGLE_H-line][i]==255)
+            if(img[OV7725_EAGLE_H - line][i] == 255)
             {
                 return i;
             }

@@ -26,7 +26,7 @@ struct _slope
 
 void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *slope);
 
-float get_control_deflection(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
+float get_control_deflection(struct _slope *slope);
 
 int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
 

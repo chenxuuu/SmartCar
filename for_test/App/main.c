@@ -18,14 +18,14 @@
 
 uint8 imgbuff[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊý×é
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //¶¨Òå´æ´¢½âÑ¹Í¼ÏñµÄÊý×é
-float speed=0.2,duoji=0;
+float speed = 0.2, duoji = 0;
 char ch;
 float out[4];
-int x[OV7725_EAGLE_H],y[OV7725_EAGLE_W];
+int x[OV7725_EAGLE_H], y[OV7725_EAGLE_W];
 
 struct _slope slope;
 
-int oled_place=0;
+int oled_place = 0;
 
 //º¯ÊýÉùÃ÷
 void PORTA_IRQHandler();
@@ -42,39 +42,15 @@ void oled_display_key()
     switch(oled_place)
     {
       case 0 :
-//        if(key_check(KEY_L) == KEY_DOWN)
-//        {
-//            dj+=0.01;
-//            control_actuator(dj);
-//        }
-//        if(key_check(KEY_R) == KEY_DOWN)
-//        {
-//            dj-=0.01;
-//            control_actuator(dj);
-//        }
+
         break;
 
       case 1 :
-//        if(key_check(KEY_A) == KEY_DOWN)
-//        {
-//            get_deformation_ratio(img,deformation_ratio);
-//            for(i=0;i<OV7725_EAGLE_H;i++)
-//            {
-//                 printf("deformation_ratio[%d]=%d\n",i,deformation_ratio[i]);
-//            }
-//        }
+
         break;
 
       case 2 :
-//        if(key_check(KEY_A) == KEY_DOWN)
-//        {
-//            get_deformation_ratio(img,deformation_ratio);
-//            for(i=0;i<OV7725_EAGLE_H;i++)
-//            {
-//                 printf("deformation_ratio[%d]=%d\n",i,deformation_ratio[i]);
-//            }
-//            deformation_get=1;
-//        }
+
         break;
 
       default:
@@ -87,30 +63,32 @@ void oled_display_key()
 //        Display_number(80,2,get_camere_center(img,10));
 //        Display_number(80,3,get_camere_center(img,40));
 //
-//        OLED_P14x16Str(0,4,"ÈüµÀÐÅÏ¢£º");
-//        if(deformation_get)
-//            OLED_P14x16Str(70,4,"ÒÑÌáÈ¡");
-//        else
-//            OLED_P14x16Str(70,4,"Î´ÌáÈ¡");
 
 
-        if(key_check(KEY_U) == KEY_DOWN)
-        {
-            oled_place--;
-            if(oled_place<0)
-                oled_place=3;
-        }
-        if(key_check(KEY_D) == KEY_DOWN)
-        {
-            oled_place++;
-            if(oled_place>3)
-                oled_place=0;
-        }
-        OLED_P14x16Str(110,0,"¡¡");
-        OLED_P14x16Str(110,2,"¡¡");
-        OLED_P14x16Str(110,4,"¡¡");
-        OLED_P14x16Str(110,6,"¡¡");
-        OLED_P14x16Str(110,oled_place*2,"¡û");
+    OLED_P14x16Str(0, 0, "Ð±ÂÊ£º");
+    DisplayFloat(42, 0, slope.left);
+    DisplayFloat(42, 1, slope.right);
+    OLED_P14x16Str(0, 2, "ÓÐÐ§µã£º");
+    OLED_P6x8fig3(56, 2, slope.left_count);
+    OLED_P6x8fig3(56, 3, slope.right_count);
+
+    if(key_check(KEY_U) == KEY_DOWN)
+    {
+        oled_place--;
+        if(oled_place < 0)
+            oled_place = 3;
+    }
+    if(key_check(KEY_D) == KEY_DOWN)
+    {
+        oled_place++;
+        if(oled_place > 3)
+            oled_place = 0;
+    }
+    OLED_P14x16Str(110, 0, "¡¡");
+    OLED_P14x16Str(110, 2, "¡¡");
+    OLED_P14x16Str(110, 4, "¡¡");
+    OLED_P14x16Str(110, 6, "¡¡");
+    OLED_P14x16Str(110, oled_place * 2, "¡û");
 }
 
 
@@ -132,19 +110,21 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯Ê
     mk60int();
     while(1)
     {
-        camera_get_img();                                   //ÉãÏñÍ·»ñÈ¡Í¼Ïñ
+        camera_get_img();  //ÉãÏñÍ·»ñÈ¡Í¼Ïñ
 
-        img_extract(img,imgbuff,CAMERA_SIZE);               //½âÑ¹µ½imgÖÐ
+        img_extract(img, imgbuff, CAMERA_SIZE); //½âÑ¹µ½imgÖÐ
 
-        get_slope(img,&slope);
+        oled_display_key();   //OLEDÏÔÊ¾
+
+        get_slope(img, &slope);  //»ñÈ¡Ð±ÂÊÐÅÏ¢
 
 
-        out[0]=slope.left;
-        out[1]=slope.right;
-        out[2]=(float)slope.left_count/10;
-        out[3]=(float)slope.right_count/10;
-        vcan_sendware(out,sizeof(out));
-        vcan_sendimg(imgbuff,CAMERA_SIZE);                  //´®¿ÚÏÔÊ¾
+        out[0] = slope.left;
+        out[1] = slope.right;
+        out[2] = (float)slope.left_count / 10;
+        out[3] = (float)slope.right_count / 10;
+        vcan_sendware(out, sizeof(out));                    //Ê¾²¨Æ÷
+        vcan_sendimg(imgbuff, CAMERA_SIZE);                 //´®¿ÚÏÔÊ¾
 
     }
 }
