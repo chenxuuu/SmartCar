@@ -5592,6 +5592,9 @@
       <name>$PROJ_DIR$\..\..\App\oled.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\App\pid.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\App\Inc\PORT_cfg.h</name>
     </file>
     <file>

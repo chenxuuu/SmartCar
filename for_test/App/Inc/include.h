@@ -48,6 +48,7 @@
 #include  "process.h"//处理库
 #include  "oled.h"   //OLED
 #include  "fitting_slope.h"//拟合求斜率
+#include  "pid.h"   //PID
 
 #include "port_cfg.h"
 
