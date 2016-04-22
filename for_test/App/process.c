@@ -30,7 +30,7 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 
     for(i = 1; i < OV7725_EAGLE_H - 29; i++) //算高度-30行，待定
     {
-        if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
+        if(i > 5 && img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
         left = get_camere_left(img, i);                     //获取最左最右
         right = get_camere_right(img, i);
