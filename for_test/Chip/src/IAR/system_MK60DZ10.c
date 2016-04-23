@@ -47,6 +47,12 @@ void start(void)
 
     gpio_init(PTA4,GPO,1);  //初始化为输出1，即 禁用了 NMI 中断
 
+    #if   MK60F15       // 硬件浮点
+
+    SCB->CPACR |=((3UL << 10*2)|(3UL << 11*2));     /* set CP10 and CP11 Full Access */
+
+    #endif
+
     main();             // 执行用户主函数
 
     while(1);           // 死循环
