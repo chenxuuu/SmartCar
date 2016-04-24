@@ -18,7 +18,7 @@
 /*!
  *  @brief      求斜率
  *  @since      v1.0
- *  @note       输入值范围：摄像头数组，xy点的数组，请先解压、行数 整型
+ *  @note       输入值范围：摄像头数组，斜率结构体，请先解压、行数 整型
  *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
  *  @note       无返回值
  *  Sample usage:           get_slope(img,&slope);
@@ -30,19 +30,19 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 
     for(i = 1; i < OV7725_EAGLE_H - 29; i++) //算高度-30行，待定
     {
-        if(i > 5 && img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
+        if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
         left = get_camere_left(img, i);                     //获取最左最右
         right = get_camere_right(img, i);
         if(left != 0)                                       //如果未丢线
         {
-            left_x[left_count] = left - OV7725_EAGLE_W / 2; //保留这个点，存入数组
+            left_x[left_count] = (int)((float)(left - OV7725_EAGLE_W / 2) * (float)slope->left_initial_value[0] / (float)slope->left_initial_value[i - 1]); //保留这个点，存入数组
             left_y[left_count] = i;
             left_count++;                                   //计数器加一
         }
         if(right != OV7725_EAGLE_W)                         //同上
         {
-            right_x[right_count] = right - OV7725_EAGLE_W / 2;
+            right_x[right_count] = (int)((float)(right - OV7725_EAGLE_W / 2) * (float)slope->right_initial_value[0] / (float)slope->right_initial_value[i - 1]);
             right_y[right_count] = i;
             right_count++;
         }
@@ -52,6 +52,27 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
     slope->left_count = left_count;
     slope->right_count = right_count;
 }
+
+
+/*!
+ *  @brief      获取初值数组
+ *  @since      v1.0
+ *  @note       输入值范围：摄像头数组，请先解压、行数 整型
+ *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       无返回值
+ *  Sample usage:           get_initial_value(img,&slope);
+ */
+void get_initial_value(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
+{
+    int i;      //定义，不解释，看后面就懂了
+
+    for(i = 1; i < 111; i++) //收集从下往上110行，待定
+    {
+        slope->left_initial_value[i - 1] = get_camere_left(img, i) - OV7725_EAGLE_W / 2;   //获取最左最右，存到初值数组中
+        slope->right_initial_value[i - 1] = get_camere_right(img, i) - OV7725_EAGLE_W / 2;
+    }
+}
+
 
 /*!
  *  @brief      舵机处理

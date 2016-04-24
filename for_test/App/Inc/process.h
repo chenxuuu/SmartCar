@@ -22,9 +22,13 @@ struct _slope
 	float right;
     int left_count;
     int right_count;
-};    //定义左右斜率存储空间，有效点数
+    int left_initial_value[110];
+    int right_initial_value[110];
+};    //定义左右斜率存储空间，有效点数，初值数组
 
 void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *slope);
+
+void get_initial_value(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *slope);
 
 float get_control_deflection(struct _slope *slope);
 

@@ -19,13 +19,36 @@
 uint8 imgbuff[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊý×é
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //¶¨Òå´æ´¢½âÑ¹Í¼ÏñµÄÊý×é
 float speed = 0.2, duoji = 0;
-char ch;
+
 float out[4];
-int x[OV7725_EAGLE_H], y[OV7725_EAGLE_W];
 
 struct _slope slope;
 
-int oled_place = 0;
+int oled_place = 0,initial_value_get=0,i;
+
+
+const int left_initial[110] =
+{
+    -75, -74, -73, -73, -73, -72, -72, -71, -70, -70, -70, -69, -69,
+    -68, -68, -67, -66, -66, -66, -65, -65, -64, -63, -63, -62, -62,
+    -61, -61, -60, -60, -59, -59, -58, -58, -57, -56, -56, -55,
+    -55, -54, -54, -53, -52, -52, -51, -51, -50, -50, -49, -49,
+    -48, -47, -47, -46, -46, -45, -45, -44, -44, -43, -42, -42,
+    -41, -41, -40, -40, -39, -39, -38, -38, -37, -37, -36, -36,
+    -35, -34, -34, -33, -33, -32, -32, -31, -31, -30, -30, -29,
+    -29, -28, -28, -27, -26, -26, -25, -25, -24, -24, -23, -23,
+    -22, -22, -21, -21, -20, -20, -19, -19, -18, -18, -17, -16
+};
+const int right_initial[110] =
+{
+    72, 72, 71, 71, 70, 70, 69, 69, 69, 68, 68, 67, 67, 66, 66, 65,
+    65, 64, 64, 63, 63, 62, 62, 61, 61, 60, 60, 59, 59, 58, 58, 57,
+    57, 56, 56, 55, 55, 54, 54, 53, 53, 52, 52, 51, 51, 50, 50, 49,
+    49, 48, 48, 47, 46, 46, 46, 45, 44, 44, 44, 43, 42, 42, 42, 41,
+    41, 40, 40, 39, 39, 38, 38, 37, 37, 36, 36, 35, 35, 34, 34, 33,
+    33, 32, 32, 31, 31, 30, 30, 29, 29, 28, 28, 27, 27, 27, 26, 26,
+    25, 25, 25, 24, 24, 23, 23, 22, 22, 21, 21, 20, 20, 19
+};
 
 //º¯ÊýÉùÃ÷
 void PORTA_IRQHandler();
@@ -50,7 +73,25 @@ void oled_display_key()
         break;
 
       case 2 :
+        if(key_check(KEY_A) == KEY_DOWN)
+        {
+            get_initial_value(img, &slope);
 
+            printf("const int right_initial[110] ={");
+            for(i = 0; i < 110; i++)
+            {
+                printf("%d,", slope.left_initial_value[i]);
+                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
+            }
+            printf("};\nconst int right_initial[110] ={");
+            for(i = 0; i < 110; i++)
+            {
+                printf("%d,", slope.left_initial_value[i]);
+                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
+            }
+            printf("};//×¢ÒâÉ¾µô×îºóµÄ¶ººÅ\n");
+            //initial_value_get=1;
+        }
         break;
 
       default:
@@ -68,9 +109,18 @@ void oled_display_key()
     OLED_P14x16Str(0, 0, "Ð±ÂÊ£º");
     DisplayFloat(42, 0, slope.left);
     DisplayFloat(42, 1, slope.right);
+
     OLED_P14x16Str(0, 2, "ÓÐÐ§µã£º");
     OLED_P6x8fig3(56, 2, slope.left_count);
     OLED_P6x8fig3(56, 3, slope.right_count);
+
+//    OLED_P14x16Str(0, 4, "ÈüµÀÐÅÏ¢£º");
+//    if(initial_value_get)
+//        OLED_P14x16Str(70, 4, "ÒÑÌáÈ¡");
+//    else
+//        OLED_P14x16Str(70, 4, "Î´ÌáÈ¡");
+    OLED_P14x16Str(0, 4, "¸üÐÂÈüµÀÐÅÏ¢");
+
 
     if(key_check(KEY_U) == KEY_DOWN)
     {
@@ -100,11 +150,16 @@ void oled_display_key()
 void  main(void)
 {
 
+    for(i = 0; i < 110; i++)
+    {
+        slope.left_initial_value[i] = left_initial[i];
+        slope.right_initial_value[i] = right_initial[i];
+    }
     camera_init(imgbuff);
 
     //ÅäÖÃÖÐ¶Ï·þÎñº¯Êý
-set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯ÊýÎª PORTA_IRQHandler
-set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯ÊýÎª PORTA_IRQHandler
+    set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯ÊýÎª PORTA_IRQHandler
+    set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯ÊýÎª PORTA_IRQHandler
 
 
     mk60int();
@@ -119,12 +174,13 @@ set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖÐ¶Ï·þÎñº¯Ê
         get_slope(img, &slope);  //»ñÈ¡Ð±ÂÊÐÅÏ¢
 
 
-        out[0] = slope.left;
-        out[1] = slope.right;
-        out[2] = (float)slope.left_count / 10;
-        out[3] = (float)slope.right_count / 10;
-        vcan_sendware(out, sizeof(out));                    //Ê¾²¨Æ÷
-        vcan_sendimg(imgbuff, CAMERA_SIZE);                 //´®¿ÚÏÔÊ¾
+//        out[0] = slope.left;
+//        out[1] = slope.right;
+//        out[2] = (float)slope.left_count / 10;
+//        out[3] = (float)slope.right_count / 10;
+//        vcan_sendware(out, sizeof(out));    //Ê¾²¨Æ÷
+        //vcan_sendimg(imgbuff, CAMERA_SIZE); //ÉãÏñÍ·´®¿ÚÏÔÊ¾
+        //android_sendimg(img);
 
     }
 }
