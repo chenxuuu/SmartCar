@@ -37,18 +37,20 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
         if(left != 0)                                       //如果未丢线
         {
             left_x[left_count] = (int)((float)(left - OV7725_EAGLE_W / 2) * (float)slope->left_initial_value[0] / (float)slope->left_initial_value[i - 1]); //保留这个点，存入数组
-            left_y[left_count] = i;
+            left_y[left_count] = (int)(0.1092 * (float)i * (float)i + 5.359 * (float)i);
+            //left_y[left_count] = i;
             left_count++;                                   //计数器加一
         }
         if(right != OV7725_EAGLE_W)                         //同上
         {
             right_x[right_count] = (int)((float)(right - OV7725_EAGLE_W / 2) * (float)slope->right_initial_value[0] / (float)slope->right_initial_value[i - 1]);
-            right_y[right_count] = i;
+            right_y[right_count] = (int)(0.1092 * (float)i * (float)i + 5.359 * (float)i);
+            //right_y[right_count] = i;
             right_count++;
         }
     }
-    slope->left = fitting_slope(left_x, left_y, left_count);        //给结构体赋值，输出数据
-    slope->right = fitting_slope(right_x, right_y, right_count);
+    slope->left = fitting_slope(left_y, left_x, left_count);        //给结构体赋值，输出数据
+    slope->right = fitting_slope(right_y, right_x, right_count);
     slope->left_count = left_count;
     slope->right_count = right_count;
 }
