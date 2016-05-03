@@ -111,10 +111,10 @@ int16 encoder_get(int encoderselect)
  */
 void control_actuator(float Voltage)
 {
-    if(Voltage > 1)
-        Voltage = 1;
-    else if(Voltage < -1)
-        Voltage = -1;
+    if(Voltage > 1.0)
+        Voltage = 1.0;
+    else if(Voltage < -1.0)
+        Voltage = -1.0;
 
     if(Voltage < 0)
     {
@@ -135,14 +135,14 @@ void control_actuator(float Voltage)
  */
 void SetMotorVoltage(float fLeftVoltage, float fRightVoltage)
 {
-    if(fLeftVoltage > 1)
-        fLeftVoltage = 1;
-    else if(fLeftVoltage < -1)
-        fLeftVoltage = -1;
-    if(fRightVoltage > 1)
-        fRightVoltage = 1;
-    else if(fRightVoltage < -1)
-        fRightVoltage = -1;
+    if(fLeftVoltage > 1.0)
+        fLeftVoltage = 1.0;
+    else if(fLeftVoltage < -1.0)
+        fLeftVoltage = -1.0;
+    if(fRightVoltage > 1.0)
+        fRightVoltage = 1.0;
+    else if(fRightVoltage < -1.0)
+        fRightVoltage = -1.0;
 
     if(fLeftVoltage > 0)
     {

@@ -66,7 +66,7 @@
 
 #if ( CAR_NUMBER == 2 )                            //2B³µ
 #define control_actuator_center 1357
-#define control_actuator_min 1217
+#define control_actuator_min 1050
 #define control_actuator_max 1532
 #endif
 /*************************************

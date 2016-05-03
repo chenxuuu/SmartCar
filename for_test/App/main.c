@@ -28,19 +28,16 @@ int oled_place = 0,initial_value_get=0,i;
 
 
 const int left_initial[110] ={
-    -69, -69, -68, -68, -67, -67, -67, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -60, -60, -59, -59, -58, -58,
-    -57, -57, -56, -56, -55, -55, -54, -54, -53, -53, -52, -52, -51, -51, -50, -50, -49, -49, -48, -48, -47, -47, -46, -45, -45,
-    -44, -44, -43, -43, -42, -42, -41, -41, -40, -40, -39, -38, -38, -37, -37, -36, -36, -35, -35, -34, -33, -33, -32, -32, -31,
-    -31, -30, -30, -29, -29, -28, -27, -27, -26, -26, -25, -25, -24, -24, -23, -23, -22, -22, -21, -21, -20, -20, -19, -19, -18,
-    -18, -17, -17, -16, -16, -15, -15, -14, -14, -13
-};
+    -70, -69, -69, -68, -68, -68, -67, -67, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -61, -60, -60,
+    -59, -59, -58, -58, -57, -57, -56, -56, -55, -55, -54, -54, -53, -53, -52, -52, -51, -51, -50, -49, -49, -48, -48,
+    -47, -47, -46, -46, -45, -45, -44, -44, -43, -43, -42, -41, -41, -40, -40, -39, -39, -38, -38, -37, -37, -36, -36,
+    -35, -34, -34, -33, -33, -32, -32, -31, -31, -30, -30, -29, -29, -28, -28, -27, -27, -26, -26, -25, -25, -24, -24,
+    -23, -23, -22, -22, -21, -21, -20, -20, -19, -19, -18, -18, -17, -17, -16, -16, -15, -15};
 const int right_initial[110] ={
-    -69, -69, -68, -68, -67, -67, -67, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -60, -60, -59, -59, -58, -58,
-    -57, -57, -56, -56, -55, -55, -54, -54, -53, -53, -52, -52, -51, -51, -50, -50, -49, -49, -48, -48, -47, -47, -46, -45, -45,
-    -44, -44, -43, -43, -42, -42, -41, -41, -40, -40, -39, -38, -38, -37, -37, -36, -36, -35, -35, -34, -33, -33, -32, -32, -31,
-    -31, -30, -30, -29, -29, -28, -27, -27, -26, -26, -25, -25, -24, -24, -23, -23, -22, -22, -21, -21, -20, -20, -19, -19, -18,
-    -18, -17, -17, -16, -16, -15, -15, -14, -14, -13
-};
+    71, 71, 70, 69, 68, 68, 67, 67, 66, 66, 65, 65, 64, 64, 63, 63, 63, 62, 61, 61, 60, 60, 59, 59, 58, 58, 57, 57, 56,
+    56, 55, 54, 54, 53, 53, 52, 52, 51, 51, 50, 49, 49, 48, 48, 47, 47, 46, 46, 45, 45, 44, 43, 43, 42, 42, 41, 41, 40,
+    40, 39, 39, 38, 38, 37, 36, 36, 35, 35, 34, 34, 33, 33, 32, 32, 31, 31, 30, 29, 29, 28, 28, 27, 27, 26, 26, 25, 25,
+    24, 24, 23, 23, 22, 22, 21, 21, 20, 20, 19, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13};
 
 //函数声明
 void PORTA_IRQHandler();
@@ -57,6 +54,19 @@ void oled_display_key()
     switch(oled_place)
     {
       case 0 :
+        if(key_check(KEY_R) == KEY_DOWN)
+            duoji-=0.01;
+        if(key_check(KEY_L) == KEY_DOWN)
+            duoji+=0.01;
+        if(key_check(KEY_A) == KEY_DOWN)
+        {
+            printf("舵机：%d/100，左斜率：%d/1000,右斜率：%d/1000，左有效：%d，右有效：%d\n",
+                   (int)(duoji*100),
+                   (int)(slope.left*1000),
+                   (int)(slope.right*1000),
+                   slope.left_count,
+                   slope.right_count);
+        }
 
         break;
 
@@ -78,7 +88,7 @@ void oled_display_key()
             printf("};\nconst int right_initial[110] ={");
             for(i = 0; i < 110; i++)
             {
-                printf("%d, ", slope.left_initial_value[i]);
+                printf("%d, ", slope.right_initial_value[i]);
                 //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
             }
             printf("};//注意删掉最后的逗号\n");
@@ -125,6 +135,7 @@ void oled_display_key()
         oled_place++;
         if(oled_place > 3)
             oled_place = 0;
+        OLED_Init();
     }
     OLED_P14x16Str(110, 0, "　");
     OLED_P14x16Str(110, 2, "　");
@@ -165,16 +176,38 @@ void  main(void)
 
         get_slope(img, &slope);  //获取斜率信息
 
-        if(slope.left_count>slope.right_count)
-            out[0] = slope.left;
-        else
-            out[0] = slope.right;
+//        if(slope.left_count<10 && slope.right_count<10)
+//            control_actuator(0);
+//        else if(slope.left_count>slope.right_count)
+//            control_actuator(-slope.left*11);
+//        else
+//            control_actuator(-slope.right*11);
+
+        if(slope.left_count + slope.right_count > 130)
+        {
+
+            duoji = (float)get_camere_center_20(img);
+
+            if(duoji > 0)
+                duoji = pow(duoji, 2) / 900;
+            else
+                duoji = -pow(duoji, 2) / 900;
+
+            control_actuator(duoji);
+        }
+
+//        if(slope.left_count>slope.right_count)
+//            out[0] = slope.left;
+//        else
+//            out[0] = slope.right;
+
+        SetMotorVoltage(0.3,0.3);
 
         //out[0] = slope.left;
         //out[1] = slope.right;
         //out[2] = (float)slope.left_count / 10;
         //out[3] = (float)slope.right_count / 10;
-        vcan_sendware(out, sizeof(out));    //示波器
+        //vcan_sendware(out, sizeof(out));    //示波器
         //vcan_sendimg(imgbuff, CAMERA_SIZE); //摄像头串口显示
         //android_sendimg(img);
 

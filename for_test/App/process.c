@@ -92,6 +92,24 @@ float get_control_deflection(struct _slope *slope)
 
 
 /*!
+ *  @brief      前四十行中点平均值
+ *  @since      v1.0
+ *  @note       输入值范围：摄像头数组，请先解压、行数 整型
+ *  @note       摄像头数组请先解压，例：img_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       行数定义最下面一行为第一行
+ *  Sample usage:            get_camere_center(img,1);
+ */
+int get_camere_center_20(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
+{
+    int i,count=0;
+    for(i=0;i<40;i++)
+        count=count+get_camere_center(img,i+1);
+    return (int)((float)count/40);
+}
+
+
+
+/*!
  *  @brief      取中点
  *  @since      v1.1
  *  @note       输入值范围：摄像头数组，请先解压、行数 整型
