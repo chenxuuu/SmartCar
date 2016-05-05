@@ -28,7 +28,7 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
     int i, left, right, left_count = 0, right_count = 0,
         left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H];      //定义，不解释，看后面就懂了
 
-    for(i = 1; i < OV7725_EAGLE_H - 29; i++) //算高度-30行，待定
+    for(i = 1; i < OV7725_EAGLE_H - 59; i++) //算高度-60行，待定
     {
         if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
@@ -49,10 +49,19 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
             right_count++;
         }
     }
-    slope->left = fitting_slope(left_y, left_x, left_count);        //给结构体赋值，输出数据
-    slope->right = fitting_slope(right_y, right_x, right_count);
+
+
     slope->left_count = left_count;
     slope->right_count = right_count;
+    if(left_count==0)
+        slope->left=0;
+    else
+        slope->left = fitting_slope(left_y, left_x, left_count);        //给结构体赋值，输出数据
+
+    if(right_count==0)
+        slope->right=0;
+    else
+        slope->right = fitting_slope(right_y, right_x, right_count);        //给结构体赋值，输出数据
 }
 
 
@@ -101,10 +110,10 @@ float get_control_deflection(struct _slope *slope)
  */
 int get_camere_center_20(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
-    int i,count=0;
-    for(i=0;i<40;i++)
-        count=count+get_camere_center(img,i+1);
-    return (int)((float)count/40);
+    int i, count = 0;
+    for(i = 0; i < 40; i++)
+        count = count + get_camere_center(img, i + 1);
+    return (int)((float)count / 40);
 }
 
 

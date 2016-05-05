@@ -15,9 +15,41 @@
  */
 #include"include.h"
 
-struct _pid	warm;
-int		process_point, set_point, dead_band;
-float		p_gain, i_gain, d_gain, integral_val, new_integ;
+//struct _pid	warm;
+//int		process_point, set_point, dead_band;
+//float		p_gain, i_gain, d_gain, integral_val, new_integ;
+
+/*
+struct _pid    warm;
+int process_point  = 30,
+    set_point      = 40,
+    dead_band      = 2;
+float p_gain       = 5.2,
+      i_gain       = 0.77,
+      d_gain       = 0.18,
+      integral_val = 0.01,
+      new_integ;
+
+
+
+
+scanf( "%d", &process_point );// 设定PV,SP值
+
+pid_init( &warm, process_point, set_point );// 初始化PID参数值
+
+//PV - 实际的测量值
+//SV - 设定的目标值
+//SP - 输出的阀开度值（常用 % 表示）
+
+pid_tune( &warm, p_gain, i_gain, d_gain, dead_band, integral_val );// 初始化PID输出值
+
+pid_setinteg( &warm, 0.0 );// Get input value for process point
+
+pid_bumpless( &warm );// how to display output
+
+printf( "%f\n", pid_calc( &warm ) );
+*/
+
 
 
 /*－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－

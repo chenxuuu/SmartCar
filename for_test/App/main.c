@@ -20,9 +20,19 @@ uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //定义存储解压图像的数组
 float speed = 0.2, duoji = 0;
 
-float out[4];
+float out[5];
 
 struct _slope slope;
+
+struct _pid actuator_pid;
+int process_point  = 0,      // pv 实际值
+    set_point      = 0,      // sp 设定值
+    dead_band      = 0;       // 死区
+float p_gain       = 0.015,
+      i_gain       = 0.0,
+      d_gain       = 0.01,
+      integral_val = 0.01,    //积分值
+      new_integ;
 
 int oled_place = 0,initial_value_get=0,i;
 
@@ -164,6 +174,8 @@ void  main(void)
     set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //设置LPTMR的中断服务函数为 PORTA_IRQHandler
     set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //设置LPTMR的中断服务函数为 PORTA_IRQHandler
 
+    pid_init( &actuator_pid, process_point, set_point );
+    pid_tune( &actuator_pid, p_gain, i_gain, d_gain, dead_band, integral_val );
 
     mk60int();
     while(1)
@@ -183,9 +195,13 @@ void  main(void)
 //        else
 //            control_actuator(-slope.right*11);
 
-        if(slope.left_count + slope.right_count > 130)
-        {
-
+//        if( ( slope.left_count > 55 ||  slope.right_count > 55 ) && ( slope.left < 0.2 && slope.left > -0.2  slope.right < 0.2 && slope.right > -0.2 )
+//
+//            /*|| (get_camere_center_20(img) > 30 && get_camere_center_20(img) < -30) */)
+//
+//        //if( slope.left < 0.2 && slope.left > -0.2 )
+//        {
+            //led(LED0, LED_ON);
             duoji = (float)get_camere_center_20(img);
 
             if(duoji > 0)
@@ -193,21 +209,40 @@ void  main(void)
             else
                 duoji = -pow(duoji, 2) / 900;
 
-            control_actuator(duoji);
-        }
+            //control_actuator(duoji);
+
+//
+//        }else
+//        {
+            //led(LED0, LED_OFF);
+            if(slope.left_count>slope.right_count)
+                actuator_pid.pv = (int)(slope.left*1000);
+            else
+                actuator_pid.pv = (int)(slope.right*1000);
+
+            pid_setinteg( &actuator_pid, 0.0 );
+            pid_bumpless( &actuator_pid );
+
+//        }
+
+//        pid_calc( &actuator_pid );
+
 
 //        if(slope.left_count>slope.right_count)
 //            out[0] = slope.left;
 //        else
 //            out[0] = slope.right;
 
+        control_actuator(pid_calc( &actuator_pid ) + duoji);
+
         SetMotorVoltage(0.3,0.3);
 
-        //out[0] = slope.left;
-        //out[1] = slope.right;
-        //out[2] = (float)slope.left_count / 10;
-        //out[3] = (float)slope.right_count / 10;
-        //vcan_sendware(out, sizeof(out));    //示波器
+//        out[0] = slope.left;
+//        out[1] = slope.right;
+//        out[2] = (float)slope.left_count / 10;
+//        out[3] = (float)slope.right_count / 10;
+//        out[4] = pid_calc( &actuator_pid );
+//        vcan_sendware(out, sizeof(out));    //示波器
         //vcan_sendimg(imgbuff, CAMERA_SIZE); //摄像头串口显示
         //android_sendimg(img);
 

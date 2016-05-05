@@ -50,6 +50,9 @@ void mk60int()
     key_init(KEY_L);
     key_init(KEY_R);
     key_init(KEY_A);
+
+    led_init(LED0);                         //初始化LED0
+    led_init(LED1);                         //初始化LED1
 }
 
 /*!
