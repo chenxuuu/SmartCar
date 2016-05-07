@@ -28,7 +28,7 @@ struct _pid actuator_pid;
 int process_point  = 0,      // pv 实际值
     set_point      = 0,      // sp 设定值
     dead_band      = 0;       // 死区
-float p_gain       = 0.015,
+float p_gain       = 0.023,
       i_gain       = 0.0,
       d_gain       = 0.01,
       integral_val = 0.01,    //积分值
@@ -215,10 +215,12 @@ void  main(void)
 //        }else
 //        {
             //led(LED0, LED_OFF);
-            if(slope.left_count>slope.right_count)
+            if(slope.left_count>slope.right_count && ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 ))
                 actuator_pid.pv = (int)(slope.left*1000);
-            else
+            else if(slope.left_count<slope.right_count && ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 ))
                 actuator_pid.pv = (int)(slope.right*1000);
+            else
+                actuator_pid.pv = 0;
 
             pid_setinteg( &actuator_pid, 0.0 );
             pid_bumpless( &actuator_pid );
@@ -233,9 +235,11 @@ void  main(void)
 //        else
 //            out[0] = slope.right;
 
-        control_actuator(pid_calc( &actuator_pid ) + duoji);
+        smart_control_actuator(pid_calc( &actuator_pid ) + duoji, 0.3, 0.3);
 
-        SetMotorVoltage(0.3,0.3);
+        //get_camere_ok(img);
+
+        //SetMotorVoltage(0.3,0.3);
 
 //        out[0] = slope.left;
 //        out[1] = slope.right;

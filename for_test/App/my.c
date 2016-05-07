@@ -55,6 +55,25 @@ void mk60int()
     led_init(LED1);                         //初始化LED1
 }
 
+
+
+/*!
+ *  @brief      差速舵机输出函数
+ *  @since      v1.1
+ *  @note       输入值范围-1～1   浮点型
+ *  Sample usage:            control_actuator(-0.2,0.3,0.3);    //输出舵机反向0.2 ，给力0.3
+ */
+void smart_control_actuator(float Voltage,float fLeftVoltage, float fRightVoltage)
+{
+    if(Voltage>0)
+        SetMotorVoltage(fLeftVoltage - 0.05*Voltage,fRightVoltage + 0.05*Voltage);
+    else
+        SetMotorVoltage(fLeftVoltage - 0.05*Voltage,fRightVoltage + 0.05*Voltage);
+    control_actuator(Voltage);
+}
+
+
+
 /*!
  *  @brief      安卓蓝牙串口摄像头输出
  *  @since      v1.0

@@ -28,7 +28,7 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
     int i, left, right, left_count = 0, right_count = 0,
         left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H];      //定义，不解释，看后面就懂了
 
-    for(i = 1; i < OV7725_EAGLE_H - 59; i++) //算高度-60行，待定
+    for(i = 1; i < OV7725_EAGLE_H - 50 + 1; i++) //算高度-50行，待定
     {
         if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
@@ -140,16 +140,7 @@ int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
  *  @note       输入值范围：摄像头数组，请先解压
  *  @note       返回值为1即为不能开
  *  @note       本函数待修改优化，目前仅能在未加偏振片时判断出来
- *  Sample usage:
-if(get_camere_ok(img))
-{
-    while(1)
-    {
-        vcan_sendimg(imgbuff, CAMERA_SIZE);
-        SetMotorVoltage(-0.05, -0.05);
-        control_actuator(1);
-    }
-}
+ *  Sample usage:           get_camere_ok(img);
  */
 int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
@@ -159,7 +150,11 @@ int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
         if(img[OV7725_EAGLE_H - 10][i] == 0 && img[OV7725_EAGLE_H - 10][i + 1] == 255)
             count++;
         if(count > 3)
-            return 1;
+            while(1)
+            {
+                SetMotorVoltage(0,0);
+            }
+
     }
     return 0;
 }

@@ -76,7 +76,7 @@
 
 
 
-
+void smart_control_actuator(float Voltage,float fLeftVoltage, float fRightVoltage);
 void SetMotorVoltage(float fLeftVoltage,float fRightVoltage);
 void mk60int();
 void control_actuator(float Voltage);
