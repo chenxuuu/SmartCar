@@ -123,6 +123,10 @@ float fitting_slope(int input_x[OV7725_EAGLE_H],int input_y[OV7725_EAGLE_H],int 
 //    }
 //    return xsa(sum, x, y);
     float x[OV7725_EAGLE_H] ,y[OV7725_EAGLE_H];
+
+    if(sum < 2)
+        return 0;
+
     for(i = 0; i < sum; i++)
     {
     	*(x + i)=(float)input_x[i];
