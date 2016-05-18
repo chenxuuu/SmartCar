@@ -26,14 +26,29 @@
 void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 {
     int i, left, right, left_count = 0, right_count = 0,
-        left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H];      //定义，不解释，看后面就懂了
+        left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H],
+        min_left=OV7725_EAGLE_W/2,min_right=OV7725_EAGLE_W/2;      //定义，不解释，看后面就懂了
 
-    for(i = 1; i < OV7725_EAGLE_H - 50 + 1; i++) //算高度-50行，待定
+    for(i = 1; i < OV7725_EAGLE_H - 25 + 1; i++) //算高度-25行，待定
     {
         if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
+
         left = get_camere_left(img, i);                     //获取最左最右
         right = get_camere_right(img, i);
+
+//        if(left <= min_left && left != 0)
+//            min_left = left;
+//        else
+//            left = 0;
+//
+//        if(right >= min_right && right != OV7725_EAGLE_W)
+//            min_right = right;
+//        else
+//            right = OV7725_EAGLE_W;
+
+
+
         if(left != 0)                                       //如果未丢线
         {
             left_x[left_count] = (int)((float)(left - OV7725_EAGLE_W / 2) * (float)slope->left_initial_value[0] / (float)slope->left_initial_value[i - 1]); //保留这个点，存入数组
@@ -53,13 +68,13 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 
     slope->left_count = left_count;
     slope->right_count = right_count;
-    if(left_count==0)
-        slope->left=0;
+    if(left_count < 2)
+        slope->left = 0;
     else
         slope->left = fitting_slope(left_y, left_x, left_count);        //给结构体赋值，输出数据
 
-    if(right_count==0)
-        slope->right=0;
+    if(right_count < 2)
+        slope->right = 0;
     else
         slope->right = fitting_slope(right_y, right_x, right_count);        //给结构体赋值，输出数据
 }
@@ -108,12 +123,12 @@ float get_control_deflection(struct _slope *slope)
  *  @note       行数定义最下面一行为第一行
  *  Sample usage:            get_camere_center(img,1);
  */
-int get_camere_center_20(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
+int get_camere_center_5(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
     int i, count = 0;
-    for(i = 0; i < 40; i++)
+    for(i = 0; i < 5; i++)
         count = count + get_camere_center(img, i + 1);
-    return (int)((float)count / 40);
+    return (int)((float)count / 5);
 }
 
 

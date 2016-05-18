@@ -18,7 +18,7 @@
 
 uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //定义存储解压图像的数组
-float speed = 0.2, duoji = 0;
+float speed = 0.2, duoji = 0, duoji1 = 0, way = 0;
 
 float out[5];
 
@@ -28,7 +28,7 @@ struct _pid actuator_pid;
 int process_point  = 0,      // pv 实际值
     set_point      = 0,      // sp 设定值
     dead_band      = 0;       // 死区
-float p_gain       = 0.023,
+float p_gain       = 14,
       i_gain       = 0.0,
       d_gain       = 0.01,
       integral_val = 0.01,    //积分值
@@ -133,6 +133,7 @@ void oled_display_key()
 //        OLED_P14x16Str(70, 4, "未提取");
     OLED_P14x16Str(0, 4, "更新赛道信息");
 
+    DisplayFloat(0, 6, duoji);
 
     if(key_check(KEY_U) == KEY_DOWN)
     {
@@ -202,22 +203,28 @@ void  main(void)
 //        //if( slope.left < 0.2 && slope.left > -0.2 )
 //        {
             //led(LED0, LED_ON);
-            duoji = (float)get_camere_center_20(img);
+            duoji = (float)get_camere_center_5(img);
 
             if(duoji > 0)
                 duoji = pow(duoji, 2) / 900;
             else
                 duoji = -pow(duoji, 2) / 900;
-
+//
+//            duoji1 = (float)get_camere_center(img,1);
+//
+//            if(duoji1 > 0)
+//                duoji1 = pow(duoji1, 2) / 900;
+//            else
+//                duoji1 = -pow(duoji1, 2) / 900;
             //control_actuator(duoji);
 
 //
 //        }else
 //        {
             //led(LED0, LED_OFF);
-            if(slope.left_count>slope.right_count && ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 ))
+            if(slope.left_count>slope.right_count /*&& ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 )*/)
                 actuator_pid.pv = (int)(slope.left*1000);
-            else if(slope.left_count<slope.right_count && ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 ))
+            else if(slope.left_count<slope.right_count /*&& ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 )*/)
                 actuator_pid.pv = (int)(slope.right*1000);
             else
                 actuator_pid.pv = 0;
@@ -227,7 +234,6 @@ void  main(void)
 
 //        }
 
-//        pid_calc( &actuator_pid );
 
 
 //        if(slope.left_count>slope.right_count)
@@ -235,7 +241,16 @@ void  main(void)
 //        else
 //            out[0] = slope.right;
 
-        smart_control_actuator(pid_calc( &actuator_pid ) + duoji, 0.3, 0.3);
+        way = pid_calc( &actuator_pid ) * 0.001;
+//
+//        if(way > 0.1 || way < 0.1)
+//        {
+//            if(duoji > 0.2 || duoji < -0.2)
+//                duoji *=3;
+//            smart_control_actuator(way + duoji, 0.3, 0.3);
+//        }
+//        else
+            smart_control_actuator(way + duoji*1, 0.25, 0.25);
 
         //get_camere_ok(img);
 

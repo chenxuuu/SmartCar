@@ -32,7 +32,7 @@ void get_initial_value(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *
 
 float get_control_deflection(struct _slope *slope);
 
-int get_camere_center_20(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
+int get_camere_center_5(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W]);
 
 int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],uint8 line);
 

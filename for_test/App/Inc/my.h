@@ -59,7 +59,7 @@
 #define CAR_NUMBER 1       //定义车号
 
 #if ( CAR_NUMBER == 1 )                            //1A车
-#define control_actuator_center 1400
+#define control_actuator_center 1392
 #define control_actuator_min 1229
 #define control_actuator_max 1549
 #endif

@@ -65,10 +65,14 @@ void mk60int()
  */
 void smart_control_actuator(float Voltage,float fLeftVoltage, float fRightVoltage)
 {
+    if(Voltage > 1.0)
+        Voltage = 1.0;
+    else if(Voltage < -1.0)
+        Voltage = -1.0;
     if(Voltage>0)
-        SetMotorVoltage(fLeftVoltage - 0.05*Voltage,fRightVoltage + 0.05*Voltage);
+        SetMotorVoltage(fLeftVoltage - 0.1*Voltage,fRightVoltage + 0.1*Voltage);
     else
-        SetMotorVoltage(fLeftVoltage - 0.05*Voltage,fRightVoltage + 0.05*Voltage);
+        SetMotorVoltage(fLeftVoltage - 0.1*Voltage,fRightVoltage + 0.1*Voltage);
     control_actuator(Voltage);
 }
 
