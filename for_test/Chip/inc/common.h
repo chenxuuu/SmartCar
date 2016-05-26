@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       common.h
- * @brief      É½ÍâK60 Æ½Ì¨³£ÓÃÀàĞÍÉùÃ÷ºÍºê¶¨Òå
- * @author     É½Íâ¿Æ¼¼
+ * @brief      å±±å¤–K60 å¹³å°å¸¸ç”¨ç±»å‹å£°æ˜å’Œå®å®šä¹‰
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -18,7 +18,7 @@
 #define _COMMON_H_
 
 /*
- * Êı¾İÀàĞÍÉùÃ÷
+ * æ•°æ®ç±»å‹å£°æ˜
  */
 typedef unsigned char       uint8;  /*  8 bits */
 typedef unsigned short int  uint16; /* 16 bits */
@@ -41,7 +41,7 @@ typedef volatile uint32     vuint32; /* 32 bits */
 typedef volatile uint64     vuint64; /* 64 bits */
 
 /*
- * ¶¨Òå´øÎ»ÓòµÄÁªºÏÌåÀàĞÍ
+ * å®šä¹‰å¸¦ä½åŸŸçš„è”åˆä½“ç±»å‹
  */
 typedef union
 {
@@ -83,10 +83,10 @@ typedef union
         uint32 b30: 1;
         uint32 b31: 1;
     };
-} Dtype;    //sizeof(Dtype) Îª 4
+} Dtype;    //sizeof(Dtype) ä¸º 4
 
 /*
- * ¶¨Òå×ø±ê½á¹¹Ìå
+ * å®šä¹‰åæ ‡ç»“æ„ä½“
  */
 typedef struct
 {
@@ -95,12 +95,12 @@ typedef struct
 } Site_t;
 
 /*
- * ¶¨Òå¾ØĞÎ´óĞ¡½á¹¹Ìå
+ * å®šä¹‰çŸ©å½¢å¤§å°ç»“æ„ä½“
  */
 typedef struct
 {
-    uint16 W;       //¿í
-    uint16 H;       //¸ß
+    uint16 W;       //å®½
+    uint16 H;       //é«˜
 } Size_t;
 
 #define TRUE    1
@@ -108,7 +108,7 @@ typedef struct
 
 
 /*
- * ÖĞ¶ÏºÅÀàĞÍÉùÃ÷
+ * ä¸­æ–­å·ç±»å‹å£°æ˜
  */
 typedef enum
 {
@@ -158,16 +158,16 @@ typedef enum
     CAN0_Tx_Warning_IRQn            = 32,       // CAN0 Tx Warning Interrupt
     CAN0_Rx_Warning_IRQn            = 33,       // CAN0 Rx Warning Interrupt
     CAN0_Wake_Up_IRQn               = 34,       // CAN0 Wake Up Interrupt
-    Reserved51_IRQn                 = 35,       // ±£Áô interrupt 51
-    Reserved52_IRQn                 = 36,       // ±£Áô interrupt 52
+    Reserved51_IRQn                 = 35,       // ä¿ç•™ interrupt 51
+    Reserved52_IRQn                 = 36,       // ä¿ç•™ interrupt 52
     CAN1_ORed_MB_IRQn               = 37,       // CAN1 OR'd Message Buffers Interrupt
     CAN1_Bus_Off_IRQn               = 38,       // CAN1 Bus Off Interrupt
     CAN1_Error_IRQn                 = 39,       // CAN1 Error Interrupt
     CAN1_Tx_Warning_IRQn            = 40,       // CAN1 Tx Warning Interrupt
     CAN1_Rx_Warning_IRQn            = 41,       // CAN1 Rx Warning Interrupt
     CAN1_Wake_Up_IRQn               = 42,       // CAN1 Wake Up Interrupt
-    Reserved59_IRQn                 = 43,       // ±£Áô interrupt 59
-    Reserved60_IRQn                 = 44,       // ±£Áô interrupt 60
+    Reserved59_IRQn                 = 43,       // ä¿ç•™ interrupt 59
+    Reserved60_IRQn                 = 44,       // ä¿ç•™ interrupt 60
     UART0_RX_TX_IRQn                = 45,       // UART0 Receive/Transmit interrupt
     UART0_ERR_IRQn                  = 46,       // UART0 Error interrupt
     UART1_RX_TX_IRQn                = 47,       // UART1 Receive/Transmit interrupt
@@ -190,7 +190,7 @@ typedef enum
     FTM2_IRQn                       = 64,       // FTM2 fault, overflow and channels interrupt
     CMT_IRQn                        = 65,       // CMT interrupt
     RTC_IRQn                        = 66,       // RTC interrupt
-    Reserved83_IRQn                 = 67,       // ±£Áô interrupt 83
+    Reserved83_IRQn                 = 67,       // ä¿ç•™ interrupt 83
     PIT0_IRQn                       = 68,       // PIT timer channel 0 interrupt
     PIT1_IRQn                       = 69,       // PIT timer channel 1 interrupt
     PIT2_IRQn                       = 70,       // PIT timer channel 2 interrupt
@@ -209,33 +209,33 @@ typedef enum
     TSI0_IRQn                       = 83,       // TSI0 Interrupt
     MCG_IRQn                        = 84,       // MCG Interrupt
     LPTMR_IRQn                      = 85,       // LPTimer interrupt
-    Reserved102_IRQn                = 86,       // ±£Áô interrupt 102
+    Reserved102_IRQn                = 86,       // ä¿ç•™ interrupt 102
     PORTA_IRQn                      = 87,       // Port A interrupt
     PORTB_IRQn                      = 88,       // Port B interrupt
     PORTC_IRQn                      = 89,       // Port C interrupt
     PORTD_IRQn                      = 90,       // Port D interrupt
     PORTE_IRQn                      = 91,       // Port E interrupt
-    Reserved108_IRQn                = 92,       // ±£Áô interrupt 108
-    Reserved109_IRQn                = 93,       // ±£Áô interrupt 109
-    Reserved110_IRQn                = 94,       // ±£Áô interrupt 110
-    Reserved111_IRQn                = 95,       // ±£Áô interrupt 111
-    Reserved112_IRQn                = 96,       // ±£Áô interrupt 112
-    Reserved113_IRQn                = 97,       // ±£Áô interrupt 113
-    Reserved114_IRQn                = 98,       // ±£Áô interrupt 114
-    Reserved115_IRQn                = 99,       // ±£Áô interrupt 115
-    Reserved116_IRQn                = 100,      // ±£Áô interrupt 116
+    Reserved108_IRQn                = 92,       // ä¿ç•™ interrupt 108
+    Reserved109_IRQn                = 93,       // ä¿ç•™ interrupt 109
+    Reserved110_IRQn                = 94,       // ä¿ç•™ interrupt 110
+    Reserved111_IRQn                = 95,       // ä¿ç•™ interrupt 111
+    Reserved112_IRQn                = 96,       // ä¿ç•™ interrupt 112
+    Reserved113_IRQn                = 97,       // ä¿ç•™ interrupt 113
+    Reserved114_IRQn                = 98,       // ä¿ç•™ interrupt 114
+    Reserved115_IRQn                = 99,       // ä¿ç•™ interrupt 115
+    Reserved116_IRQn                = 100,      // ä¿ç•™ interrupt 116
 #ifdef MK60F15
     FTM3_IRQn                       = 101,      // FX FTM3   interrupt 117
 #else
-    Reserved117_IRQn                = 101,      // ±£Áô interrupt 117
+    Reserved117_IRQn                = 101,      // ä¿ç•™ interrupt 117
 #endif
-    Reserved118_IRQn                = 102,      // ±£Áô interrupt 118
-    Reserved119_IRQn                = 103,      // ±£Áô interrupt 119
+    Reserved118_IRQn                = 102,      // ä¿ç•™ interrupt 118
+    Reserved119_IRQn                = 103,      // ä¿ç•™ interrupt 119
 } IRQn_t, IRQn_Type;
 
 
 /*
- * ÖĞ¶ÏÏòÁ¿±í±àºÅÉùÃ÷
+ * ä¸­æ–­å‘é‡è¡¨ç¼–å·å£°æ˜
  */
 typedef enum
 {
@@ -287,16 +287,16 @@ typedef enum
     CAN0_Tx_Warning_VECTORn             ,       // CAN0 Tx Warning Interrupt
     CAN0_Rx_Warning_VECTORn             ,       // CAN0 Rx Warning Interrupt
     CAN0_Wake_Up_VECTORn                ,       // CAN0 Wake Up Interrupt
-    Reserved51_VECTORn                  ,       // ±£Áô interrupt 51
-    Reserved52_VECTORn                  ,       // ±£Áô interrupt 52
+    Reserved51_VECTORn                  ,       // ä¿ç•™ interrupt 51
+    Reserved52_VECTORn                  ,       // ä¿ç•™ interrupt 52
     CAN1_ORed_MB_VECTORn                ,       // CAN1 OR'd Message Buffers Interrupt
     CAN1_Bus_Off_VECTORn                ,       // CAN1 Bus Off Interrupt
     CAN1_Error_VECTORn                  ,       // CAN1 Error Interrupt
     CAN1_Tx_Warning_VECTORn             ,       // CAN1 Tx Warning Interrupt
     CAN1_Rx_Warning_VECTORn             ,       // CAN1 Rx Warning Interrupt
     CAN1_Wake_Up_VECTORn                ,       // CAN1 Wake Up Interrupt
-    Reserved59_VECTORn                  ,       // ±£Áô interrupt 59
-    Reserved60_VECTORn                  ,       // ±£Áô interrupt 60
+    Reserved59_VECTORn                  ,       // ä¿ç•™ interrupt 59
+    Reserved60_VECTORn                  ,       // ä¿ç•™ interrupt 60
     UART0_RX_TX_VECTORn                 ,       // UART0 Receive/Transmit interrupt
     UART0_ERR_VECTORn                   ,       // UART0 Error interrupt
     UART1_RX_TX_VECTORn                 ,       // UART1 Receive/Transmit interrupt
@@ -319,7 +319,7 @@ typedef enum
     FTM2_VECTORn                        ,       // FTM2 fault, overflow and channels interrupt
     CMT_VECTORn                         ,       // CMT interrupt
     RTC_VECTORn                         ,       // RTC interrupt
-    Reserved83_VECTORn                  ,       // ±£Áô interrupt 83
+    Reserved83_VECTORn                  ,       // ä¿ç•™ interrupt 83
     PIT0_VECTORn                        ,       // PIT timer channel 0 interrupt
     PIT1_VECTORn                        ,       // PIT timer channel 1 interrupt
     PIT2_VECTORn                        ,       // PIT timer channel 2 interrupt
@@ -338,36 +338,36 @@ typedef enum
     TSI0_VECTORn                        ,       // TSI0 Interrupt
     MCG_VECTORn                         ,       // MCG Interrupt
     LPTMR_VECTORn                       ,       // LPTimer interrupt
-    Reserved102_VECTORn                 ,       // ±£Áô interrupt 102
+    Reserved102_VECTORn                 ,       // ä¿ç•™ interrupt 102
     PORTA_VECTORn                       ,       // Port A interrupt
     PORTB_VECTORn                       ,       // Port B interrupt
     PORTC_VECTORn                       ,       // Port C interrupt
     PORTD_VECTORn                       ,       // Port D interrupt
     PORTE_VECTORn                       ,       // Port E interrupt
-    Reserved108_VECTORn                 ,       // ±£Áô interrupt 108
-    Reserved109_VECTORn                 ,       // ±£Áô interrupt 109
-    Reserved110_VECTORn                 ,       // ±£Áô interrupt 110
-    Reserved111_VECTORn                 ,       // ±£Áô interrupt 111
-    Reserved112_VECTORn                 ,       // ±£Áô interrupt 112
-    Reserved113_VECTORn                 ,       // ±£Áô interrupt 113
-    Reserved114_VECTORn                 ,       // ±£Áô interrupt 114
-    Reserved115_VECTORn                 ,       // ±£Áô interrupt 115
-    Reserved116_VECTORn                 ,       // ±£Áô interrupt 116
+    Reserved108_VECTORn                 ,       // ä¿ç•™ interrupt 108
+    Reserved109_VECTORn                 ,       // ä¿ç•™ interrupt 109
+    Reserved110_VECTORn                 ,       // ä¿ç•™ interrupt 110
+    Reserved111_VECTORn                 ,       // ä¿ç•™ interrupt 111
+    Reserved112_VECTORn                 ,       // ä¿ç•™ interrupt 112
+    Reserved113_VECTORn                 ,       // ä¿ç•™ interrupt 113
+    Reserved114_VECTORn                 ,       // ä¿ç•™ interrupt 114
+    Reserved115_VECTORn                 ,       // ä¿ç•™ interrupt 115
+    Reserved116_VECTORn                 ,       // ä¿ç•™ interrupt 116
 #ifdef MK60F15
     FTM3__VECTORn                       = 101,      // FX FTM3   interrupt 117
 #else
-    Reserved117_VECTORn                 ,       // ±£Áô interrupt 117
+    Reserved117_VECTORn                 ,       // ä¿ç•™ interrupt 117
 #endif
 
-    Reserved118_VECTORn                 ,       // ±£Áô interrupt 118
-    Reserved119_VECTORn                 ,       // ±£Áô interrupt 119
+    Reserved118_VECTORn                 ,       // ä¿ç•™ interrupt 118
+    Reserved119_VECTORn                 ,       // ä¿ç•™ interrupt 119
 } VECTORn_t;
 
 /*
- * ¶¨ÒåÔËĞĞµ½RAMµÄº¯Êı
+ * å®šä¹‰è¿è¡Œåˆ°RAMçš„å‡½æ•°
  */
 #if defined(__ICCARM__)
-//IAR ÓÃ __ramfunc À´ÉùÃ÷
+//IAR ç”¨ __ramfunc æ¥å£°æ˜
 #define     __RAMFUNC __ramfunc
 #else
 #define     __RAMFUN
@@ -375,24 +375,24 @@ typedef enum
 
 
 /*
- * °üº¬Cortex-MÄÚºËµÄÍ¨ÓÃÍ·ÎÄ¼ş
+ * åŒ…å«Cortex-Må†…æ ¸çš„é€šç”¨å¤´æ–‡ä»¶
  */
 #include    <stdio.h>                       //printf
 #include    <string.h>                      //memcpy
 #include    <stdlib.h>                      //malloc
-#include "misc.h"        //ÕâÁ½¸öË³Ğò²»ÄÜ·´£¬ÒòÎª arm_math.h ÀïĞèÒª  __NVIC_PRIO_BITS µÄ¶¨Òå
+#include "misc.h"        //è¿™ä¸¤ä¸ªé¡ºåºä¸èƒ½åï¼Œå› ä¸º arm_math.h é‡Œéœ€è¦  __NVIC_PRIO_BITS çš„å®šä¹‰
 
 #define   __NVIC_PRIO_BITS    4       /*ARM Cortex M4 implementation for interrupt priority shift*/
 #include "arm_math.h"
 
 
 /*
- * °üº¬É½ÍâK60Æ½Ì¨µÄÅäÖÃÍ·ÎÄ¼ş
+ * åŒ…å«å±±å¤–K60å¹³å°çš„é…ç½®å¤´æ–‡ä»¶
  */
 #include "MK60_conf.h"
 
 /*
- * °üº¬Æ½Ì¨Í·ÎÄ¼ş
+ * åŒ…å«å¹³å°å¤´æ–‡ä»¶
  */
 #if defined(MK60DZ10)
 #include "MK60DZ10.h"
@@ -400,8 +400,8 @@ typedef enum
 #elif defined(MK60F15)
 #include "MK60F15.h"
 
-//SIM_SCGC4_IIC2_MASK ¸ÄÎª SIM_SCGC4_IIC0_MASK
-//SIM_SCGC4_IIC2_SHIFT  ¸ÄÎª SIM_SCGC4_IIC0_SHIFT
+//SIM_SCGC4_IIC2_MASK æ”¹ä¸º SIM_SCGC4_IIC0_MASK
+//SIM_SCGC4_IIC2_SHIFT  æ”¹ä¸º SIM_SCGC4_IIC0_SHIFT
 #else
 #error "error"
 #endif
@@ -409,11 +409,11 @@ typedef enum
 
 
 /*
- * °üº¬³£ÓÃÍ·ÎÄ¼ş
+ * åŒ…å«å¸¸ç”¨å¤´æ–‡ä»¶
  */
-#include    "system_MK60DZ10.h"             //ÏµÍ³ÅäÖÃ
-#include    "PORT_cfg.h"                    //¹Ü½Å¸´ÓÃÅäÖÃ
-#include    "MK60_mcg.h"                    //K60 Ê±ÖÓÄ£¿é
+#include    "system_MK60DZ10.h"             //ç³»ç»Ÿé…ç½®
+#include    "PORT_cfg.h"                    //ç®¡è„šå¤ç”¨é…ç½®
+#include    "MK60_mcg.h"                    //K60 æ—¶é’Ÿæ¨¡å—
 
 #if (defined(IAR))
 #include "intrinsics.h"
@@ -423,14 +423,14 @@ typedef enum
 
 
 /**
- *  @brief ±äÁ¿µÄÎ»Çå0ºÍÖÃ1
+ *  @brief å˜é‡çš„ä½æ¸…0å’Œç½®1
  */
-#define BIT_CLEAN(var,n)        (var) &= ~(1<<(n))   //±äÁ¿var µÄnÎ»£¨¼´µÚn+1Î»£©Çå0
-#define BIT_SET(var,n)          (var) |=  (1<<(n))   //±äÁ¿var µÄnÎ»£¨¼´µÚn+1Î»£©ÖÃ1
-#define BIT_GET(var,n)          (((var)>>(n))&0x01)  //¶ÁÈ¡±äÁ¿var µÄnÎ»£¨¼´µÚn+1Î»£©
+#define BIT_CLEAN(var,n)        (var) &= ~(1<<(n))   //å˜é‡var çš„nä½ï¼ˆå³ç¬¬n+1ä½ï¼‰æ¸…0
+#define BIT_SET(var,n)          (var) |=  (1<<(n))   //å˜é‡var çš„nä½ï¼ˆå³ç¬¬n+1ä½ï¼‰ç½®1
+#define BIT_GET(var,n)          (((var)>>(n))&0x01)  //è¯»å–å˜é‡var çš„nä½ï¼ˆå³ç¬¬n+1ä½ï¼‰
 
 /**
- *  @brief ·Â¶ş½øÖÆ¸³Öµ
+ *  @brief ä»¿äºŒè¿›åˆ¶èµ‹å€¼
  */
 #define  HEX__(n)   0x##n##UL
 #define  B8__(x)   ( (x & 0x0000000FUL) ? 1:0 )\
@@ -451,45 +451,45 @@ B32(10000000,11111111,10101010,01010101) = 2164238933
 */
 
 /*
- * ´òÓ¡ºê¶¨ÒåÕ¹¿ª½á¹û
+ * æ‰“å°å®å®šä¹‰å±•å¼€ç»“æœ
  */
 #define _MKSTR(str)  #str
-#define MKSTR(str)  _MKSTR(str)                       //°Ñºê¶¨ÒåÕ¹¿ª½á¹û×ª»»Îª×Ö·û´®
+#define MKSTR(str)  _MKSTR(str)                       //æŠŠå®å®šä¹‰å±•å¼€ç»“æœè½¬æ¢ä¸ºå­—ç¬¦ä¸²
 
-#define DEFINE_PRINTF(def)  printf(MKSTR(def)"\n")    //´®¿Ú´òÓ¡ºê¶¨ÒåÕ¹¿ª½á¹û
+#define DEFINE_PRINTF(def)  printf(MKSTR(def)"\n")    //ä¸²å£æ‰“å°å®å®šä¹‰å±•å¼€ç»“æœ
 
 
 /*
- * Çó×î´óÖµºÍ×îĞ¡Öµ
+ * æ±‚æœ€å¤§å€¼å’Œæœ€å°å€¼
  */
 #define MAX( x, y ) ( ((x) > (y)) ? (x) : (y) )
 #define MIN( x, y ) ( ((x) < (y)) ? (x) : (y) )
 
 
 /*
- * ·µ»ØÊı×éÔªËØµÄ¸öÊı
+ * è¿”å›æ•°ç»„å…ƒç´ çš„ä¸ªæ•°
  */
 #define ARR_SIZE( a ) ( sizeof( (a) ) / sizeof( ((a)[0]) ) )
 
 /*
- * ºê¶¨ÒåÊµÏÖ·µ»Ø¾ø¶ÔÖµ£¨xÀï²»ÄÜÓĞ×Ô¼Ó×Ô¼õµÄÓï¾ä£¬·ñÔò±äÁ¿³ö´í£©
+ * å®å®šä¹‰å®ç°è¿”å›ç»å¯¹å€¼ï¼ˆxé‡Œä¸èƒ½æœ‰è‡ªåŠ è‡ªå‡çš„è¯­å¥ï¼Œå¦åˆ™å˜é‡å‡ºé”™ï¼‰
  */
 #define ABS(x) (((x) > 0) ? (x) : (-(x)))
 
 /*
- * »ñÈ¡½á¹¹ÌåÄ³³ÉÔ±Æ«ÒÆ
+ * è·å–ç»“æ„ä½“æŸæˆå‘˜åç§»
  */
 #define OFFSET(type, member)    (uint32)(&(((type *)0)->member))
 
 /*
- * È·±£xµÄ·¶Î§Îª min~max
+ * ç¡®ä¿xçš„èŒƒå›´ä¸º min~max
  */
 #define RANGE(x,max,min)        ((uint8)((x)<(min) ? (min) : ( (x)>(max) ? (max):(x) )))
 
 /*
- * ½»»»32Î»Êı¾İµÄ4×Ö½ÚË³Ğò
+ * äº¤æ¢32ä½æ•°æ®çš„4å­—èŠ‚é¡ºåº
  */
-#if 1         //Á½ÖÖ·½·¨£¬µÚÒ»ÖÖÊÇCMSIS¿â×Ô´ø
+#if 1         //ä¸¤ç§æ–¹æ³•ï¼Œç¬¬ä¸€ç§æ˜¯CMSISåº“è‡ªå¸¦
 #define SWAP32(data)    __REV(data)
 #else
 #define SWAP32(data)    (uint32)((((uint32)(data) & (0xFFu<<0 ))<<24)      \
@@ -500,9 +500,9 @@ B32(10000000,11111111,10101010,01010101) = 2164238933
 #endif
 
 /*
- * ½»»»16Î»Êı¾İµÄ2×Ö½ÚË³Ğò
+ * äº¤æ¢16ä½æ•°æ®çš„2å­—èŠ‚é¡ºåº
  */
-#if 1         //Á½ÖÖ·½·¨£¬µÚÒ»ÖÖÊÇCMSIS¿â×Ô´ø
+#if 1         //ä¸¤ç§æ–¹æ³•ï¼Œç¬¬ä¸€ç§æ˜¯CMSISåº“è‡ªå¸¦
 #define SWAP16(data)    __REVSH(data)
 #else
 #define SWAP16(data)    (uint32)((((uint16)(data) & (0xFF<<0 ))<<8)      \
@@ -511,7 +511,7 @@ B32(10000000,11111111,10101010,01010101) = 2164238933
 #endif
 
 /*
- * ½»»» x, y µÄÖµ
+ * äº¤æ¢ x, y çš„å€¼
  */
 #define SWAP(x,y)           do{x^=y;y^=x;x^=y;}while(0)
 

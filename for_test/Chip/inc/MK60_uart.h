@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       MK60_uart.h
- * @brief      uartÇı¶¯Í·ÎÄ¼ş
- * @author     É½Íâ¿Æ¼¼
+ * @brief      uarté©±åŠ¨å¤´æ–‡ä»¶
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.2
  * @date       2014-10-09
  */
@@ -33,36 +33,36 @@ extern UART_MemMapPtr UARTN[UART_MAX];
 /********************************************************************/
 
 
-//³õÊ¼»¯
-extern void   uart_init      (UARTn_e, uint32 baud);             //³õÊ¼»¯uartxÄ£¿é
+//åˆå§‹åŒ–
+extern void   uart_init      (UARTn_e, uint32 baud);             //åˆå§‹åŒ–uartxæ¨¡å—
 
-//½ÓÊÕÏà¹Ø´úÂë
-extern void   uart_getchar   (UARTn_e, char *ch);                //µÈ´ı½ÓÊÕ1¸ö×Ö½Ú
+//æ¥æ”¶ç›¸å…³ä»£ç 
+extern void   uart_getchar   (UARTn_e, char *ch);                //ç­‰å¾…æ¥æ”¶1ä¸ªå­—èŠ‚
 
-extern char   uart_querychar (UARTn_e, char *ch);                //²éÑ¯½ÓÊÕ1¸ö×Ö·û
-extern uint32 uart_querystr  (UARTn_e, char *str, uint32 max_len); //²éÑ¯½ÓÊÕ×Ö·û´®
-extern uint32 uart_querybuff (UARTn_e, char *buff,uint32 max_len); //²éÑ¯½ÓÊÕbuff
+extern char   uart_querychar (UARTn_e, char *ch);                //æŸ¥è¯¢æ¥æ”¶1ä¸ªå­—ç¬¦
+extern uint32 uart_querystr  (UARTn_e, char *str, uint32 max_len); //æŸ¥è¯¢æ¥æ”¶å­—ç¬¦ä¸²
+extern uint32 uart_querybuff (UARTn_e, char *buff,uint32 max_len); //æŸ¥è¯¢æ¥æ”¶buff
 
-extern char   uart_query     (UARTn_e);                          //²éÑ¯ÊÇ·ñ½ÓÊÕµ½Ò»¸ö×Ö½Ú
-
-
-//·¢ËÍÏà¹Ø´úÂë
-extern void uart_putchar   (UARTn_e, char ch);                 //·¢ËÍ1¸ö×Ö½Ú
-extern void uart_putbuff   (UARTn_e , uint8 *buff, uint32 len);//·¢ËÍlen¸ö×Ö½Úbuff
-extern void uart_putstr    (UARTn_e , const uint8 *str);       //·¢ËÍ×Ö·û´®
+extern char   uart_query     (UARTn_e);                          //æŸ¥è¯¢æ˜¯å¦æ¥æ”¶åˆ°ä¸€ä¸ªå­—èŠ‚
 
 
+//å‘é€ç›¸å…³ä»£ç 
+extern void uart_putchar   (UARTn_e, char ch);                 //å‘é€1ä¸ªå­—èŠ‚
+extern void uart_putbuff   (UARTn_e , uint8 *buff, uint32 len);//å‘é€lenä¸ªå­—èŠ‚buff
+extern void uart_putstr    (UARTn_e , const uint8 *str);       //å‘é€å­—ç¬¦ä¸²
 
-//ÖĞ¶ÏÏà¹Ø´úÂë
-extern void uart_rx_irq_en (UARTn_e);                          //¿ª´®¿Ú½ÓÊÕÖĞ¶Ï
-extern void uart_tx_irq_en (UARTn_e);                          //¿ª´®¿Ú·¢ËÍÖĞ¶Ï
-extern void uart_txc_irq_en (UARTn_e);                         //¿ª´®¿Ú·¢ËÍÍê³ÉÖĞ¶Ï
 
-extern void uart_rx_irq_dis(UARTn_e);                          //¹Ø´®¿Ú½ÓÊÕÖĞ¶Ï
-extern void uart_tx_irq_dis(UARTn_e);                          //¹Ø´®¿Ú·¢ËÍÖĞ¶Ï
-extern void uart_txc_irq_dis(UARTn_e);                         //¹Ø´®¿Ú·¢ËÍÍê³ÉÖĞ¶Ï
 
-extern void uart3_test_handler(void);                        //ÖĞ¶Ï·şÎñº¯Êı£¬½ö¹©²Î¿¼£¨ĞèÓÃ»§×ÔĞĞÊµÏÖ£©
+//ä¸­æ–­ç›¸å…³ä»£ç 
+extern void uart_rx_irq_en (UARTn_e);                          //å¼€ä¸²å£æ¥æ”¶ä¸­æ–­
+extern void uart_tx_irq_en (UARTn_e);                          //å¼€ä¸²å£å‘é€ä¸­æ–­
+extern void uart_txc_irq_en (UARTn_e);                         //å¼€ä¸²å£å‘é€å®Œæˆä¸­æ–­
+
+extern void uart_rx_irq_dis(UARTn_e);                          //å…³ä¸²å£æ¥æ”¶ä¸­æ–­
+extern void uart_tx_irq_dis(UARTn_e);                          //å…³ä¸²å£å‘é€ä¸­æ–­
+extern void uart_txc_irq_dis(UARTn_e);                         //å…³ä¸²å£å‘é€å®Œæˆä¸­æ–­
+
+extern void uart3_test_handler(void);                        //ä¸­æ–­æœåŠ¡å‡½æ•°ï¼Œä»…ä¾›å‚è€ƒï¼ˆéœ€ç”¨æˆ·è‡ªè¡Œå®ç°ï¼‰
 
 /********************************************************************/
 

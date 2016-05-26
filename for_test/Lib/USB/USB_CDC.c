@@ -10,16 +10,16 @@ uint8 CDC_OUT_Data[CDC_BUFFER_SIZE];
 
 
 /*!
- *  @brief      CDCÀà³õÊ¼»¯º¯Êı
+ *  @brief      CDCç±»åˆå§‹åŒ–å‡½æ•°
  *  @since      v5.0
  */
 void CDC_Init(void)
 {
-    //ÅäÖÃ´®¿ÚÌØĞÔ
-    com_cfg.DTERate      = 9600;                //²¨ÌØÂÊ
-    com_cfg.CharFormat   = 0;                   //×Ö·û¸ñÊ½
-    com_cfg.ParityType   = 0;                   //¼«ĞÔÀàĞÍ
-    com_cfg.Databits     = 0x08;                //Êı¾İÎ»Êı
+    //é…ç½®ä¸²å£ç‰¹æ€§
+    com_cfg.DTERate      = 9600;                //æ³¢ç‰¹ç‡
+    com_cfg.CharFormat   = 0;                   //å­—ç¬¦æ ¼å¼
+    com_cfg.ParityType   = 0;                   //ææ€§ç±»å‹
+    com_cfg.Databits     = 0x08;                //æ•°æ®ä½æ•°
 }
 
 /**********************************************************/
@@ -30,7 +30,7 @@ void CDC_Engine(void)
     switch(u8CDCState)
     {
     case WAITING_FOR_ENUMERATION:
-        /* µÈ´ı USB Ã¶¾Ù */
+        /* ç­‰å¾… USB æšä¸¾ */
         while(gu8USB_State != uENUMERATED)
         {
             (void)u8CDCState;
@@ -57,8 +57,8 @@ void CDC_Engine(void)
 }
 
 /*!
- *  @brief      µ±Ç°½Ó¿ÚÇëÇóÎªCDCÀàÇëÇó µÄ ÖĞ¶Ï·şÎñº¯Êı
- *  @note       ÔÚ USB_Setup_Handler ÖĞ¶ÏÀïµ÷ÓÃ
+ *  @brief      å½“å‰æ¥å£è¯·æ±‚ä¸ºCDCç±»è¯·æ±‚ çš„ ä¸­æ–­æœåŠ¡å‡½æ•°
+ *  @note       åœ¨ USB_Setup_Handler ä¸­æ–­é‡Œè°ƒç”¨
  *  @since      v5.0
  */
 uint8 CDC_InterfaceReq_Handler(void)

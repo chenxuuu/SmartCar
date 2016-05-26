@@ -7,7 +7,7 @@
 #include "USB_CDC.h"
 
 
-#define MaxPacketSize   64      //µÍËÙUSB Îª 8 £¬È«ËÙUSB Îª 8¡¢16¡¢32¡¢64£¬¸ßËÙUSBÎª 64
+#define MaxPacketSize   64      //ä½Žé€ŸUSB ä¸º 8 ï¼Œå…¨é€ŸUSB ä¸º 8ã€16ã€32ã€64ï¼Œé«˜é€ŸUSBä¸º 64
 
 
 /* Macros */

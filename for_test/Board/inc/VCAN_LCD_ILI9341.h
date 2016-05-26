@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_LCD_ILI9341.h
- * @brief      LCD ILI9341º¯Êı¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      LCD ILI9341å‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-09-03
  */
@@ -20,30 +20,30 @@
 #include "MK60_flexbus.h"
 
 
-//ÓÃ»§ÅäÖÃ
-#define ILI9341_DIR_DEFAULT     1       //¶¨ÒåÄ¬ÈÏ·½Ïò (0~3)
+//ç”¨æˆ·é…ç½®
+#define ILI9341_DIR_DEFAULT     1       //å®šä¹‰é»˜è®¤æ–¹å‘ (0~3)
 
 
 #if (USE_LCD == LCD_ILI9341)
 
-/*********************** API½Ó¿Ú ******************************/
-//Ìá¹©API½Ó¿Ú¸øLCDµ÷ÓÃ
+/*********************** APIæ¥å£ ******************************/
+//æä¾›APIæ¥å£ç»™LCDè°ƒç”¨
 
-#define LCD_H                   ILI9341_get_h()                 //¸ß
-#define LCD_W                   ILI9341_get_w()                 //¿í
+#define LCD_H                   ILI9341_get_h()                 //é«˜
+#define LCD_W                   ILI9341_get_w()                 //å®½
 
-#define LCD_INIT()              LCD_ILI9341_init()              //³õÊ¼»¯
-#define LCD_PTLON(site,size)    LCD_ILI9341_ptlon(site,size)    //¿ª´°
-#define LCD_RAMWR()             LCD_ILI9341_WR_CMD(0x2C)        //Ğ´Ä£Ê½
-#define LCD_WR_DATA(data)       LCD_ILI9341_WR_DATA(data)       //Ğ´Êı¾İ
-#define LCD_WR_CMD(cmd)         LCD_ILI9341_WR_CMD(cmd)         //ÃüÁî
-#define LCD_SET_DIR(opt)        LCD_ILI9341_dir(opt)            //·½Ïò
+#define LCD_INIT()              LCD_ILI9341_init()              //åˆå§‹åŒ–
+#define LCD_PTLON(site,size)    LCD_ILI9341_ptlon(site,size)    //å¼€çª—
+#define LCD_RAMWR()             LCD_ILI9341_WR_CMD(0x2C)        //å†™æ¨¡å¼
+#define LCD_WR_DATA(data)       LCD_ILI9341_WR_DATA(data)       //å†™æ•°æ®
+#define LCD_WR_CMD(cmd)         LCD_ILI9341_WR_CMD(cmd)         //å‘½ä»¤
+#define LCD_SET_DIR(opt)        LCD_ILI9341_dir(opt)            //æ–¹å‘
 
-#define LCD_DIR                 ILI9341_get_dir()               //»ñÈ¡·½Ïò
+#define LCD_DIR                 ILI9341_get_dir()               //è·å–æ–¹å‘
 
 #endif //(USE_LCD == LCD_ILI9341)
 
-/********************* ILI9341ÄÚ²¿ÊµÏÖ ***********************/
+/********************* ILI9341å†…éƒ¨å®ç° ***********************/
 
 #define LCD_ILI9341_CMD_ADDR                    FB_8080_CMD
 #define LCD_ILI9341_DATA_ADDR                   FB_8080_DATA

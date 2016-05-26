@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016£¬³¿Ğñ
+ *     Copyright (c) 2016ï¼Œæ™¨æ—­
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£º³¿ĞñµÄ²©¿Í http://www.chenxublog.com
+ *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊô³¿ĞñËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£Áô³¿ĞñµÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±æ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       PID.h
- * @brief      PIDÍ·ÎÄ¼ş
- * @author     ³¿Ğñ
+ * @brief      PIDå¤´æ–‡ä»¶
+ * @author     æ™¨æ—­
  * @version    v1.0
  * @date       2016-3-29
  */
@@ -18,13 +18,13 @@
 
 struct _pid
 {
-	int	pv;             /* integer that contains the process value ¹ı³ÌÁ¿ */
-	int	sp;             /*£ªinteger that contains the set point   Éè¶¨Öµ */
-	float	integral;       /* »ı·ÖÖµ £­£­ Æ«²îÀÛ¼ÆÖµ */
+	int	pv;             /* integer that contains the process value è¿‡ç¨‹é‡ */
+	int	sp;             /*ï¼Šinteger that contains the set point   è®¾å®šå€¼ */
+	float	integral;       /* ç§¯åˆ†å€¼ ï¼ï¼ åå·®ç´¯è®¡å€¼ */
 	float	pgain;
 	float	igain;
 	float	dgain;
-	int	deadband;       /* ËÀÇø */
+	int	deadband;       /* æ­»åŒº */
 	int	last_error;
 };
 

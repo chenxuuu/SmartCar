@@ -5,8 +5,8 @@
 
 
 
-#define VAR_VALUE(var_tab)      num_info[var_tab].val       //Ö¸¶¨±êºÅµÄ±äÁ¿µÄÖµ
-#define VAR_OLDVALUE(var_tab)   num_info[var_tab].oldval    //Ö¸¶¨±êºÅµÄ±äÁ¿µÄ×îºóÈ·ÈÏÖµ
+#define VAR_VALUE(var_tab)      num_info[var_tab].val       //æŒ‡å®šæ ‡å·çš„å˜é‡çš„å€¼
+#define VAR_OLDVALUE(var_tab)   num_info[var_tab].oldval    //æŒ‡å®šæ ‡å·çš„å˜é‡çš„æœ€åç¡®è®¤å€¼
 #define VAR_MAXVALUE(var_tab)   num_info[var_tab].maxval
 #define VAR_MINVALUE(var_tab)   num_info[var_tab].minval
 #define VAR_SITE(var_tab)       num_info[var_tab].site
@@ -23,28 +23,28 @@ uint32 *var_addr[VAR_MAX] = {(uint32 *)&car_ctrl,(uint32 *)&var1, (uint32 *)&var
 ui_var_info_t  num_info[VAR_MAX] =
 {
     //  {val,oldval,minval,maxval,{x,y}}
-    //val,oldval,»áÔÚµ÷ÓÃkey_event_initµÄÊ±ºò´ÓÆä¶ÔÓ¦±äÁ¿Àï¸³Öµ¹ıÀ´£¬ËùÒÔÕâÀïµÄÖµ¿ÉÒÔËæÒâĞ´
-    //ĞèÒªÉèÖÃminval,maxval,{x,y}
-    //Îñ±Ø×¢Òâ×îĞ¡Öµ²»Òª´óÓÚ×î´óÖµ
-    {0, 0, 0, CAR_CTRL_MAX, {90,102}},      //±äÁ¿ car_ctrl£¬
-    {0, 0, 0, 100, {90, 0}},                //±äÁ¿ var1£¬
-    {0, 0, 0, 100, {90, 17}},               //±äÁ¿ var2£¬
-    {0, 0, 0, 300, {90, 34}},               //±äÁ¿ var3£¬
-    {0, 0, 0, 300, {90, 51}},               //±äÁ¿ var4£¬
-    {0, 0, 0, 65540, {90, 68}},             //±äÁ¿ var5£¬
-    {0, 0, 0, 65540, {90, 85}}              //±äÁ¿ var6£¬
+    //val,oldval,ä¼šåœ¨è°ƒç”¨key_event_initçš„æ—¶å€™ä»å…¶å¯¹åº”å˜é‡é‡Œèµ‹å€¼è¿‡æ¥ï¼Œæ‰€ä»¥è¿™é‡Œçš„å€¼å¯ä»¥éšæ„å†™
+    //éœ€è¦è®¾ç½®minval,maxval,{x,y}
+    //åŠ¡å¿…æ³¨æ„æœ€å°å€¼ä¸è¦å¤§äºæœ€å¤§å€¼
+    {0, 0, 0, CAR_CTRL_MAX, {90,102}},      //å˜é‡ car_ctrlï¼Œ
+    {0, 0, 0, 100, {90, 0}},                //å˜é‡ var1ï¼Œ
+    {0, 0, 0, 100, {90, 17}},               //å˜é‡ var2ï¼Œ
+    {0, 0, 0, 300, {90, 34}},               //å˜é‡ var3ï¼Œ
+    {0, 0, 0, 300, {90, 51}},               //å˜é‡ var4ï¼Œ
+    {0, 0, 0, 65540, {90, 68}},             //å˜é‡ var5ï¼Œ
+    {0, 0, 0, 65540, {90, 85}}              //å˜é‡ var6ï¼Œ
 };
 
-uint8   new_tab = 0;        //µ±Ç°Ñ¡ÔñµÄ±äÁ¿±àºÅ
-uint32  last_tab;           //×îºó½ÓÊÕµ½µÄ±äÁ¿±àºÅ
+uint8   new_tab = 0;        //å½“å‰é€‰æ‹©çš„å˜é‡ç¼–å·
+uint32  last_tab;           //æœ€åæ¥æ”¶åˆ°çš„å˜é‡ç¼–å·
 
 
 
-//Í¬²½Ö¸¶¨µÄÖµ¡£tab Îª VAR_NUM Ê±±íÊ¾È«²¿Í¬²½£¬Ğ¡ÓÚÔòÍ¬²½¶ÔÓ¦µÄ
-//±ØĞëÏÈÍ¬²½ÔÙÏÔÊ¾È«²¿£¬ÒòÎªÓĞ¿ÉÄÜÍ¬²½Ê§°Ü¡£
-//static uint8 var_syn(uint8 tab);         //Í¬²½Êı¾İ£¬1±íÊ¾³É¹¦£¬0±íÊ¾Ê§°Ü
+//åŒæ­¥æŒ‡å®šçš„å€¼ã€‚tab ä¸º VAR_NUM æ—¶è¡¨ç¤ºå…¨éƒ¨åŒæ­¥ï¼Œå°äºåˆ™åŒæ­¥å¯¹åº”çš„
+//å¿…é¡»å…ˆåŒæ­¥å†æ˜¾ç¤ºå…¨éƒ¨ï¼Œå› ä¸ºæœ‰å¯èƒ½åŒæ­¥å¤±è´¥ã€‚
+//static uint8 var_syn(uint8 tab);         //åŒæ­¥æ•°æ®ï¼Œ1è¡¨ç¤ºæˆåŠŸï¼Œ0è¡¨ç¤ºå¤±è´¥
 
-void save_var2buff(var_tab_e var_num, uint8 *sendbuf);              //°ÑĞèÒª·¢ËÍµÄ±äÁ¿µÄÊı¾İĞ´Èëµ½»º³åÇø
+void save_var2buff(var_tab_e var_num, uint8 *sendbuf);              //æŠŠéœ€è¦å‘é€çš„å˜é‡çš„æ•°æ®å†™å…¥åˆ°ç¼“å†²åŒº
 
 void var_init()
 {
@@ -57,7 +57,7 @@ void var_init()
         num_info[var_num].val       = vartemp;
         num_info[var_num].oldval    = vartemp;
 
-        //¼ì²â×îĞ¡ÖµÓë×î´óÖµ
+        //æ£€æµ‹æœ€å°å€¼ä¸æœ€å¤§å€¼
         ASSERT(num_info[var_num].maxval  >=  num_info[var_num].minval );
     }
 }
@@ -107,13 +107,13 @@ void updata_var(var_tab_e var_tal)
     VAR_VALUE(var_tal) = vartemp;
 }
 
-//¶Ô±äÁ¿µÄ¼Ó¼õ½øĞĞ´¦Àí
+//å¯¹å˜é‡çš„åŠ å‡è¿›è¡Œå¤„ç†
 void var_value(ui_var_event_e ctrl)
 {
     ASSERT(new_tab < VAR_MAX);
 
 
-    //ĞŞ¸Äµ±Ç°±äÁ¿µÄÖµ
+    //ä¿®æ”¹å½“å‰å˜é‡çš„å€¼
     switch(ctrl)
     {
     case VAR_ADD:
@@ -134,7 +134,7 @@ void var_value(ui_var_event_e ctrl)
         }
         else
         {
-            VAR_VALUE(new_tab) = VAR_MAXVALUE(new_tab) ;//×îĞ¡Öµ¼õÒ»Îª×î´óÖµ
+            VAR_VALUE(new_tab) = VAR_MAXVALUE(new_tab) ;//æœ€å°å€¼å‡ä¸€ä¸ºæœ€å¤§å€¼
         }
         break;
 
@@ -156,90 +156,90 @@ void var_value(ui_var_event_e ctrl)
         }
         else
         {
-            VAR_VALUE(new_tab) = VAR_MAXVALUE(new_tab) ;//×îĞ¡Öµ¼õÒ»Îª×î´óÖµ
+            VAR_VALUE(new_tab) = VAR_MAXVALUE(new_tab) ;//æœ€å°å€¼å‡ä¸€ä¸ºæœ€å¤§å€¼
         }
         break;
 
-    default:                        //ÎŞĞ§Ñ¡Ôñ£¬²»ĞèÒªÇĞ»»
+    default:                        //æ— æ•ˆé€‰æ‹©ï¼Œä¸éœ€è¦åˆ‡æ¢
         break;
     }
 
     var_display(new_tab);
 }
 
-//¶Ô±äÁ¿½øĞĞÑ¡Ôñ
+//å¯¹å˜é‡è¿›è¡Œé€‰æ‹©
 void var_select(ui_var_event_e  ctrl)
 {
     ASSERT(new_tab < VAR_MAX);
 
-    uint8 old_tab = new_tab;       //ÏÈ±¸·İµ±Ç°±äÁ¿±êºÅ
+    uint8 old_tab = new_tab;       //å…ˆå¤‡ä»½å½“å‰å˜é‡æ ‡å·
 
-    //ÇĞ»»µ½ÏÂÒ»¸ö±äÁ¿
+    //åˆ‡æ¢åˆ°ä¸‹ä¸€ä¸ªå˜é‡
     switch(ctrl)
     {
-    case VAR_NEXT:                      //ÏÂÒ»¸ö
+    case VAR_NEXT:                      //ä¸‹ä¸€ä¸ª
         new_tab++;
         if(new_tab >= (VAR_MAX) )
         {
-            new_tab = 0;               //´ÓÍ·¿ªÊ¼
+            new_tab = 0;               //ä»å¤´å¼€å§‹
         }
         break;
 
-    case VAR_PREV:                      //ÉÏÒ»¸ö
+    case VAR_PREV:                      //ä¸Šä¸€ä¸ª
         new_tab--;
         if(new_tab >= (VAR_MAX) )
         {
-            new_tab = VAR_MAX - 1;     //´ÓÎ²¿ªÊ¼
+            new_tab = VAR_MAX - 1;     //ä»å°¾å¼€å§‹
         }
         break;
 
-    case VAR_NEXT_HOLD:                 //¿ìÏÂ
+    case VAR_NEXT_HOLD:                 //å¿«ä¸‹
         new_tab += VAR_SELECT_HOLD_OFFSET;
         if(new_tab >= (VAR_MAX) )
         {
-            new_tab = 0;               //´ÓÍ·¿ªÊ¼
+            new_tab = 0;               //ä»å¤´å¼€å§‹
         }
         break;
 
-    case VAR_PREV_HOLD:                 //¿ìÉÏ
+    case VAR_PREV_HOLD:                 //å¿«ä¸Š
         new_tab -= VAR_SELECT_HOLD_OFFSET;
         if(new_tab >= (VAR_MAX) )
         {
-            new_tab = VAR_MAX - 1;     //´ÓÎ²¿ªÊ¼
+            new_tab = VAR_MAX - 1;     //ä»å°¾å¼€å§‹
         }
         break;
 
-    default:                        //ÎŞĞ§Ñ¡Ôñ£¬²»ĞèÒªÇĞ»»
+    default:                        //æ— æ•ˆé€‰æ‹©ï¼Œä¸éœ€è¦åˆ‡æ¢
         return;
     }
 
-    var_display(old_tab);               //´¦ÀíÉÏÒ»¸ö±äÁ¿
+    var_display(old_tab);               //å¤„ç†ä¸Šä¸€ä¸ªå˜é‡
 
-    var_display(new_tab);              //´¦Àíµ±Ç°±äÁ¿£º
+    var_display(new_tab);              //å¤„ç†å½“å‰å˜é‡ï¼š
 
 }
 
 
-//È·ÈÏµ±Ç°Ñ¡ÔñµÄ
+//ç¡®è®¤å½“å‰é€‰æ‹©çš„
 void var_ok()
 {
     ASSERT(new_tab < VAR_MAX);
 
-    //±È½ÏÊÇ·ñÓĞ¸Ä±äÖµ
-    if(VAR_VALUE(new_tab) != VAR_OLDVALUE(new_tab))   //Öµ¸Ä±äÁË£¬ÔòĞèÒª´¦Àí
+    //æ¯”è¾ƒæ˜¯å¦æœ‰æ”¹å˜å€¼
+    if(VAR_VALUE(new_tab) != VAR_OLDVALUE(new_tab))   //å€¼æ”¹å˜äº†ï¼Œåˆ™éœ€è¦å¤„ç†
     {
-        var_syn(new_tab);          //Í¬²½ĞÂµÄÖµ
+        var_syn(new_tab);          //åŒæ­¥æ–°çš„å€¼
     }
 
     var_display(new_tab);
 }
 
-//È¡Ïûµ±Ç°Ñ¡ÔñµÄÖµ  OK
+//å–æ¶ˆå½“å‰é€‰æ‹©çš„å€¼  OK
 void val_cancel()
 {
     ASSERT(new_tab < VAR_MAX);
 
-    //Ö±½Ó»¹Ô­µ±Ç°Öµ
+    //ç›´æ¥è¿˜åŸå½“å‰å€¼
     VAR_VALUE(new_tab) = VAR_OLDVALUE(new_tab);
 
     var_display(new_tab);
@@ -247,23 +247,23 @@ void val_cancel()
 
 
 
-//ÏÔÊ¾Ö¸¶¨µÄÖµ¡£tab Îª VAR_MAX Ê±±íÊ¾È«²¿ÏÔÊ¾£¬Ğ¡ÓÚÔòÏÔÊ¾¶ÔÓ¦µÄ
+//æ˜¾ç¤ºæŒ‡å®šçš„å€¼ã€‚tab ä¸º VAR_MAX æ—¶è¡¨ç¤ºå…¨éƒ¨æ˜¾ç¤ºï¼Œå°äºåˆ™æ˜¾ç¤ºå¯¹åº”çš„
 
 void var_display(uint8 tab)
 {
 #if UI_VAR_USE_LCD
 
-    //¶¨Òå±³¾°ÑÓÊ±
-#define SELECT_NO_CHANGE_BG         WHITE   //µ±Ç°Ñ¡ÖĞ£¬¶øÇÒÃ»ÓĞ¸Ä±ä
-#define SELECT_CHANGE_BG            WHITE   //µ±Ç°Ñ¡ÖĞ£¬¶øÇÒ¸Ä±äÁË
-#define NO_SELECT_NO_CHANGE_BG      RED     //Ã»ÓĞÑ¡ÖĞ£¬¶øÇÒÃ»ÓĞ¸Ä±ä£¨ÆÕÍ¨µÄ¾ÍÊÇÕâÑù£©
-#define NO_SELECT_CHANGE_BG         RED     //Ã»ÓĞÑ¡ÖĞ£¬¶øÇÒ¸Ä±äÁË
+    //å®šä¹‰èƒŒæ™¯å»¶æ—¶
+#define SELECT_NO_CHANGE_BG         WHITE   //å½“å‰é€‰ä¸­ï¼Œè€Œä¸”æ²¡æœ‰æ”¹å˜
+#define SELECT_CHANGE_BG            WHITE   //å½“å‰é€‰ä¸­ï¼Œè€Œä¸”æ”¹å˜äº†
+#define NO_SELECT_NO_CHANGE_BG      RED     //æ²¡æœ‰é€‰ä¸­ï¼Œè€Œä¸”æ²¡æœ‰æ”¹å˜ï¼ˆæ™®é€šçš„å°±æ˜¯è¿™æ ·ï¼‰
+#define NO_SELECT_CHANGE_BG         RED     //æ²¡æœ‰é€‰ä¸­ï¼Œè€Œä¸”æ”¹å˜äº†
 
-    //¶¨ÒåÎÄ×ÖÑÕÉ«
-#define SELECT_NO_CHANGE            BLUE    //µ±Ç°Ñ¡ÖĞ£¬¶øÇÒÃ»ÓĞ¸Ä±ä
-#define SELECT_CHANGE               GREEN   //µ±Ç°Ñ¡ÖĞ£¬¶øÇÒ¸Ä±äÁË
-#define NO_SELECT_NO_CHANGE         BLUE    //Ã»ÓĞÑ¡ÖĞ£¬¶øÇÒÃ»ÓĞ¸Ä±ä£¨ÆÕÍ¨µÄ¾ÍÊÇÕâÑù£©
-#define NO_SELECT_CHANGE            GREEN   //Ã»ÓĞÑ¡ÖĞ£¬¶øÇÒ¸Ä±äÁË
+    //å®šä¹‰æ–‡å­—é¢œè‰²
+#define SELECT_NO_CHANGE            BLUE    //å½“å‰é€‰ä¸­ï¼Œè€Œä¸”æ²¡æœ‰æ”¹å˜
+#define SELECT_CHANGE               GREEN   //å½“å‰é€‰ä¸­ï¼Œè€Œä¸”æ”¹å˜äº†
+#define NO_SELECT_NO_CHANGE         BLUE    //æ²¡æœ‰é€‰ä¸­ï¼Œè€Œä¸”æ²¡æœ‰æ”¹å˜ï¼ˆæ™®é€šçš„å°±æ˜¯è¿™æ ·ï¼‰
+#define NO_SELECT_CHANGE            GREEN   //æ²¡æœ‰é€‰ä¸­ï¼Œè€Œä¸”æ”¹å˜äº†
 
     uint8  i = 0;
     uint16 bkColor;
@@ -271,9 +271,9 @@ void var_display(uint8 tab)
 
     ASSERT((new_tab < VAR_MAX) && (tab <= VAR_MAX));
 
-    if(tab == VAR_MAX)      //ÏÔÊ¾È«²¿
+    if(tab == VAR_MAX)      //æ˜¾ç¤ºå…¨éƒ¨
     {
-        i = VAR_MAX - 1;    //Ñ­»·µÄ´ÎÊı
+        i = VAR_MAX - 1;    //å¾ªç¯çš„æ¬¡æ•°
         tab = 0;
     }
 
@@ -281,8 +281,8 @@ void var_display(uint8 tab)
     {
         if(tab == new_tab)
         {
-            //ÏÔÊ¾µ±Ç°µÄÖµ£ºÅĞ¶ÏÖµÊÇ·ñ¸Ä±ä
-            if(VAR_VALUE(tab) == VAR_OLDVALUE(tab)) //ÖµÃ»¸Ä±ä£¬²»ĞèÒª´¦Àí
+            //æ˜¾ç¤ºå½“å‰çš„å€¼ï¼šåˆ¤æ–­å€¼æ˜¯å¦æ”¹å˜
+            if(VAR_VALUE(tab) == VAR_OLDVALUE(tab)) //å€¼æ²¡æ”¹å˜ï¼Œä¸éœ€è¦å¤„ç†
             {
                 Color   =  SELECT_NO_CHANGE;
                 bkColor =  SELECT_NO_CHANGE_BG;
@@ -295,8 +295,8 @@ void var_display(uint8 tab)
         }
         else
         {
-            //ÏÔÊ¾·Çµ±Ç°µÄÖµ
-            if(VAR_VALUE(tab) == VAR_OLDVALUE(tab)) //ÖµÃ»¸Ä±ä£¬²»ĞèÒª´¦Àí
+            //æ˜¾ç¤ºéå½“å‰çš„å€¼
+            if(VAR_VALUE(tab) == VAR_OLDVALUE(tab)) //å€¼æ²¡æ”¹å˜ï¼Œä¸éœ€è¦å¤„ç†
             {
                 Color   =  NO_SELECT_NO_CHANGE;
                 bkColor =  NO_SELECT_NO_CHANGE_BG;
@@ -309,14 +309,14 @@ void var_display(uint8 tab)
             }
         }
 
-        //ÏÔÊ¾ÎÄ×Ö
+        //æ˜¾ç¤ºæ–‡å­—
         LCD_num_C(VAR_SITE(tab), VAR_VALUE(tab), Color, bkColor);
 
         tab++;
     }
-    while(i--);         //tab != VAR_MAX µÄÊ±ºò£¬Ö´ĞĞÒ»´Î¾ÍÌø³ö
+    while(i--);         //tab != VAR_MAX çš„æ—¶å€™ï¼Œæ‰§è¡Œä¸€æ¬¡å°±è·³å‡º
 #else
-    tab = tab;          //Ïû³ı±àÒë¾¯¸æ
+    tab = tab;          //æ¶ˆé™¤ç¼–è¯‘è­¦å‘Š
 #endif
 }
 
@@ -328,7 +328,7 @@ void save_var2buff(var_tab_e var_num, uint8 *sendbuf)
     *((uint32 *)&sendbuf[COM_LEN + sizeof(uint32)]) = temp;
 }
 
-//Í¬²½Ö¸¶¨µÄÖµ¡£tab Îª VAR_MAX Ê±±íÊ¾È«²¿Í¬²½£¬Ğ¡ÓÚÔòÍ¬²½¶ÔÓ¦µÄ
+//åŒæ­¥æŒ‡å®šçš„å€¼ã€‚tab ä¸º VAR_MAX æ—¶è¡¨ç¤ºå…¨éƒ¨åŒæ­¥ï¼Œå°äºåˆ™åŒæ­¥å¯¹åº”çš„
 uint8 var_syn(uint8 tab)
 {
     ASSERT((new_tab < VAR_MAX) && (tab <= VAR_MAX));
@@ -345,22 +345,22 @@ uint8 var_syn(uint8 tab)
 
     do
     {
-        oldvalue = VAR_OLDVALUE(tab);                   //±¸·İ¾ÉµÄÖµ
+        oldvalue = VAR_OLDVALUE(tab);                   //å¤‡ä»½æ—§çš„å€¼
 
-        //°ÑÖµ¸´ÖÆµ½¶ÔÓ¦µÄ±äÁ¿
+        //æŠŠå€¼å¤åˆ¶åˆ°å¯¹åº”çš„å˜é‡
         save_var((var_tab_e)tab, VAR_VALUE(tab));
 
-        //·¢ËÍĞÂµÄÖµ
-        save_var2buff((var_tab_e)tab, tempbuff);        //°Ñ±äÁ¿Ğ´½ø tempbuff Àï
-        nrf_msg_tx(COM_VAR, tempbuff);                //·¢ËÍÊı¾İ
+        //å‘é€æ–°çš„å€¼
+        save_var2buff((var_tab_e)tab, tempbuff);        //æŠŠå˜é‡å†™è¿› tempbuff é‡Œ
+        nrf_msg_tx(COM_VAR, tempbuff);                //å‘é€æ•°æ®
 
-        while(nrf_tx_state() == NRF_TXING);             //µÈ´ı·¢ËÍÍê³É
+        while(nrf_tx_state() == NRF_TXING);             //ç­‰å¾…å‘é€å®Œæˆ
 
-        if(NRF_TX_ERROR == nrf_tx_state())             //·¢ËÍÊ§°Ü
+        if(NRF_TX_ERROR == nrf_tx_state())             //å‘é€å¤±è´¥
         {
-            VAR_OLDVALUE(tab) = oldvalue;               //»¹Ô­¾ÉµÄÖµ
+            VAR_OLDVALUE(tab) = oldvalue;               //è¿˜åŸæ—§çš„å€¼
 
-            //·ÅÆúÍ¬²½
+            //æ”¾å¼ƒåŒæ­¥
             return 0;
         }
         tab++;
@@ -376,7 +376,7 @@ uint8    car_ctrl_get()
 }
 
 
-//³µ×´Ì¬¿ØÖÆ
+//è½¦çŠ¶æ€æ§åˆ¶
 uint8 car_ctrl_syn(CAR_CTRL_MODE_e mode)
 {
     uint8 ret;

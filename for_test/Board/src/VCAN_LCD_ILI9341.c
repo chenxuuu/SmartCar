@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_LCD_ILI9341.c
- * @brief      LCD ILI9341º¯Êı¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      LCD ILI9341å‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.1
  * @date       2014-02-03
  */
@@ -22,9 +22,9 @@
 
 #if (USE_LCD == LCD_ILI9341)
 
-//¶¨ÒåËùÓÃµ½µÄ IO¹Ü½Å
-#define LCD_RST    PTC13                //¸´Î»
-#define LCD_BL     PTB8                 //±³¹â
+//å®šä¹‰æ‰€ç”¨åˆ°çš„ IOç®¡è„š
+#define LCD_RST    PTC13                //å¤ä½
+#define LCD_BL     PTB8                 //èƒŒå…‰
 
 
 #define ILI9341_DELAY()          DELAY_MS(100)
@@ -34,7 +34,7 @@
 #define ILI9341_H       240
 #define ILI9341_W       320
 
-#if ((ILI9341_DIR_DEFAULT&1 )== 0)      //ºáÆÁ
+#if ((ILI9341_DIR_DEFAULT&1 )== 0)      //æ¨ªå±
 uint16  ili9341_h   = ILI9341_H;
 uint16  ili9341_w   = ILI9341_W;
 #else
@@ -43,20 +43,20 @@ uint16  ili9341_w   = ILI9341_H;
 #endif
 uint8   ili9341_dir = ILI9341_DIR_DEFAULT;
 /*!
- *  @brief      LCD_ILI9341³õÊ¼»¯
+ *  @brief      LCD_ILI9341åˆå§‹åŒ–
  *  @since      v5.0
  */
 void    LCD_ILI9341_init()
 {
-    gpio_init (LCD_BL, GPO, 1); //LCD±³¹â¹Ü½ÅÊä³ö1£¬±íÊ¾¹Ø±ÕLCD±³¹â
+    gpio_init (LCD_BL, GPO, 1); //LCDèƒŒå…‰ç®¡è„šè¾“å‡º1ï¼Œè¡¨ç¤ºå…³é—­LCDèƒŒå…‰
 
-    //¸´Î»LCD
+    //å¤ä½LCD
     gpio_init (LCD_RST, GPO, 0);
 
     ILI9341_DELAYMS(1);
     GPIO_SET   (LCD_RST, 1);
 
-    //³õÊ¼»¯×ÜÏß
+    //åˆå§‹åŒ–æ€»çº¿
     flexbus_8080_init();
 
     ILI9341_DELAY();
@@ -169,16 +169,16 @@ void    LCD_ILI9341_init()
     LCD_ILI9341_WR_CMD(0x29); //display on
 
 
-    LCD_SET_DIR(ili9341_dir);   //Òº¾§·½ÏòÏÔÊ¾º¯Êı
+    LCD_SET_DIR(ili9341_dir);   //æ¶²æ™¶æ–¹å‘æ˜¾ç¤ºå‡½æ•°
 
     LCD_ILI9341_WR_CMD(0x2c);
 
-    PTXn_T(LCD_BL,OUT) = 0;     //¿ªLCD±³¹â
+    PTXn_T(LCD_BL,OUT) = 0;     //å¼€LCDèƒŒå…‰
 }
 
 /*!
- *  @brief      ÉèÖÃILI9341GRAMÖ¸ÕëÉ¨Ãè·½Ïò
- *  @param      option    ·½ÏòÑ¡Ôñ£¨0~3£©
+ *  @brief      è®¾ç½®ILI9341GRAMæŒ‡é’ˆæ‰«ææ–¹å‘
+ *  @param      option    æ–¹å‘é€‰æ‹©ï¼ˆ0~3ï¼‰
  *  @since      v5.0
  */
 void LCD_ILI9341_dir(uint8 option)
@@ -194,9 +194,9 @@ void LCD_ILI9341_dir(uint8 option)
     {
         case 0:
         {
-            /*ºáÆÁ*/
+            /*æ¨ªå±*/
             LCD_ILI9341_WR_CMD(0x36);
-            LCD_ILI9341_WR_DATA(0xA8);    //ºáÆÁ
+            LCD_ILI9341_WR_DATA(0xA8);    //æ¨ªå±
 
             LCD_ILI9341_WR_CMD(0X2A);
             LCD_ILI9341_WR_DATA(0x00);  //start
@@ -216,9 +216,9 @@ void LCD_ILI9341_dir(uint8 option)
         break;
         case 1:
         {
-            /*ÊúÆÁ*/
+            /*ç«–å±*/
             LCD_ILI9341_WR_CMD(0x36);
-            LCD_ILI9341_WR_DATA(0xD8);  //ÊúÆÁ
+            LCD_ILI9341_WR_DATA(0xD8);  //ç«–å±
 
             LCD_ILI9341_WR_CMD(0X2A);
             LCD_ILI9341_WR_DATA(0x00);
@@ -238,9 +238,9 @@ void LCD_ILI9341_dir(uint8 option)
         break;
         case 2:
         {
-            /*ºáÆÁ*/
+            /*æ¨ªå±*/
             LCD_ILI9341_WR_CMD(0x36);
-            LCD_ILI9341_WR_DATA(0x68);    //ºáÆÁ
+            LCD_ILI9341_WR_DATA(0x68);    //æ¨ªå±
 
             LCD_ILI9341_WR_CMD(0X2A);
             LCD_ILI9341_WR_DATA(0x00);  //start
@@ -259,9 +259,9 @@ void LCD_ILI9341_dir(uint8 option)
         break;
         case 3:
         {
-            /*ÊúÆÁ*/
+            /*ç«–å±*/
             LCD_ILI9341_WR_CMD(0x36);
-            LCD_ILI9341_WR_DATA(0x18);  //ÊúÆÁ
+            LCD_ILI9341_WR_DATA(0x18);  //ç«–å±
 
             LCD_ILI9341_WR_CMD(0X2A);
             LCD_ILI9341_WR_DATA(0x00);
@@ -280,7 +280,7 @@ void LCD_ILI9341_dir(uint8 option)
         }
         break;
         default:
-            //ÓÉÓÚ¿ªÍ·ÓĞĞ£Ñé£¬Òò¶ø²»»áÖ´ĞĞµ½ÕâÀï
+            //ç”±äºå¼€å¤´æœ‰æ ¡éªŒï¼Œå› è€Œä¸ä¼šæ‰§è¡Œåˆ°è¿™é‡Œ
             //LCD_ILI9341_dir(ILI9341_DIR_DEFAULT);
             break;
 
@@ -289,9 +289,9 @@ void LCD_ILI9341_dir(uint8 option)
 }
 
 /*!
- *  @brief      ÉèÖÃILI9341¿ª´°
- *  @param      site        ×óÉÏ½Ç×ø±êÎ»ÖÃ
- *  @param      size        ¿ª´°´óĞ¡
+ *  @brief      è®¾ç½®ILI9341å¼€çª—
+ *  @param      site        å·¦ä¸Šè§’åæ ‡ä½ç½®
+ *  @param      size        å¼€çª—å¤§å°
  *  @since      v5.0
  */
 void LCD_ILI9341_ptlon(Site_t site, Size_t size)
@@ -311,8 +311,8 @@ void LCD_ILI9341_ptlon(Site_t site, Size_t size)
 }
 
 /*!
- *  @brief      »ñÈ¡ ILI9341 ¸ß¶È
- *  @return     ILI9341 ¸ß¶È
+ *  @brief      è·å– ILI9341 é«˜åº¦
+ *  @return     ILI9341 é«˜åº¦
  *  @since      v5.0
  */
 uint16 ILI9341_get_h()
@@ -321,8 +321,8 @@ uint16 ILI9341_get_h()
 }
 
 /*!
- *  @brief      »ñÈ¡ ILI9341 ¿í¶È
- *  @return     ILI9341 ¿í¶È
+ *  @brief      è·å– ILI9341 å®½åº¦
+ *  @return     ILI9341 å®½åº¦
  *  @since      v5.0
  */
 uint16 ILI9341_get_w()
@@ -331,8 +331,8 @@ uint16 ILI9341_get_w()
 }
 
 /*!
- *  @brief      »ñÈ¡ ILI9341 ÏÔÊ¾·½Ïò
- *  @return     ILI9341 ·½Ïò
+ *  @brief      è·å– ILI9341 æ˜¾ç¤ºæ–¹å‘
+ *  @return     ILI9341 æ–¹å‘
  *  @since      v5.0
  */
 uint8 ILI9341_get_dir()

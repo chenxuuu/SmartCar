@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_TSL1401.c
- * @brief      ÏßÕóCCDº¯Êı¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      çº¿é˜µCCDå‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2014-01-04
  */
@@ -32,22 +32,22 @@ static void tsl1401_restet();
 static void tsl1401_delay(volatile uint32 time );
 static void tsl1401_gather(void);
 
-//ÅäÖÃCCD¹Ü½Å
+//é…ç½®CCDç®¡è„š
 //                          CCD1            CCD2        CCD3
 
-#if 1             //ºêÌõ¼ş±àÒëÑ¡Ôñ²»Í¬µÄĞÅºÅÀàĞÍ
-ADCn_Ch_e   tsl1401_ch[] = {ADC0_DP1,     ADC0_DP0,    ADC1_DP1};       //CCDËùÓÃµÄ ADCÍ¨µÀ(Ô­Ê¼ĞÅºÅ)
+#if 1             //å®æ¡ä»¶ç¼–è¯‘é€‰æ‹©ä¸åŒçš„ä¿¡å·ç±»å‹
+ADCn_Ch_e   tsl1401_ch[] = {ADC0_DP1,     ADC0_DP0,    ADC1_DP1};       //CCDæ‰€ç”¨çš„ ADCé€šé“(åŸå§‹ä¿¡å·)
 #else
-ADCn_Ch_e   tsl1401_ch[] = {ADC0_DM1,     ADC0_DM0,    ADC1_DM1};       //CCDËùÓÃµÄ ADCÍ¨µÀ(·Å´óĞÅºÅ)
+ADCn_Ch_e   tsl1401_ch[] = {ADC0_DM1,     ADC0_DM0,    ADC1_DM1};       //CCDæ‰€ç”¨çš„ ADCé€šé“(æ”¾å¤§ä¿¡å·)
 #endif
-PTXn_e      tsl1401_si[] = {PTE6 ,        PTE8 ,       PTE10};          //CCDËùÓÃµÄ SI¹Ü½Å
-PTXn_e      tsl1401_clk[] = {PTE7 ,        PTE9 ,       PTE12};         //CCDËùÓÃµÄ SI¹Ü½Å
-PTXn_e      tsl1401_led[] = {PTA8 ,        PTA9 ,       PTD15};         //CCD ²¹¹â ËùÓÃµÄ LED_EN ¹Ü½Å
+PTXn_e      tsl1401_si[] = {PTE6 ,        PTE8 ,       PTE10};          //CCDæ‰€ç”¨çš„ SIç®¡è„š
+PTXn_e      tsl1401_clk[] = {PTE7 ,        PTE9 ,       PTE12};         //CCDæ‰€ç”¨çš„ SIç®¡è„š
+PTXn_e      tsl1401_led[] = {PTA8 ,        PTA9 ,       PTD15};         //CCD è¡¥å…‰ æ‰€ç”¨çš„ LED_EN ç®¡è„š
 
-//CCD ²É¼¯»ØÀ´µÄ´æ´¢¿Õ¼äÖ¸ÕëÊı×é
-uint8 *tsl1401_addr[TSL1401_MAX] = {0};                                 //CCD ²É¼¯Í¼ÏñµÄµØÖ·Êı×é
+//CCD é‡‡é›†å›æ¥çš„å­˜å‚¨ç©ºé—´æŒ‡é’ˆæ•°ç»„
+uint8 *tsl1401_addr[TSL1401_MAX] = {0};                                 //CCD é‡‡é›†å›¾åƒçš„åœ°å€æ•°ç»„
 
-//È«²¿CCDµÄSI¹Ü½ÅÊä³öÊı¾İ
+//å…¨éƒ¨CCDçš„SIç®¡è„šè¾“å‡ºæ•°æ®
 void tsl1401_si_out(uint8 data)
 {
     uint8   i = TSL1401_MAX;
@@ -60,7 +60,7 @@ void tsl1401_si_out(uint8 data)
     }
 }
 
-//È«²¿CCDµÄCLK¹Ü½ÅÊä³öÊı¾İ
+//å…¨éƒ¨CCDçš„CLKç®¡è„šè¾“å‡ºæ•°æ®
 void tsl1401_clk_out(uint8 data)
 {
     uint8   i = TSL1401_MAX;
@@ -73,7 +73,7 @@ void tsl1401_clk_out(uint8 data)
     }
 }
 
-//tsl1401,ÏßĞÔCCD³õÊ¼»¯£¬timeÎªÆØ¹âÊ±¼ä£¬µ¥Î»Óë TSL1401_INT_TIME µÄÉèÖÃÒ»ÖÂ£¬³õÊ¼»¯ºó±ØĞëµ÷ÓÃtsl1401_set_addrs À´ÉèÖÃ´æ´¢µØÖ·£¨»òÕßÏÈÉèÖÃ´æ´¢Í¼ÏñµØÖ·£©
+//tsl1401,çº¿æ€§CCDåˆå§‹åŒ–ï¼Œtimeä¸ºæ›å…‰æ—¶é—´ï¼Œå•ä½ä¸ TSL1401_INT_TIME çš„è®¾ç½®ä¸€è‡´ï¼Œåˆå§‹åŒ–åå¿…é¡»è°ƒç”¨tsl1401_set_addrs æ¥è®¾ç½®å­˜å‚¨åœ°å€ï¼ˆæˆ–è€…å…ˆè®¾ç½®å­˜å‚¨å›¾åƒåœ°å€ï¼‰
 void tsl1401_init(uint32 time)
 {
     uint8 i = TSL1401_MAX;
@@ -81,26 +81,26 @@ void tsl1401_init(uint32 time)
     while(i)
     {
         i--;
-        adc_init(tsl1401_ch[i]); //³õÊ¼»¯ CCD ËùÓÃµÄ ADCÍ¨µÀ
+        adc_init(tsl1401_ch[i]); //åˆå§‹åŒ– CCD æ‰€ç”¨çš„ ADCé€šé“
 
-        //³õÊ¼»¯ CCD µÄ¿ØÖÆ¹Ü½Å CLK ºÍ SI
+        //åˆå§‹åŒ– CCD çš„æ§åˆ¶ç®¡è„š CLK å’Œ SI
         gpio_init (tsl1401_clk[i], GPO, 0);
         gpio_init (tsl1401_si[i] , GPO, 0);
     }
 
     tsl1401_time = time;
-    TSL1401_INT_TIME(tsl1401_time);         //  ÉèÖÃÖĞ¶ÏÊ±¼ä
+    TSL1401_INT_TIME(tsl1401_time);         //  è®¾ç½®ä¸­æ–­æ—¶é—´
 
-    tsl1401_restet();                       //  ¶ªÆúµÚÒ»Ö¡µÄÊı¾İ£¨ÂÒµÄ£©
+    tsl1401_restet();                       //  ä¸¢å¼ƒç¬¬ä¸€å¸§çš„æ•°æ®ï¼ˆä¹±çš„ï¼‰
 }
 
-//ÉèÖÃ²É¼¯Í¼ÏñµÄµØÖ·
-//num Îª TSL1401_MAX Ê±£¬ÉèÖÃÈ«²¿µØÖ·£¬·ñÔòÉèÖÃÖ¸¶¨µÄµØÖ·
+//è®¾ç½®é‡‡é›†å›¾åƒçš„åœ°å€
+//num ä¸º TSL1401_MAX æ—¶ï¼Œè®¾ç½®å…¨éƒ¨åœ°å€ï¼Œå¦åˆ™è®¾ç½®æŒ‡å®šçš„åœ°å€
 void tsl1401_set_addrs(TSL1401_e num, uint8 *addr, ... )
 {
     ASSERT(num <= TSL1401_MAX);
 
-    va_list ap;                                 //´´½¨Õ»Ö¸Õëap
+    va_list ap;                                 //åˆ›å»ºæ ˆæŒ‡é’ˆap
     uint8_t *value;
     uint8_t n = 0;
 
@@ -110,20 +110,20 @@ void tsl1401_set_addrs(TSL1401_e num, uint8 *addr, ... )
     }
     else if(num == TSL1401_MAX)
     {
-        va_start(ap, addr);                         //»ñÈ¡¿É±ä²ÎÊıÁĞ±íµÄµÚÒ»¸ö²ÎÊıµÄµØÖ·
+        va_start(ap, addr);                         //è·å–å¯å˜å‚æ•°åˆ—è¡¨çš„ç¬¬ä¸€ä¸ªå‚æ•°çš„åœ°å€
         value = addr;
         while(num--)
         {
             tsl1401_addr[n++] = value;
-            value = va_arg(ap, uint8_t * );             //»ñÈ¡¿É±ä²ÎÊıµÄµ±Ç°²ÎÊı£¬·µ»ØÖ¸¶¨ÀàĞÍ²¢½«Ö¸ÕëÖ¸ÏòÏÂÒ»²ÎÊı
+            value = va_arg(ap, uint8_t * );             //è·å–å¯å˜å‚æ•°çš„å½“å‰å‚æ•°ï¼Œè¿”å›æŒ‡å®šç±»å‹å¹¶å°†æŒ‡é’ˆæŒ‡å‘ä¸‹ä¸€å‚æ•°
         }
 
-        va_end(ap);                                 //Çå¿Õva_list¿É±ä²ÎÊıÁĞ±í
+        va_end(ap);                                 //æ¸…ç©ºva_listå¯å˜å‚æ•°åˆ—è¡¨
     }
 }
 
 
-//num Îª TSL1401_MAX Ê±£¬¿ªÆôÈ«²¿LED£¬·ñÔò¿ªÆô¶ÔÓ¦µÄ LED
+//num ä¸º TSL1401_MAX æ—¶ï¼Œå¼€å¯å…¨éƒ¨LEDï¼Œå¦åˆ™å¼€å¯å¯¹åº”çš„ LED
 void tsl1401_led_en(TSL1401_e num)
 {
     ASSERT(num <= TSL1401_MAX);
@@ -142,7 +142,7 @@ void tsl1401_led_en(TSL1401_e num)
     }
 }
 
-//num Îª TSL1401_MAX Ê±£¬¿ªÆôÈ«²¿LED£¬·ñÔò¿ªÆô¶ÔÓ¦µÄ LED
+//num ä¸º TSL1401_MAX æ—¶ï¼Œå¼€å¯å…¨éƒ¨LEDï¼Œå¦åˆ™å¼€å¯å¯¹åº”çš„ LED
 void tsl1401_led_dis(TSL1401_e num)
 {
     ASSERT(num <= TSL1401_MAX);
@@ -161,30 +161,30 @@ void tsl1401_led_dis(TSL1401_e num)
     }
 }
 
-//tsl1401,ÏßĞÔCCD²É¼¯Í¼Ïñ
+//tsl1401,çº¿æ€§CCDé‡‡é›†å›¾åƒ
 void tsl1401_get_img(void)
 {
-    tsl1401_flag = tsl1401_start;           //Æô¶¯²É¼¯
-    while(tsl1401_flag != tsl1401_finish);  //µÈ´ı²É¼¯Íê³É
+    tsl1401_flag = tsl1401_start;           //å¯åŠ¨é‡‡é›†
+    while(tsl1401_flag != tsl1401_finish);  //ç­‰å¾…é‡‡é›†å®Œæˆ
 }
 
-//»ñÈ¡ tsl1401,ÏßĞÔCCD ÆØ¹âÊ±¼ä
+//è·å– tsl1401,çº¿æ€§CCD æ›å…‰æ—¶é—´
 uint32 tsl1401_get_time(void)
 {
     return tsl1401_time;
 }
 
-//ÉèÖÃ tsl1401,ÏßĞÔCCD ÆØ¹âÊ±¼ä
+//è®¾ç½® tsl1401,çº¿æ€§CCD æ›å…‰æ—¶é—´
 void tsl1401_set_time(uint32 time)
 {
     tsl1401_time = time;
-    TSL1401_INT_TIME(tsl1401_time);         //  ÉèÖÃÖĞ¶ÏÊ±¼ä
+    TSL1401_INT_TIME(tsl1401_time);         //  è®¾ç½®ä¸­æ–­æ—¶é—´
 }
 
-//·ÅÈë¶¨Ê±ÖĞ¶ÏÀï£¬ÒÔ±ãÓÚ¶¨Ê±¸´Î»ÆØ¹âÊ±¼ä
+//æ”¾å…¥å®šæ—¶ä¸­æ–­é‡Œï¼Œä»¥ä¾¿äºå®šæ—¶å¤ä½æ›å…‰æ—¶é—´
 void tsl1401_time_isr()
 {
-    //Ö»ÅĞ¶ÏÊÇ·ñ¿ªÊ¼²É¼¯ºÍÊÇ·ñ²É¼¯Íê³É
+    //åªåˆ¤æ–­æ˜¯å¦å¼€å§‹é‡‡é›†å’Œæ˜¯å¦é‡‡é›†å®Œæˆ
     if(tsl1401_flag == tsl1401_start)
     {
         tsl1401_gather();
@@ -192,7 +192,7 @@ void tsl1401_time_isr()
     }
     else
     {
-        tsl1401_restet();                   // ¸´Î»
+        tsl1401_restet();                   // å¤ä½
     }
 }
 
@@ -204,10 +204,10 @@ void tsl1401_delay( uint32 time )
 }
 
 
-//²É¼¯Í¼Ïñ
+//é‡‡é›†å›¾åƒ
 void tsl1401_gather(void)
 {
-#define TSL1401_TIME   10   //ÑÓÊ±Ê±¼ä
+#define TSL1401_TIME   10   //å»¶æ—¶æ—¶é—´
 
     uint8_t n = TSL1401_SIZE, k = 0;
     uint8_t i;
@@ -241,7 +241,7 @@ void tsl1401_gather(void)
 #undef TSL1401_TIME
 }
 
-//ÓÃÓÚµ÷ÕûÆØ¹âÊ±¼ä
+//ç”¨äºè°ƒæ•´æ›å…‰æ—¶é—´
 void tsl1401_restet()
 {
 #define TSL1401_RETIME   1

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,ɽ��Ƽ�
+ *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     �������ۣ�ɽ����̳ http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
- *     ��ע�������⣬�����������ݰ�Ȩ����ɽ��Ƽ����У�δ������������������ҵ��;��
- *     �޸�����ʱ���뱣��ɽ��Ƽ��İ�Ȩ������
+ *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
+ *     修改内容时必须保留山外科技的版权声明。
  *
  * @file       VCAN_camera.h
- * @brief      ����ͷ�����ӿ��ض���
- * @author     ɽ��Ƽ�
+ * @brief      摄像头函数接口重定向
+ * @author     山外科技
  * @version    v5.2.1
  * @date       2015-04-01
  */
@@ -19,27 +19,27 @@
 #define _VCAN_CAMERA_H_
 
 
-#define CAMERA_OV7725_EAGLE         2       //ɽ��ӥ��
-#define CAMERA_OV7725_WOLF          3       //ɽ������
+#define CAMERA_OV7725_EAGLE         2       //山外鹰眼
+#define CAMERA_OV7725_WOLF          3       //山外狼眼
 
 
-#define USE_CAMERA      CAMERA_OV7725_EAGLE   //ѡ��ʹ�õ� ����ͷ
+#define USE_CAMERA      CAMERA_OV7725_EAGLE   //选择使用的 摄像头
 
 typedef struct
 {
-    uint8 addr;                 /*�Ĵ�����ַ*/
-    uint8 val;                   /*�Ĵ���ֵ*/
+    uint8 addr;                 /*寄存器地址*/
+    uint8 val;                   /*寄存器值*/
 } reg_s;
 
-//����ͼ��ɼ�״̬
+//定义图像采集状态
 typedef enum
 {
     IMG_NOTINIT = 0,
-    IMG_FINISH,             //ͼ��ɼ����
-    IMG_FAIL,               //ͼ��ɼ�ʧ��(�ɼ���������)
-    IMG_GATHER,             //ͼ��ɼ���
-    IMG_START,              //��ʼ�ɼ�ͼ��
-    IMG_STOP,               //��ֹͼ��ɼ�
+    IMG_FINISH,             //图像采集完毕
+    IMG_FAIL,               //图像采集失败(采集行数少了)
+    IMG_GATHER,             //图像采集中
+    IMG_START,              //开始采集图像
+    IMG_STOP,               //禁止图像采集
 } IMG_STATUS_e;
 
 
@@ -50,21 +50,21 @@ typedef enum
 extern void img_extract(void *dst, void *src, uint32_t srclen);
 
 
-// ����ͷ �ӿ�ͳһ�ĳ� ����ģʽ
+// 摄像头 接口统一改成 如下模式
 
 //  camera_init(imgaddr);
 //  camera_get_img();
 //  camera_cfg(rag,val)
 
 
-//  camera_vsync()  //���ж�
-//  camera_href()   //���ж�
-//  camera_dma()    //DMA�ж�
+//  camera_vsync()  //场中断
+//  camera_href()   //行中断
+//  camera_dma()    //DMA中断
 
-// ��Ҫ �ṩ ���� �궨��
-// #define  CAMERA_USE_HREF    1     //�Ƿ�ʹ�� ���ж� (0 Ϊ ��ʹ�ã�1Ϊʹ��)
-// #define  CAMERA_COLOR       1     //����ͷ�����ɫ �� 0 Ϊ �ڰ׶�ֵ��ͼ�� ��1 Ϊ �Ҷ� ͼ�� ��2 Ϊ RGB565 ͼ��
-// #define  CAMERA_POWER       0     //����ͷ ��Դѡ�� 0 Ϊ 3.3V ,1 Ϊ 5V
+// 需要 提供 如下 宏定义
+// #define  CAMERA_USE_HREF    1     //是否使用 行中断 (0 为 不使用，1为使用)
+// #define  CAMERA_COLOR       1     //摄像头输出颜色 ， 0 为 黑白二值化图像 ，1 为 灰度 图像 ，2 为 RGB565 图像
+// #define  CAMERA_POWER       0     //摄像头 电源选择， 0 为 3.3V ,1 为 5V
 
 
 

@@ -2,8 +2,8 @@
 #include "USB_Desc.h"
 
 
-/* Êı×é ºÍ È«¾Ö»º³åÇø */
-#pragma data_alignment=512      //±ØĞë 512 ×Ö½Ú¶ÔÆë
+/* æ•°ç»„ å’Œ å…¨å±€ç¼“å†²åŒº */
+#pragma data_alignment=512      //å¿…é¡» 512 å­—èŠ‚å¯¹é½
 
 tBDT tBDTtable[16];
 
@@ -78,10 +78,10 @@ const uint8 *String_Table[4] =
 };
 
 
-/* USB ÖĞ¶Ï·şÎñº¯ÊıµÄÈ«¾Ö±äÁ¿ */
-uint8   gu8USB_Flags;           //USB µÄ ¸÷¶Ëµã ½ÓÊÕµ½Êı¾İ µÄ ±êÖ¾Î»
+/* USB ä¸­æ–­æœåŠ¡å‡½æ•°çš„å…¨å±€å˜é‡ */
+uint8   gu8USB_Flags;           //USB çš„ å„ç«¯ç‚¹ æ¥æ”¶åˆ°æ•°æ® çš„ æ ‡å¿—ä½
 uint8   gu8USBClearFlags;
-uint8   *pu8IN_DataPointer;     //Ö¸Ïò USBÊäÈëÊı¾İ»º³åÇøµÄ Ö¸Õë
+uint8   *pu8IN_DataPointer;     //æŒ‡å‘ USBè¾“å…¥æ•°æ®ç¼“å†²åŒºçš„ æŒ‡é’ˆ
 uint8   gu8IN_Counter;
 uint8   gu8USB_Toogle_flags;
 uint8   gu8Dummy;
@@ -90,11 +90,11 @@ uint8   gu8Interface;
 uint8   gu8HALT_EP;
 uint8   gu8USB_State;
 
-tUSB_Setup *Setup_Pkt;          //USB setup Êı¾İ°üÖ¸Õë
+tUSB_Setup *Setup_Pkt;          //USB setup æ•°æ®åŒ…æŒ‡é’ˆ
 
 
 /*!
- *  @brief      ¶ËµãIN´«ËÍ(INÊÇÏà¶ÔÖ÷»ú¶øÑÔ)
+ *  @brief      ç«¯ç‚¹INä¼ é€(INæ˜¯ç›¸å¯¹ä¸»æœºè€Œè¨€)
  *  @since      v5.0
  */
 void EP_IN_Transfer(uint8 u8EP, uint8 *pu8DataPointer, uint8 u8DataSize)
@@ -164,7 +164,7 @@ void EP_IN_Transfer(uint8 u8EP, uint8 *pu8DataPointer, uint8 u8DataSize)
 }
 
 /*!
- *  @brief      ¶ËµãOUT´«ËÍ(OUTÊÇÏà¶ÔÖ÷»ú¶øÑÔ)
+ *  @brief      ç«¯ç‚¹OUTä¼ é€(OUTæ˜¯ç›¸å¯¹ä¸»æœºè€Œè¨€)
  *  @since      v5.0
  */
 uint8 EP_OUT_Transfer(uint8 u8EP, uint8 *pu8DataPointer)
@@ -189,7 +189,7 @@ uint8 EP_OUT_Transfer(uint8 u8EP, uint8 *pu8DataPointer)
 }
 
 /*!
- *  @brief      ¶ËµãOUT³¤¶È¼ì²â(OUTÊÇÏà¶ÔÖ÷»ú¶øÑÔ)
+ *  @brief      ç«¯ç‚¹OUTé•¿åº¦æ£€æµ‹(OUTæ˜¯ç›¸å¯¹ä¸»æœºè€Œè¨€)
  *  @since      v5.0
  */
 uint16 USB_EP_OUT_SizeCheck(uint8 u8EP)
@@ -201,7 +201,7 @@ uint16 USB_EP_OUT_SizeCheck(uint8 u8EP)
 }
 
 /*!
- *  @brief      ÉèÖÃ USB ¶Ëµã
+ *  @brief      è®¾ç½® USB ç«¯ç‚¹
  *  @since      v5.0
  */
 void USB_Set_Interface(void)
@@ -233,7 +233,7 @@ void USB_Set_Interface(void)
 
 
 /*!
- *  @brief      ±ê×¼ÇëÇóÖĞ¶Ï·şÎñº¯Êı£¨USB½ÓÊÕµÄSetupµÄÇëÇó£©
+ *  @brief      æ ‡å‡†è¯·æ±‚ä¸­æ–­æœåŠ¡å‡½æ•°ï¼ˆUSBæ¥æ”¶çš„Setupçš„è¯·æ±‚ï¼‰
  *  @since      v5.0
  */
 void USB_StdReq_Handler(void)
@@ -294,7 +294,7 @@ void USB_StdReq_Handler(void)
 }
 
 /*!
- *  @brief      USB SETUPÖĞ¶Ï ·şÎñº¯Êı
+ *  @brief      USB SETUPä¸­æ–­ æœåŠ¡å‡½æ•°
  *  @since      v5.0
  */
 void USB_Setup_Handler(void)
@@ -336,7 +336,7 @@ void USB_Setup_Handler(void)
 }
 
 /*!
- *  @brief      USB ¶Ëµã SETUPÖĞ¶Ï ·şÎñº¯Êı
+ *  @brief      USB ç«¯ç‚¹ SETUPä¸­æ–­ æœåŠ¡å‡½æ•°
  *  @since      v5.0
  */
 void USB_Endpoint_Setup_Handler(void)
@@ -370,7 +370,7 @@ void USB_Endpoint_Setup_Handler(void)
 }
 
 /*!
- *  @brief      USB ÁîÅÆÖĞ¶Ï ·şÎñº¯Êı
+ *  @brief      USB ä»¤ç‰Œä¸­æ–­ æœåŠ¡å‡½æ•°
  *  @since      v5.0
  */
 void USB_Handler(void)
@@ -409,7 +409,7 @@ void USB_Handler(void)
 }
 
 /*!
- *  @brief      USB ¶Ëµã 0 IN ·şÎñº¯Êı(INÊÇÏà¶ÔÖ÷»ú¶øÑÔ)
+ *  @brief      USB ç«¯ç‚¹ 0 IN æœåŠ¡å‡½æ•°(INæ˜¯ç›¸å¯¹ä¸»æœºè€Œè¨€)
  *  @since      v5.0
  */
 void USB_EP0_IN_Handler(void)
@@ -424,7 +424,7 @@ void USB_EP0_IN_Handler(void)
 }
 
 /*!
- *  @brief      USB ¶Ëµã 0 stall(´«ÊäÊ§°Ü)
+ *  @brief      USB ç«¯ç‚¹ 0 stall(ä¼ è¾“å¤±è´¥)
  *  @since      v5.0
  */
 void USB_EP0_Stall(void)
@@ -437,7 +437,7 @@ void USB_EP0_Stall(void)
 }
 
 /*!
- *  @brief      USB ¶Ëµã 0 OUT ·şÎñº¯Êı(OUT ÊÇÏà¶ÔÖ÷»ú¶øÑÔ)
+ *  @brief      USB ç«¯ç‚¹ 0 OUT æœåŠ¡å‡½æ•°(OUT æ˜¯ç›¸å¯¹ä¸»æœºè€Œè¨€)
  *  @since      v5.0
  */
 void USB_EP0_OUT_Handler(void)
@@ -450,7 +450,7 @@ void USB_EP0_OUT_Handler(void)
 }
 
 /*!
- *  @brief      USB stall ÖĞ¶Ï£¨´«ÊäÊ§°Ü£©
+ *  @brief      USB stall ä¸­æ–­ï¼ˆä¼ è¾“å¤±è´¥ï¼‰
  *  @since      v5.0
  */
 void USB_Stall_Handler(void)
@@ -461,7 +461,7 @@ void USB_Stall_Handler(void)
 }
 
 /*!
- *  @brief      USB ¸´Î» ÖĞ¶Ï·şÎñº¯Êı
+ *  @brief      USB å¤ä½ ä¸­æ–­æœåŠ¡å‡½æ•°
  *  @since      v5.0
  */
 void USB_Reset_Handler(void)
@@ -523,7 +523,7 @@ void USB_Reset_Handler(void)
 
 
 /*!
- *  @brief      USB ×ÜµÄ ÖĞ¶Ï·şÎñº¯Êı
+ *  @brief      USB æ€»çš„ ä¸­æ–­æœåŠ¡å‡½æ•°
  *  @since      v5.0
  */
 void USB_ISR(void)

@@ -1,35 +1,35 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       MK60_SysTick.h
- * @brief      SysTick Çı¶¯º¯Êı£¬°üÀ¨ÑÓÊ±
- * @author     É½Íâ¿Æ¼¼
+ * @brief      SysTick é©±åŠ¨å‡½æ•°ï¼ŒåŒ…æ‹¬å»¶æ—¶
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-10-08
  */
 
-//SysTick ¼ÆÊıÊ±¼äÌ«¶Ì£¬²»ÒËÓÃÓÚ ¼ÆÊ±£¬Òò¶ø²»¼ÓÈë ¼ÆÊ±¹¦ÄÜ
+//SysTick è®¡æ•°æ—¶é—´å¤ªçŸ­ï¼Œä¸å®œç”¨äº è®¡æ—¶ï¼Œå› è€Œä¸åŠ å…¥ è®¡æ—¶åŠŸèƒ½
 
 #define     SYSTICK_CLK_KHZ                 core_clk_khz
 
 
-/*          ÓÃÓÚÑÓÊ±         */
+/*          ç”¨äºå»¶æ—¶         */
 extern void    systick_delay(uint32 time);
 extern void    systick_delay_ms(uint32 ms);
 
-#define     systick_delay_us(us)          systick_delay(us * SYSTICK_CLK_KHZ/1000);   //ÑÓÊ± us
-#define     systick_delay_ns(ns)          systick_delay(ns * SYSTICK_CLK_KHZ/1000000);//ÑÓÊ± ns
+#define     systick_delay_us(us)          systick_delay(us * SYSTICK_CLK_KHZ/1000);   //å»¶æ—¶ us
+#define     systick_delay_ns(ns)          systick_delay(ns * SYSTICK_CLK_KHZ/1000000);//å»¶æ—¶ ns
 
-/*       ÓÃÓÚ¶¨Ê±           */
+/*       ç”¨äºå®šæ—¶           */
 extern void systick_timing(uint32 time);
-#define systick_timing_ms(ms)               systick_timing(ms * SYSTICK_CLK_KHZ);        //¶¨Ê± us
-#define systick_timing_us(us)               systick_timing(us * SYSTICK_CLK_KHZ/1000);   //¶¨Ê± us
-#define systick_timing_ns(ns)               systick_timing(ns * SYSTICK_CLK_KHZ/1000000);//¶¨Ê± ns
+#define systick_timing_ms(ms)               systick_timing(ms * SYSTICK_CLK_KHZ);        //å®šæ—¶ us
+#define systick_timing_us(us)               systick_timing(us * SYSTICK_CLK_KHZ/1000);   //å®šæ—¶ us
+#define systick_timing_ns(ns)               systick_timing(ns * SYSTICK_CLK_KHZ/1000000);//å®šæ—¶ ns
 
 

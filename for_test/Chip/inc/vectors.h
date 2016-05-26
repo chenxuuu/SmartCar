@@ -1,30 +1,30 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       vectors.c
- * @brief      ÖĞ¶ÏÏòÁ¿±íµÄº¯ÊıµØÖ·¶¨Òå
- * @author     É½Íâ¿Æ¼¼
+ * @brief      ä¸­æ–­å‘é‡è¡¨çš„å‡½æ•°åœ°å€å®šä¹‰
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-07-02
- * @note       ÈçÏÂ´úÂë´Ó·ÉË¼¿¨¶û¹Ù·½Àı³Ì¼Ì³ĞÏÂÀ´£¬ÉÔÎ¢ĞŞ¸Ä
+ * @note       å¦‚ä¸‹ä»£ç ä»é£æ€å¡å°”å®˜æ–¹ä¾‹ç¨‹ç»§æ‰¿ä¸‹æ¥ï¼Œç¨å¾®ä¿®æ”¹
  */
 
 #ifndef __VECTORS_H
 #define __VECTORS_H     1
 
-extern void default_isr(void);                  //¶¨ÒåÄ¬ÈÏÖĞ¶Ï·şÎñº¯Êı
+extern void default_isr(void);                  //å®šä¹‰é»˜è®¤ä¸­æ–­æœåŠ¡å‡½æ•°
 
-typedef void (*vector_entry)(void);             //¶¨ÒåÖĞ¶ÏÏòÁ¿±íµÄº¯ÊıÀàĞÍ
+typedef void (*vector_entry)(void);             //å®šä¹‰ä¸­æ–­å‘é‡è¡¨çš„å‡½æ•°ç±»å‹
 
-extern void Reset_Handler (void);                //ÉùÃ÷¸´Î»º¯Êı£¬ÔÚ .s ÎÄ¼şÀï¶¨Òå
+extern void Reset_Handler (void);                //å£°æ˜å¤ä½å‡½æ•°ï¼Œåœ¨ .s æ–‡ä»¶é‡Œå®šä¹‰
 
-extern unsigned long __BOOT_STACK_ADDRESS[];    //ÉùÃ÷Õ»µØÖ·£¬´ÓlinkerÎÄ¼ş£¨*.icf £©»ñµÃ
+extern unsigned long __BOOT_STACK_ADDRESS[];    //å£°æ˜æ ˆåœ°å€ï¼Œä»linkeræ–‡ä»¶ï¼ˆ*.icf ï¼‰è·å¾—
 
                              // Address     Vector IRQ   Source module   Source description
 #define VECTOR_000      (vector_entry)__BOOT_STACK_ADDRESS  //          ARM core        Initial Supervisor SP

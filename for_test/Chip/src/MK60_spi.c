@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       MK60_spi.c
- * @brief      SPIÇý¶¯º¯Êý
- * @author     É½Íâ¿Æ¼¼
+ * @brief      SPIé©±åŠ¨å‡½æ•°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-07-16
  */
@@ -19,22 +19,22 @@
 #include "MK60_spi.h"
 
 
-SPI_MemMapPtr SPIN[3] = {SPI0_BASE_PTR, SPI1_BASE_PTR, SPI2_BASE_PTR}; //¶¨ÒåÈý¸öÖ¸ÕëÊý×é±£´æ SPIx µÄµØÖ·
+SPI_MemMapPtr SPIN[3] = {SPI0_BASE_PTR, SPI1_BASE_PTR, SPI2_BASE_PTR}; //å®šä¹‰ä¸‰ä¸ªæŒ‡é’ˆæ•°ç»„ä¿å­˜ SPIx çš„åœ°å€
 
 
 
-#define SPI_TX_WAIT(SPIn)     while(  ( SPI_SR_REG(SPIN[SPIn]) & SPI_SR_TXRXS_MASK ) == 1 ) //µÈ´ý·¢ËÍ Íê³É
-#define SPI_RX_WAIT(SPIn)     while(  ( SPI_SR_REG(SPIN[SPIn]) & SPI_SR_RFDF_MASK ) == 0 )  //µÈ´ý·¢ËÍ FIFOÎª·Ç¿Õ
-#define SPI_EOQF_WAIT(SPIn)   while(  (SPI_SR_REG(SPIN[SPIn]) & SPI_SR_EOQF_MASK ) == 0 )   //µÈ´ý´«ÊäÍê³É
+#define SPI_TX_WAIT(SPIn)     while(  ( SPI_SR_REG(SPIN[SPIn]) & SPI_SR_TXRXS_MASK ) == 1 ) //ç­‰å¾…å‘é€ å®Œæˆ
+#define SPI_RX_WAIT(SPIn)     while(  ( SPI_SR_REG(SPIN[SPIn]) & SPI_SR_RFDF_MASK ) == 0 )  //ç­‰å¾…å‘é€ FIFOä¸ºéžç©º
+#define SPI_EOQF_WAIT(SPIn)   while(  (SPI_SR_REG(SPIN[SPIn]) & SPI_SR_EOQF_MASK ) == 0 )   //ç­‰å¾…ä¼ è¾“å®Œæˆ
 
 
 /*!
- *  @brief      SPI³õÊ¼»¯£¬ÉèÖÃÄ£Ê½
- *  @param      SPIn_e          SPIÄ£¿é(SPI0¡¢SPI1¡¢SPI2)
- *  @param      SPIn_PCSn_e     Æ¬Ñ¡¹Ü½Å±àºÅ
- *  @param      SPI_CFG         SPIÖ÷´Ó»úÄ£Ê½Ñ¡Ôñ
+ *  @brief      SPIåˆå§‹åŒ–ï¼Œè®¾ç½®æ¨¡å¼
+ *  @param      SPIn_e          SPIæ¨¡å—(SPI0ã€SPI1ã€SPI2)
+ *  @param      SPIn_PCSn_e     ç‰‡é€‰ç®¡è„šç¼–å·
+ *  @param      SPI_CFG         SPIä¸»ä»Žæœºæ¨¡å¼é€‰æ‹©
  *  @since      v5.0
- *  Sample usage:       uint32 baud = spi_init(SPI0,SPIn_PCS0, MASTER,10*1000*1000);              //³õÊ¼»¯SPI,Ñ¡ÔñCS0,Ö÷»úÄ£Ê½, ²¨ÌØÂÊÎª1M ,·µ»ØÕæÊµ²¨ÌØÂÊµ½baud±äÁ¿
+ *  Sample usage:       uint32 baud = spi_init(SPI0,SPIn_PCS0, MASTER,10*1000*1000);              //åˆå§‹åŒ–SPI,é€‰æ‹©CS0,ä¸»æœºæ¨¡å¼, æ³¢ç‰¹çŽ‡ä¸º1M ,è¿”å›žçœŸå®žæ³¢ç‰¹çŽ‡åˆ°baudå˜é‡
  */
 uint32 spi_init(SPIn_e spin, SPI_PCSn_e pcs, SPI_CFG master,uint32 baud)
 {
@@ -45,15 +45,15 @@ uint32 spi_init(SPIn_e spin, SPI_PCSn_e pcs, SPI_CFG master,uint32 baud)
     uint32 fit_clk,fit_br=0,fit_pbr,min_diff =~0,diff;
     uint32 tmp;
 
-    //¼ÆËãCSµ½µÚÒ»¸öSCKµÄÊ±¼ä
+    //è®¡ç®—CSåˆ°ç¬¬ä¸€ä¸ªSCKçš„æ—¶é—´
     uint8 pcssck,cssck,fit_pcssck,fit_cssck;
 
-    //Ê¹ÄÜSPIÄ£¿éÊ±ÖÓ£¬ÅäÖÃSPIÒý½Å¹¦ÄÜ
+    //ä½¿èƒ½SPIæ¨¡å—æ—¶é’Ÿï¼Œé…ç½®SPIå¼•è„šåŠŸèƒ½
     if(spin == SPI0)
     {
         SIM_SCGC6 |= SIM_SCGC6_DSPI0_MASK;
 
-        //½øÐÐ¹Ü½Å¸´ÓÃ
+        //è¿›è¡Œç®¡è„šå¤ç”¨
         port_init(SPI0_SCK_PIN , ALT2  );
         port_init(SPI0_SOUT_PIN, ALT2  );
         port_init(SPI0_SIN_PIN , ALT2  );
@@ -119,31 +119,31 @@ uint32 spi_init(SPIn_e spin, SPI_PCSn_e pcs, SPI_CFG master,uint32 baud)
     }
     else
     {
-        //´«µÝ½øÀ´µÄ spi Ä£¿éÓÐÎó£¬Ö±½ÓÅÐ¶Ï¶ÏÑÔÊ§°Ü
+        //ä¼ é€’è¿›æ¥çš„ spi æ¨¡å—æœ‰è¯¯ï¼Œç›´æŽ¥åˆ¤æ–­æ–­è¨€å¤±è´¥
         ASSERT(0);
     }
 
     SPI_MCR_REG(SPIN[spin]) = ( 0
-                                | SPI_MCR_CLR_TXF_MASK     //Çå¿Õ Tx FIFO ¼ÆÊýÆ÷
-                                | SPI_MCR_CLR_RXF_MASK     //Çå¿Õ Rx FIFO ¼ÆÊýÆ÷
-                                | SPI_MCR_HALT_MASK        //Í£Ö¹SPI´«Êä
+                                | SPI_MCR_CLR_TXF_MASK     //æ¸…ç©º Tx FIFO è®¡æ•°å™¨
+                                | SPI_MCR_CLR_RXF_MASK     //æ¸…ç©º Rx FIFO è®¡æ•°å™¨
+                                | SPI_MCR_HALT_MASK        //åœæ­¢SPIä¼ è¾“
                               );
 
-    /*************  Çå±êÖ¾Î»  ***************/
+    /*************  æ¸…æ ‡å¿—ä½  ***************/
     SPI_SR_REG(SPIN[spin]) = (0
-                              | SPI_SR_EOQF_MASK    //·¢ËÍ¶ÓÁÐ¿ÕÁË£¬·¢ËÍÍê±Ï
-                              | SPI_SR_TFUF_MASK    //´«ÊäFIFOÏÂÒç±êÖ¾Î»£¬SPIÎª´Ó»úÄ£Ê½£¬Tx FIFOÎª¿Õ£¬¶øÍâ²¿SPIÖ÷»úÄ£Ê½Æô¶¯´«Êä£¬±êÖ¾Î»¾Í»áÖÃ1£¬Ð´1Çå0
-                              | SPI_SR_TFFF_MASK    //´«ÊäFIFOÂú±êÖ¾Î»¡£ Ð´1»òÕßDMA¿ØÖÆÆ÷·¢ÏÖ´«ÊäFIFOÂúÁË¾Í»áÇå0¡£ 0±íÊ¾Tx FIFOÂúÁË
-                              | SPI_SR_RFOF_MASK    //½ÓÊÕFIFOÒç³ö±êÖ¾Î»¡£
-                              | SPI_SR_RFDF_MASK    //½ÓÊÕFIFOËðºÄ±êÖ¾Î»£¬Ð´1»òÕßDMA¿ØÖÆÆ÷·¢ÏÖ´«ÊäFIFO¿ÕÁË¾Í»áÇå0¡£0±íÊ¾Rx FIFO¿Õ
+                              | SPI_SR_EOQF_MASK    //å‘é€é˜Ÿåˆ—ç©ºäº†ï¼Œå‘é€å®Œæ¯•
+                              | SPI_SR_TFUF_MASK    //ä¼ è¾“FIFOä¸‹æº¢æ ‡å¿—ä½ï¼ŒSPIä¸ºä»Žæœºæ¨¡å¼ï¼ŒTx FIFOä¸ºç©ºï¼Œè€Œå¤–éƒ¨SPIä¸»æœºæ¨¡å¼å¯åŠ¨ä¼ è¾“ï¼Œæ ‡å¿—ä½å°±ä¼šç½®1ï¼Œå†™1æ¸…0
+                              | SPI_SR_TFFF_MASK    //ä¼ è¾“FIFOæ»¡æ ‡å¿—ä½ã€‚ å†™1æˆ–è€…DMAæŽ§åˆ¶å™¨å‘çŽ°ä¼ è¾“FIFOæ»¡äº†å°±ä¼šæ¸…0ã€‚ 0è¡¨ç¤ºTx FIFOæ»¡äº†
+                              | SPI_SR_RFOF_MASK    //æŽ¥æ”¶FIFOæº¢å‡ºæ ‡å¿—ä½ã€‚
+                              | SPI_SR_RFDF_MASK    //æŽ¥æ”¶FIFOæŸè€—æ ‡å¿—ä½ï¼Œå†™1æˆ–è€…DMAæŽ§åˆ¶å™¨å‘çŽ°ä¼ è¾“FIFOç©ºäº†å°±ä¼šæ¸…0ã€‚0è¡¨ç¤ºRx FIFOç©º
                              );
 
 
-    //¸ù¾ÝÖ÷´Ó»úÄ£Ê½ÉèÖÃ¹¤×÷Ä£Ê½¡£MCUÌá¹©×î´óÖ÷»úÆµÂÊÊÇ1/2Ö÷Æµ£¬×î´ó´Ó»úÆµÂÊÊÇ1/4Ö÷Æµ
+    //æ ¹æ®ä¸»ä»Žæœºæ¨¡å¼è®¾ç½®å·¥ä½œæ¨¡å¼ã€‚MCUæä¾›æœ€å¤§ä¸»æœºé¢‘çŽ‡æ˜¯1/2ä¸»é¢‘ï¼Œæœ€å¤§ä»Žæœºé¢‘çŽ‡æ˜¯1/4ä¸»é¢‘
     if(master == MASTER)
     {
         SPI_MCR_REG(SPIN[spin]) =  (0
-                                    |  SPI_MCR_MSTR_MASK        //Master,Ö÷»úÄ£Ê½
+                                    |  SPI_MCR_MSTR_MASK        //Master,ä¸»æœºæ¨¡å¼
                                     |  SPI_MCR_PCSIS(pcs)
                                     |  SPI_MCR_PCSIS_MASK
                                    );
@@ -157,14 +157,14 @@ uint32 spi_init(SPIn_e spin, SPI_PCSn_e pcs, SPI_CFG master,uint32 baud)
                 diff = abs(tmp - clk);
                 if(min_diff > diff)
                 {
-                    //¼Ç×¡ ×î¼ÑÅäÖÃ
+                    //è®°ä½ æœ€ä½³é…ç½®
                     min_diff = diff;
                     fit_br = br;
                     fit_pbr = pbr;
 
                     if(min_diff == 0)
                     {
-                        //¸ÕºÃÆ¥Åä
+                        //åˆšå¥½åŒ¹é…
 
                         goto SPI_CLK_EXIT;
                     }
@@ -177,7 +177,7 @@ uint32 spi_init(SPIn_e spin, SPI_PCSn_e pcs, SPI_CFG master,uint32 baud)
 SPI_CLK_EXIT:
         fit_clk =  bus_clk_khz *1000 /(Scaler[fit_br] * Prescaler[fit_pbr]);
 
-        //ÐèÒªËãÒ»ÏÂ CS µ½ CLK µÄÊ±¼ä£¨²¨ÌØÂÊµÄ°ëÖÜÆÚ£©,Âú×ãÌõ¼þ£º (1<<(CSSCK + 1 ))*( 2*PCSSCK+1) = fclk /(2*  baud)
+        //éœ€è¦ç®—ä¸€ä¸‹ CS åˆ° CLK çš„æ—¶é—´ï¼ˆæ³¢ç‰¹çŽ‡çš„åŠå‘¨æœŸï¼‰,æ»¡è¶³æ¡ä»¶ï¼š (1<<(CSSCK + 1 ))*( 2*PCSSCK+1) = fclk /(2*  baud)
         clk =  bus_clk_khz*1000/fit_clk/2;
         min_diff = ~0;
         fit_cssck = 0x0F;
@@ -186,19 +186,19 @@ SPI_CLK_EXIT:
         {
             tmp = 1<<(cssck+1) ;
             pcssck = (clk/tmp-1)/2;
-            if(pcssck>3)continue;       //²»ÄÜ³¬¹ý 3
+            if(pcssck>3)continue;       //ä¸èƒ½è¶…è¿‡ 3
             tmp = tmp * (2*pcssck+1);
             diff = abs(tmp-clk);
             if(min_diff > diff)
             {
-                //¼Ç×¡ ×î¼ÑÅäÖÃ
+                //è®°ä½ æœ€ä½³é…ç½®
                 min_diff = diff;
                 fit_cssck = cssck;
                 fit_pcssck = pcssck;
 
                 if(min_diff == 0)
                 {
-                    //¸ÕºÃÆ¥Åä
+                    //åˆšå¥½åŒ¹é…
                     goto SPI_CSSCK_EXIT;
                 }
             }
@@ -207,27 +207,27 @@ SPI_CLK_EXIT:
 SPI_CSSCK_EXIT:
 
         SPI_CTAR_REG(SPIN[spin], 0) = (0
-                                       //| SPI_CTAR_DBR_MASK    //Ë«²¨ÌØÂÊ £¬¼ÙÉè DBR=1£¬CPHA=1£¬PBR=00£¬µÃSCK Duty Cycle Îª 50/50
-                                       //| SPI_CTAR_CPHA_MASK   //Êý¾ÝÔÚSCKÉÏÉýÑØ¸Ä±ä£¨Êä³ö£©£¬ÔÚÏÂ½µÑØ±»²¶×½£¨ÊäÈë¶ÁÈ¡£©¡£Èç¹ûÊÇ0£¬Ôò·´Ö®¡£  w25x16ÔÚÉÏÉýÑØ¶ÁÈ¡Êý¾Ý£»NRF24L01ÔÚÉÏÉýÑØ¶ÁÈ¡Êý¾Ý
-                                       | SPI_CTAR_PBR(fit_pbr)        //²¨ÌØÂÊ·ÖÆµÆ÷ £¬0~3 ¶ÔÓ¦µÄ·ÖÆµÖµPrescalerÎª 2¡¢3¡¢5¡¢7
+                                       //| SPI_CTAR_DBR_MASK    //åŒæ³¢ç‰¹çŽ‡ ï¼Œå‡è®¾ DBR=1ï¼ŒCPHA=1ï¼ŒPBR=00ï¼Œå¾—SCK Duty Cycle ä¸º 50/50
+                                       //| SPI_CTAR_CPHA_MASK   //æ•°æ®åœ¨SCKä¸Šå‡æ²¿æ”¹å˜ï¼ˆè¾“å‡ºï¼‰ï¼Œåœ¨ä¸‹é™æ²¿è¢«æ•æ‰ï¼ˆè¾“å…¥è¯»å–ï¼‰ã€‚å¦‚æžœæ˜¯0ï¼Œåˆ™åä¹‹ã€‚  w25x16åœ¨ä¸Šå‡æ²¿è¯»å–æ•°æ®ï¼›NRF24L01åœ¨ä¸Šå‡æ²¿è¯»å–æ•°æ®
+                                       | SPI_CTAR_PBR(fit_pbr)        //æ³¢ç‰¹çŽ‡åˆ†é¢‘å™¨ ï¼Œ0~3 å¯¹åº”çš„åˆ†é¢‘å€¼Prescalerä¸º 2ã€3ã€5ã€7
 
-                                       | SPI_CTAR_PDT(0x00)     //ÑÓÊ±Òò×ÓÎª PDT*2+1 £¬ÕâÀïPDTÎª3£¬¼´ÑÓÊ±Òò×ÓÎª7¡£PDTÎª2bit
-                                       | SPI_CTAR_BR(fit_br)         //²¨ÌØÂÊ¼ÆÊýÆ÷Öµ ,µ±BR<=3,·ÖÆµScaler Îª 2*£¨BR+1£© £¬µ±BR>=3£¬·ÖÆµScaler Îª 2^BR  ¡£BRÎª4bit
-                                       //SCK ²¨ÌØÂÊ = (Bus clk/Prescaler) x [(1+DBR)/Scaler ]          fSYS Îª Bus clock
-                                       //              50M / 2         x [ 1  /  2  ] = 25M   ÕâÀïÒÔ×î´óµÄÀ´Ëã
+                                       | SPI_CTAR_PDT(0x00)     //å»¶æ—¶å› å­ä¸º PDT*2+1 ï¼Œè¿™é‡ŒPDTä¸º3ï¼Œå³å»¶æ—¶å› å­ä¸º7ã€‚PDTä¸º2bit
+                                       | SPI_CTAR_BR(fit_br)         //æ³¢ç‰¹çŽ‡è®¡æ•°å™¨å€¼ ,å½“BR<=3,åˆ†é¢‘Scaler ä¸º 2*ï¼ˆBR+1ï¼‰ ï¼Œå½“BR>=3ï¼Œåˆ†é¢‘Scaler ä¸º 2^BR  ã€‚BRä¸º4bit
+                                       //SCK æ³¢ç‰¹çŽ‡ = (Bus clk/Prescaler) x [(1+DBR)/Scaler ]          fSYS ä¸º Bus clock
+                                       //              50M / 2         x [ 1  /  2  ] = 25M   è¿™é‡Œä»¥æœ€å¤§çš„æ¥ç®—
 
-                                       //| SPI_CTAR_CPOL_MASK   //Ê±ÖÓ¼«ÐÔ£¬1±íÊ¾ SCK ²»»îÔ¾×´Ì¬Îª¸ßµçÆ½,   NRF24L01 ²»»îÔ¾ÎªµÍµçÆ½
-                                       | SPI_CTAR_FMSZ(0x07)    //Ã¿Ö¡´«Êä 7bit+1 £¬¼´8bit £¨FMSZÄ¬ÈÏ¾ÍÊÇ8£©
-                                       // | SPI_CTAR_LSBFE_MASK //1ÎªµÍÎ»ÔÚÇ°¡£
+                                       //| SPI_CTAR_CPOL_MASK   //æ—¶é’Ÿæžæ€§ï¼Œ1è¡¨ç¤º SCK ä¸æ´»è·ƒçŠ¶æ€ä¸ºé«˜ç”µå¹³,   NRF24L01 ä¸æ´»è·ƒä¸ºä½Žç”µå¹³
+                                       | SPI_CTAR_FMSZ(0x07)    //æ¯å¸§ä¼ è¾“ 7bit+1 ï¼Œå³8bit ï¼ˆFMSZé»˜è®¤å°±æ˜¯8ï¼‰
+                                       // | SPI_CTAR_LSBFE_MASK //1ä¸ºä½Žä½åœ¨å‰ã€‚
 
-                                       // ÏÂÃæÁ½¸ö²ÎÊýÊÇµ÷Õû CS ÐÅºÅÀ´ÁËµ½µÚÒ»¸öCLKµÄÊ±¼ä
-                                       | SPI_CTAR_CSSCK(fit_cssck)    // x £º0~0x0F
-                                       | SPI_CTAR_PCSSCK(fit_pcssck)    //ÉèÖÃÆ¬Ñ¡ÐÅºÅÓÐÐ§µ½Ê±ÖÓµÚÒ»¸ö±ßÑØ³öÏÖµÄÑÓÊ±µÄÔ¤·ÖÆµÖµ¡£tcscÑÓÊ±Ô¤·ÖÆµ 2*x+1£» x 0~3
+                                       // ä¸‹é¢ä¸¤ä¸ªå‚æ•°æ˜¯è°ƒæ•´ CS ä¿¡å·æ¥äº†åˆ°ç¬¬ä¸€ä¸ªCLKçš„æ—¶é—´
+                                       | SPI_CTAR_CSSCK(fit_cssck)    // x ï¼š0~0x0F
+                                       | SPI_CTAR_PCSSCK(fit_pcssck)    //è®¾ç½®ç‰‡é€‰ä¿¡å·æœ‰æ•ˆåˆ°æ—¶é’Ÿç¬¬ä¸€ä¸ªè¾¹æ²¿å‡ºçŽ°çš„å»¶æ—¶çš„é¢„åˆ†é¢‘å€¼ã€‚tcscå»¶æ—¶é¢„åˆ†é¢‘ 2*x+1ï¼› x 0~3
                                       );
     }
     else
     {
-        //Ä¬ÈÏ´Ó»úÄ£Ê½
+        //é»˜è®¤ä»Žæœºæ¨¡å¼
         SPI_CTAR_SLAVE_REG(SPIN[spin], 0) = (0
                                              | SPI_CTAR_SLAVE_FMSZ(0x07)
                                              | SPI_CTAR_SLAVE_CPOL_MASK
@@ -236,59 +236,59 @@ SPI_CSSCK_EXIT:
     }
 
 
-    SPI_MCR_REG(SPIN[spin]) &= ~SPI_MCR_HALT_MASK;     //Æô¶¯SPI´«Êä¡£1ÎªÔÝÍ££¬0ÎªÆô¶¯
+    SPI_MCR_REG(SPIN[spin]) &= ~SPI_MCR_HALT_MASK;     //å¯åŠ¨SPIä¼ è¾“ã€‚1ä¸ºæš‚åœï¼Œ0ä¸ºå¯åŠ¨
 
     return fit_clk;
 
 }
 
 /*!
- *  @brief      SPI·¢ËÍ½ÓÊÕº¯Êý
- *  @param      SPIn_e          SPIÄ£¿é(SPI0¡¢SPI1¡¢SPI2)
- *  @param      SPIn_PCSn_e     Æ¬Ñ¡¹Ü½Å±àºÅ
- *  @param      modata          ·¢ËÍµÄÊý¾Ý»º³åÇøµØÖ·(²»ÐèÒª½ÓÊÕÔò´« NULL)
- *  @param      midata          ·¢ËÍÊý¾ÝÊ±½ÓÊÕµ½µÄÊý¾ÝµÄ´æ´¢µØÖ·(²»ÐèÒª½ÓÊÕÔò´« NULL)
+ *  @brief      SPIå‘é€æŽ¥æ”¶å‡½æ•°
+ *  @param      SPIn_e          SPIæ¨¡å—(SPI0ã€SPI1ã€SPI2)
+ *  @param      SPIn_PCSn_e     ç‰‡é€‰ç®¡è„šç¼–å·
+ *  @param      modata          å‘é€çš„æ•°æ®ç¼“å†²åŒºåœ°å€(ä¸éœ€è¦æŽ¥æ”¶åˆ™ä¼  NULL)
+ *  @param      midata          å‘é€æ•°æ®æ—¶æŽ¥æ”¶åˆ°çš„æ•°æ®çš„å­˜å‚¨åœ°å€(ä¸éœ€è¦æŽ¥æ”¶åˆ™ä¼  NULL)
  *  @since      v5.0
- *  Sample usage:           spi_mosi(SPI0,SPIn_PCS0,buff,buff,2);    //·¢ËÍbuffµÄÄÚÈÝ£¬²¢½ÓÊÕµ½buffÀï£¬³¤¶ÈÎª2×Ö½Ú
+ *  Sample usage:           spi_mosi(SPI0,SPIn_PCS0,buff,buff,2);    //å‘é€buffçš„å†…å®¹ï¼Œå¹¶æŽ¥æ”¶åˆ°buffé‡Œï¼Œé•¿åº¦ä¸º2å­—èŠ‚
  */
 void spi_mosi(SPIn_e spin, SPI_PCSn_e pcs, uint8 *modata, uint8 *midata, uint32 len)
 {
     uint32 i = 0;
     do
     {
-        /*************  Çå±êÖ¾Î»  ***************/
+        /*************  æ¸…æ ‡å¿—ä½  ***************/
         SPI_SR_REG(SPIN[spin]) = (0
-                                  | SPI_SR_EOQF_MASK    //·¢ËÍ¶ÓÁÐ¿ÕÁË£¬·¢ËÍÍê±Ï±êÖ¾
-                                  | SPI_SR_TFUF_MASK    //´«ÊäFIFOÏÂÒç±êÖ¾Î»£¬SPIÎª´Ó»úÄ£Ê½£¬Tx FIFOÎª¿Õ£¬¶øÍâ²¿SPIÖ÷»úÄ£Ê½Æô¶¯´«Êä£¬±êÖ¾Î»¾Í»áÖÃ1£¬Ð´1Çå0
-                                  | SPI_SR_TFFF_MASK    //´«ÊäFIFOÂú±êÖ¾Î»¡£ Ð´1»òÕßDMA¿ØÖÆÆ÷·¢ÏÖ´«ÊäFIFOÂúÁË¾Í»áÇå0¡£ 0±íÊ¾Tx FIFOÂúÁË
-                                  | SPI_SR_RFOF_MASK    //½ÓÊÕFIFOÒç³ö±êÖ¾Î»¡£
-                                  | SPI_SR_RFDF_MASK    //½ÓÊÕFIFOËðºÄ±êÖ¾Î»£¬Ð´1»òÕßDMA¿ØÖÆÆ÷·¢ÏÖ´«ÊäFIFO¿ÕÁË¾Í»áÇå0¡£0±íÊ¾Rx FIFO¿Õ
+                                  | SPI_SR_EOQF_MASK    //å‘é€é˜Ÿåˆ—ç©ºäº†ï¼Œå‘é€å®Œæ¯•æ ‡å¿—
+                                  | SPI_SR_TFUF_MASK    //ä¼ è¾“FIFOä¸‹æº¢æ ‡å¿—ä½ï¼ŒSPIä¸ºä»Žæœºæ¨¡å¼ï¼ŒTx FIFOä¸ºç©ºï¼Œè€Œå¤–éƒ¨SPIä¸»æœºæ¨¡å¼å¯åŠ¨ä¼ è¾“ï¼Œæ ‡å¿—ä½å°±ä¼šç½®1ï¼Œå†™1æ¸…0
+                                  | SPI_SR_TFFF_MASK    //ä¼ è¾“FIFOæ»¡æ ‡å¿—ä½ã€‚ å†™1æˆ–è€…DMAæŽ§åˆ¶å™¨å‘çŽ°ä¼ è¾“FIFOæ»¡äº†å°±ä¼šæ¸…0ã€‚ 0è¡¨ç¤ºTx FIFOæ»¡äº†
+                                  | SPI_SR_RFOF_MASK    //æŽ¥æ”¶FIFOæº¢å‡ºæ ‡å¿—ä½ã€‚
+                                  | SPI_SR_RFDF_MASK    //æŽ¥æ”¶FIFOæŸè€—æ ‡å¿—ä½ï¼Œå†™1æˆ–è€…DMAæŽ§åˆ¶å™¨å‘çŽ°ä¼ è¾“FIFOç©ºäº†å°±ä¼šæ¸…0ã€‚0è¡¨ç¤ºRx FIFOç©º
                                  );
 
 
-        /************** ÇåFIFO¼ÆÊýÆ÷ **************/
+        /************** æ¸…FIFOè®¡æ•°å™¨ **************/
         SPI_MCR_REG(SPIN[spin])    |=  (0
-                                        | SPI_MCR_CLR_TXF_MASK  //Ð´1Çå Tx FIFO ¼ÆÊýÆ÷
-                                        | SPI_MCR_CLR_RXF_MASK  //Ð´1Çå Rx FIFO ¼ÆÊýÆ÷
+                                        | SPI_MCR_CLR_TXF_MASK  //å†™1æ¸… Tx FIFO è®¡æ•°å™¨
+                                        | SPI_MCR_CLR_RXF_MASK  //å†™1æ¸… Rx FIFO è®¡æ•°å™¨
                                        );
 
     }
-    while( (SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));            //Èç¹û Rx FIFO ·Ç¿Õ£¬ÔòÇåFIFO.
+    while( (SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));            //å¦‚æžœ Rx FIFO éžç©ºï¼Œåˆ™æ¸…FIFO.
 
-    /***************** ·¢ËÍlen-1¸öÊý¾Ý *******************/                                                ;
+    /***************** å‘é€len-1ä¸ªæ•°æ® *******************/                                                ;
     for(i = 0; i < (len - 1); i++)
     {
         SPI_PUSHR_REG(SPIN[spin]) = (0
-                                     | SPI_PUSHR_CTAS(0)             //Ñ¡ÔñCTAR0¼Ä´æÆ÷
-                                     | SPI_PUSHR_CONT_MASK           //1Îª ´«ÊäÆÚ¼ä±£³ÖPCSnÐÅºÅ £¬¼´¼ÌÐø´«ÊäÊý¾Ý
+                                     | SPI_PUSHR_CTAS(0)             //é€‰æ‹©CTAR0å¯„å­˜å™¨
+                                     | SPI_PUSHR_CONT_MASK           //1ä¸º ä¼ è¾“æœŸé—´ä¿æŒPCSnä¿¡å· ï¼Œå³ç»§ç»­ä¼ è¾“æ•°æ®
                                      | SPI_PUSHR_PCS(pcs)
-                                     | SPI_PUSHR_TXDATA(modata[i])     //Òª´«ÊäµÄÊý¾Ý
+                                     | SPI_PUSHR_TXDATA(modata[i])     //è¦ä¼ è¾“çš„æ•°æ®
                                     );
 
-        while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDFÎª1£¬Rx FIFO is not empty.
+        while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDFä¸º1ï¼ŒRx FIFO is not empty.
         if(midata != NULL)
         {
-            midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);                  //±£´æ½ÓÊÕµ½µÄÊý¾Ý
+            midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);                  //ä¿å­˜æŽ¥æ”¶åˆ°çš„æ•°æ®
         }
         else
         {
@@ -297,124 +297,124 @@ void spi_mosi(SPIn_e spin, SPI_PCSn_e pcs, uint8 *modata, uint8 *midata, uint32 
         SPI_SR_REG(SPIN[spin]) |= SPI_SR_RFDF_MASK;
     }
 
-    /***************** ·¢ËÍ×îºóÒ»¸öÊý¾Ý *******************/
+    /***************** å‘é€æœ€åŽä¸€ä¸ªæ•°æ® *******************/
     SPI_PUSHR_REG(SPIN[spin]) = (0
-                                 | SPI_PUSHR_CTAS(0)                 //Ñ¡ÔñCTAR0¼Ä´æÆ÷
+                                 | SPI_PUSHR_CTAS(0)                 //é€‰æ‹©CTAR0å¯„å­˜å™¨
                                  | SPI_PUSHR_PCS(pcs)
-                                 | SPI_PUSHR_EOQ_MASK                //1Îª ´«ÊäSPI×îºóµÄÊý¾Ý
+                                 | SPI_PUSHR_EOQ_MASK                //1ä¸º ä¼ è¾“SPIæœ€åŽçš„æ•°æ®
                                  | SPI_PUSHR_TXDATA(modata[i])
                                 );
 
-    SPI_EOQF_WAIT(spin);                                            //µÈ´ý·¢ËÍÍê³É¡£(Òª¼°Ê±°ÑRX FIFOµÄ¶«Î÷Çåµô£¬²»È»ÕâÀï¾ÍÎÞÏÞµÈ´ý)
+    SPI_EOQF_WAIT(spin);                                            //ç­‰å¾…å‘é€å®Œæˆã€‚(è¦åŠæ—¶æŠŠRX FIFOçš„ä¸œè¥¿æ¸…æŽ‰ï¼Œä¸ç„¶è¿™é‡Œå°±æ— é™ç­‰å¾…)
 
-    while( !(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));           //RFDFÎª1£¬Rx FIFO is not empty.
+    while( !(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));           //RFDFä¸º1ï¼ŒRx FIFO is not empty.
     if(midata != NULL)
     {
-        midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);                  //±£´æ½ÓÊÕµ½µÄÊý¾Ý
+        midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);                  //ä¿å­˜æŽ¥æ”¶åˆ°çš„æ•°æ®
     }
     else
     {
         SPI_POPR_REG(SPIN[spin]);
     }
-    SPI_SR_REG(SPIN[spin]) |= SPI_SR_RFDF_MASK;                     //Ð´1Çå¿ÕRFDF£¬±ê¼ÇRx FIFO ÊÇ¿ÕµÄ
+    SPI_SR_REG(SPIN[spin]) |= SPI_SR_RFDF_MASK;                     //å†™1æ¸…ç©ºRFDFï¼Œæ ‡è®°Rx FIFO æ˜¯ç©ºçš„
 }
 
 /*!
- *  @brief      SPI·¢ËÍ½ÓÊÕº¯Êý
- *  @param      SPIn_e          SPIÄ£¿é(SPI0¡¢SPI1¡¢SPI2)
- *  @param      SPIn_PCSn_e     Æ¬Ñ¡¹Ü½Å±àºÅ
- *  @param      mocmd           ·¢ËÍµÄÃüÁî»º³åÇøµØÖ·(²»ÐèÒª½ÓÊÕÔò´« NULL)
- *  @param      micmd           ·¢ËÍÃüÁîÊ±½ÓÊÕµ½µÄÊý¾ÝµÄ´æ´¢µØÖ·(²»ÐèÒª½ÓÊÕÔò´« NULL)
- *  @param      modata          ·¢ËÍµÄÊý¾Ý»º³åÇøµØÖ·(²»ÐèÒª½ÓÊÕÔò´« NULL)
- *  @param      midata          ·¢ËÍÊý¾ÝÊ±½ÓÊÕµ½µÄÊý¾ÝµÄ´æ´¢µØÖ·(²»ÐèÒª½ÓÊÕÔò´« NULL)
+ *  @brief      SPIå‘é€æŽ¥æ”¶å‡½æ•°
+ *  @param      SPIn_e          SPIæ¨¡å—(SPI0ã€SPI1ã€SPI2)
+ *  @param      SPIn_PCSn_e     ç‰‡é€‰ç®¡è„šç¼–å·
+ *  @param      mocmd           å‘é€çš„å‘½ä»¤ç¼“å†²åŒºåœ°å€(ä¸éœ€è¦æŽ¥æ”¶åˆ™ä¼  NULL)
+ *  @param      micmd           å‘é€å‘½ä»¤æ—¶æŽ¥æ”¶åˆ°çš„æ•°æ®çš„å­˜å‚¨åœ°å€(ä¸éœ€è¦æŽ¥æ”¶åˆ™ä¼  NULL)
+ *  @param      modata          å‘é€çš„æ•°æ®ç¼“å†²åŒºåœ°å€(ä¸éœ€è¦æŽ¥æ”¶åˆ™ä¼  NULL)
+ *  @param      midata          å‘é€æ•°æ®æ—¶æŽ¥æ”¶åˆ°çš„æ•°æ®çš„å­˜å‚¨åœ°å€(ä¸éœ€è¦æŽ¥æ”¶åˆ™ä¼  NULL)
  *  @since      v5.0
- *  Sample usage:           spi_mosi_cmd(SPI0,SPIn_PCS0,cmd,NULL,buff,buff,1,2);    //·¢ËÍcmd/buffµÄÄÚÈÝ£¬²»½ÓÊÕcmd·¢ËÍÊ±µÄÊý¾Ý£¬½ÓÊÕbuff·¢ËÍÊ±µÄÊý¾Ýµ½buffÀï£¬³¤¶È·Ö±ðÎª1¡¢2×Ö½Ú
+ *  Sample usage:           spi_mosi_cmd(SPI0,SPIn_PCS0,cmd,NULL,buff,buff,1,2);    //å‘é€cmd/buffçš„å†…å®¹ï¼Œä¸æŽ¥æ”¶cmdå‘é€æ—¶çš„æ•°æ®ï¼ŒæŽ¥æ”¶buffå‘é€æ—¶çš„æ•°æ®åˆ°buffé‡Œï¼Œé•¿åº¦åˆ†åˆ«ä¸º1ã€2å­—èŠ‚
  */
 void spi_mosi_cmd(SPIn_e spin, SPI_PCSn_e pcs, uint8 *mocmd , uint8 *micmd , uint8 *modata , uint8 *midata, uint32 cmdlen , uint32 len)
 {
     uint32 i = 0;
     do
     {
-        /*************  Çå±êÖ¾Î»  ***************/
+        /*************  æ¸…æ ‡å¿—ä½  ***************/
         SPI_SR_REG(SPIN[spin]) = (0
-                                  | SPI_SR_EOQF_MASK    //·¢ËÍ¶ÓÁÐ¿ÕÁË£¬·¢ËÍÍê±Ï±êÖ¾
-                                  | SPI_SR_TFUF_MASK    //´«ÊäFIFOÏÂÒç±êÖ¾Î»£¬SPIÎª´Ó»úÄ£Ê½£¬Tx FIFOÎª¿Õ£¬¶øÍâ²¿SPIÖ÷»úÄ£Ê½Æô¶¯´«Êä£¬±êÖ¾Î»¾Í»áÖÃ1£¬Ð´1Çå0
-                                  | SPI_SR_TFFF_MASK    //´«ÊäFIFOÂú±êÖ¾Î»¡£ Ð´1»òÕßDMA¿ØÖÆÆ÷·¢ÏÖ´«ÊäFIFOÂúÁË¾Í»áÇå0¡£ 0±íÊ¾Tx FIFOÂúÁË
-                                  | SPI_SR_RFOF_MASK    //½ÓÊÕFIFOÒç³ö±êÖ¾Î»¡£
-                                  | SPI_SR_RFDF_MASK    //½ÓÊÕFIFOËðºÄ±êÖ¾Î»£¬Ð´1»òÕßDMA¿ØÖÆÆ÷·¢ÏÖ´«ÊäFIFO¿ÕÁË¾Í»áÇå0¡£0±íÊ¾Rx FIFO¿Õ
+                                  | SPI_SR_EOQF_MASK    //å‘é€é˜Ÿåˆ—ç©ºäº†ï¼Œå‘é€å®Œæ¯•æ ‡å¿—
+                                  | SPI_SR_TFUF_MASK    //ä¼ è¾“FIFOä¸‹æº¢æ ‡å¿—ä½ï¼ŒSPIä¸ºä»Žæœºæ¨¡å¼ï¼ŒTx FIFOä¸ºç©ºï¼Œè€Œå¤–éƒ¨SPIä¸»æœºæ¨¡å¼å¯åŠ¨ä¼ è¾“ï¼Œæ ‡å¿—ä½å°±ä¼šç½®1ï¼Œå†™1æ¸…0
+                                  | SPI_SR_TFFF_MASK    //ä¼ è¾“FIFOæ»¡æ ‡å¿—ä½ã€‚ å†™1æˆ–è€…DMAæŽ§åˆ¶å™¨å‘çŽ°ä¼ è¾“FIFOæ»¡äº†å°±ä¼šæ¸…0ã€‚ 0è¡¨ç¤ºTx FIFOæ»¡äº†
+                                  | SPI_SR_RFOF_MASK    //æŽ¥æ”¶FIFOæº¢å‡ºæ ‡å¿—ä½ã€‚
+                                  | SPI_SR_RFDF_MASK    //æŽ¥æ”¶FIFOæŸè€—æ ‡å¿—ä½ï¼Œå†™1æˆ–è€…DMAæŽ§åˆ¶å™¨å‘çŽ°ä¼ è¾“FIFOç©ºäº†å°±ä¼šæ¸…0ã€‚0è¡¨ç¤ºRx FIFOç©º
                                  );
 
-        /************** ÇåFIFO¼ÆÊýÆ÷ **************/
+        /************** æ¸…FIFOè®¡æ•°å™¨ **************/
         SPI_MCR_REG(SPIN[spin])    |=  (0
-                                        | SPI_MCR_CLR_TXF_MASK      //Ð´1Çå Tx FIFO ¼ÆÊýÆ÷
-                                        | SPI_MCR_CLR_RXF_MASK      //Ð´1Çå Rx FIFO ¼ÆÊýÆ÷
+                                        | SPI_MCR_CLR_TXF_MASK      //å†™1æ¸… Tx FIFO è®¡æ•°å™¨
+                                        | SPI_MCR_CLR_RXF_MASK      //å†™1æ¸… Rx FIFO è®¡æ•°å™¨
                                        );
 
     }
-    while( (SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));            //Èç¹û Rx FIFO ·Ç¿Õ£¬ÔòÇåFIFO.
+    while( (SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));            //å¦‚æžœ Rx FIFO éžç©ºï¼Œåˆ™æ¸…FIFO.
 
-    /***************** ·¢ËÍcmdlen¸öÊý¾Ý *******************/                                                ;
+    /***************** å‘é€cmdlenä¸ªæ•°æ® *******************/                                                ;
     for(i = 0; i < cmdlen; i++)
     {
         SPI_PUSHR_REG(SPIN[spin]) = (0
-                                     | SPI_PUSHR_CTAS(0)             //Ñ¡ÔñCTAR0¼Ä´æÆ÷
-                                     | SPI_PUSHR_CONT_MASK           //1Îª ´«ÊäÆÚ¼ä±£³ÖPCSnÐÅºÅ £¬¼´¼ÌÐø´«ÊäÊý¾Ý
+                                     | SPI_PUSHR_CTAS(0)             //é€‰æ‹©CTAR0å¯„å­˜å™¨
+                                     | SPI_PUSHR_CONT_MASK           //1ä¸º ä¼ è¾“æœŸé—´ä¿æŒPCSnä¿¡å· ï¼Œå³ç»§ç»­ä¼ è¾“æ•°æ®
                                      | SPI_PUSHR_PCS(pcs)
-                                     | SPI_PUSHR_TXDATA(mocmd[i])    //Òª´«ÊäµÄÊý¾Ý
+                                     | SPI_PUSHR_TXDATA(mocmd[i])    //è¦ä¼ è¾“çš„æ•°æ®
                                     );
 
-        while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDFÎª1£¬Rx FIFO is not empty.
+        while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDFä¸º1ï¼ŒRx FIFO is not empty.
         if(micmd != NULL)
         {
-            micmd[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //±£´æ½ÓÊÕµ½µÄÊý¾Ý
+            micmd[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //ä¿å­˜æŽ¥æ”¶åˆ°çš„æ•°æ®
         }
         else
         {
-            SPI_POPR_REG(SPIN[spin]);                               //¶ÁÈ¡FIFOÊý¾Ý(¶ªÆú¶ÁÈ¡µ½µÄÊý¾Ý)
+            SPI_POPR_REG(SPIN[spin]);                               //è¯»å–FIFOæ•°æ®(ä¸¢å¼ƒè¯»å–åˆ°çš„æ•°æ®)
         }
         SPI_SR_REG(SPIN[spin]) |= SPI_SR_RFDF_MASK;
     }
 
-    /***************** ·¢ËÍlen-1¸öÊý¾Ý *******************/                                                ;
+    /***************** å‘é€len-1ä¸ªæ•°æ® *******************/                                                ;
     for(i = 0; i < (len - 1); i++)
     {
         SPI_PUSHR_REG(SPIN[spin]) = (0
-                                     | SPI_PUSHR_CTAS(0)             //Ñ¡ÔñCTAR0¼Ä´æÆ÷
-                                     | SPI_PUSHR_CONT_MASK           //1Îª ´«ÊäÆÚ¼ä±£³ÖPCSnÐÅºÅ £¬¼´¼ÌÐø´«ÊäÊý¾Ý
+                                     | SPI_PUSHR_CTAS(0)             //é€‰æ‹©CTAR0å¯„å­˜å™¨
+                                     | SPI_PUSHR_CONT_MASK           //1ä¸º ä¼ è¾“æœŸé—´ä¿æŒPCSnä¿¡å· ï¼Œå³ç»§ç»­ä¼ è¾“æ•°æ®
                                      | SPI_PUSHR_PCS(pcs)
-                                     | SPI_PUSHR_TXDATA(modata[i])     //Òª´«ÊäµÄÊý¾Ý
+                                     | SPI_PUSHR_TXDATA(modata[i])     //è¦ä¼ è¾“çš„æ•°æ®
                                     );
 
-        while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDFÎª1£¬Rx FIFO is not empty.
+        while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDFä¸º1ï¼ŒRx FIFO is not empty.
 
         if(midata != NULL)
         {
-            midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //±£´æ½ÓÊÕµ½µÄÊý¾Ý
+            midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //ä¿å­˜æŽ¥æ”¶åˆ°çš„æ•°æ®
         }
         else
         {
-            SPI_POPR_REG(SPIN[spin]);                               //¶ÁÈ¡FIFOÊý¾Ý(¶ªÆú¶ÁÈ¡µ½µÄÊý¾Ý)
+            SPI_POPR_REG(SPIN[spin]);                               //è¯»å–FIFOæ•°æ®(ä¸¢å¼ƒè¯»å–åˆ°çš„æ•°æ®)
         }
         SPI_SR_REG(SPIN[spin]) |= SPI_SR_RFDF_MASK;
     }
-    /***************** ·¢ËÍ×îºóÒ»¸öÊý¾Ý *******************/
+    /***************** å‘é€æœ€åŽä¸€ä¸ªæ•°æ® *******************/
     SPI_PUSHR_REG(SPIN[spin]) = (0
-                                 | SPI_PUSHR_CTAS(0)          //Ñ¡ÔñCTAR0¼Ä´æÆ÷
+                                 | SPI_PUSHR_CTAS(0)          //é€‰æ‹©CTAR0å¯„å­˜å™¨
                                  | SPI_PUSHR_PCS(pcs)
-                                 | SPI_PUSHR_EOQ_MASK         //End Of Queue£¬1Îª ´«ÊäSPI×îºóµÄÊý¾Ý
+                                 | SPI_PUSHR_EOQ_MASK         //End Of Queueï¼Œ1ä¸º ä¼ è¾“SPIæœ€åŽçš„æ•°æ®
                                  | SPI_PUSHR_TXDATA(modata[i])
                                 );
 
-    SPI_EOQF_WAIT(spin);    //Òª¼°Ê±°ÑRX FIFOµÄ¶«Î÷Çåµô£¬²»È»ÕâÀï¾ÍÎÞÏÞµÈ´ý
+    SPI_EOQF_WAIT(spin);    //è¦åŠæ—¶æŠŠRX FIFOçš„ä¸œè¥¿æ¸…æŽ‰ï¼Œä¸ç„¶è¿™é‡Œå°±æ— é™ç­‰å¾…
 
-    while( !(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));    //RFDFÎª1£¬Rx FIFO is not empty.
+    while( !(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));    //RFDFä¸º1ï¼ŒRx FIFO is not empty.
     if(midata != NULL)
     {
-        midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //±£´æ½ÓÊÕµ½µÄÊý¾Ý
+        midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //ä¿å­˜æŽ¥æ”¶åˆ°çš„æ•°æ®
     }
     else
     {
-        SPI_POPR_REG(SPIN[spin]);                               //¶ÁÈ¡FIFOÊý¾Ý(¶ªÆú¶ÁÈ¡µ½µÄÊý¾Ý)
+        SPI_POPR_REG(SPIN[spin]);                               //è¯»å–FIFOæ•°æ®(ä¸¢å¼ƒè¯»å–åˆ°çš„æ•°æ®)
     }
     SPI_SR_REG(SPIN[spin]) |= SPI_SR_RFDF_MASK;
 }

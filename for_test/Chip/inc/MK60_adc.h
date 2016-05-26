@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       MK60_adc.h
- * @brief      ADCº¯Êý
- * @author     É½Íâ¿Æ¼¼
+ * @brief      ADCå‡½æ•°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-08-28
  */
@@ -23,13 +23,13 @@ typedef enum
     // ---------------------------------ADC0-------------------------
     ADC0_DP0,
     ADC0_DP1,
-    PGA0_DP,        //²»Ö§³ÖADC£¬ÐèÒªÅäÖÃ ADC PGA register ÉèÖÃ·Å´óÔöÒæ
+    PGA0_DP,        //ä¸æ”¯æŒADCï¼Œéœ€è¦é…ç½® ADC PGA register è®¾ç½®æ”¾å¤§å¢žç›Š
     ADC0_DP3,
-    //Èí¼þ´¥·¢²»Ö§³ÖBÍ¨µÀ
-    ADC0_SE4b,      // PTC2     ²»Ö§³ÖÈí¼þADC
-    ADC0_SE5b,      // PTD1     ²»Ö§³ÖÈí¼þADC
-    ADC0_SE6b,      // PTD5     ²»Ö§³ÖÈí¼þADC
-    ADC0_SE7b,      // PTD6     ²»Ö§³ÖÈí¼þADC
+    //è½¯ä»¶è§¦å‘ä¸æ”¯æŒBé€šé“
+    ADC0_SE4b,      // PTC2     ä¸æ”¯æŒè½¯ä»¶ADC
+    ADC0_SE5b,      // PTD1     ä¸æ”¯æŒè½¯ä»¶ADC
+    ADC0_SE6b,      // PTD5     ä¸æ”¯æŒè½¯ä»¶ADC
+    ADC0_SE7b,      // PTD6     ä¸æ”¯æŒè½¯ä»¶ADC
 
     ADC0_SE8,       // PTB0
     ADC0_SE9,       // PTB1
@@ -44,32 +44,32 @@ typedef enum
     ADC0_SE18,      // PTE25
     ADC0_DM0,       // ADC0_DM0
     ADC0_DM1,       // ADC0_DM1
-    RES0,           // ±£Áô
-    RES1,           // ±£Áô
-    DAC0_OUT,       // DAC0Êä³ö ²»Ö§³ÖADC
-    RES2,           // ±£Áô
-    RES3,           // ±£Áô
-    Temp0_Sensor,   // Temperature Sensor,ÄÚ²¿ÎÂ¶È²âÁ¿£¬¿ÉÓÃADCº¯Êý
-    Bandgap0,       // ÎÂ¶È²¹³¥½á¹¹´øÏ¶»ù×¼Ô´   ²»Ö§³ÖADC
-    RES4,           // ±£Áô
-    VREFH0,         // ²Î¿¼¸ßµçÑ¹,¿ÉÓÃADCº¯Êý ,½á¹ûºãÎª 2^n-1
-    VREFL0,         // ²Î¿¼µÍµçÑ¹,¿ÉÓÃADCº¯Êý ,½á¹ûºãÎª 0
-    Module0_Dis,    // ²»Ö§³Ö ADC
+    RES0,           // ä¿ç•™
+    RES1,           // ä¿ç•™
+    DAC0_OUT,       // DAC0è¾“å‡º ä¸æ”¯æŒADC
+    RES2,           // ä¿ç•™
+    RES3,           // ä¿ç•™
+    Temp0_Sensor,   // Temperature Sensor,å†…éƒ¨æ¸©åº¦æµ‹é‡ï¼Œå¯ç”¨ADCå‡½æ•°
+    Bandgap0,       // æ¸©åº¦è¡¥å¿ç»“æž„å¸¦éš™åŸºå‡†æº   ä¸æ”¯æŒADC
+    RES4,           // ä¿ç•™
+    VREFH0,         // å‚è€ƒé«˜ç”µåŽ‹,å¯ç”¨ADCå‡½æ•° ,ç»“æžœæ’ä¸º 2^n-1
+    VREFL0,         // å‚è€ƒä½Žç”µåŽ‹,å¯ç”¨ADCå‡½æ•° ,ç»“æžœæ’ä¸º 0
+    Module0_Dis,    // ä¸æ”¯æŒ ADC
 
     // ---------------------------------ADC1-------------------------
     ADC1_DP0,
     ADC1_DP1,
-    PGA1_DP,        // ²»Ö§³Ö ADC
+    PGA1_DP,        // ä¸æ”¯æŒ ADC
     ADC1_DP3,
     ADC1_SE4a,      // PTE0
     ADC1_SE5a,      // PTE1
     ADC1_SE6a,      // PTE2
     ADC1_SE7a,      // PTE3
 
-    ADC1_SE4b = ADC1_SE4a,  // PTC8     ²»Ö§³ÖÈí¼þADC ,´«µÝ ADC1_SE4b µ½Èí¼þADCº¯ÊýÀï£¬»áµ±×÷ ADC1_SE4a ´¦Àí¡£
-    ADC1_SE5b = ADC1_SE5a,  // PTC9     ²»Ö§³ÖÈí¼þADC
-    ADC1_SE6b = ADC1_SE6a,  // PTC10    ²»Ö§³ÖÈí¼þADC
-    ADC1_SE7b = ADC1_SE7a,  // PTC11    ²»Ö§³ÖÈí¼þADC
+    ADC1_SE4b = ADC1_SE4a,  // PTC8     ä¸æ”¯æŒè½¯ä»¶ADC ,ä¼ é€’ ADC1_SE4b åˆ°è½¯ä»¶ADCå‡½æ•°é‡Œï¼Œä¼šå½“ä½œ ADC1_SE4a å¤„ç†ã€‚
+    ADC1_SE5b = ADC1_SE5a,  // PTC9     ä¸æ”¯æŒè½¯ä»¶ADC
+    ADC1_SE6b = ADC1_SE6a,  // PTC10    ä¸æ”¯æŒè½¯ä»¶ADC
+    ADC1_SE7b = ADC1_SE7a,  // PTC11    ä¸æ”¯æŒè½¯ä»¶ADC
 
     ADC1_SE8,       // PTB0
     ADC1_SE9,       // PTB1
@@ -84,27 +84,27 @@ typedef enum
     VREF_OUTPUT,    // VREF Output
     ADC1_DM0,       // ADC1_DM0
     ADC1_DM1,       // ADC1_DM1
-    RES5,           //±£Áô
+    RES5,           //ä¿ç•™
     RES6,
     DAC1_OUT,
-    RES7,           //±£Áô
+    RES7,           //ä¿ç•™
     RES8,
     Temp1_Sensor,
-    Bandgap1,       // ÎÂ¶È²¹³¥½á¹¹´øÏ¶»ù×¼Ô´   ²»Ö§³ÖADC
+    Bandgap1,       // æ¸©åº¦è¡¥å¿ç»“æž„å¸¦éš™åŸºå‡†æº   ä¸æ”¯æŒADC
     RES9,
-    VREFH1,         // ²Î¿¼¸ßµçÑ¹,¿ÉÓÃADCº¯Êý ,½á¹ûºãÎª 2^n-1
-    VREFL1,         // ²Î¿¼µÍµçÑ¹,¿ÉÓÃADCº¯Êý ,½á¹ûºãÎª 0
-    Module1_Dis,    // ²»Ö§³Ö ADC
+    VREFH1,         // å‚è€ƒé«˜ç”µåŽ‹,å¯ç”¨ADCå‡½æ•° ,ç»“æžœæ’ä¸º 2^n-1
+    VREFL1,         // å‚è€ƒä½Žç”µåŽ‹,å¯ç”¨ADCå‡½æ•° ,ç»“æžœæ’ä¸º 0
+    Module1_Dis,    // ä¸æ”¯æŒ ADC
 
 } ADCn_Ch_e;
 
-typedef enum  //ADCÄ£¿é
+typedef enum  //ADCæ¨¡å—
 {
     ADC0,
     ADC1
 } ADCn_e;
 
-//¾«¶ÈÎ»Êý
+//ç²¾åº¦ä½æ•°
 typedef enum ADC_nbit
 {
     ADC_8bit   = 0x00,
@@ -114,11 +114,11 @@ typedef enum ADC_nbit
 } ADC_nbit;
 
 
-//Íâ²¿º¯Êý½Ó¿ÚÉùÃ÷
-extern void     adc_init    (ADCn_Ch_e);                //ADC³õÊ¼»¯
-extern uint16   adc_once    (ADCn_Ch_e, ADC_nbit);      //²É¼¯Ò»´ÎÒ»Â·Ä£ÄâÁ¿µÄADÖµ
+//å¤–éƒ¨å‡½æ•°æŽ¥å£å£°æ˜Ž
+extern void     adc_init    (ADCn_Ch_e);                //ADCåˆå§‹åŒ–
+extern uint16   adc_once    (ADCn_Ch_e, ADC_nbit);      //é‡‡é›†ä¸€æ¬¡ä¸€è·¯æ¨¡æ‹Ÿé‡çš„ADå€¼
 
-extern void     adc_stop    (ADCn_e);                   //Í£Ö¹ADC×ª»»
+extern void     adc_stop    (ADCn_e);                   //åœæ­¢ADCè½¬æ¢
 
 
 #endif /* __MK60_ADC16_H__ */

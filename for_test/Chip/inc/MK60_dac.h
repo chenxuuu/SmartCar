@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       MK60_dac.h
- * @brief      DACº¯Êı
- * @author     É½Íâ¿Æ¼¼
+ * @brief      DACå‡½æ•°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-08-28
  */
@@ -17,14 +17,14 @@
 #ifndef     _MK60_DAC_H_
 #define     _MK60_DAC_H_ 1u
 
-typedef enum DACn       //DACÄ£¿é
+typedef enum DACn       //DACæ¨¡å—
 {
     DAC0,
     DAC1
 } DACn_e;
 
-extern void dac_init(DACn_e);               //DACÒ»´Î×ª»»³õÊ¼»¯
-extern void dac_out(DACn_e, uint16 val);    //DACÒ»´Î×ª»»²Ù×÷
+extern void dac_init(DACn_e);               //DACä¸€æ¬¡è½¬æ¢åˆå§‹åŒ–
+extern void dac_out(DACn_e, uint16 val);    //DACä¸€æ¬¡è½¬æ¢æ“ä½œ
 
 #endif  //_MK60_DAC_H_
 

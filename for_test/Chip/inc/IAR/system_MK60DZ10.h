@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       system_MK60DZ10.h
- * @brief      ÏµÍ³Æô¶¯Ïà¹Øº¯Êı
- * @author     É½Íâ¿Æ¼¼
+ * @brief      ç³»ç»Ÿå¯åŠ¨ç›¸å…³å‡½æ•°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-07-02
  */
@@ -22,11 +22,11 @@ extern int core_clk_mhz;
 extern int bus_clk_khz;
 
 
-void start(void);           //kinetis Æô¶¯º¯Êı
-void sysinit (void);        //ÏµÍ³³õÊ¼»¯£¬ÉèÖÃÏµÍ³ÆµÂÊ£¬³õÊ¼»¯printf¶Ë¿Ú
-void trace_clk_init(void);  //trace Ê±ÖÓÊä³ö ³õÊ¼»¯
-void fb_clk_init(void);     //fb Ê±ÖÓÊä³ö ³õÊ¼»¯
+void start(void);           //kinetis å¯åŠ¨å‡½æ•°
+void sysinit (void);        //ç³»ç»Ÿåˆå§‹åŒ–ï¼Œè®¾ç½®ç³»ç»Ÿé¢‘ç‡ï¼Œåˆå§‹åŒ–printfç«¯å£
+void trace_clk_init(void);  //trace æ—¶é’Ÿè¾“å‡º åˆå§‹åŒ–
+void fb_clk_init(void);     //fb æ—¶é’Ÿè¾“å‡º åˆå§‹åŒ–
 
-void common_startup(void);  //¸´ÖÆÖĞ¶ÏÏòÁ¿±í ºÍ ±ØÒªµÄÊı¾İµ½ RAMÀï
+void common_startup(void);  //å¤åˆ¶ä¸­æ–­å‘é‡è¡¨ å’Œ å¿…è¦çš„æ•°æ®åˆ° RAMé‡Œ
 
 #endif  //__SYSTEM_MK60_H__

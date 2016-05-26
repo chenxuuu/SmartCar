@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       main.c
- * @brief      É½ÍâK60 Æ½Ì¨Ö÷³ÌĞò
- * @author     É½Íâ¿Æ¼¼
+ * @brief      å±±å¤–K60 å¹³å°ä¸»ç¨‹åº
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-08-28
  */
@@ -17,25 +17,25 @@
 #include "common.h"
 #include "include.h"
 
-uint8 imgbuff[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊı×é
+uint8 imgbuff[CAMERA_SIZE];                             //å®šä¹‰å­˜å‚¨æ¥æ”¶å›¾åƒçš„æ•°ç»„
 uint8 img[CAMERA_W*CAMERA_H];
 
-//º¯ÊıÉùÃ÷
+//å‡½æ•°å£°æ˜
 void PORTA_IRQHandler();
 void DMA0_IRQHandler();
 
 
 
 /*!
- *  @brief      mainº¯Êı
+ *  @brief      mainå‡½æ•°
  *  @since      v5.3
- *  @note       É½ÍâÉãÏñÍ· LCD ²âÊÔÊµÑé
+ *  @note       å±±å¤–æ‘„åƒå¤´ LCD æµ‹è¯•å®éªŒ
  */
 void  main(void)
 {
-    Site_t site     = {0, 0};                           //ÏÔÊ¾Í¼Ïñ×óÉÏ½ÇÎ»ÖÃ
-    Size_t imgsize  = {CAMERA_W, CAMERA_H};             //Í¼Ïñ´óĞ¡
-    Size_t size;                   //ÏÔÊ¾ÇøÓòÍ¼Ïñ´óĞ¡
+    Site_t site     = {0, 0};                           //æ˜¾ç¤ºå›¾åƒå·¦ä¸Šè§’ä½ç½®
+    Size_t imgsize  = {CAMERA_W, CAMERA_H};             //å›¾åƒå¤§å°
+    Size_t size;                   //æ˜¾ç¤ºåŒºåŸŸå›¾åƒå¤§å°
 
     LCD_init();
     LCD_str            (site,"Cam init ing",FCOLOUR,BCOLOUR);
@@ -46,15 +46,15 @@ void  main(void)
     camera_init(imgbuff);
 
     LCD_str            (site,"Cam init OK!",FCOLOUR,BCOLOUR);
-    //ÅäÖÃÖĞ¶Ï·şÎñº¯Êı
-    set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯ÊıÎª PORTA_IRQHandler
-    set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯ÊıÎª PORTA_IRQHandler
+    //é…ç½®ä¸­æ–­æœåŠ¡å‡½æ•°
+    set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //è®¾ç½®LPTMRçš„ä¸­æ–­æœåŠ¡å‡½æ•°ä¸º PORTA_IRQHandler
+    set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //è®¾ç½®LPTMRçš„ä¸­æ–­æœåŠ¡å‡½æ•°ä¸º PORTA_IRQHandler
 
     while(1)
     {
-        camera_get_img();                                   //ÉãÏñÍ·»ñÈ¡Í¼Ïñ
+        camera_get_img();                                   //æ‘„åƒå¤´è·å–å›¾åƒ
 
-        //ºÚ°×ÉãÏñÍ·
+        //é»‘ç™½æ‘„åƒå¤´
         LCD_Img_Binary_Z(site, size, imgbuff, imgsize);
 
 
@@ -65,26 +65,26 @@ void  main(void)
 
 
 /*!
- *  @brief      PORTAÖĞ¶Ï·şÎñº¯Êı
+ *  @brief      PORTAä¸­æ–­æœåŠ¡å‡½æ•°
  *  @since      v5.0
  */
 void PORTA_IRQHandler()
 {
-    uint8  n;    //Òı½ÅºÅ
+    uint8  n;    //å¼•è„šå·
     uint32 flag;
 
     while(!PORTA_ISFR);
     flag = PORTA_ISFR;
-    PORTA_ISFR  = ~0;                                   //ÇåÖĞ¶Ï±êÖ¾Î»
+    PORTA_ISFR  = ~0;                                   //æ¸…ä¸­æ–­æ ‡å¿—ä½
 
-    n = 29;                                             //³¡ÖĞ¶Ï
-    if(flag & (1 << n))                                 //PTA29´¥·¢ÖĞ¶Ï
+    n = 29;                                             //åœºä¸­æ–­
+    if(flag & (1 << n))                                 //PTA29è§¦å‘ä¸­æ–­
     {
         camera_vsync();
     }
-#if ( CAMERA_USE_HREF == 1 )                            //Ê¹ÓÃĞĞÖĞ¶Ï
+#if ( CAMERA_USE_HREF == 1 )                            //ä½¿ç”¨è¡Œä¸­æ–­
     n = 28;
-    if(flag & (1 << n))                                 //PTA28´¥·¢ÖĞ¶Ï
+    if(flag & (1 << n))                                 //PTA28è§¦å‘ä¸­æ–­
     {
         camera_href();
     }
@@ -94,7 +94,7 @@ void PORTA_IRQHandler()
 }
 
 /*!
- *  @brief      DMA0ÖĞ¶Ï·şÎñº¯Êı
+ *  @brief      DMA0ä¸­æ–­æœåŠ¡å‡½æ•°
  *  @since      v5.0
  */
 void DMA0_IRQHandler()

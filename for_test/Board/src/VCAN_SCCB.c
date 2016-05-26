@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_SCCB.c
- * @brief      OVÉãÏñÍ·ÅäÖÃ×ÜÏßSCCBº¯Êı¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      OVæ‘„åƒå¤´é…ç½®æ€»çº¿SCCBå‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-09-01
  */
@@ -23,8 +23,8 @@
 static void SCCB_delay(uint16 i);
 
 /*!
- *  @brief      SCCBÑÓ³Ùº¯Êı
- *  @param      time    ÑÓÊ±Ê±¼ä
+ *  @brief      SCCBå»¶è¿Ÿå‡½æ•°
+ *  @param      time    å»¶æ—¶æ—¶é—´
  *  @since      v5.0
  */
 static void SCCB_delay(volatile uint16 time)
@@ -36,20 +36,20 @@ static void SCCB_delay(volatile uint16 time)
 }
 
 /*!
- *  @brief      SCCB¹Ü½ÅÅäÖÃ
+ *  @brief      SCCBç®¡è„šé…ç½®
  *  @since      v5.0
  */
 void SCCB_GPIO_init(void)
 {
-    gpio_init  (SCCB_SCL, GPO, 1); //³õÊ¼»¯SCL
-    gpio_init  (SCCB_SDA, GPO, 1); //³õÊ¼»¯SDA
+    gpio_init  (SCCB_SCL, GPO, 1); //åˆå§‹åŒ–SCL
+    gpio_init  (SCCB_SDA, GPO, 1); //åˆå§‹åŒ–SDA
 
     port_init_NoALT(SCCB_SCL,ODO | PULLUP);
     port_init_NoALT(SCCB_SDA,ODO | PULLUP);
 }
 
 /*!
- *  @brief      SCCBÆğÊ¼ĞÅºÅ
+ *  @brief      SCCBèµ·å§‹ä¿¡å·
  *  @since      v5.0
  */
 static uint8 SCCB_Start(void)
@@ -62,7 +62,7 @@ static uint8 SCCB_Start(void)
     if(!SDA_IN())
     {
         SDA_DDR_OUT();
-        return 0;   /* SDAÏßÎªµÍµçÆ½Ôò×ÜÏßÃ¦,ÍË³ö */
+        return 0;   /* SDAçº¿ä¸ºä½ç”µå¹³åˆ™æ€»çº¿å¿™,é€€å‡º */
     }
     SDA_DDR_OUT();
     SDA_L();
@@ -73,7 +73,7 @@ static uint8 SCCB_Start(void)
     if(SDA_IN())
     {
         SDA_DDR_OUT();
-        return 0;   /* SDAÏßÎª¸ßµçÆ½Ôò×ÜÏß³ö´í,ÍË³ö */
+        return 0;   /* SDAçº¿ä¸ºé«˜ç”µå¹³åˆ™æ€»çº¿å‡ºé”™,é€€å‡º */
     }
     //SDA_DDR_OUT();
     //SDA_L();
@@ -82,7 +82,7 @@ static uint8 SCCB_Start(void)
 }
 
 /*!
- *  @brief      SCCBÍ£Ö¹ĞÅºÅ
+ *  @brief      SCCBåœæ­¢ä¿¡å·
  *  @since      v5.0
  */
 static void SCCB_Stop(void)
@@ -98,7 +98,7 @@ static void SCCB_Stop(void)
 }
 
 /*!
- *  @brief      SCCBÓ¦´ğĞÅºÅ
+ *  @brief      SCCBåº”ç­”ä¿¡å·
  *  @since      v5.0
  */
 static void SCCB_Ack(void)
@@ -114,7 +114,7 @@ static void SCCB_Ack(void)
 }
 
 /*!
- *  @brief      SCCBÎŞÓ¦´ğĞÅºÅ
+ *  @brief      SCCBæ— åº”ç­”ä¿¡å·
  *  @since      v5.0
  */
 static void SCCB_NoAck(void)
@@ -130,8 +130,8 @@ static void SCCB_NoAck(void)
 }
 
 /*!
- *  @brief      SCCB µÈ´ıÓ¦´ğ
- *  @return     Ó¦´ğ½á¹û£¨0±íÊ¾ÎŞÓ¦´ğ£¬1±íÊ¾ÓĞÓ¦´ğ£©
+ *  @brief      SCCB ç­‰å¾…åº”ç­”
+ *  @return     åº”ç­”ç»“æœï¼ˆ0è¡¨ç¤ºæ— åº”ç­”ï¼Œ1è¡¨ç¤ºæœ‰åº”ç­”ï¼‰
  *  @since      v5.0
  */
 static int SCCB_WaitAck(void)
@@ -145,7 +145,7 @@ static int SCCB_WaitAck(void)
 
     SCCB_DELAY();
 
-    if(SDA_IN())           //Ó¦´ğÎª¸ßµçÆ½£¬Òì³££¬Í¨ĞÅÊ§°Ü
+    if(SDA_IN())           //åº”ç­”ä¸ºé«˜ç”µå¹³ï¼Œå¼‚å¸¸ï¼Œé€šä¿¡å¤±è´¥
     {
         SDA_DDR_OUT();
         SCL_L();
@@ -157,8 +157,8 @@ static int SCCB_WaitAck(void)
 }
 
 /*!
- *  @brief      SCCB ·¢ËÍµÄÊı¾İ
- *  @param      SendByte    ĞèÒª·¢ËÍµÄÊı¾İ
+ *  @brief      SCCB å‘é€çš„æ•°æ®
+ *  @param      SendByte    éœ€è¦å‘é€çš„æ•°æ®
  *  @since      v5.0
  */
 static void SCCB_SendByte(uint8 SendByte)
@@ -167,7 +167,7 @@ static void SCCB_SendByte(uint8 SendByte)
     while(i--)
     {
 
-        if(SendByte & 0x80)     //SDA Êä³öÊı¾İ
+        if(SendByte & 0x80)     //SDA è¾“å‡ºæ•°æ®
         {
             SDA_H();
         }
@@ -177,17 +177,17 @@ static void SCCB_SendByte(uint8 SendByte)
         }
         SendByte <<= 1;
         SCCB_DELAY();
-        SCL_H();                //SCL À­¸ß£¬²É¼¯ĞÅºÅ
+        SCL_H();                //SCL æ‹‰é«˜ï¼Œé‡‡é›†ä¿¡å·
         SCCB_DELAY();
-        SCL_L();                //SCL Ê±ÖÓÏßÀ­µÍ
+        SCL_L();                //SCL æ—¶é’Ÿçº¿æ‹‰ä½
         //SCCB_DELAY();
     }
     //SCL_L();
 }
 
 /*!
- *  @brief      ½ÓÊÕSCCB×ÜÏßµÄÊı¾İ
- *  @return     ½ÓÊÕµ½µÄÊı¾İ
+ *  @brief      æ¥æ”¶SCCBæ€»çº¿çš„æ•°æ®
+ *  @return     æ¥æ”¶åˆ°çš„æ•°æ®
  *  @since      v5.0
  */
 static int SCCB_ReceiveByte(void)
@@ -220,16 +220,16 @@ static int SCCB_ReceiveByte(void)
 }
 
 /*****************************************************************************************
-* º¯ÊıÃû£ºSCCB_WriteByte
-* ÃèÊö  £ºĞ´Ò»×Ö½ÚÊı¾İ
-* ÊäÈë  £º- WriteAddress: ´ıĞ´ÈëµØÖ·    - SendByte: ´ıĞ´ÈëÊı¾İ  - DeviceAddress: Æ÷¼şÀàĞÍ
-* Êä³ö  £º·µ»ØÎª:=1³É¹¦Ğ´Èë,=0Ê§°Ü
-* ×¢Òâ  £ºÎŞ
+* å‡½æ•°åï¼šSCCB_WriteByte
+* æè¿°  ï¼šå†™ä¸€å­—èŠ‚æ•°æ®
+* è¾“å…¥  ï¼š- WriteAddress: å¾…å†™å…¥åœ°å€    - SendByte: å¾…å†™å…¥æ•°æ®  - DeviceAddress: å™¨ä»¶ç±»å‹
+* è¾“å‡º  ï¼šè¿”å›ä¸º:=1æˆåŠŸå†™å…¥,=0å¤±è´¥
+* æ³¨æ„  ï¼šæ— 
 *****************************************************************************************/
 static int SCCB_WriteByte_one( uint16 WriteAddress , uint8 SendByte );
 
 
-int SCCB_WriteByte( uint16 WriteAddress , uint8 SendByte )            //¿¼ÂÇµ½ÓÃsccbµÄ¹Ü½ÅÄ£Äâ£¬±È½ÏÈİÒ×Ê§°Ü£¬Òò´Ë¶àÊÔ¼¸´Î
+int SCCB_WriteByte( uint16 WriteAddress , uint8 SendByte )            //è€ƒè™‘åˆ°ç”¨sccbçš„ç®¡è„šæ¨¡æ‹Ÿï¼Œæ¯”è¾ƒå®¹æ˜“å¤±è´¥ï¼Œå› æ­¤å¤šè¯•å‡ æ¬¡
 {
     uint8 i = 0;
     while( 0 == SCCB_WriteByte_one ( WriteAddress, SendByte ) )
@@ -249,13 +249,13 @@ int SCCB_WriteByte_one( uint16 WriteAddress , uint8 SendByte )
     {
         return 0;
     }
-    SCCB_SendByte( DEV_ADR );                    /* Æ÷¼şµØÖ· */
+    SCCB_SendByte( DEV_ADR );                    /* å™¨ä»¶åœ°å€ */
     if( !SCCB_WaitAck() )
     {
         SCCB_Stop();
         return 0;
     }
-    SCCB_SendByte((uint8)(WriteAddress & 0x00FF));   /* ÉèÖÃµÍÆğÊ¼µØÖ· */
+    SCCB_SendByte((uint8)(WriteAddress & 0x00FF));   /* è®¾ç½®ä½èµ·å§‹åœ°å€ */
     SCCB_WaitAck();
     SCCB_SendByte(SendByte);
     SCCB_WaitAck();
@@ -267,11 +267,11 @@ int SCCB_WriteByte_one( uint16 WriteAddress , uint8 SendByte )
 
 
 /******************************************************************************************************************
- * º¯ÊıÃû£ºSCCB_ReadByte
- * ÃèÊö  £º¶ÁÈ¡Ò»´®Êı¾İ
- * ÊäÈë  £º- pBuffer: ´æ·Å¶Á³öÊı¾İ  - length: ´ı¶Á³ö³¤¶È    - ReadAddress: ´ı¶Á³öµØÖ·        - DeviceAddress: Æ÷¼şÀàĞÍ
- * Êä³ö  £º·µ»ØÎª:=1³É¹¦¶ÁÈë,=0Ê§°Ü
- * ×¢Òâ  £ºÎŞ
+ * å‡½æ•°åï¼šSCCB_ReadByte
+ * æè¿°  ï¼šè¯»å–ä¸€ä¸²æ•°æ®
+ * è¾“å…¥  ï¼š- pBuffer: å­˜æ”¾è¯»å‡ºæ•°æ®  - length: å¾…è¯»å‡ºé•¿åº¦    - ReadAddress: å¾…è¯»å‡ºåœ°å€        - DeviceAddress: å™¨ä»¶ç±»å‹
+ * è¾“å‡º  ï¼šè¿”å›ä¸º:=1æˆåŠŸè¯»å…¥,=0å¤±è´¥
+ * æ³¨æ„  ï¼šæ— 
  **********************************************************************************************************************/
 static int SCCB_ReadByte_one(uint8 *pBuffer,   uint16 length,   uint8 ReadAddress);
 
@@ -295,13 +295,13 @@ int SCCB_ReadByte_one(uint8 *pBuffer,   uint16 length,   uint8 ReadAddress)
     {
         return 0;
     }
-    SCCB_SendByte( DEV_ADR );         /* Æ÷¼şµØÖ· */
+    SCCB_SendByte( DEV_ADR );         /* å™¨ä»¶åœ°å€ */
     if( !SCCB_WaitAck() )
     {
         SCCB_Stop();
         return 0;
     }
-    SCCB_SendByte( ReadAddress );           /* ÉèÖÃµÍÆğÊ¼µØÖ· */
+    SCCB_SendByte( ReadAddress );           /* è®¾ç½®ä½èµ·å§‹åœ°å€ */
     SCCB_WaitAck();
     SCCB_Stop();
 
@@ -309,7 +309,7 @@ int SCCB_ReadByte_one(uint8 *pBuffer,   uint16 length,   uint8 ReadAddress)
     {
         return 0;
     }
-    SCCB_SendByte( DEV_ADR + 1 );               /* Æ÷¼şµØÖ· */
+    SCCB_SendByte( DEV_ADR + 1 );               /* å™¨ä»¶åœ°å€ */
 
     if(!SCCB_WaitAck())
     {

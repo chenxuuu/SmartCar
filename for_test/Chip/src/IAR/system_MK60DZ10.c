@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,ɽ��Ƽ�
+ *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     �������ۣ�ɽ����̳ http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
- *     ��ע�������⣬�����������ݰ�Ȩ����ɽ��Ƽ����У�δ������������������ҵ��;��
- *     �޸�����ʱ���뱣��ɽ��Ƽ��İ�Ȩ������
+ *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
+ *     修改内容时必须保留山外科技的版权声明。
  *
  * @file       system_MK60DZ10.c
- * @brief      ϵͳ������غ���
- * @author     ɽ��Ƽ�
+ * @brief      系统启动相关函数
+ * @author     山外科技
  * @version    v5.2
  * @date       2014-10-09
  */
@@ -29,55 +29,55 @@ int bus_clk_khz;
 extern void main(void);
 
 /*!
- *  @brief      kinetis ��������
+ *  @brief      kinetis 启动函数
  *  @since      v5.0
- *  @author     ��˼������˾
- *  @note       �˺�����ϵͳ���������ɻ�ຯ�����ã�Ȼ��ִ��main����
+ *  @author     飞思卡尔公司
+ *  @note       此函数是系统启动初期由汇编函数调用，然后执行main函数
  */
 void start(void)
 {
-    wdog_disable();     // �رտ��Ź�
+    wdog_disable();     // 关闭看门狗
 
-    common_startup();   // �����ж������� �� ��Ҫ�����ݵ� RAM��
+    common_startup();   // 复制中断向量表 和 必要的数据到 RAM里
 
-    sysinit();          // ϵͳ��ʼ��������ϵͳƵ�ʣ���ʼ��printf�˿�
+    sysinit();          // 系统初始化，设置系统频率，初始化printf端口
 
-    //Ϊ�˷�ֹ main ���� �� ������ ���ؿڣ����� ����ʧ�ܣ��˴����� ���� KEY_A �ͽ�����ѭ��
+    //为了防止 main 函数 里 复用了 下载口，导致 下载失败，此处增加 按下 KEY_A 就进入死循环
     SRART_CHECK();
 
-    gpio_init(PTA4,GPO,1);  //��ʼ��Ϊ���1���� ������ NMI �ж�
+    gpio_init(PTA4,GPO,1);  //初始化为输出1，即 禁用了 NMI 中断
 
-    #if   MK60F15       // Ӳ������
+    #if   MK60F15       // 硬件浮点
 
     SCB->CPACR |=((3UL << 10*2)|(3UL << 11*2));     /* set CP10 and CP11 Full Access */
 
     #endif
 
-    main();             // ִ���û�������
+    main();             // 执行用户主函数
 
-    while(1);           // ��ѭ��
+    while(1);           // 死循环
 }
 
 /*!
- *  @brief      ϵͳ��ʼ��������ϵͳƵ�ʣ���ʼ��printf�˿�
+ *  @brief      系统初始化，设置系统频率，初始化printf端口
  *  @since      v5.0
- *  @note       �˺�����ϵͳ���������ɻ�ຯ�����ã�Ȼ��ִ��main����
+ *  @note       此函数是系统启动初期由汇编函数调用，然后执行main函数
  */
 void sysinit (void)
 {
-    core_clk_mhz = pll_init(CORE_CLK);     //����ϵͳʱ��
+    core_clk_mhz = pll_init(CORE_CLK);     //设置系统时钟
 
-    core_clk_khz = core_clk_mhz * 1000;     //�����úõ�ʱ�Ӷ�������ȫ�ֱ�����Ա����ʹ��
+    core_clk_khz = core_clk_mhz * 1000;     //把配置好的时钟都保存在全局变量里，以便后续使用
     bus_clk_khz = core_clk_khz / (((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> 24) + 1);
 
-    uart_init (VCAN_PORT, VCAN_BAUD);   //��ʼ��printf�õ��Ĺܽ�
+    uart_init (VCAN_PORT, VCAN_BAUD);   //初始化printf用到的管脚
 }
 
 /*!
- *  @brief      trace ʱ����� ��ʼ��
+ *  @brief      trace 时钟输出 初始化
  *  @since      v5.0
- *  @note       ������У��ʱ������Ƿ���ȷ
- *  @author     ��˼������˾
+ *  @note       可用来校验时钟输出是否正确
+ *  @author     飞思卡尔公司
  */
 void trace_clk_init(void)
 {
@@ -89,10 +89,10 @@ void trace_clk_init(void)
 }
 
 /*!
- *  @brief      fb ʱ����� ��ʼ��
+ *  @brief      fb 时钟输出 初始化
  *  @since      v5.0
- *  @note       ������У��ʱ������Ƿ���ȷ
- *  @author     ��˼������˾
+ *  @note       可用来校验时钟输出是否正确
+ *  @author     飞思卡尔公司
  */
 void fb_clk_init(void)
 {
@@ -105,9 +105,9 @@ void fb_clk_init(void)
 
 
 /*!
- *  @brief      �����ж������� �� ��Ҫ�����ݵ� RAM��
+ *  @brief      复制中断向量表 和 必要的数据到 RAM里
  *  @since      v5.0
- *  @author     ��˼������˾
+ *  @author     飞思卡尔公司
  */
 #pragma section = ".data"
 #pragma section = ".data_init"
@@ -127,44 +127,44 @@ void common_startup(void)
     uint8 *bss_start, * bss_end;
 
 
-    /*  VECTOR_TABLE �� VECTOR_RAM �ĵ�ַ��  linker �ļ����� ��*.icf�� */
+    /*  VECTOR_TABLE 和 VECTOR_RAM 的地址从  linker 文件里获得 （*.icf） */
     extern uint32 __VECTOR_TABLE[];
     extern uint32 __VECTOR_RAM[];
 
-    /* ����ROM����ж���������RAM�� */
-    if (__VECTOR_RAM != __VECTOR_TABLE)             //�������RAM����������Ҫ�����ж�������
+    /* 复制ROM里的中断向量表到RAM里 */
+    if (__VECTOR_RAM != __VECTOR_TABLE)             //如果不是RAM启动，则需要复制中断向量表
     {
-        for (n = 0; n < 0x410; n++)                 //�������
+        for (n = 0; n < 0x410; n++)                 //逐个复制
             __VECTOR_RAM[n] = __VECTOR_TABLE[n];
     }
-    /* ָ���µ��ж���������ַΪ __VECTOR_RAM */
+    /* 指定新的中断向量表地址为 __VECTOR_RAM */
     write_vtor((uint32)__VECTOR_RAM);
 
-    /* ���Ѹ���ֵ�ı�����ROM�︴�����ݵ�RAM�� */
-    data_ram = __section_begin(".data");            //�Ѹ���ֵ�ı����ĵ�ַ��RAM��
-    data_rom = __section_begin(".data_init");       //�Ѹ���ֵ�ı��������ݴ����ROM���Ҫ��ֵ��RAM��
+    /* 把已赋初值的变量从ROM里复制数据到RAM里 */
+    data_ram = __section_begin(".data");            //已赋初值的变量的地址在RAM里
+    data_rom = __section_begin(".data_init");       //已赋初值的变量的数据存放在ROM里，需要赋值到RAM里
     data_rom_end = __section_end(".data_init");
     n = data_rom_end - data_rom;
 
-    /* ���Ƴ�ʼ�����ݵ�RAM�� */
+    /* 复制初始化数据到RAM里 */
     while (n--)
         *data_ram++ = *data_rom++;
 
-    /* û����ֵ���߳�ֵΪ0�ı�������Ҫ�����RAM������ݣ�ȷ��ֵΪ0 */
+    /* 没赋初值或者初值为0的变量，需要清除其RAM里的数据，确保值为0 */
     bss_start = __section_begin(".bss");
     bss_end = __section_end(".bss");
 
-    /* ���û����ֵ���߳�ֵΪ0�ı�������ֵ */
+    /* 清除没赋初值或者初值为0的变量数据值 */
     n = bss_end - bss_start;
     while(n--)
         *bss_start++ = 0;
 
-    /* ��ֵ�� __ramfunc �����ĺ����ĵĴ���ε� RAM�����Լӿ���������        */
+    /* 赋值用 __ramfunc 声明的函数的的代码段到 RAM，可以加快代码的运行        */
     uint8 *code_relocate_ram = __section_begin("CodeRelocateRam");
     uint8 *code_relocate = __section_begin("CodeRelocate");
     uint8 *code_relocate_end = __section_end("CodeRelocate");
 
-    /* ��ROM�︴�ƺ������뵽RAM�� */
+    /* 从ROM里复制函数代码到RAM里 */
     n = code_relocate_end - code_relocate;
     while (n--)
         *code_relocate_ram++ = *code_relocate++;

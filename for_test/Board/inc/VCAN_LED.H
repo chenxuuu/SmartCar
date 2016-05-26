@@ -1,15 +1,15 @@
  /*!
   *     COPYRIGHT NOTICE
-  *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+  *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
   *     All rights reserved. 
-  *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+  *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
   *
-  *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
-  *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+  *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+  *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
   *
   * @file       VCAN_LED.h
-  * @brief      ledÇı¶¯Í·ÎÄ¼ş
-  * @author     É½Íâ¿Æ¼¼
+  * @brief      ledé©±åŠ¨å¤´æ–‡ä»¶
+  * @author     å±±å¤–ç§‘æŠ€
   * @version    v5.0
   * @date       2013-07-9
   */
@@ -18,7 +18,7 @@
 #define __VCAN_LED_H__
 
 
-/*! Ã¶¾ÙLED±àºÅ */
+/*! æšä¸¾LEDç¼–å· */
 typedef enum
 {
   LED0,
@@ -28,16 +28,16 @@ typedef enum
   LED_MAX,
 }LED_e;
 
-/*! Ã¶¾ÙLEDÁÁÃğ×´Ì¬ */
+/*! æšä¸¾LEDäº®ç­çŠ¶æ€ */
 typedef enum LED_status
 {
-  LED_ON  =   0,            //µÆÁÁ(¶ÔÓ¦µÍµçÆ½)
-  LED_OFF =   1             //µÆ°µ(¶ÔÓ¦¸ßµçÆ½)
+  LED_ON  =   0,            //ç¯äº®(å¯¹åº”ä½ç”µå¹³)
+  LED_OFF =   1             //ç¯æš—(å¯¹åº”é«˜ç”µå¹³)
 }LED_status; 
 
 
-extern void    led_init(LED_e);            //³õÊ¼»¯LED¶Ë¿Ú
-extern void    led(LED_e,LED_status);      //ÉèÖÃLEDµÆÁÁÃğ
-extern void    led_turn(LED_e);            //ÉèÖÃLEDµÆÁÁÃğ·´×ª
+extern void    led_init(LED_e);            //åˆå§‹åŒ–LEDç«¯å£
+extern void    led(LED_e,LED_status);      //è®¾ç½®LEDç¯äº®ç­
+extern void    led_turn(LED_e);            //è®¾ç½®LEDç¯äº®ç­åè½¬
 
 #endif  //__VCAN_LED_H__

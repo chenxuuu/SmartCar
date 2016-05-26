@@ -1,21 +1,21 @@
  /*!
   *     COPYRIGHT NOTICE
-  *     Copyright (c) 2014,É½Íâ¿Æ¼¼
+  *     Copyright (c) 2014,å±±å¤–ç§‘æŠ€
   *     All rights reserved.
-  *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+  *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
   *
-  *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
-  *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+  *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+  *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
   *
   * @file       VCAN_LED.c
-  * @brief      ledÇı¶¯º¯ÊıÊµÏÖ
-  * @author     É½Íâ¿Æ¼¼
+  * @brief      ledé©±åŠ¨å‡½æ•°å®ç°
+  * @author     å±±å¤–ç§‘æŠ€
   * @version    v5.2
   * @date       2014-10-4
   */
 
 /*
- * °üº¬Í·ÎÄ¼ş
+ * åŒ…å«å¤´æ–‡ä»¶
  */
 #include "common.h"
 #include "MK60_port.h"
@@ -24,16 +24,16 @@
 
 
 /*
- * ¶¨ÒåLED ±àºÅ¶ÔÓ¦µÄ¹Ü½Å
+ * å®šä¹‰LED ç¼–å·å¯¹åº”çš„ç®¡è„š
  */
 PTXn_e LED_PTxn[LED_MAX] = {PTB20,PTB21,PTB22,PTB23};
 
 
 /*!
- *  @brief      ³õÊ¼»¯LED¶Ë¿Ú
- *  @param      LED_e    LED±àºÅ
+ *  @brief      åˆå§‹åŒ–LEDç«¯å£
+ *  @param      LED_e    LEDç¼–å·
  *  @since      v5.0
- *  Sample usage:       led_init (LED0);    //³õÊ¼»¯ LED0
+ *  Sample usage:       led_init (LED0);    //åˆå§‹åŒ– LED0
  */
 void    led_init(LED_e ledn)
 {
@@ -55,11 +55,11 @@ void    led_init(LED_e ledn)
 
 
 /*!
- *  @brief      ÉèÖÃLEDµÆÁÁÃğ
- *  @param      LED_e           LED±àºÅ£¨LED0¡¢LED1¡¢LED2¡¢LED3£©
- *  @param      LED_status      LEDÁÁÃğ×´Ì¬£¨LED_ON¡¢LED_OFF£©
+ *  @brief      è®¾ç½®LEDç¯äº®ç­
+ *  @param      LED_e           LEDç¼–å·ï¼ˆLED0ã€LED1ã€LED2ã€LED3ï¼‰
+ *  @param      LED_status      LEDäº®ç­çŠ¶æ€ï¼ˆLED_ONã€LED_OFFï¼‰
  *  @since      v5.2
- *  Sample usage:       led (LED0,LED_ON);    //µãÁÁ LED0
+ *  Sample usage:       led (LED0,LED_ON);    //ç‚¹äº® LED0
  */
 void    led(LED_e ledn,LED_status status)
 {
@@ -78,10 +78,10 @@ void    led(LED_e ledn,LED_status status)
 }
 
 /*!
- *  @brief      ÉèÖÃLEDµÆÁÁÃğ·´×ª
- *  @param      LED_e           LED±àºÅ£¨LED0¡¢LED1¡¢LED2¡¢LED3£©
+ *  @brief      è®¾ç½®LEDç¯äº®ç­åè½¬
+ *  @param      LED_e           LEDç¼–å·ï¼ˆLED0ã€LED1ã€LED2ã€LED3ï¼‰
  *  @since      v5.2
- *  Sample usage:       led_turn (LED0);    // LED0µÆÁÁÃğ·´×ª
+ *  Sample usage:       led_turn (LED0);    // LED0ç¯äº®ç­åè½¬
  */
 void led_turn(LED_e ledn)
 {
