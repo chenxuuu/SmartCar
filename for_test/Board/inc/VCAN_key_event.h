@@ -6,8 +6,8 @@
 
 
 
-extern void key_event_init();                              //³õÊ¼»¯°´¼üÏûÏ¢
-extern void deal_key_event(void);                          //´¦Àí°´¼üÏûÏ¢£¨×Ô¶¯ÇĞ»»Ñ¡ÖĞµÄÊı×Ö£¬×Ô¶¯¶ÔÊı×Ö½øĞĞ¼Ó¼õ£©
+extern void key_event_init();                              //åˆå§‹åŒ–æŒ‰é”®æ¶ˆæ¯
+extern void deal_key_event(void);                          //å¤„ç†æŒ‰é”®æ¶ˆæ¯ï¼ˆè‡ªåŠ¨åˆ‡æ¢é€‰ä¸­çš„æ•°å­—ï¼Œè‡ªåŠ¨å¯¹æ•°å­—è¿›è¡ŒåŠ å‡ï¼‰
 
 
 

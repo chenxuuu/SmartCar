@@ -7,29 +7,29 @@
 
 
 
-//±ê×¼µÄUSBÉè±¸ÓĞ5ÖÖUSBÃèÊö·û£ºÉè±¸ÃèÊö·û£¬ÅäÖÃÃèÊö·û£¬×Ö·û´®ÃèÊö·û£¬½Ó¿ÚÃèÊö·û£¬¶ËµãÃèÊö·û£® Ò»¸öÉè±¸Ö»ÓĞÒ»¸öÉè±¸ÃèÊö·û
+//æ ‡å‡†çš„USBè®¾å¤‡æœ‰5ç§USBæè¿°ç¬¦ï¼šè®¾å¤‡æè¿°ç¬¦ï¼Œé…ç½®æè¿°ç¬¦ï¼Œå­—ç¬¦ä¸²æè¿°ç¬¦ï¼Œæ¥å£æè¿°ç¬¦ï¼Œç«¯ç‚¹æè¿°ç¬¦ï¼ ä¸€ä¸ªè®¾å¤‡åªæœ‰ä¸€ä¸ªè®¾å¤‡æè¿°ç¬¦
 
 
 /*
  * Device and/or Interface Class codes
  */
-//Éè±¸ÀàÂëµÄµäĞÍÖµÈçÏÂ:
-//²Î¿¼ http://www.usb.org/developers/defined_class
+//è®¾å¤‡ç±»ç çš„å…¸å‹å€¼å¦‚ä¸‹:
+//å‚è€ƒ http://www.usb.org/developers/defined_class
 #define USB_CLASS_PER_INTERFACE     0
-#define USB_CLAS_AUDIO              1       // ÉùÒôÉè±¸
-#define USB_CLASS_COMM              2       // µ÷ÖÆ½âµ÷Æ÷£¬Íø¿¨£¬ISDNÁ¬½Ó
-#define USB_CLASS_HID               3       // HIDÉè±¸£¬ÈçÊó±ê£¬¼üÅÌ
-#define USB_CLASS_PHYSICAL          5       // ÎïÀíÉè±¸
-#define USB_CLASS_STILL_IMAGE       6       // ¾²Ö¹Í¼Ïñ²¶×½Éè±¸
-#define USB_CLASS_PRINTER           7       // ´òÓ¡»ú
-#define USB_CLASS_MASS_STORAGE      8       // ÅúÁ¿´æ´¢Éè±¸
+#define USB_CLAS_AUDIO              1       // å£°éŸ³è®¾å¤‡
+#define USB_CLASS_COMM              2       // è°ƒåˆ¶è§£è°ƒå™¨ï¼Œç½‘å¡ï¼ŒISDNè¿æ¥
+#define USB_CLASS_HID               3       // HIDè®¾å¤‡ï¼Œå¦‚é¼ æ ‡ï¼Œé”®ç›˜
+#define USB_CLASS_PHYSICAL          5       // ç‰©ç†è®¾å¤‡
+#define USB_CLASS_STILL_IMAGE       6       // é™æ­¢å›¾åƒæ•æ‰è®¾å¤‡
+#define USB_CLASS_PRINTER           7       // æ‰“å°æœº
+#define USB_CLASS_MASS_STORAGE      8       // æ‰¹é‡å­˜å‚¨è®¾å¤‡
 #define USB_CLASS_HUB               9       // USB HUBS
-#define USB_CLASS_CSCID             0x0B    // ÖÇÄÜ¿¨
-#define USB_CLASS_VIDEO             0X0E    // ÊÓÆµÉè±¸£¬ÈçÍøÂçÉãÏñÍ·
-#define USB_CLASS_VENDOR_SPEC       0xFF    // ³§ÉÌ×Ô¶¨ÒåµÄÉè±¸
+#define USB_CLASS_CSCID             0x0B    // æ™ºèƒ½å¡
+#define USB_CLASS_VIDEO             0X0E    // è§†é¢‘è®¾å¤‡ï¼Œå¦‚ç½‘ç»œæ‘„åƒå¤´
+#define USB_CLASS_VENDOR_SPEC       0xFF    // å‚å•†è‡ªå®šä¹‰çš„è®¾å¤‡
 
 //CDC SubClass
-//¡¶Universal Serial Bus Class Definitions for Communication Devices Revision 1.2¡·
+//ã€ŠUniversal Serial Bus Class Definitions for Communication Devices Revision 1.2ã€‹
 //Table 4 Class Subclass Code 
 #define USB_CDC_SUBCLASS_ACM                    0x02
 #define USB_CDC_SUBCLASS_ETHERNET               0x06
@@ -40,7 +40,7 @@
 #define USB_CDC_SUBCLASS_EEM                    0x0c
 
 //CDC Protocol
-//¡¶Universal Serial Bus Class Definitions for Communication Devices Revision 1.2¡·
+//ã€ŠUniversal Serial Bus Class Definitions for Communication Devices Revision 1.2ã€‹
 //Table 5 Communications Interface Class Control Protocol Codes 
 #define USB_CDC_PROTO_NONE                      0
  
@@ -55,14 +55,14 @@
 #define USB_CDC_ACM_PROTO_VENDOR                0xff//Vendor-specific 
 
 /*
- * ÃèÊö·ûÀàĞÍ
+ * æè¿°ç¬¦ç±»å‹
  */
 //  USB 2.0 spec table 9.5
-#define USB_DT_DEVICE                   0x01        //Éè±¸ÃèÊö·û
-#define USB_DT_CONFIG                   0x02        //ÅäÖÃÃèÊö·û
-#define USB_DT_STRING                   0x03        //½Ó¿ÚÃèÊö·û
-#define USB_DT_INTERFACE                0x04        //×Ö·û´®ÃèÊö·û
-#define USB_DT_ENDPOINT                 0x05        //¶ËµãÃèÊö·û
+#define USB_DT_DEVICE                   0x01        //è®¾å¤‡æè¿°ç¬¦
+#define USB_DT_CONFIG                   0x02        //é…ç½®æè¿°ç¬¦
+#define USB_DT_STRING                   0x03        //æ¥å£æè¿°ç¬¦
+#define USB_DT_INTERFACE                0x04        //å­—ç¬¦ä¸²æè¿°ç¬¦
+#define USB_DT_ENDPOINT                 0x05        //ç«¯ç‚¹æè¿°ç¬¦
 #define USB_DT_DEVICE_QUALIFIER         0x06
 #define USB_DT_OTHER_SPEED_CONFIG       0x07
 #define USB_DT_INTERFACE_POWER          0x08
@@ -88,25 +88,25 @@
 
 #define USB_DT_HUB                      0x29
 
-//Éè±¸ÃèÊö·û
+//è®¾å¤‡æè¿°ç¬¦
 //The USB_DEVICE_DESCRIPTOR structure is used by USB client drivers to retrieve a USB-defined device descriptor.
 //http://technet.microsoft.com/zh-cn/library/ff539280
 typedef struct _USB_DEVICE_DESCRIPTOR
 {
-    uint8  bLength;                   //Ö¸¶¨µÄ³¤¶È£¬¹Ì¶¨Îª0x12
-    uint8  bDescriptorType;           //Éè±¸ÃèÊö·ûÀàĞÍ£®¹Ì¶¨Îª0x01( USB_DEVICE_DESCRIPTOR_TYPE )
-    uint16 bcdUSB;                    //USB ¹æ·¶·¢²¼ºÅ£®±íÊ¾ÁË±¾Éè±¸ÄÜÊÊÓÃÓÚÄÇÖÖĞ­Òé£¬Èç2.0=0x0200£¬1.1=0x0110µÈ£®
-    uint8  bDeviceClass;              //ÀàĞÍ´úÂë£¨ÓÉUSBÖ¸¶¨£©¡£µ±ËüµÄÖµÊÇ0Ê±£¬±íÊ¾ËùÓĞ½Ó¿ÚÔÚÅäÖÃÃèÊö·ûÀï£¬²¢ÇÒËùÓĞ½Ó¿ÚÊÇ¶ÀÁ¢µÄ¡£µ±ËüµÄÖµÊÇ1µ½0xFEÊ±£¬±íÊ¾²»Í¬µÄ½Ó¿Ú¹ØÁªµÄ¡£µ±ËüµÄÖµÊÇ0xFFÊ±£¬ËüÊÇ³§ÉÌ×Ô¼º¶¨ÒåµÄ£®
-    uint8  bDeviceSubClass;           //×ÓÀàĞÍ´úÂë£¨ÓÉUSB·ÖÅä£©£®Èç¹ûbDeviceClassÖµÊÇ0£¬Ò»¶¨ÒªÉèÖÃÎª0£®ÆäËüÇé¿ö¾Í¸ù¾İUSB-IF×éÖ¯¶¨ÒåµÄ±àÂë£®
-    uint8  bDeviceProtocol;           //Ğ­Òé´úÂë£¨ÓÉUSB·ÖÅä£©£®Èç¹ûÊ¹ÓÃUSB-IF×éÖ¯¶¨ÒåµÄĞ­Òé£¬¾ÍĞèÒªÉèÖÃÕâÀïµÄÖµ£¬·ñÔòÖ±½ÓÉèÖÃÎª0¡£Èç¹û³§ÉÌ×Ô¼º¶¨ÒåµÄ¿ÉÒÔÉèÖÃÎª0xFF£®
-    uint8  bMaxPacketSize0;           //¶Ëµã0 ×î´ó·Ö×é´óĞ¡£¨Ö»ÓĞ8,16,32,64ÓĞĞ§£©£®
-    uint16 idVendor;                  //¹©Ó¦ÉÌID£¨ÓÉUSB·ÖÅä£©
-    uint16 idProduct;                 //²úÆ·ID£¨ÓÉ³§ÉÌ·ÖÅä£©£®ÓÉ¹©Ó¦ÉÌIDºÍ²úÆ·ID£¬¾Í¿ÉÒÔÈÃ²Ù×÷ÏµÍ³¼ÓÔØ²»Í¬µÄÇı¶¯³ÌĞò£®
-    uint16 bcdDevice;                 //Éè±¸³ö²ú±àÂë£®ÓÉ³§¼Ò×ÔĞĞÉèÖÃ
-    uint8  iManufacturer;             //³§ÉÌÃèÊö·û×Ö·û´®Ë÷Òı£®Ë÷Òıµ½¶ÔÓ¦µÄ×Ö·û´®ÃèÊö·û£® Îª0Ôò±íÊ¾Ã»ÓĞ£®
-    uint8  iProduct;                  //²úÆ·ÃèÊö·û×Ö·û´®Ë÷Òı£®Í¬ÉÏ
-    uint8  iSerialNumber;             //Éè±¸ĞòÁĞºÅ×Ö·û´®Ë÷Òı£®Í¬ÉÏ
-    uint8  bNumConfigurations;        //ËùÖ§³ÖµÄÅäÖÃ×Ö·û·û´®Ë÷Òı
+    uint8  bLength;                   //æŒ‡å®šçš„é•¿åº¦ï¼Œå›ºå®šä¸º0x12
+    uint8  bDescriptorType;           //è®¾å¤‡æè¿°ç¬¦ç±»å‹ï¼å›ºå®šä¸º0x01( USB_DEVICE_DESCRIPTOR_TYPE )
+    uint16 bcdUSB;                    //USB è§„èŒƒå‘å¸ƒå·ï¼è¡¨ç¤ºäº†æœ¬è®¾å¤‡èƒ½é€‚ç”¨äºé‚£ç§åè®®ï¼Œå¦‚2.0=0x0200ï¼Œ1.1=0x0110ç­‰ï¼
+    uint8  bDeviceClass;              //ç±»å‹ä»£ç ï¼ˆç”±USBæŒ‡å®šï¼‰ã€‚å½“å®ƒçš„å€¼æ˜¯0æ—¶ï¼Œè¡¨ç¤ºæ‰€æœ‰æ¥å£åœ¨é…ç½®æè¿°ç¬¦é‡Œï¼Œå¹¶ä¸”æ‰€æœ‰æ¥å£æ˜¯ç‹¬ç«‹çš„ã€‚å½“å®ƒçš„å€¼æ˜¯1åˆ°0xFEæ—¶ï¼Œè¡¨ç¤ºä¸åŒçš„æ¥å£å…³è”çš„ã€‚å½“å®ƒçš„å€¼æ˜¯0xFFæ—¶ï¼Œå®ƒæ˜¯å‚å•†è‡ªå·±å®šä¹‰çš„ï¼
+    uint8  bDeviceSubClass;           //å­ç±»å‹ä»£ç ï¼ˆç”±USBåˆ†é…ï¼‰ï¼å¦‚æœbDeviceClasså€¼æ˜¯0ï¼Œä¸€å®šè¦è®¾ç½®ä¸º0ï¼å…¶å®ƒæƒ…å†µå°±æ ¹æ®USB-IFç»„ç»‡å®šä¹‰çš„ç¼–ç ï¼
+    uint8  bDeviceProtocol;           //åè®®ä»£ç ï¼ˆç”±USBåˆ†é…ï¼‰ï¼å¦‚æœä½¿ç”¨USB-IFç»„ç»‡å®šä¹‰çš„åè®®ï¼Œå°±éœ€è¦è®¾ç½®è¿™é‡Œçš„å€¼ï¼Œå¦åˆ™ç›´æ¥è®¾ç½®ä¸º0ã€‚å¦‚æœå‚å•†è‡ªå·±å®šä¹‰çš„å¯ä»¥è®¾ç½®ä¸º0xFFï¼
+    uint8  bMaxPacketSize0;           //ç«¯ç‚¹0 æœ€å¤§åˆ†ç»„å¤§å°ï¼ˆåªæœ‰8,16,32,64æœ‰æ•ˆï¼‰ï¼
+    uint16 idVendor;                  //ä¾›åº”å•†IDï¼ˆç”±USBåˆ†é…ï¼‰
+    uint16 idProduct;                 //äº§å“IDï¼ˆç”±å‚å•†åˆ†é…ï¼‰ï¼ç”±ä¾›åº”å•†IDå’Œäº§å“IDï¼Œå°±å¯ä»¥è®©æ“ä½œç³»ç»ŸåŠ è½½ä¸åŒçš„é©±åŠ¨ç¨‹åºï¼
+    uint16 bcdDevice;                 //è®¾å¤‡å‡ºäº§ç¼–ç ï¼ç”±å‚å®¶è‡ªè¡Œè®¾ç½®
+    uint8  iManufacturer;             //å‚å•†æè¿°ç¬¦å­—ç¬¦ä¸²ç´¢å¼•ï¼ç´¢å¼•åˆ°å¯¹åº”çš„å­—ç¬¦ä¸²æè¿°ç¬¦ï¼ ä¸º0åˆ™è¡¨ç¤ºæ²¡æœ‰ï¼
+    uint8  iProduct;                  //äº§å“æè¿°ç¬¦å­—ç¬¦ä¸²ç´¢å¼•ï¼åŒä¸Š
+    uint8  iSerialNumber;             //è®¾å¤‡åºåˆ—å·å­—ç¬¦ä¸²ç´¢å¼•ï¼åŒä¸Š
+    uint8  bNumConfigurations;        //æ‰€æ”¯æŒçš„é…ç½®å­—ç¬¦ç¬¦ä¸²ç´¢å¼•
 } USB_DEVICE_DESCRIPTOR, *PUSB_DEVICE_DESCRIPTOR;
 
 
@@ -115,10 +115,10 @@ const USB_DEVICE_DESCRIPTOR Device_Descriptor =
     0x12,                   //bLength
     USB_DT_DEVICE,          //bDescriptorType
     0x0200,                 //bcdUSB ver R=2.00
-    USB_CLASS_COMM,         //bDeviceClass = CDCÀà
+    USB_CLASS_COMM,         //bDeviceClass = CDCç±»
     USB_CDC_SUBCLASS_ACM,   //bDeviceSubClass
     USB_CDC_PROTO_NONE,     //bDeviceProtocol
-    MaxPacketSize,          //bMaxPacketSize0   Êı¾İ°ü³¤¶È MaxPacketSize ×Ö½Ú
+    MaxPacketSize,          //bMaxPacketSize0   æ•°æ®åŒ…é•¿åº¦ MaxPacketSize å­—èŠ‚
     0x15A2,                 //idVendor - 0x15A2(freescale Vendor ID)
     0xA50F,                 //idProduct
     0x0000,                 //bcdDevice - Version 1.00
@@ -195,7 +195,7 @@ const uint8 String_Descriptor3[] =
 ********************************************************************/
 const uint8 Configuration_Descriptor[0x43] =
 {
-    // ÅäÖÃÃèÊö·û
+    // é…ç½®æè¿°ç¬¦
     0x09,           //bLength
     USB_DT_CONFIG,  //bDescriptorType
     0x43, 0x00,     //wTotalLength - # of bytes including interface and endpoint descpt.
@@ -206,20 +206,20 @@ const uint8 Configuration_Descriptor[0x43] =
     //                              bit 6 if 1 self powered else Bus powered
     //                              bit 5-remote wakeup
     //                              bit 4-0-reserved
-    50,             //bMaxPower - ×î´óµçÁ÷ = bMaxPower *2 = 100mA
+    50,             //bMaxPower - æœ€å¤§ç”µæµ = bMaxPower *2 = 100mA
 
     /********************************************************************
     *       Interface Descriptor
     ********************************************************************/
-    0x09,               //blength - ÃèÊö·ûµÄ³¤¶È£º0x09
-    USB_DT_INTERFACE,   //bDescriptorType - ÃèÊö·ûµÄÀàĞÍ£ºUSB_DT_INTERFACE
+    0x09,               //blength - æè¿°ç¬¦çš„é•¿åº¦ï¼š0x09
+    USB_DT_INTERFACE,   //bDescriptorType - æè¿°ç¬¦çš„ç±»å‹ï¼šUSB_DT_INTERFACE
     0x00,               //bInterfaceNumber - Zero based value identifying the index of the config.
     0x00,               //bAlternateSetting;
-    0x01,               //bNumEndpoints - ¶Ëµã 0 ÒÔÍâµÄ¶ËµãÊı :1
-    USB_CLASS_COMM,     //bInterfaceClass - Àà´úÂë: USB_CLASS_COMM
-    USB_CDC_SUBCLASS_ACM,//bInterfaceSubClass  ×ÓÀà´úÂë:USB_CDC_SUBCLASS_ACM
-    USB_CDC_ACM_PROTO_AT_V25TER, //bInterfaceProtocol  Ğ­Òé´úÂë:
-    0x01,               //iInterface - ×Ö·û´®ÃèÊö·ûµÄË÷ÒıÖµ
+    0x01,               //bNumEndpoints - ç«¯ç‚¹ 0 ä»¥å¤–çš„ç«¯ç‚¹æ•° :1
+    USB_CLASS_COMM,     //bInterfaceClass - ç±»ä»£ç : USB_CLASS_COMM
+    USB_CDC_SUBCLASS_ACM,//bInterfaceSubClass  å­ç±»ä»£ç :USB_CDC_SUBCLASS_ACM
+    USB_CDC_ACM_PROTO_AT_V25TER, //bInterfaceProtocol  åè®®ä»£ç :
+    0x01,               //iInterface - å­—ç¬¦ä¸²æè¿°ç¬¦çš„ç´¢å¼•å€¼
 
     /*Header Functional Descriptor*/
     // Header Functional Descriptor (marks beginning of the concatenated set of Functional Descriptors)
@@ -254,8 +254,8 @@ const uint8 Configuration_Descriptor[0x43] =
     ********************************************************************/
     0x07,           //blength
     USB_DT_ENDPOINT,//bDescriptorType - EndPoint
-    0x81,           //bEndpointAddress  ¶Ëµã1 Îª IN
-    0x03,           //bmAttributes      ÖĞ¶Ï
+    0x81,           //bEndpointAddress  ç«¯ç‚¹1 ä¸º IN
+    0x03,           //bmAttributes      ä¸­æ–­
     MaxPacketSize, 0x00,     //wMaxPacketSize
     0x02,           //bInterval
     /********************************************************************
@@ -275,7 +275,7 @@ const uint8 Configuration_Descriptor[0x43] =
     ********************************************************************/
     0x07,           //blength
     USB_DT_ENDPOINT,//bDescriptorType - EndPoint
-    0x82,           //bEndpointAddress  ¶Ëµã2 IN
+    0x82,           //bEndpointAddress  ç«¯ç‚¹2 IN
     0x02,           //bmAttributes      Bulk
     MaxPacketSize, 0x00,     //wMaxPacketSize
     0x00,           //bInterval

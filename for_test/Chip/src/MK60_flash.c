@@ -1,33 +1,33 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       MK60_flash.c
- * @brief      flashº¯Êı¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      flashå‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.2
  * @date       2014-10-09
  */
 
 
-//°üº¬Í·ÎÄ¼ş
+//åŒ…å«å¤´æ–‡ä»¶
 
 #include "MK60_flash.h"
 
-//ºê¶¨Òå FCCOB Number
+//å®å®šä¹‰ FCCOB Number
 #if defined(MK60DZ10)
-#define     FCMD        FTFL_FCCOB0         //FTFL ÃüÁî
+#define     FCMD        FTFL_FCCOB0         //FTFL å‘½ä»¤
 
 #define     FADDR2      FTFL_FCCOB1         //Flash address [23:16]
 #define     FADDR1      FTFL_FCCOB2         //Flash address [15:8]
 #define     FADDR0      FTFL_FCCOB3         //Flash address [7:0]
 
-#define     FDATA0      FTFL_FCCOB4         //Data Byte 0       //×¢ÒâÒ»µã£¬4×Ö½ÚÅÅĞò£¬FDATA3ÊÇ×îµÍÎ»£¬FDATA0ÊÇ×î¸ßÎ»
+#define     FDATA0      FTFL_FCCOB4         //Data Byte 0       //æ³¨æ„ä¸€ç‚¹ï¼Œ4å­—èŠ‚æ’åºï¼ŒFDATA3æ˜¯æœ€ä½ä½ï¼ŒFDATA0æ˜¯æœ€é«˜ä½
 #define     FDATA1      FTFL_FCCOB5         //Data Byte 1
 #define     FDATA2      FTFL_FCCOB6         //Data Byte 2
 #define     FDATA3      FTFL_FCCOB7         //Data Byte 3
@@ -36,32 +36,32 @@
 #define     FDATA6      FTFL_FCCOBA         //Data Byte 6
 #define     FDATA7      FTFL_FCCOBB         //Data Byte 7
 
-//FCMD ÃüÁî
-#define     RD1BLK    0x00   // ¶ÁÕû¿éFlash
-#define     RD1SEC    0x01   // ¶ÁÕû¸öÉÈÇø
-#define     PGMCHK    0x02   // Ğ´Èë¼ì²é
-#define     RDRSRC    0x03   // ¶ÁÄ¿±êÊı¾İ(4×Ö½Ú)
-#define     PGM4      0x06   // Ğ´Èë³¤×Ö(4×Ö½Ú)
-#define     ERSBLK    0x08   // ²Á³ıÕû¿éFlash
-#define     ERSSCR    0x09   // ²Á³ıFlashÉÈÇø
-#define     PGMSEC    0x0B   // Ğ´ÈëÉÈÇø
-#define     RD1ALL    0x40   // ¶ÁËùÓĞµÄ¿é
-#define     RDONCE    0x41   // Ö»¶ÁÒ»´Î
-#define     PGMONCE   0x43   // Ö»Ğ´Ò»´Î
-#define     ERSALL    0x44   // ²Á³ıËùÓĞ¿é
-#define     VFYKEY    0x45   // ÑéÖ¤ºóÃÅ·ÃÎÊÔ¿³×
-#define     PGMPART   0x80   // Ğ´Èë·ÖÇø
-#define     SETRAM    0x81   // Éè¶¨FlexRAM¹¦ÄÜ
+//FCMD å‘½ä»¤
+#define     RD1BLK    0x00   // è¯»æ•´å—Flash
+#define     RD1SEC    0x01   // è¯»æ•´ä¸ªæ‰‡åŒº
+#define     PGMCHK    0x02   // å†™å…¥æ£€æŸ¥
+#define     RDRSRC    0x03   // è¯»ç›®æ ‡æ•°æ®(4å­—èŠ‚)
+#define     PGM4      0x06   // å†™å…¥é•¿å­—(4å­—èŠ‚)
+#define     ERSBLK    0x08   // æ“¦é™¤æ•´å—Flash
+#define     ERSSCR    0x09   // æ“¦é™¤Flashæ‰‡åŒº
+#define     PGMSEC    0x0B   // å†™å…¥æ‰‡åŒº
+#define     RD1ALL    0x40   // è¯»æ‰€æœ‰çš„å—
+#define     RDONCE    0x41   // åªè¯»ä¸€æ¬¡
+#define     PGMONCE   0x43   // åªå†™ä¸€æ¬¡
+#define     ERSALL    0x44   // æ“¦é™¤æ‰€æœ‰å—
+#define     VFYKEY    0x45   // éªŒè¯åé—¨è®¿é—®é’¥åŒ™
+#define     PGMPART   0x80   // å†™å…¥åˆ†åŒº
+#define     SETRAM    0x81   // è®¾å®šFlexRAMåŠŸèƒ½
 
 #elif defined(MK60F15)
-#define     FCMD        FTFE_FCCOB0         //FTFL ÃüÁî
+#define     FCMD        FTFE_FCCOB0         //FTFL å‘½ä»¤
 
 #define     FADDR2      FTFE_FCCOB1         //Flash address [23:16]
 #define     FADDR1      FTFE_FCCOB2         //Flash address [15:8]
 #define     FADDR0      FTFE_FCCOB3         //Flash address [7:0]
-//Must be 64-bit aligned (Flash address [2:0] = 000)  8×Ö½Ú¶ÔÆë
+//Must be 64-bit aligned (Flash address [2:0] = 000)  8å­—èŠ‚å¯¹é½
 
-#define     FDATA0      FTFE_FCCOB4         //Data Byte 0       //×¢ÒâÒ»µã£¬4×Ö½ÚÅÅĞò£¬FDATA3ÊÇ×îµÍÎ»£¬FDATA0ÊÇ×î¸ßÎ»
+#define     FDATA0      FTFE_FCCOB4         //Data Byte 0       //æ³¨æ„ä¸€ç‚¹ï¼Œ4å­—èŠ‚æ’åºï¼ŒFDATA3æ˜¯æœ€ä½ä½ï¼ŒFDATA0æ˜¯æœ€é«˜ä½
 #define     FDATA1      FTFE_FCCOB5         //Data Byte 1
 #define     FDATA2      FTFE_FCCOB6         //Data Byte 2
 #define     FDATA3      FTFE_FCCOB7         //Data Byte 3
@@ -70,73 +70,73 @@
 #define     FDATA6      FTFE_FCCOBA         //Data Byte 6
 #define     FDATA7      FTFE_FCCOBB         //Data Byte 7
 
-//FCMD ÃüÁî
-#define     RD1BLK    0x00   // ¶ÁÕû¿éFlash
-#define     RD1SEC    0x01   // ¶ÁÕû¸öÉÈÇø
-#define     PGMCHK    0x02   // Ğ´Èë¼ì²é
-#define     RDRSRC    0x03   // ¶ÁÄ¿±êÊı¾İ(8×Ö½Ú)
-#define     PGM8      0x07   // Ğ´Èë³¤×Ö(8×Ö½Ú)
-#define     ERSBLK    0x08   // ²Á³ıÕû¿éFlash
-#define     ERSSCR    0x09   // ²Á³ıFlashÉÈÇø
-#define     PGMSEC    0x0B   // Ğ´ÈëÉÈÇø
-#define     RD1ALL    0x40   // ¶ÁËùÓĞµÄ¿é
-#define     RDONCE    0x41   // Ö»¶ÁÒ»´Î
-#define     PGMONCE   0x43   // Ö»Ğ´Ò»´Î
-#define     ERSALL    0x44   // ²Á³ıËùÓĞ¿é
-#define     VFYKEY    0x45   // ÑéÖ¤ºóÃÅ·ÃÎÊÔ¿³×
-#define     PGMPART   0x80   // Ğ´Èë·ÖÇø
-#define     SETRAM    0x81   // Éè¶¨FlexRAM¹¦ÄÜ
+//FCMD å‘½ä»¤
+#define     RD1BLK    0x00   // è¯»æ•´å—Flash
+#define     RD1SEC    0x01   // è¯»æ•´ä¸ªæ‰‡åŒº
+#define     PGMCHK    0x02   // å†™å…¥æ£€æŸ¥
+#define     RDRSRC    0x03   // è¯»ç›®æ ‡æ•°æ®(8å­—èŠ‚)
+#define     PGM8      0x07   // å†™å…¥é•¿å­—(8å­—èŠ‚)
+#define     ERSBLK    0x08   // æ“¦é™¤æ•´å—Flash
+#define     ERSSCR    0x09   // æ“¦é™¤Flashæ‰‡åŒº
+#define     PGMSEC    0x0B   // å†™å…¥æ‰‡åŒº
+#define     RD1ALL    0x40   // è¯»æ‰€æœ‰çš„å—
+#define     RDONCE    0x41   // åªè¯»ä¸€æ¬¡
+#define     PGMONCE   0x43   // åªå†™ä¸€æ¬¡
+#define     ERSALL    0x44   // æ“¦é™¤æ‰€æœ‰å—
+#define     VFYKEY    0x45   // éªŒè¯åé—¨è®¿é—®é’¥åŒ™
+#define     PGMPART   0x80   // å†™å…¥åˆ†åŒº
+#define     SETRAM    0x81   // è®¾å®šFlexRAMåŠŸèƒ½
 
 #endif
 
 
 
 /*!
- *  @brief      FlashÃüÁî
- *  @return     ÃüÁîÖ´ĞĞ½á¹û(1³É¹¦£¬0Ê§°Ü)
+ *  @brief      Flashå‘½ä»¤
+ *  @return     å‘½ä»¤æ‰§è¡Œç»“æœ(1æˆåŠŸï¼Œ0å¤±è´¥)
  *  @since      v5.0
  */
 __RAMFUNC uint8 flash_cmd()
 {
-    //Ğ´ FTFL_FSTAT Æô¶¯ FlashÃüÁî
+    //å†™ FTFL_FSTAT å¯åŠ¨ Flashå‘½ä»¤
 #if defined(MK60DZ10)
     FTFL_FSTAT =    (0
-                     |  FTFL_FSTAT_CCIF_MASK        // Ö¸ÁîÍê³É±êÖ¾(Ğ´1Çå0)
-                     |  FTFL_FSTAT_RDCOLERR_MASK    // ¶Á³åÍ»´íÎó±êÖ¾(Ğ´1Çå0)
-                     |  FTFL_FSTAT_ACCERR_MASK      // ·ÃÎÊ´íÎó±êÖ¾Î»(Ğ´1Çå0)
-                     |  FTFL_FSTAT_FPVIOL_MASK      // ·Ç·¨·ÃÎÊ±£»¤±êÖ¾Î»(Ğ´1Çå0)
+                     |  FTFL_FSTAT_CCIF_MASK        // æŒ‡ä»¤å®Œæˆæ ‡å¿—(å†™1æ¸…0)
+                     |  FTFL_FSTAT_RDCOLERR_MASK    // è¯»å†²çªé”™è¯¯æ ‡å¿—(å†™1æ¸…0)
+                     |  FTFL_FSTAT_ACCERR_MASK      // è®¿é—®é”™è¯¯æ ‡å¿—ä½(å†™1æ¸…0)
+                     |  FTFL_FSTAT_FPVIOL_MASK      // éæ³•è®¿é—®ä¿æŠ¤æ ‡å¿—ä½(å†™1æ¸…0)
                     );
 
-    while(!(FTFL_FSTAT & FTFL_FSTAT_CCIF_MASK));    // µÈ´ıÃüÁîÍê³É
+    while(!(FTFL_FSTAT & FTFL_FSTAT_CCIF_MASK));    // ç­‰å¾…å‘½ä»¤å®Œæˆ
 
-    // ¼ì²é´íÎó±êÖ¾
+    // æ£€æŸ¥é”™è¯¯æ ‡å¿—
     if( FTFL_FSTAT & (FTFL_FSTAT_ACCERR_MASK | FTFL_FSTAT_RDCOLERR_MASK | FTFL_FSTAT_FPVIOL_MASK | FTFL_FSTAT_MGSTAT0_MASK))
     {
-        return 0 ;                                  //Ö´ĞĞÃüÁî³ö´í
+        return 0 ;                                  //æ‰§è¡Œå‘½ä»¤å‡ºé”™
     }
     else
     {
-        return 1;                                   //Ö´ĞĞÃüÁî³É¹¦
+        return 1;                                   //æ‰§è¡Œå‘½ä»¤æˆåŠŸ
     }
 
 #elif defined(MK60F15)
     FTFE_FSTAT =    (0
-                     |  FTFE_FSTAT_CCIF_MASK        // Ö¸ÁîÍê³É±êÖ¾(Ğ´1Çå0)
-                     |  FTFE_FSTAT_RDCOLERR_MASK    // ¶Á³åÍ»´íÎó±êÖ¾(Ğ´1Çå0)
-                     |  FTFE_FSTAT_ACCERR_MASK      // ·ÃÎÊ´íÎó±êÖ¾Î»(Ğ´1Çå0)
-                     |  FTFE_FSTAT_FPVIOL_MASK      // ·Ç·¨·ÃÎÊ±£»¤±êÖ¾Î»(Ğ´1Çå0)
+                     |  FTFE_FSTAT_CCIF_MASK        // æŒ‡ä»¤å®Œæˆæ ‡å¿—(å†™1æ¸…0)
+                     |  FTFE_FSTAT_RDCOLERR_MASK    // è¯»å†²çªé”™è¯¯æ ‡å¿—(å†™1æ¸…0)
+                     |  FTFE_FSTAT_ACCERR_MASK      // è®¿é—®é”™è¯¯æ ‡å¿—ä½(å†™1æ¸…0)
+                     |  FTFE_FSTAT_FPVIOL_MASK      // éæ³•è®¿é—®ä¿æŠ¤æ ‡å¿—ä½(å†™1æ¸…0)
                     );
 
-    while(!(FTFE_FSTAT & FTFE_FSTAT_CCIF_MASK));    // µÈ´ıÃüÁîÍê³É
+    while(!(FTFE_FSTAT & FTFE_FSTAT_CCIF_MASK));    // ç­‰å¾…å‘½ä»¤å®Œæˆ
 
-    // ¼ì²é´íÎó±êÖ¾
+    // æ£€æŸ¥é”™è¯¯æ ‡å¿—
     if( FTFE_FSTAT & (FTFE_FSTAT_ACCERR_MASK | FTFE_FSTAT_RDCOLERR_MASK | FTFE_FSTAT_FPVIOL_MASK | FTFE_FSTAT_MGSTAT0_MASK))
     {
-        return 0 ;                                  //Ö´ĞĞÃüÁî³ö´í
+        return 0 ;                                  //æ‰§è¡Œå‘½ä»¤å‡ºé”™
     }
     else
     {
-        return 1;                                   //Ö´ĞĞÃüÁî³É¹¦
+        return 1;                                   //æ‰§è¡Œå‘½ä»¤æˆåŠŸ
     }
 
 #endif
@@ -144,57 +144,57 @@ __RAMFUNC uint8 flash_cmd()
 
 
 /*!
- *  @brief      ³õÊ¼»¯flash
+ *  @brief      åˆå§‹åŒ–flash
  *  @since      v5.0
  */
 __RAMFUNC void flash_init(void)
 {
 #if defined( MK60DZ10)
-    // Çå³ıFlashÔ¤¶ÁÈ¡»º³åÇø
+    // æ¸…é™¤Flashé¢„è¯»å–ç¼“å†²åŒº
     FMC_PFB0CR |= FMC_PFB0CR_S_B_INV_MASK;      //
     FMC_PFB1CR |= FMC_PFB0CR_S_B_INV_MASK;
 
-    while(!(FTFL_FSTAT & FTFL_FSTAT_CCIF_MASK));    // µÈ´ıÃüÁîÍê³É
+    while(!(FTFL_FSTAT & FTFL_FSTAT_CCIF_MASK));    // ç­‰å¾…å‘½ä»¤å®Œæˆ
 
     FTFL_FSTAT =    (0
-                     |  FTFL_FSTAT_CCIF_MASK        // Ö¸ÁîÍê³É±êÖ¾(Ğ´1Çå0)
-                     |  FTFL_FSTAT_RDCOLERR_MASK    // ¶Á³åÍ»´íÎó±êÖ¾(Ğ´1Çå0)
-                     |  FTFL_FSTAT_ACCERR_MASK      // ·ÃÎÊ´íÎó±êÖ¾Î»(Ğ´1Çå0)
-                     |  FTFL_FSTAT_FPVIOL_MASK      // ·Ç·¨·ÃÎÊ±£»¤±êÖ¾Î»(Ğ´1Çå0)
+                     |  FTFL_FSTAT_CCIF_MASK        // æŒ‡ä»¤å®Œæˆæ ‡å¿—(å†™1æ¸…0)
+                     |  FTFL_FSTAT_RDCOLERR_MASK    // è¯»å†²çªé”™è¯¯æ ‡å¿—(å†™1æ¸…0)
+                     |  FTFL_FSTAT_ACCERR_MASK      // è®¿é—®é”™è¯¯æ ‡å¿—ä½(å†™1æ¸…0)
+                     |  FTFL_FSTAT_FPVIOL_MASK      // éæ³•è®¿é—®ä¿æŠ¤æ ‡å¿—ä½(å†™1æ¸…0)
                     );
 
 #elif defined(MK60F15)
-    // Çå³ıFlashÔ¤¶ÁÈ¡»º³åÇø
+    // æ¸…é™¤Flashé¢„è¯»å–ç¼“å†²åŒº
     FMC_PFB01CR |= FMC_PFB01CR_S_B_INV_MASK;      //
     //FMC_PFB23CR |= FMC_PFB23CR_S_B_INV_MASK;
 
-    while(!(FTFE_FSTAT & FTFE_FSTAT_CCIF_MASK));    // µÈ´ıÃüÁîÍê³É
+    while(!(FTFE_FSTAT & FTFE_FSTAT_CCIF_MASK));    // ç­‰å¾…å‘½ä»¤å®Œæˆ
 
     FTFE_FSTAT =    (0
-                     |  FTFE_FSTAT_CCIF_MASK        // Ö¸ÁîÍê³É±êÖ¾(Ğ´1Çå0)
-                     |  FTFE_FSTAT_RDCOLERR_MASK    // ¶Á³åÍ»´íÎó±êÖ¾(Ğ´1Çå0)
-                     |  FTFE_FSTAT_ACCERR_MASK      // ·ÃÎÊ´íÎó±êÖ¾Î»(Ğ´1Çå0)
-                     |  FTFE_FSTAT_FPVIOL_MASK      // ·Ç·¨·ÃÎÊ±£»¤±êÖ¾Î»(Ğ´1Çå0)
+                     |  FTFE_FSTAT_CCIF_MASK        // æŒ‡ä»¤å®Œæˆæ ‡å¿—(å†™1æ¸…0)
+                     |  FTFE_FSTAT_RDCOLERR_MASK    // è¯»å†²çªé”™è¯¯æ ‡å¿—(å†™1æ¸…0)
+                     |  FTFE_FSTAT_ACCERR_MASK      // è®¿é—®é”™è¯¯æ ‡å¿—ä½(å†™1æ¸…0)
+                     |  FTFE_FSTAT_FPVIOL_MASK      // éæ³•è®¿é—®ä¿æŠ¤æ ‡å¿—ä½(å†™1æ¸…0)
                     );
 #endif
     DELAY_MS(10);
 }
 
 /*!
- *  @brief      ²Á³ıÖ¸¶¨flashÉÈÇø
- *  @param      sector_num    ÉÈÇøºÅ£¨K60N512Êµ¼ÊÊ¹ÓÃ0~255£©
- *  @return     Ö´ĞĞ½á¹û(1³É¹¦£¬0Ê§°Ü)
+ *  @brief      æ“¦é™¤æŒ‡å®šflashæ‰‡åŒº
+ *  @param      sector_num    æ‰‡åŒºå·ï¼ˆK60N512å®é™…ä½¿ç”¨0~255ï¼‰
+ *  @return     æ‰§è¡Œç»“æœ(1æˆåŠŸï¼Œ0å¤±è´¥)
  *  @since      v5.0
- *  Sample usage:       flash_erase_sector(127);        //²Á³ıÉÈÇø127
+ *  Sample usage:       flash_erase_sector(127);        //æ“¦é™¤æ‰‡åŒº127
  */
 __RAMFUNC uint8 flash_erase_sector(uint16 sector_num)
 {
     uint32 addr = sector_num * FLASH_SECTOR_SIZE;
 
-    // ÉèÖÃ²Á³ıÃüÁî
+    // è®¾ç½®æ“¦é™¤å‘½ä»¤
     FCMD = ERSSCR;
 
-    // ÉèÖÃÄ¿±êµØÖ·
+    // è®¾ç½®ç›®æ ‡åœ°å€
     FADDR2 = ((Dtype *)&addr)->B[2];
     FADDR1 = ((Dtype *)&addr)->B[1];
     FADDR0 = ((Dtype *)&addr)->B[0];
@@ -218,51 +218,51 @@ __RAMFUNC uint8 flash_erase_sector(uint16 sector_num)
 
 
 /*!
- *  @brief      Ğ´Èë³¤×Ö½ÚÊı¾İµ½ flashÖ¸¶¨µØÖ·
- *  @param      sector_num      ÉÈÇøºÅ£¨0 ~ FLASH_SECTOR_NUM£©
- *  @param      offset          Ğ´ÈëÉÈÇøÄÚ²¿Æ«ÒÆµØÖ·£¨0~2043 ÖĞ 4µÄ±¶Êı£©
- *  @param      data            ĞèÒªĞ´ÈëµÄÊı¾İ
- *  @return     Ö´ĞĞ½á¹û(1³É¹¦£¬0Ê§°Ü)
+ *  @brief      å†™å…¥é•¿å­—èŠ‚æ•°æ®åˆ° flashæŒ‡å®šåœ°å€
+ *  @param      sector_num      æ‰‡åŒºå·ï¼ˆ0 ~ FLASH_SECTOR_NUMï¼‰
+ *  @param      offset          å†™å…¥æ‰‡åŒºå†…éƒ¨åç§»åœ°å€ï¼ˆ0~2043 ä¸­ 4çš„å€æ•°ï¼‰
+ *  @param      data            éœ€è¦å†™å…¥çš„æ•°æ®
+ *  @return     æ‰§è¡Œç»“æœ(1æˆåŠŸï¼Œ0å¤±è´¥)
  *  @since      v5.0
- *  Sample usage:       flash_write(127,0,0xFFFFFFFE);        //ÉÈÇø127,Æ«ÒÆµØÖ·Îª0,Ğ´ÈëÊı¾İ:0xFFFFFFFE
+ *  Sample usage:       flash_write(127,0,0xFFFFFFFE);        //æ‰‡åŒº127,åç§»åœ°å€ä¸º0,å†™å…¥æ•°æ®:0xFFFFFFFE
  */
 __RAMFUNC uint8 flash_write(uint16 sector_num, uint16 offset, FLASH_WRITE_TYPE data)
 {
     uint32 addr = sector_num * FLASH_SECTOR_SIZE  + offset ;
     uint32 tmpdata;
 
-    ASSERT(offset % FLASH_ALIGN_ADDR == 0);             //Æ«ÒÆÁ¿±ØĞëÎª4µÄ±¶Êı
-    //´Ë´¦ÌáÊ¾¾¯¸æ£¬µ«ÊÇ°²È«µÄ¡­¡­
-    ASSERT(offset <= FLASH_SECTOR_SIZE);                //ÉÈÇø´óĞ¡Îª2K£¬¼´Æ«ÒÆÁ¿±ØĞë²»´óÓÚ 0x800
-    //´Ë´¦ÌáÊ¾¾¯¸æ£¬µ«ÊÇ°²È«µÄ¡­¡­
+    ASSERT(offset % FLASH_ALIGN_ADDR == 0);             //åç§»é‡å¿…é¡»ä¸º4çš„å€æ•°
+    //æ­¤å¤„æç¤ºè­¦å‘Šï¼Œä½†æ˜¯å®‰å…¨çš„â€¦â€¦
+    ASSERT(offset <= FLASH_SECTOR_SIZE);                //æ‰‡åŒºå¤§å°ä¸º2Kï¼Œå³åç§»é‡å¿…é¡»ä¸å¤§äº 0x800
+    //æ­¤å¤„æç¤ºè­¦å‘Šï¼Œä½†æ˜¯å®‰å…¨çš„â€¦â€¦
 
-    // ÉèÖÃÄ¿±êµØÖ·
+    // è®¾ç½®ç›®æ ‡åœ°å€
     FADDR2 = ((Dtype *)&addr)->B[2];
     FADDR1 = ((Dtype *)&addr)->B[1];
     FADDR0 = ((Dtype *)&addr)->B[0];
 
-    // ÉèÖÃ µÍ32Î»Êı¾İ
+    // è®¾ç½® ä½32ä½æ•°æ®
     tmpdata = (uint32)data;
 
-    FDATA0 = ((Dtype *)&tmpdata)->B[3];                    // ÉèÖÃĞ´ÈëÊı¾İ
+    FDATA0 = ((Dtype *)&tmpdata)->B[3];                    // è®¾ç½®å†™å…¥æ•°æ®
     FDATA1 = ((Dtype *)&tmpdata)->B[2];
     FDATA2 = ((Dtype *)&tmpdata)->B[1];
     FDATA3 = ((Dtype *)&tmpdata)->B[0];
 
 #if defined(MK60DZ10)
 
-    // ÉèÖÃ²Á³ıÃüÁî
+    // è®¾ç½®æ“¦é™¤å‘½ä»¤
     FCMD = PGM4;
 
 #elif defined(MK60F15)
 
-    // ÉèÖÃ²Á³ıÃüÁî
+    // è®¾ç½®æ“¦é™¤å‘½ä»¤
     FCMD = PGM8;
 
-    // ÉèÖÃ ¸ß32Î»Êı¾İ
+    // è®¾ç½® é«˜32ä½æ•°æ®
     tmpdata = (uint32)(data>>32);
 
-    FDATA4 = ((Dtype *)&tmpdata)->B[3];                 // ÉèÖÃĞ´ÈëÊı¾İ
+    FDATA4 = ((Dtype *)&tmpdata)->B[3];                 // è®¾ç½®å†™å…¥æ•°æ®
     FDATA5 = ((Dtype *)&tmpdata)->B[2];
     FDATA6 = ((Dtype *)&tmpdata)->B[1];
     FDATA7 = ((Dtype *)&tmpdata)->B[0];
@@ -273,20 +273,20 @@ __RAMFUNC uint8 flash_write(uint16 sector_num, uint16 offset, FLASH_WRITE_TYPE d
         return 0;
     }
 
-    return 1;  //³É¹¦Ö´ĞĞ
+    return 1;  //æˆåŠŸæ‰§è¡Œ
 
 }
 
 
 /*!
- *  @brief      Ğ´ÈëÊı¾İ»º³åÇøµ½ flashÖ¸¶¨µØÖ·
- *  @param      sector_num      ÉÈÇøºÅ£¨K60N512Êµ¼ÊÊ¹ÓÃ0~255£©
- *  @param      offset          Ğ´ÈëÉÈÇøÄÚ²¿Æ«ÒÆµØÖ·£¨0~2043 ÖĞ 4µÄ±¶Êı£©
- *  @param      buf             ĞèÒªĞ´ÈëµÄÊı¾İ»º³åÇøÊ×µØÖ·
- *  @return     Ö´ĞĞ½á¹û(1³É¹¦£¬0Ê§°Ü)
+ *  @brief      å†™å…¥æ•°æ®ç¼“å†²åŒºåˆ° flashæŒ‡å®šåœ°å€
+ *  @param      sector_num      æ‰‡åŒºå·ï¼ˆK60N512å®é™…ä½¿ç”¨0~255ï¼‰
+ *  @param      offset          å†™å…¥æ‰‡åŒºå†…éƒ¨åç§»åœ°å€ï¼ˆ0~2043 ä¸­ 4çš„å€æ•°ï¼‰
+ *  @param      buf             éœ€è¦å†™å…¥çš„æ•°æ®ç¼“å†²åŒºé¦–åœ°å€
+ *  @return     æ‰§è¡Œç»“æœ(1æˆåŠŸï¼Œ0å¤±è´¥)
  *  @since      v5.0
  *  Sample usage:           uint32 buff[10];
-                            flash_write_buf(127,0,sizeof(buff),buff);        //ÉÈÇø127,Æ«ÒÆµØÖ·Îª0,Ğ´ÈëÊı¾İÔ´µØÖ·:buff,ÊıÄ¿sizeof(buff)
+                            flash_write_buf(127,0,sizeof(buff),buff);        //æ‰‡åŒº127,åç§»åœ°å€ä¸º0,å†™å…¥æ•°æ®æºåœ°å€:buff,æ•°ç›®sizeof(buff)
  */
 
 __RAMFUNC uint8 flash_write_buf(uint16 sector_num, uint16 offset, uint16 cnt, uint8 *buf)
@@ -296,14 +296,14 @@ __RAMFUNC uint8 flash_write_buf(uint16 sector_num, uint16 offset, uint16 cnt, ui
     uint32  addr;
     uint32  data;
 
-    ASSERT(offset % FLASH_ALIGN_ADDR == 0);                    //Æ«ÒÆÁ¿±ØĞëÎª4µÄ±¶Êı
-    //´Ë´¦ÌáÊ¾¾¯¸æ£¬µ«ÊÇ°²È«µÄ(ramº¯Êıµ÷ÓÃromº¯ÊıÒıÆğ¾¯¸æ)
-    ASSERT(offset <= FLASH_SECTOR_SIZE );                    //ÉÈÇø´óĞ¡Îª2K£¬¼´Æ«ÒÆÁ¿±ØĞë²»´óÓÚ 0x800
-    //´Ë´¦ÌáÊ¾¾¯¸æ£¬µ«ÊÇ°²È«µÄ(ramº¯Êıµ÷ÓÃromº¯ÊıÒıÆğ¾¯¸æ)
+    ASSERT(offset % FLASH_ALIGN_ADDR == 0);                    //åç§»é‡å¿…é¡»ä¸º4çš„å€æ•°
+    //æ­¤å¤„æç¤ºè­¦å‘Šï¼Œä½†æ˜¯å®‰å…¨çš„(ramå‡½æ•°è°ƒç”¨romå‡½æ•°å¼•èµ·è­¦å‘Š)
+    ASSERT(offset <= FLASH_SECTOR_SIZE );                    //æ‰‡åŒºå¤§å°ä¸º2Kï¼Œå³åç§»é‡å¿…é¡»ä¸å¤§äº 0x800
+    //æ­¤å¤„æç¤ºè­¦å‘Šï¼Œä½†æ˜¯å®‰å…¨çš„(ramå‡½æ•°è°ƒç”¨romå‡½æ•°å¼•èµ·è­¦å‘Š)
 
-    addr = sector_num * FLASH_SECTOR_SIZE  + offset;      //¼ÆËãµØÖ·
+    addr = sector_num * FLASH_SECTOR_SIZE  + offset;      //è®¡ç®—åœ°å€
 
-    // ÉèÖÃĞ´ÈëÃüÁî
+    // è®¾ç½®å†™å…¥å‘½ä»¤
 #if defined(MK60DZ10)
     FCMD = PGM4;
 #elif defined(MK60F15)
@@ -313,24 +313,24 @@ __RAMFUNC uint8 flash_write_buf(uint16 sector_num, uint16 offset, uint16 cnt, ui
     for(size = 0; size < cnt; size += FLASH_ALIGN_ADDR )
     {
 
-        // ÉèÖÃÄ¿±êµØÖ·
+        // è®¾ç½®ç›®æ ‡åœ°å€
         FADDR2 = ((Dtype *)&addr)->B[2];
         FADDR1 = ((Dtype *)&addr)->B[1];
         FADDR0 = ((Dtype *)&addr)->B[0];
 
-        // ÉèÖÃ µÍ32Î»Êı¾İ
+        // è®¾ç½® ä½32ä½æ•°æ®
         data =  *(uint32 *)buf;
 
-        FDATA0 = ((Dtype *)&data)->B[3];                    // ÉèÖÃĞ´ÈëÊı¾İ
+        FDATA0 = ((Dtype *)&data)->B[3];                    // è®¾ç½®å†™å…¥æ•°æ®
         FDATA1 = ((Dtype *)&data)->B[2];
         FDATA2 = ((Dtype *)&data)->B[1];
         FDATA3 = ((Dtype *)&data)->B[0];
 
 #if defined(MK60F15)
-        // ÉèÖÃ ¸ß32Î»Êı¾İ
+        // è®¾ç½® é«˜32ä½æ•°æ®
         data = *(uint32 *)(buf+4);
 
-        FDATA4 = ((Dtype *)&data)->B[3];                    // ÉèÖÃĞ´ÈëÊı¾İ
+        FDATA4 = ((Dtype *)&data)->B[3];                    // è®¾ç½®å†™å…¥æ•°æ®
         FDATA5 = ((Dtype *)&data)->B[2];
         FDATA6 = ((Dtype *)&data)->B[1];
         FDATA7 = ((Dtype *)&data)->B[0];
@@ -344,6 +344,6 @@ __RAMFUNC uint8 flash_write_buf(uint16 sector_num, uint16 offset, uint16 cnt, ui
         addr += FLASH_ALIGN_ADDR;
         buf += FLASH_ALIGN_ADDR;
     }
-    return 1;  //³É¹¦Ö´ĞĞ
+    return 1;  //æˆåŠŸæ‰§è¡Œ
 }
 

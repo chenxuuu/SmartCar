@@ -1,19 +1,19 @@
 #ifndef _VCAN_LCD_CH_H_
 #define _VCAN_LCD_CH_H_
 
-//¸ù¾İ×Ö¿âÀ´¶¨ £¨ĞèÒªÔÚ SD¿¨ ¸ùÄ¿Â¼ ÏÂ ·ÅÈë HZLIB.bin ×Ö·ûÎÄ¼ş £©
+//æ ¹æ®å­—åº“æ¥å®š ï¼ˆéœ€è¦åœ¨ SDå¡ æ ¹ç›®å½• ä¸‹ æ”¾å…¥ HZLIB.bin å­—ç¬¦æ–‡ä»¶ ï¼‰
 #define LCD_CH_H    16
 #define LCD_CH_W    16
 
-#define LCD_CH_SIZE     (LCD_CH_W*LCD_CH_H/8)         //ºº×ÖÕ¼ÓÃ¿Õ¼ä´óĞ¡
+#define LCD_CH_SIZE     (LCD_CH_W*LCD_CH_H/8)         //æ±‰å­—å ç”¨ç©ºé—´å¤§å°
 
 
 
 extern void LCD_Char_CH (Site_t site,const uint8 *str,uint16 Color,uint16 bkColor);
-extern void LCD_Str_CH  (Site_t site,const uint8 *str, uint16 Color ,uint16 bkColor);   //´¿ºº×Ö×Ö·û´®
-extern void LCD_Str_ENCH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor); //ÖĞÓ¢»ìºÏ×Ö·û´®
+extern void LCD_Str_CH  (Site_t site,const uint8 *str, uint16 Color ,uint16 bkColor);   //çº¯æ±‰å­—å­—ç¬¦ä¸²
+extern void LCD_Str_ENCH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor); //ä¸­è‹±æ··åˆå­—ç¬¦ä¸²
 
-//ÏÂÃæµÄÏÔÊ¾ º¯Êı£¬ÊÇµ÷ÓÃ flash ÀïµÄ×Ö·ûÊı¾İÏÔÊ¾ºº×Ö
+//ä¸‹é¢çš„æ˜¾ç¤º å‡½æ•°ï¼Œæ˜¯è°ƒç”¨ flash é‡Œçš„å­—ç¬¦æ•°æ®æ˜¾ç¤ºæ±‰å­—
 extern void LCD_FChar_CH (Site_t site,const uint8 *strbuf,             uint16 Color,uint16 bkColor);
 extern void LCD_FStr_CH  (Site_t site,const uint8 *strbuf,uint16 num,  uint16 Color,uint16 bkColor);
 

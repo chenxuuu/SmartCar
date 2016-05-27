@@ -1,25 +1,25 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       MK60_flexbus.h
- * @brief      flexbusº¯Êý¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      flexbuså‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-09-02
  */
 
-//ÏÂÃæÁ½¸ö²ÎÊý¶¼Óë flexbus_8080_init º¯ÊýÏà¹Ø£¬ÐÞ¸Äºó¿ÉÄÜÐèÒªÐÞ¸Ä flexbus_8080_init º¯ÊýµÄÄÚÈÝ
-#define FB_BA       0x6000      //»ùµØÖ·     = FB_BA * 0x10000 £¬ÓÃÓÚÇø·Ö ²»Í¬µÄÆ¬Ñ¡ÐÅºÅ
-                                //²Î¿¼ System memory map µÄËµÃ÷£¬ External Memory µÄ·¶Î§Îª 0x6000_0000 ~ 0x9FFF_FFFF
-                                //¼´ FB_BA µÄÈ¡Öµ·¶Î§Îª 0x6000 ~ 0x9FFF
+//ä¸‹é¢ä¸¤ä¸ªå‚æ•°éƒ½ä¸Ž flexbus_8080_init å‡½æ•°ç›¸å…³ï¼Œä¿®æ”¹åŽå¯èƒ½éœ€è¦ä¿®æ”¹ flexbus_8080_init å‡½æ•°çš„å†…å®¹
+#define FB_BA       0x6000      //åŸºåœ°å€     = FB_BA * 0x10000 ï¼Œç”¨äºŽåŒºåˆ† ä¸åŒçš„ç‰‡é€‰ä¿¡å·
+                                //å‚è€ƒ System memory map çš„è¯´æ˜Žï¼Œ External Memory çš„èŒƒå›´ä¸º 0x6000_0000 ~ 0x9FFF_FFFF
+                                //å³ FB_BA çš„å–å€¼èŒƒå›´ä¸º 0x6000 ~ 0x9FFF
 
-#define FB_BAM      0x0800      //»ùµØÖ·ÑÚÄ¤ = (FB_BA + FB_BAM)* 0x10000 £¬ÓÃÓÚÇø·Ö Í¬Ò»¸öCS¿ØÖÆµÄÁ½¸ö²»Á¬ÐøµÄ¿éµÄµØÖ·
+#define FB_BAM      0x0800      //åŸºåœ°å€æŽ©è†œ = (FB_BA + FB_BAM)* 0x10000 ï¼Œç”¨äºŽåŒºåˆ† åŒä¸€ä¸ªCSæŽ§åˆ¶çš„ä¸¤ä¸ªä¸è¿žç»­çš„å—çš„åœ°å€
 
 #define FB_8080_CMD     (*(volatile uint16 *)(FB_BA * 0x10000))
 #define FB_8080_DATA    (*(volatile uint16 *)((FB_BA + FB_BAM )* 0x10000))

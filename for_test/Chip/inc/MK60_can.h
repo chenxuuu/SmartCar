@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       MK60_can.h
- * @brief      CANº¯Êı
- * @author     É½Íâ¿Æ¼¼
+ * @brief      CANå‡½æ•°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -17,7 +17,7 @@
 #ifndef _MK60_CAN_H_
 #define _MK60_CAN_H_
 
-/*! CAN±àºÅ */
+/*! CANç¼–å· */
 typedef enum
 {
     CAN0,
@@ -25,10 +25,10 @@ typedef enum
 
 } CANn_e;
 
-/*! MB»º³åÇø±àºÅ */
+/*! MBç¼“å†²åŒºç¼–å· */
 typedef enum
 {
-    MB_NUM_0,       //¶¨ÒåÓÊÏä0
+    MB_NUM_0,       //å®šä¹‰é‚®ç®±0
     MB_NUM_1,
     MB_NUM_2,
     MB_NUM_3,
@@ -50,30 +50,30 @@ typedef enum
 
 } mb_num_e;
 
-/*! CAN¹¤×÷Ä£Ê½ */
+/*! CANå·¥ä½œæ¨¡å¼ */
 typedef enum
 {
-    CAN_NORMAL,         //Õı³£Ä£Ê½
-    CAN_LOOPBACK,       //»·»ØÄ£Ê½
+    CAN_NORMAL,         //æ­£å¸¸æ¨¡å¼
+    CAN_LOOPBACK,       //ç¯å›æ¨¡å¼
 } CAN_mode_e;
 
 
-/*! CAN²¨ÌØÂÊµÄ¼Ä´æÆ÷ÅäÖÃ½á¹¹Ìå */
+/*! CANæ³¢ç‰¹ç‡çš„å¯„å­˜å™¨é…ç½®ç»“æ„ä½“ */
 typedef struct
 {
-    uint32_t band;          //²¨ÌØÂÊ£¨Kb/s£©
-    uint16_t presdiv;       //·ÖÆµÏµÊı
-    uint8_t  prop_seg;      //´«²¥Ê±¼ä¶Î
-    uint8_t  pseg1;         //ÏàÎ»»º³å¶Î1
-    uint8_t  pseg2;         //ÏàÎ»»º³å¶Î2
-    uint8_t  rjw;           //Í¬²½Ìø×ª¿í¶È
+    uint32_t band;          //æ³¢ç‰¹ç‡ï¼ˆKb/sï¼‰
+    uint16_t presdiv;       //åˆ†é¢‘ç³»æ•°
+    uint8_t  prop_seg;      //ä¼ æ’­æ—¶é—´æ®µ
+    uint8_t  pseg1;         //ç›¸ä½ç¼“å†²æ®µ1
+    uint8_t  pseg2;         //ç›¸ä½ç¼“å†²æ®µ2
+    uint8_t  rjw;           //åŒæ­¥è·³è½¬å®½åº¦
 
-    uint8_t  res[2];        //±£Áô
+    uint8_t  res[2];        //ä¿ç•™
 
 } CAN_band_cfg_t;
 
-/*! CAN²¨ÌØÂÊ±àºÅ */
-typedef enum        //ÈôĞŞ¸Ä´Ë´¦µÄÖµ£¬Ôò»¹±ØĞëĞŞ¸Ä can_band_cfg Êı×é
+/*! CANæ³¢ç‰¹ç‡ç¼–å· */
+typedef enum        //è‹¥ä¿®æ”¹æ­¤å¤„çš„å€¼ï¼Œåˆ™è¿˜å¿…é¡»ä¿®æ”¹ can_band_cfg æ•°ç»„
 {
     CAN_BAUD_10K    ,
     CAN_BAUD_20K    ,
@@ -88,37 +88,37 @@ typedef enum        //ÈôĞŞ¸Ä´Ë´¦µÄÖµ£¬Ôò»¹±ØĞëĞŞ¸Ä can_band_cfg Êı×é
 
 } CAN_BAUD_e;
 
-/*! CANÊ±ÖÓÔ´Ñ¡Ôñ */
+/*! CANæ—¶é’Ÿæºé€‰æ‹© */
 typedef enum
 {
-    CAN_CLKSRC_BUS,   //BUS×ÜÏß
-    CAN_CLKSRC_OSC,   //Íâ²¿¾§Õñ
+    CAN_CLKSRC_BUS,   //BUSæ€»çº¿
+    CAN_CLKSRC_OSC,   //å¤–éƒ¨æ™¶æŒ¯
 } CAN_CLKSRC_e;
 
 
-/*! ÓÃ»§×Ô¶¨Òå CAN ID */
+/*! ç”¨æˆ·è‡ªå®šä¹‰ CAN ID */
 typedef struct
 {
     uint32  ID: 29;     //ID
-    uint32  IDE: 1;     //IDE   // 1 : À©Õ¹ID, 0: ±ê×¼ID
-    uint32  RTR: 1;     //RTR   // 1: Ô¶³ÌÖ¡, 0: Êı¾İÖ¡
+    uint32  IDE: 1;     //IDE   // 1 : æ‰©å±•ID, 0: æ ‡å‡†ID
+    uint32  RTR: 1;     //RTR   // 1: è¿œç¨‹å¸§, 0: æ•°æ®å¸§
 } CAN_USR_ID_t;
 
 
-extern void    can_init        (CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode,CAN_CLKSRC_e clksrc);    //CAN ³õÊ¼»¯
-extern void    can_tx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8 len, void *buff);    //CAN ·¢ËÍÊı¾İ
-extern void    can_rx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void *buff);  //CAN ½ÓÊÕÊı¾İ
+extern void    can_init        (CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode,CAN_CLKSRC_e clksrc);    //CAN åˆå§‹åŒ–
+extern void    can_tx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8 len, void *buff);    //CAN å‘é€æ•°æ®
+extern void    can_rx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void *buff);  //CAN æ¥æ”¶æ•°æ®
 
-extern void    can_rxbuff_enble(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id);                           //Ê¹ÄÜ CAN ½ÓÊÕ»º³åÇø
-extern void    can_rxbuff_mask (CANn_e cann, mb_num_e nMB, uint32 mask,uint8 isIRMQ);                  //CAN ½ÓÊÕÑÚÂëÅäÖÃ£¬Ñ¡Ôñ
+extern void    can_rxbuff_enble(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id);                           //ä½¿èƒ½ CAN æ¥æ”¶ç¼“å†²åŒº
+extern void    can_rxbuff_mask (CANn_e cann, mb_num_e nMB, uint32 mask,uint8 isIRMQ);                  //CAN æ¥æ”¶æ©ç é…ç½®ï¼Œé€‰æ‹©
 
-extern void    can_irq_en      (CANn_e cann, mb_num_e nMB);                                            //Ê¹ÄÜ CAN »º³åÇø½ÓÊÕºÍ·¢ËÍÖĞ¶Ï
-extern void    can_irq_dis     (CANn_e cann, mb_num_e nMB);                                            //½ûÖ¹ CAN »º³åÇø½ÓÊÕºÍ·¢ËÍÖĞ¶Ï
+extern void    can_irq_en      (CANn_e cann, mb_num_e nMB);                                            //ä½¿èƒ½ CAN ç¼“å†²åŒºæ¥æ”¶å’Œå‘é€ä¸­æ–­
+extern void    can_irq_dis     (CANn_e cann, mb_num_e nMB);                                            //ç¦æ­¢ CAN ç¼“å†²åŒºæ¥æ”¶å’Œå‘é€ä¸­æ–­
 
-extern void    can_clear_flag  (CANn_e cann, mb_num_e nMB);                                            //Çå CAN »º³åÇøÖĞ¶Ï±êÖ¾
-extern uint32  can_get_flag    (CANn_e cann, mb_num_e nMB);                                            //»ñµÃ CAN »º³åÇøÖĞ¶Ï±êÖ¾
+extern void    can_clear_flag  (CANn_e cann, mb_num_e nMB);                                            //æ¸… CAN ç¼“å†²åŒºä¸­æ–­æ ‡å¿—
+extern uint32  can_get_flag    (CANn_e cann, mb_num_e nMB);                                            //è·å¾— CAN ç¼“å†²åŒºä¸­æ–­æ ‡å¿—
 
-extern void    can_setband     (CANn_e cann, CAN_BAUD_e band);                                         //ÉèÖÃ CAN µÄ²¨ÌØÂÊ
+extern void    can_setband     (CANn_e cann, CAN_BAUD_e band);                                         //è®¾ç½® CAN çš„æ³¢ç‰¹ç‡
 
 
 #endif

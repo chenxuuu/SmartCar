@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       misc.c
- * @brief      É½ÍâK60 Æ½Ì¨ÆäËûÐèÒªÓÃµ½µÄº¯ÊýµÄÊµÏÖ
- * @author     É½Íâ¿Æ¼¼
+ * @brief      å±±å¤–K60 å¹³å°å…¶ä»–éœ€è¦ç”¨åˆ°çš„å‡½æ•°çš„å®žçŽ°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-06-26
  */
@@ -19,11 +19,11 @@
 
 
 /*!
- *  @brief      ÉèÖÃÖÐ¶ÏÏòÁ¿±íµØÖ·
- *  @param      vtor    ÐÂµÄÖÐ¶ÏÏòÁ¿±íµØÖ·
+ *  @brief      è®¾ç½®ä¸­æ–­å‘é‡è¡¨åœ°å€
+ *  @param      vtor    æ–°çš„ä¸­æ–­å‘é‡è¡¨åœ°å€
  *  @since      v5.0
- *  @author     ·ÉË¼¿¨¶û¹«Ë¾
- *  Sample usage:       write_vtor ((uint32)__VECTOR_RAM);  //ÐÂµÄÖÐ¶ÏÏòÁ¿µØÖ·
+ *  @author     é£žæ€å¡å°”å…¬å¸
+ *  Sample usage:       write_vtor ((uint32)__VECTOR_RAM);  //æ–°çš„ä¸­æ–­å‘é‡åœ°å€
  */
 void write_vtor (int vtor)
 {
@@ -36,16 +36,16 @@ void write_vtor (int vtor)
 
 
 /*!
- *  @brief      ÉèÖÃÖÐ¶ÏÏòÁ¿±íÀïµÄÖÐ¶Ï·þÎñº¯Êý
+ *  @brief      è®¾ç½®ä¸­æ–­å‘é‡è¡¨é‡Œçš„ä¸­æ–­æœåŠ¡å‡½æ•°
  *  @since      v5.0
- *  @warning    Ö»ÓÐÖÐ¶ÏÏòÁ¿±íÎ»ÓÚicfÖ¸¶¨µÄRAMÇøÓòÊ±£¬´Ëº¯Êý²ÅÓÐÐ§
- *  Sample usage:       set_vector_handler(UART3_RX_TX_VECTORn , uart3_handler);    //°Ñ uart3_handler º¯ÊýÌí¼Óµ½ÖÐ¶ÏÏòÁ¿±í
+ *  @warning    åªæœ‰ä¸­æ–­å‘é‡è¡¨ä½äºŽicfæŒ‡å®šçš„RAMåŒºåŸŸæ—¶ï¼Œæ­¤å‡½æ•°æ‰æœ‰æ•ˆ
+ *  Sample usage:       set_vector_handler(UART3_RX_TX_VECTORn , uart3_handler);    //æŠŠ uart3_handler å‡½æ•°æ·»åŠ åˆ°ä¸­æ–­å‘é‡è¡¨
  */
 void set_vector_handler(VECTORn_t vector , void pfunc_handler(void))
 {
     extern uint32 __VECTOR_RAM[];
 
-    ASSERT(SCB->VTOR == (uint32)__VECTOR_RAM);  //¶ÏÑÔ£¬¼ì²âÖÐ¶ÏÏòÁ¿±íÊÇ·ñÔÚ RAM Àï
+    ASSERT(SCB->VTOR == (uint32)__VECTOR_RAM);  //æ–­è¨€ï¼Œæ£€æµ‹ä¸­æ–­å‘é‡è¡¨æ˜¯å¦åœ¨ RAM é‡Œ
 
     __VECTOR_RAM[vector] = (uint32)pfunc_handler;
 }

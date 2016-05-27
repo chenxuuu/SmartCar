@@ -15,9 +15,9 @@ uint32 mybr;               // File R/W count
 
 /*******************************************************************************
 * Function Name  : GetGBKCode_from_sd
-* Description    : ´ÓSD¿¨×Ö¿âÖĞ¶ÁÈ¡×ÔÃşÊı¾İµ½Ö¸¶¨µÄ»º³åÇø
-* Input          : pBuffer---Êı¾İ±£´æµØÖ·
-*				   					c--ºº×Ö×Ö·ûµÍ×Ö½ÚÂë
+* Description    : ä»SDå¡å­—åº“ä¸­è¯»å–è‡ªæ‘¸æ•°æ®åˆ°æŒ‡å®šçš„ç¼“å†²åŒº
+* Input          : pBuffer---æ•°æ®ä¿å­˜åœ°å€
+*				   					c--æ±‰å­—å­—ç¬¦ä½å­—èŠ‚ç 
 * Output         : None
 * Return         : 0(success)  -1(fail)
 * Attention		 	 : None
@@ -26,8 +26,8 @@ int GetGBKCode_from_sd(unsigned char* pBuffer,const unsigned char * c)
 {
     unsigned char High8bit,Low8bit;
     unsigned int pos;
-    High8bit=*c;     /* È¡¸ß8Î»Êı¾İ */
-    Low8bit=*(c+1);  /* È¡µÍ8Î»Êı¾İ */
+    High8bit=*c;     /* å–é«˜8ä½æ•°æ® */
+    Low8bit=*(c+1);  /* å–ä½8ä½æ•°æ® */
 
     pos = ((High8bit-0xb0)*94+Low8bit-0xa1)*LCD_CH_SIZE ;	
     f_mount(0, &myfs);
@@ -35,8 +35,8 @@ int GetGBKCode_from_sd(unsigned char* pBuffer,const unsigned char * c)
 
     if ( myres == FR_OK )
     {
-        f_lseek (&myfsrc, pos);														 //Ö¸ÕëÆ«ÒÆ
-        myres = f_read( &myfsrc, pBuffer, LCD_CH_SIZE, &mybr );		 //16*16´óĞ¡µÄºº×Ö Æä×ÖÄ£ Õ¼ÓÃ16*2¸ö×Ö½Ú
+        f_lseek (&myfsrc, pos);														 //æŒ‡é’ˆåç§»
+        myres = f_read( &myfsrc, pBuffer, LCD_CH_SIZE, &mybr );		 //16*16å¤§å°çš„æ±‰å­— å…¶å­—æ¨¡ å ç”¨16*2ä¸ªå­—èŠ‚
 
         f_close(&myfsrc);
 
@@ -49,16 +49,16 @@ int GetGBKCode_from_sd(unsigned char* pBuffer,const unsigned char * c)
 }
 
 /********************************************************************
- * º¯ÊıÃû£ºLCD_Char_CH
- * ÃèÊö  £ºÏÔÊ¾µ¥¸öºº×Ö×Ö·û
- * ÊäÈë  : 	x: 0~(319-16)
+ * å‡½æ•°åï¼šLCD_Char_CH
+ * æè¿°  ï¼šæ˜¾ç¤ºå•ä¸ªæ±‰å­—å­—ç¬¦
+ * è¾“å…¥  : 	x: 0~(319-16)
  *         	y: 0~(239-16)
- *			str: ÖĞÎÄ×Ö·û´®Ê×Ö·
- *			Color: ×Ö·ûÑÕÉ«
- *			bkColor: ±³¾°ÑÕÉ«
- * Êä³ö  £ºÎŞ
- * ¾ÙÀı  £º	LCD_Char_CH(200,100,"ºÃ",0,0);
- * ×¢Òâ	 £ºÈç¹ûÊäÈë´óÓÚ1µÄºº×Ö×Ö·û´®£¬ÏÔÊ¾½«»á½Ø¶Ï£¬Ö»ÏÔÊ¾×îÇ°ÃæÒ»¸öºº×Ö
+ *			str: ä¸­æ–‡å­—ç¬¦ä¸²é¦–å€
+ *			Color: å­—ç¬¦é¢œè‰²
+ *			bkColor: èƒŒæ™¯é¢œè‰²
+ * è¾“å‡º  ï¼šæ— 
+ * ä¸¾ä¾‹  ï¼š	LCD_Char_CH(200,100,"å¥½",0,0);
+ * æ³¨æ„	 ï¼šå¦‚æœè¾“å…¥å¤§äº1çš„æ±‰å­—å­—ç¬¦ä¸²ï¼Œæ˜¾ç¤ºå°†ä¼šæˆªæ–­ï¼Œåªæ˜¾ç¤ºæœ€å‰é¢ä¸€ä¸ªæ±‰å­—
 ************************************************************************/
 void LCD_Char_CH(Site_t site,const uint8 *str,uint16 Color,uint16 bkColor)
 {
@@ -69,10 +69,10 @@ void LCD_Char_CH(Site_t site,const uint8 *str,uint16 Color,uint16 bkColor)
 
     const Size_t size   = {LCD_CH_W,LCD_CH_H};
 
-    GetGBKCode_from_sd(buffer,str);  /* È¡×ÖÄ£Êı¾İ */
+    GetGBKCode_from_sd(buffer,str);  /* å–å­—æ¨¡æ•°æ® */
 
-    LCD_PTLON(site, size);              //¿ª´°
-    LCD_RAMWR();                        //Ğ´ÄÚ´æ
+    LCD_PTLON(site, size);              //å¼€çª—
+    LCD_RAMWR();                        //å†™å†…å­˜
 
     for (i=0;i < LCD_CH_SIZE;i++)
     {
@@ -93,19 +93,19 @@ void LCD_Char_CH(Site_t site,const uint8 *str,uint16 Color,uint16 bkColor)
     }
 }
 
-void LCD_Str_CH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor) 		//ÏÔÊ¾16*16ºº×Ö×Ö·û´®
+void LCD_Str_CH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor) 		//æ˜¾ç¤º16*16æ±‰å­—å­—ç¬¦ä¸²
 {
     while(*str != '\0')
     {
         if(site.x>(LCD_W-16))
             {	
-             /*»»ĞĞ*/
+             /*æ¢è¡Œ*/
             site.x =0;
             site.y +=LCD_CH_H;
         }
         if(site.y >(LCD_H-LCD_CH_W))
         {
-             /*ÖØĞÂ¹éÁã*/
+             /*é‡æ–°å½’é›¶*/
              site.y =0;
              site.x =0;
         }
@@ -116,21 +116,21 @@ void LCD_Str_CH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor) 		
 }
 
 
-void LCD_Str_ENCH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor) 		//ÏÔÊ¾16*16ºº×Ö×Ö·û´®
+void LCD_Str_ENCH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor) 		//æ˜¾ç¤º16*16æ±‰å­—å­—ç¬¦ä¸²
 {
     while(*str != '\0')
     {
-        if( *str < 0x80)       //Ó¢ÎÄ
+        if( *str < 0x80)       //è‹±æ–‡
         {
             if(site.x>(LCD_W-LCD_EN_W))
             {	
-                 /*»»ĞĞ*/
+                 /*æ¢è¡Œ*/
                 site.x =0;
                 site.y +=LCD_EN_H;
             }
             if(site.y >(LCD_H-LCD_EN_H))
             {
-                 /*ÖØĞÂ¹éÁã*/
+                 /*é‡æ–°å½’é›¶*/
                  site.y =0;
                  site.x =0;
             }
@@ -142,13 +142,13 @@ void LCD_Str_ENCH(Site_t site,const uint8 *str  , uint16 Color ,uint16 bkColor) 
         {
             if(site.x>(LCD_W-LCD_CH_W))
             {	
-                 /*»»ĞĞ*/
+                 /*æ¢è¡Œ*/
                 site.x =0;
                 site.y +=LCD_CH_H;
             }
             if(site.y >(LCD_H-LCD_CH_H))
             {
-                 /*ÖØĞÂ¹éÁã*/
+                 /*é‡æ–°å½’é›¶*/
                  site.y =0;
                  site.x =0;
             }
@@ -167,8 +167,8 @@ void LCD_FChar_CH (Site_t site,const uint8 *str,uint16 Color,uint16 bkColor)
 
     const Size_t size   = {LCD_CH_W,LCD_CH_H};
 
-    LCD_PTLON(site, size);              //¿ª´°
-    LCD_RAMWR();                        //Ğ´ÄÚ´æ
+    LCD_PTLON(site, size);              //å¼€çª—
+    LCD_RAMWR();                        //å†™å†…å­˜
 
     for (i=0;i < LCD_CH_SIZE;i++)
     {
@@ -195,13 +195,13 @@ void LCD_FStr_CH (Site_t site,const uint8 *str,uint16 num,uint16 Color,uint16 bk
     {
         if(site.x>(LCD_W-16))
         {
-             /*»»ĞĞ*/
+             /*æ¢è¡Œ*/
             site.x =0;
             site.y +=LCD_CH_H;
         }
         if(site.y >(LCD_H-LCD_CH_W))
         {
-             /*ÖØĞÂ¹éÁã*/
+             /*é‡æ–°å½’é›¶*/
              site.y =0;
              site.x =0;
         }

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2015,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2015,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       VCAN_computer.h
- * @brief      É½Íâ¶à¹¦ÄÜµ÷ÊÔÖúÊÖÉÏÎ»»úÇý¶¯´úÂë
- * @author     É½Íâ¿Æ¼¼
+ * @brief      å±±å¤–å¤šåŠŸèƒ½è°ƒè¯•åŠ©æ‰‹ä¸Šä½æœºé©±åŠ¨ä»£ç 
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.2.2
  * @date       2015-03-24
  */
@@ -17,14 +17,14 @@
 #define _VCAN_COMPUTER_H_
 
 /*
- * °üº¬Í·ÎÄ¼þ
+ * åŒ…å«å¤´æ–‡ä»¶
  */
 #include "common.h"
 #include "MK60_uart.h"
 
 
-//ÉÏÎ»»úµÄÏÂÔØµØÖ·£º
-//¡¾É½Íâ¶à¹¦ÄÜµ÷ÊÔÖúÊÖV1.1.1¡¿´®¿Ú¡¢ÉãÏñÍ·¡¢GSM... - ÖÇÄÜ³µ×ÊÁÏÇø - http://vcan123.com/forum.php?mod=viewthread&tid=5988&ctid=27
+//ä¸Šä½æœºçš„ä¸‹è½½åœ°å€ï¼š
+//ã€å±±å¤–å¤šåŠŸèƒ½è°ƒè¯•åŠ©æ‰‹V1.1.1ã€‘ä¸²å£ã€æ‘„åƒå¤´ã€GSM... - æ™ºèƒ½è½¦èµ„æ–™åŒº - http://vcan123.com/forum.php?mod=viewthread&tid=5988&ctid=27
 
 extern void vcan_sendimg(void *imgaddr, uint32_t imgsize);
 extern void vcan_sendccd(void *ccdaddr, uint32_t ccdsize);

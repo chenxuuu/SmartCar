@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_TSL1401.h
- * @brief      ÏßÕóCCDº¯Êı¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      çº¿é˜µCCDå‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2014-01-04
  */
@@ -19,16 +19,16 @@
 
 
 
-#define TSL1401_SIZE    128                         //¶¨ÒåCCDÃ¿´Î²É¼¯µÄ´ÎÊı
+#define TSL1401_SIZE    128                         //å®šä¹‰CCDæ¯æ¬¡é‡‡é›†çš„æ¬¡æ•°
 
-#define TSL1401_INT_TIME(time)  pit_init_ms(PIT0,time)     //¶¨ÒåCCD ¶¨Ê±ÖĞ¶ÏµÄÖĞ¶ÏÊ±¼äÉèÖÃº¯Êı
+#define TSL1401_INT_TIME(time)  pit_init_ms(PIT0,time)     //å®šä¹‰CCD å®šæ—¶ä¸­æ–­çš„ä¸­æ–­æ—¶é—´è®¾ç½®å‡½æ•°
 
 
 typedef enum
 {
-    TSL1401_L,      //×ó
-    TSL1401_M,      //ÖĞ
-    TSL1401_R,      //ÓÒ
+    TSL1401_L,      //å·¦
+    TSL1401_M,      //ä¸­
+    TSL1401_R,      //å³
 
     TSL1401_MAX,
 } TSL1401_e;
@@ -36,24 +36,24 @@ typedef enum
 
 typedef enum
 {
-    tsl1401_noint,      //Ã»³õÊ¼»¯
-    tsl1401_start,      //¿ªÊ¼²É¼¯
-    //tsl1401_ing,        //²É¼¯ÖĞ
-    tsl1401_finish,     //²É¼¯½áÊø
+    tsl1401_noint,      //æ²¡åˆå§‹åŒ–
+    tsl1401_start,      //å¼€å§‹é‡‡é›†
+    //tsl1401_ing,        //é‡‡é›†ä¸­
+    tsl1401_finish,     //é‡‡é›†ç»“æŸ
 } tsl1401_status_e;
 
 
-extern void tsl1401_init        (uint32 time);                              //tsl1401,ÏßĞÔCCD³õÊ¼»¯£¬timeÎªÆØ¹âÊ±¼ä£¬µ¥Î»Óë TSL1401_INT_TIME µÄÉèÖÃÒ»ÖÂ£¬³õÊ¼»¯ºó±ØĞëµ÷ÓÃtsl1401_set_addrs À´ÉèÖÃ´æ´¢µØÖ·£¨»òÕßÏÈÉèÖÃ´æ´¢Í¼ÏñµØÖ·£©
-extern void tsl1401_set_addrs   (TSL1401_e num, uint8 *addr, ... );         //tsl1401,ÏßĞÔCCDÉèÖÃ²É¼¯Êı¾İµÄµØÖ·
-extern void tsl1401_get_img     (void);                                     //tsl1401,ÏßĞÔCCD²É¼¯Í¼Ïñ
+extern void tsl1401_init        (uint32 time);                              //tsl1401,çº¿æ€§CCDåˆå§‹åŒ–ï¼Œtimeä¸ºæ›å…‰æ—¶é—´ï¼Œå•ä½ä¸ TSL1401_INT_TIME çš„è®¾ç½®ä¸€è‡´ï¼Œåˆå§‹åŒ–åå¿…é¡»è°ƒç”¨tsl1401_set_addrs æ¥è®¾ç½®å­˜å‚¨åœ°å€ï¼ˆæˆ–è€…å…ˆè®¾ç½®å­˜å‚¨å›¾åƒåœ°å€ï¼‰
+extern void tsl1401_set_addrs   (TSL1401_e num, uint8 *addr, ... );         //tsl1401,çº¿æ€§CCDè®¾ç½®é‡‡é›†æ•°æ®çš„åœ°å€
+extern void tsl1401_get_img     (void);                                     //tsl1401,çº¿æ€§CCDé‡‡é›†å›¾åƒ
 
-extern void tsl1401_set_time    (uint32 time);                              //ÉèÖÃ tsl1401,ÏßĞÔCCD ÆØ¹âÊ±¼ä
-extern uint32 tsl1401_get_time     (void);                                  //»ñÈ¡ tsl1401,ÏßĞÔCCD ÆØ¹âÊ±¼ä
+extern void tsl1401_set_time    (uint32 time);                              //è®¾ç½® tsl1401,çº¿æ€§CCD æ›å…‰æ—¶é—´
+extern uint32 tsl1401_get_time     (void);                                  //è·å– tsl1401,çº¿æ€§CCD æ›å…‰æ—¶é—´
 
-extern void tsl1401_led_en      (TSL1401_e num);                            //¿ªÆô²¹¹âµÆ
-extern void tsl1401_led_dis     (TSL1401_e num);                            //¹Ø±Õ²¹¹âµÆ
+extern void tsl1401_led_en      (TSL1401_e num);                            //å¼€å¯è¡¥å…‰ç¯
+extern void tsl1401_led_dis     (TSL1401_e num);                            //å…³é—­è¡¥å…‰ç¯
 
 
-extern void tsl1401_time_isr    ();                                         //¶¨Ê±ÆØ¹âÖĞ¶Ï·şÎñº¯Êı
+extern void tsl1401_time_isr    ();                                         //å®šæ—¶æ›å…‰ä¸­æ–­æœåŠ¡å‡½æ•°
 
 #endif  // _TSL1401_H_

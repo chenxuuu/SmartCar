@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       MK60_rtc.c
- * @brief      rtcÄ£¿éº¯Êý
- * @author     É½Íâ¿Æ¼¼
+ * @brief      rtcæ¨¡å—å‡½æ•°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -18,66 +18,66 @@
 #include "MK60_rtc.h"
 
 /*!
- *  @brief      RTC³õÊ¼»¯
+ *  @brief      RTCåˆå§‹åŒ–
  *  @since      v5.0
- *  Sample usage:       rtc_init();    //RTC³õÊ¼»¯
+ *  Sample usage:       rtc_init();    //RTCåˆå§‹åŒ–
  */
 void rtc_init(void)
 {
     volatile uint32 delay;
 
-    SIM_SCGC6 |= SIM_SCGC6_RTC_MASK;    //¿ªÆô RTC Ê±ÖÓ
+    SIM_SCGC6 |= SIM_SCGC6_RTC_MASK;    //å¼€å¯ RTC æ—¶é’Ÿ
 
-    RTC_CR  = RTC_CR_SWR_MASK;          //¸´Î» RTC ¼Ä´æÆ÷£¨³ý SWR£¬ RTC_WAR £¬ RTC_RAR £©
-    RTC_CR  &= ~RTC_CR_SWR_MASK;        //Çå¿Õ¸´Î»±êÖ¾Î»
+    RTC_CR  = RTC_CR_SWR_MASK;          //å¤ä½ RTC å¯„å­˜å™¨ï¼ˆé™¤ SWRï¼Œ RTC_WAR ï¼Œ RTC_RAR ï¼‰
+    RTC_CR  &= ~RTC_CR_SWR_MASK;        //æ¸…ç©ºå¤ä½æ ‡å¿—ä½
     RTC_CR  = (0
-               | RTC_CR_OSCE_MASK       //32.768 kHz ¾§Õñ Ê¹ÄÜ
-               //| RTC_CR_SC2P_MASK     //¼ÓÈë 2p µçÈÝ
-               //| RTC_CR_SC4P_MASK     //¼ÓÈë 4p µçÈÝ
-               //| RTC_CR_SC8P_MASK     //¼ÓÈë 8p µçÈÝ
-               | RTC_CR_SC16P_MASK      //¼ÓÈë 16p µçÈÝ
-               | RTC_CR_CLKO_MASK       //RTC_CLKOUT Êä³ö 32k Ê¹ÄÜ (0±íÊ¾Êä³ö£¬1±íÊ¾½ûÖ¹)
+               | RTC_CR_OSCE_MASK       //32.768 kHz æ™¶æŒ¯ ä½¿èƒ½
+               //| RTC_CR_SC2P_MASK     //åŠ å…¥ 2p ç”µå®¹
+               //| RTC_CR_SC4P_MASK     //åŠ å…¥ 4p ç”µå®¹
+               //| RTC_CR_SC8P_MASK     //åŠ å…¥ 8p ç”µå®¹
+               | RTC_CR_SC16P_MASK      //åŠ å…¥ 16p ç”µå®¹
+               | RTC_CR_CLKO_MASK       //RTC_CLKOUT è¾“å‡º 32k ä½¿èƒ½ (0è¡¨ç¤ºè¾“å‡ºï¼Œ1è¡¨ç¤ºç¦æ­¢)
               );
 
     delay = 0x600000;
-    while(delay--);                     //µÈ´ý 32K ¾§ÕñÎÈ¶¨£¨ÆðÕñÊ±¼äÐèÒª¿´¾§ÕñÊÖ²á£©
+    while(delay--);                     //ç­‰å¾… 32K æ™¶æŒ¯ç¨³å®šï¼ˆèµ·æŒ¯æ—¶é—´éœ€è¦çœ‹æ™¶æŒ¯æ‰‹å†Œï¼‰
 
-    //ÉèÖÃÊ±¼ä²¹³¥
+    //è®¾ç½®æ—¶é—´è¡¥å¿
     RTC_TCR = (0
-               | RTC_TCR_CIR(0)         //²¹³¥¼ä¸ô(¿ÉÒÔ´Ó1Ãë(0X0)µ½256(0xFF)µÄ·¶Î§ÄÚ),8bit
-               | RTC_TCR_TCR(0)         //²¹³¥ÖµµÄ·¶Î§´Ó 32*1024Hz -127 µÄÖÜÆÚµ½ 32*1024Hz +128 ÖÜÆÚ£¬¼´ TCR ·¶Î§Îª (int8)-127 ~ (int8)128
+               | RTC_TCR_CIR(0)         //è¡¥å¿é—´éš”(å¯ä»¥ä»Ž1ç§’(0X0)åˆ°256(0xFF)çš„èŒƒå›´å†…),8bit
+               | RTC_TCR_TCR(0)         //è¡¥å¿å€¼çš„èŒƒå›´ä»Ž 32*1024Hz -127 çš„å‘¨æœŸåˆ° 32*1024Hz +128 å‘¨æœŸï¼Œå³ TCR èŒƒå›´ä¸º (int8)-127 ~ (int8)128
               );
 
-    RTC_SR &= RTC_SR_TCE_MASK;          //½ûÓÃRTC ¼ÆÊýÆ÷£¬±ãÓÚºóÐøÉèÖÃ¼Ä´æÆ÷  TSR ºÍ TPR
+    RTC_SR &= RTC_SR_TCE_MASK;          //ç¦ç”¨RTC è®¡æ•°å™¨ï¼Œä¾¿äºŽåŽç»­è®¾ç½®å¯„å­˜å™¨  TSR å’Œ TPR
 
-    //Ê±¼äºÍÄÖÖÓÉèÖÃ
-    RTC_TSR = 0;                        //µ±Ç°Ê±¼ä
-    RTC_TAR = 0;                        //ÄÖÖÓÊ±¼ä
+    //æ—¶é—´å’Œé—¹é’Ÿè®¾ç½®
+    RTC_TSR = 0;                        //å½“å‰æ—¶é—´
+    RTC_TAR = 0;                        //é—¹é’Ÿæ—¶é—´
 
-    //ÖÐ¶ÏÅäÖÃ
+    //ä¸­æ–­é…ç½®
     RTC_IER = (0
-               //| RTC_IER_TAIE_MASK    //ÄÖÖÓÖÐ¶ÏÊ¹ÄÜ£¨0±íÊ¾½ûÖ¹£¬1±íÊ¾Ê¹ÄÜ£©
-               //| RTC_IER_TOIE_MASK    //Òç³öÖÐ¶ÏÊ¹ÄÜ£¨0±íÊ¾½ûÖ¹£¬1±íÊ¾Ê¹ÄÜ£©
-               //| RTC_IER_TIIE_MASK    //ÎÞÐ§Ê±¼äÖÐ¶ÏÊ¹ÄÜ£¨0±íÊ¾½ûÖ¹£¬1±íÊ¾Ê¹ÄÜ£©
+               //| RTC_IER_TAIE_MASK    //é—¹é’Ÿä¸­æ–­ä½¿èƒ½ï¼ˆ0è¡¨ç¤ºç¦æ­¢ï¼Œ1è¡¨ç¤ºä½¿èƒ½ï¼‰
+               //| RTC_IER_TOIE_MASK    //æº¢å‡ºä¸­æ–­ä½¿èƒ½ï¼ˆ0è¡¨ç¤ºç¦æ­¢ï¼Œ1è¡¨ç¤ºä½¿èƒ½ï¼‰
+               //| RTC_IER_TIIE_MASK    //æ— æ•ˆæ—¶é—´ä¸­æ–­ä½¿èƒ½ï¼ˆ0è¡¨ç¤ºç¦æ­¢ï¼Œ1è¡¨ç¤ºä½¿èƒ½ï¼‰
               );
 
-    RTC_SR |= RTC_SR_TCE_MASK;          //Ê¹ÄÜRTC ¼ÆÊýÆ÷
+    RTC_SR |= RTC_SR_TCE_MASK;          //ä½¿èƒ½RTC è®¡æ•°å™¨
 }
 
 /*!
- *  @brief      ÉèÖÃµ±Ç°Ê±¼ä
+ *  @brief      è®¾ç½®å½“å‰æ—¶é—´
  *  @since      v5.0
  */
 void rtc_set_time(uint32 seconds)
 {
-    RTC_SR &= ~RTC_SR_TCE_MASK;         //½ûÓÃRTC ¼ÆÊýÆ÷£¬±ãÓÚºóÐøÉèÖÃ¼Ä´æÆ÷  TSR ºÍ TPR
-    RTC_TSR = seconds;                  //µ±Ç°Ê±¼ä
-    RTC_SR |= RTC_SR_TCE_MASK;          //Ê¹ÄÜRTC ¼ÆÊýÆ÷
+    RTC_SR &= ~RTC_SR_TCE_MASK;         //ç¦ç”¨RTC è®¡æ•°å™¨ï¼Œä¾¿äºŽåŽç»­è®¾ç½®å¯„å­˜å™¨  TSR å’Œ TPR
+    RTC_TSR = seconds;                  //å½“å‰æ—¶é—´
+    RTC_SR |= RTC_SR_TCE_MASK;          //ä½¿èƒ½RTC è®¡æ•°å™¨
 
 }
 
 /*!
- *  @brief      »ñÈ¡µ±Ç°Ê±¼ä
+ *  @brief      èŽ·å–å½“å‰æ—¶é—´
  *  @since      v5.0
  */
 uint32 rtc_get_time(void)
@@ -87,83 +87,83 @@ uint32 rtc_get_time(void)
 
 
 /*!
- *  @brief      ÉèÖÃRTCÄÖÖÓÊ±¼ä£¬Ê¹ÄÜÄÖÖÓÖÐ¶Ï
- *  @param      alarm    ÄÖÖÓÊ±¼ä
- *  @return     ÉèÖÃÄÖÖÓ½á¹û(0±íÊ¾Ê§°Ü£¬1±íÊ¾³É¹¦)
+ *  @brief      è®¾ç½®RTCé—¹é’Ÿæ—¶é—´ï¼Œä½¿èƒ½é—¹é’Ÿä¸­æ–­
+ *  @param      alarm    é—¹é’Ÿæ—¶é—´
+ *  @return     è®¾ç½®é—¹é’Ÿç»“æžœ(0è¡¨ç¤ºå¤±è´¥ï¼Œ1è¡¨ç¤ºæˆåŠŸ)
  *  @since      v5.0
- *  Sample usage:       if( rtc_set_alarm(sec) == 0 )       //ÉèÖÃÄÖÖÓÊ±¼ä Îª sec
+ *  Sample usage:       if( rtc_set_alarm(sec) == 0 )       //è®¾ç½®é—¹é’Ÿæ—¶é—´ ä¸º sec
                         {
-                            printf("\nÉèÖÃÄÖÖÓÊ§°Ü£¬²»ÄÜÉèÖÃ¹ýÈ¥µÄÊ±¼äÎªÄÖÖÓÊ±¼ä!");
+                            printf("\nè®¾ç½®é—¹é’Ÿå¤±è´¥ï¼Œä¸èƒ½è®¾ç½®è¿‡åŽ»çš„æ—¶é—´ä¸ºé—¹é’Ÿæ—¶é—´!");
                         }
  */
 uint8 rtc_set_alarm(uint32 alarm)
 {
-    if(alarm < RTC_TSR)                 //ÄÖÖÓÊ±¼ä²»ÄÜÎª¹ýÈ¥Ê±¼ä
+    if(alarm < RTC_TSR)                 //é—¹é’Ÿæ—¶é—´ä¸èƒ½ä¸ºè¿‡åŽ»æ—¶é—´
     {
         return 0;
     }
 
-    RTC_SR &= ~RTC_SR_TCE_MASK;         //½ûÓÃRTC ¼ÆÊýÆ÷£¬±ãÓÚºóÐøÉèÖÃ¼Ä´æÆ÷  TSR ºÍ TPR
+    RTC_SR &= ~RTC_SR_TCE_MASK;         //ç¦ç”¨RTC è®¡æ•°å™¨ï¼Œä¾¿äºŽåŽç»­è®¾ç½®å¯„å­˜å™¨  TSR å’Œ TPR
 
-    RTC_TAR = alarm;                    //ÄÖÖÓÊ±¼ä
-    RTC_SR |= RTC_SR_TCE_MASK;          //Ê¹ÄÜRTC ¼ÆÊýÆ÷
+    RTC_TAR = alarm;                    //é—¹é’Ÿæ—¶é—´
+    RTC_SR |= RTC_SR_TCE_MASK;          //ä½¿èƒ½RTC è®¡æ•°å™¨
 
-    RTC_IER |= RTC_IER_TAIE_MASK;       //Ê¹ÄÜÄÖÖÓÖÐ¶Ï
+    RTC_IER |= RTC_IER_TAIE_MASK;       //ä½¿èƒ½é—¹é’Ÿä¸­æ–­
 
     return 1;
 }
 
 /*!
- *  @brief      ¹Ø±ÕÄÖÖÓÖÐ¶Ï
+ *  @brief      å…³é—­é—¹é’Ÿä¸­æ–­
  *  @since      v5.0
  */
 void rtc_close_alarm()
 {
-    RTC_IER &= ~RTC_IER_TAIE_MASK;      //½ûÖ¹ÄÖÖÓÖÐ¶Ï
+    RTC_IER &= ~RTC_IER_TAIE_MASK;      //ç¦æ­¢é—¹é’Ÿä¸­æ–­
 }
 
 /*!
- *  @brief      RTC²âÊÔÖÐ¶Ï·þÎñº¯Êý
+ *  @brief      RTCæµ‹è¯•ä¸­æ–­æœåŠ¡å‡½æ•°
  *  @since      v5.0
- *  @warning    ´Ëº¯ÊýÐèÒªÓÃ»§¸ù¾Ý×Ô¼ºÐèÇóÍê³É£¬ÕâÀï½ö½öÊÇÌá¹©Ò»¸öÄ£°æ
- *  Sample usage:       set_vector_handler(RTC_VECTORn , rtc_test_handler);    //°Ñ rtc_test_handler º¯ÊýÌí¼Óµ½ÖÐ¶ÏÏòÁ¿±í£¬²»ÐèÒªÎÒÃÇÊÖ¶¯µ÷ÓÃ
+ *  @warning    æ­¤å‡½æ•°éœ€è¦ç”¨æˆ·æ ¹æ®è‡ªå·±éœ€æ±‚å®Œæˆï¼Œè¿™é‡Œä»…ä»…æ˜¯æä¾›ä¸€ä¸ªæ¨¡ç‰ˆ
+ *  Sample usage:       set_vector_handler(RTC_VECTORn , rtc_test_handler);    //æŠŠ rtc_test_handler å‡½æ•°æ·»åŠ åˆ°ä¸­æ–­å‘é‡è¡¨ï¼Œä¸éœ€è¦æˆ‘ä»¬æ‰‹åŠ¨è°ƒç”¨
  */
 void rtc_test_handler(void)
 {
     uint32 sr = RTC_SR;
 
-    if(sr & RTC_SR_TIF_MASK) //ÎÞÐ§ÉèÖÃ
+    if(sr & RTC_SR_TIF_MASK) //æ— æ•ˆè®¾ç½®
     {
-        //ÇåTIF¡¢TOFÎ»£¬½ûÓÃ¼ÆÊýÊ±Ð´TSR¼Ä´æÆ÷¾Í»áÇå¿Õ´ËÎ»
+        //æ¸…TIFã€TOFä½ï¼Œç¦ç”¨è®¡æ•°æ—¶å†™TSRå¯„å­˜å™¨å°±ä¼šæ¸…ç©ºæ­¤ä½
         RTC_SR = (0
-                  //| RTC_SR_TCE_MASK    //¼ÆÄÜÊ¹Êý(0Îª½ûÖ¹£¬1ÎªÊ¹ÄÜ)
+                  //| RTC_SR_TCE_MASK    //è®¡èƒ½ä½¿æ•°(0ä¸ºç¦æ­¢ï¼Œ1ä¸ºä½¿èƒ½)
                   );
-        RTC_TSR = 0;  //Ãë¼ÆÊý¼Ä´æÆ÷£¬Ð´²Ù×÷À´Çå¿ÕTIFÎ»
+        RTC_TSR = 0;  //ç§’è®¡æ•°å¯„å­˜å™¨ï¼Œå†™æ“ä½œæ¥æ¸…ç©ºTIFä½
 
-        //ÏÂÃæÓÉÓÃ»§¼ÓÈë×Ô¼ºµÄ´úÂë
-        //printf("\nRTCÎÞÐ§ÉèÖÃ");
+        //ä¸‹é¢ç”±ç”¨æˆ·åŠ å…¥è‡ªå·±çš„ä»£ç 
+        //printf("\nRTCæ— æ•ˆè®¾ç½®");
     }
 
-    if(sr & RTC_SR_TOF_MASK)  //Òç³ö
+    if(sr & RTC_SR_TOF_MASK)  //æº¢å‡º
     {
 
-        //ÇåTIF¡¢TOFÎ»£¬½ûÓÃ¼ÆÊýÊ±Ð´TSR¼Ä´æÆ÷¾Í»áÇå¿Õ´ËÎ»
+        //æ¸…TIFã€TOFä½ï¼Œç¦ç”¨è®¡æ•°æ—¶å†™TSRå¯„å­˜å™¨å°±ä¼šæ¸…ç©ºæ­¤ä½
         RTC_SR = (0
-                  //| RTC_SR_TCE_MASK    //¼ÆÄÜÊ¹Êý(0Îª½ûÖ¹£¬1ÎªÊ¹ÄÜ)
+                  //| RTC_SR_TCE_MASK    //è®¡èƒ½ä½¿æ•°(0ä¸ºç¦æ­¢ï¼Œ1ä¸ºä½¿èƒ½)
                   );
-        RTC_TSR = 0;  //Ãë¼ÆÊý¼Ä´æÆ÷£¬Ð´²Ù×÷À´Çå¿ÕTIFÎ»
+        RTC_TSR = 0;  //ç§’è®¡æ•°å¯„å­˜å™¨ï¼Œå†™æ“ä½œæ¥æ¸…ç©ºTIFä½
 
-        //ÏÂÃæÓÉÓÃ»§¼ÓÈë×Ô¼ºµÄ´úÂë
-        //printf("\nRTCÒç³ö");
+        //ä¸‹é¢ç”±ç”¨æˆ·åŠ å…¥è‡ªå·±çš„ä»£ç 
+        //printf("\nRTCæº¢å‡º");
     }
 
-    if(sr & RTC_SR_TAF_MASK)  //±¨¾¯
+    if(sr & RTC_SR_TAF_MASK)  //æŠ¥è­¦
     {
-        //Ð´ TAR À´Çå¿Õ SR_TAF
+        //å†™ TAR æ¥æ¸…ç©º SR_TAF
         RTC_TAR = 0;
 
-        //ÏÂÃæÓÉÓÃ»§¼ÓÈë×Ô¼ºµÄ´úÂë
-        //printf("\nRTC±¨¾¯");
+        //ä¸‹é¢ç”±ç”¨æˆ·åŠ å…¥è‡ªå·±çš„ä»£ç 
+        //printf("\nRTCæŠ¥è­¦");
     }
 
 

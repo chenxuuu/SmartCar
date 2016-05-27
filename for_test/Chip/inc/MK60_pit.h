@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       MK60_pit.h
- * @brief      pit¶¨Ê±Æ÷º¯Êı¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      pitå®šæ—¶å™¨å‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-08-23
  */
@@ -18,7 +18,7 @@
 #ifndef _MK60_PIT_H_
 #define _MK60_PIT_H_
 
-//¶¨ÒåPITÄ£¿éºÅ
+//å®šä¹‰PITæ¨¡å—å·
 typedef enum
 {
     PIT0,
@@ -29,39 +29,39 @@ typedef enum
     PIT_MAX,
 } PITn_e;
 
-#define     PIT_Flag_Clear(PITn_e)          PIT_TFLG(PITn_e)|=PIT_TFLG_TIF_MASK        //ÇåÖĞ¶Ï±êÖ¾£¨Ğ´1 Çå¿Õ±êÖ¾Î»£©
+#define     PIT_Flag_Clear(PITn_e)          PIT_TFLG(PITn_e)|=PIT_TFLG_TIF_MASK        //æ¸…ä¸­æ–­æ ‡å¿—ï¼ˆå†™1 æ¸…ç©ºæ ‡å¿—ä½ï¼‰
 
-//msÊÇºÁÃë=0.001Ãë usÊÇÎ¢Ãë=0.000001Ãë nsÊÇÄÉÃë=0.000000001Ãë
+//msæ˜¯æ¯«ç§’=0.001ç§’ usæ˜¯å¾®ç§’=0.000001ç§’ nsæ˜¯çº³ç§’=0.000000001ç§’
 
-void    pit_close  (PITn_e);                                                            //¹Ø±Õ PIT ¼ÆÊ±
+void    pit_close  (PITn_e);                                                            //å…³é—­ PIT è®¡æ—¶
 
-/*****************************ÒÔÏÂ´úÂëÓÃÓÚPITÖĞ¶Ï*************************************/
+/*****************************ä»¥ä¸‹ä»£ç ç”¨äºPITä¸­æ–­*************************************/
 
-void        pit_init(PITn_e, uint32 cnt);                                              //³õÊ¼»¯PITn£¬²¢ÉèÖÃ¶¨Ê±Ê±¼ä(µ¥Î»ÎªbusÊ±ÖÓÖÜÆÚ)
-#define     pit_init_ms(PITn_e,ms)          pit_init(PITn_e,ms * bus_clk_khz);         //³õÊ¼»¯PITn£¬²¢ÉèÖÃ¶¨Ê±Ê±¼ä(µ¥Î»Îª ms)
-#define     pit_init_us(PITn_e,us)          pit_init(PITn_e,us * bus_clk_khz/1000);    //³õÊ¼»¯PITn£¬²¢ÉèÖÃ¶¨Ê±Ê±¼ä(µ¥Î»Îª us)
-#define     pit_init_ns(PITn_e,ns)          pit_init(PITn_e,ns * bus_clk_khz/1000000); //³õÊ¼»¯PITn£¬²¢ÉèÖÃ¶¨Ê±Ê±¼ä(µ¥Î»Îª ns)
+void        pit_init(PITn_e, uint32 cnt);                                              //åˆå§‹åŒ–PITnï¼Œå¹¶è®¾ç½®å®šæ—¶æ—¶é—´(å•ä½ä¸ºbusæ—¶é’Ÿå‘¨æœŸ)
+#define     pit_init_ms(PITn_e,ms)          pit_init(PITn_e,ms * bus_clk_khz);         //åˆå§‹åŒ–PITnï¼Œå¹¶è®¾ç½®å®šæ—¶æ—¶é—´(å•ä½ä¸º ms)
+#define     pit_init_us(PITn_e,us)          pit_init(PITn_e,us * bus_clk_khz/1000);    //åˆå§‹åŒ–PITnï¼Œå¹¶è®¾ç½®å®šæ—¶æ—¶é—´(å•ä½ä¸º us)
+#define     pit_init_ns(PITn_e,ns)          pit_init(PITn_e,ns * bus_clk_khz/1000000); //åˆå§‹åŒ–PITnï¼Œå¹¶è®¾ç½®å®šæ—¶æ—¶é—´(å•ä½ä¸º ns)
 
-/*****************************ÒÔÉÏ´úÂëÓÃÓÚPITÖĞ¶Ï*************************************/
-/*****************************ÒÔÏÂ´úÂëÓÃÓÚPITÑÓÊ±*************************************/
+/*****************************ä»¥ä¸Šä»£ç ç”¨äºPITä¸­æ–­*************************************/
+/*****************************ä»¥ä¸‹ä»£ç ç”¨äºPITå»¶æ—¶*************************************/
 
-//×¢ÒâÁË£¬ÑÓÊ±º¯Êı²»ĞèÒª³õÊ¼»¯µÄ£¬Ö±½Óµ÷ÓÃ
+//æ³¨æ„äº†ï¼Œå»¶æ—¶å‡½æ•°ä¸éœ€è¦åˆå§‹åŒ–çš„ï¼Œç›´æ¥è°ƒç”¨
 
-void        pit_delay(PITn_e, uint32 cnt);                                       //PITÑÓÊ±£¨²»ĞèÒª³õÊ¼»¯µÄ£©
-#define     pit_delay_ms(PITn_e,ms)          pit_delay(PITn_e,ms * bus_clk_khz);        //PITÑÓÊ± ms
-#define     pit_delay_us(PITn_e,us)          pit_delay(PITn_e,us * bus_clk_khz/1000);   //PITÑÓÊ± us
-#define     pit_delay_ns(PITn_e,ns)          pit_delay(PITn_e,ns * bus_clk_khz/1000000);//PITÑÓÊ± ns
+void        pit_delay(PITn_e, uint32 cnt);                                       //PITå»¶æ—¶ï¼ˆä¸éœ€è¦åˆå§‹åŒ–çš„ï¼‰
+#define     pit_delay_ms(PITn_e,ms)          pit_delay(PITn_e,ms * bus_clk_khz);        //PITå»¶æ—¶ ms
+#define     pit_delay_us(PITn_e,us)          pit_delay(PITn_e,us * bus_clk_khz/1000);   //PITå»¶æ—¶ us
+#define     pit_delay_ns(PITn_e,ns)          pit_delay(PITn_e,ns * bus_clk_khz/1000000);//PITå»¶æ—¶ ns
 
-/*****************************ÒÔÉÏ´úÂëÓÃÓÚPITÑÓÊ±*************************************/
-/*****************************ÒÔÏÂ´úÂëÓÃÓÚPIT¼ÆÊ±*************************************/
+/*****************************ä»¥ä¸Šä»£ç ç”¨äºPITå»¶æ—¶*************************************/
+/*****************************ä»¥ä¸‹ä»£ç ç”¨äºPITè®¡æ—¶*************************************/
 
-void    pit_time_start  (PITn_e);                                                       //PIT¿ªÊ¼¼ÆÊ±
-uint32  pit_time_get    (PITn_e);                                                       //»ñÈ¡ PITn¼ÆÊ±Ê±¼ä(³¬Ê±Ê±»á¹Ø±Õ ¶¨Ê±Æ÷)£¨µ¥Î»Îª busÊ±ÖÓ£©(ÈôÖµÎª 0xFFFFFFFF£¬Ôò±íÊ¾Òç³ö)
+void    pit_time_start  (PITn_e);                                                       //PITå¼€å§‹è®¡æ—¶
+uint32  pit_time_get    (PITn_e);                                                       //è·å– PITnè®¡æ—¶æ—¶é—´(è¶…æ—¶æ—¶ä¼šå…³é—­ å®šæ—¶å™¨)ï¼ˆå•ä½ä¸º busæ—¶é’Ÿï¼‰(è‹¥å€¼ä¸º 0xFFFFFFFFï¼Œåˆ™è¡¨ç¤ºæº¢å‡º)
 
-#define pit_time_get_ms(PITn_e)   (pit_time_get(PITn_e)/bus_clk_khz)                    //»ñÈ¡¼ÆÊ±Ê±¼ä£¨µ¥Î»Îª ms£©
-#define pit_time_get_us(PITn_e)   (pit_time_get(PITn_e)/(bus_clk_khz/1000))             //»ñÈ¡¼ÆÊ±Ê±¼ä£¨µ¥Î»Îª us£©
+#define pit_time_get_ms(PITn_e)   (pit_time_get(PITn_e)/bus_clk_khz)                    //è·å–è®¡æ—¶æ—¶é—´ï¼ˆå•ä½ä¸º msï¼‰
+#define pit_time_get_us(PITn_e)   (pit_time_get(PITn_e)/(bus_clk_khz/1000))             //è·å–è®¡æ—¶æ—¶é—´ï¼ˆå•ä½ä¸º usï¼‰
 
-/*****************************ÒÔÉÏ´úÂëÓÃÓÚPIT¼ÆÊ±*************************************/
+/*****************************ä»¥ä¸Šä»£ç ç”¨äºPITè®¡æ—¶*************************************/
 
 
 #endif  //_MK60_PIT_H_

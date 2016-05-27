@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_MMA7455.h
- * @brief      KEYÇı¶¯Í·ÎÄ¼ş
- * @author     É½Íâ¿Æ¼¼
+ * @brief      KEYé©±åŠ¨å¤´æ–‡ä»¶
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-07-10
  */
@@ -18,7 +18,7 @@
 #define __VCAN_MMA7455_H__
 
 
-#define     MMA7455_DEVICE          I2C0        //¶¨ÒåMMA7455 ËùÓÃµÄ½Ó¿Ú Îª I2C0
+#define     MMA7455_DEVICE          I2C0        //å®šä¹‰MMA7455 æ‰€ç”¨çš„æ¥å£ ä¸º I2C0
 
 #define     MMA7455_ADRESS          (0x1D)      /*MMA7455_Device Address*/
 
@@ -55,10 +55,10 @@
 #define     MMA7455_LT      0x1D    //29  Latency time value  (Read/Write)
 #define     MMA7455_TW      0x1E    //30  Time window for second pulse value(Read/Write)
 
-//º¯ÊıÉùÃ÷
-extern void  mma7455_init(void);                        //³õÊ¼»¯MMA7455
-extern void  mma7455_write_reg(uint8 reg, uint8 Data);  //Ğ´MMA7455¼Ä´æÆ÷
-extern uint8 mma7455_read_reg(uint8 reg);               //¶ÁMMA7455¼Ä´æÆ÷
+//å‡½æ•°å£°æ˜
+extern void  mma7455_init(void);                        //åˆå§‹åŒ–MMA7455
+extern void  mma7455_write_reg(uint8 reg, uint8 Data);  //å†™MMA7455å¯„å­˜å™¨
+extern uint8 mma7455_read_reg(uint8 reg);               //è¯»MMA7455å¯„å­˜å™¨
 
 
 #endif  //__VCAN_MMA7455_H__

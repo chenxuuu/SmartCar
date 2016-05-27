@@ -1,22 +1,22 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2015,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2015,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_computer.c
- * @brief      É½Íâ¶à¹¦ÄÜµ÷ÊÔÖúÊÖÉÏÎ»»úÇı¶¯´úÂë
- * @author     É½Íâ¿Æ¼¼
+ * @brief      å±±å¤–å¤šåŠŸèƒ½è°ƒè¯•åŠ©æ‰‹ä¸Šä½æœºé©±åŠ¨ä»£ç 
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.2.2
  * @date       2015-03-24
  */
 
 
 /*
- * °üº¬Í·ÎÄ¼ş
+ * åŒ…å«å¤´æ–‡ä»¶
  */
 #include "common.h"
 #include "MK60_uart.h"
@@ -25,71 +25,71 @@
 
 
 /*!
- *  @brief      É½Íâ¶à¹¦ÄÜµ÷ÊÔÖúÊÖÉÏÎ»»ú£¬ÉãÏñÍ·ÏÔÊ¾º¯Êı
- *  @param      imgaddr    Í¼ÏñÆğÊ¼µØÖ·
- *  @param      imgsize    Í¼ÏñÕ¼ÓÃ¿Õ¼äµÄ´óĞ¡
+ *  @brief      å±±å¤–å¤šåŠŸèƒ½è°ƒè¯•åŠ©æ‰‹ä¸Šä½æœºï¼Œæ‘„åƒå¤´æ˜¾ç¤ºå‡½æ•°
+ *  @param      imgaddr    å›¾åƒèµ·å§‹åœ°å€
+ *  @param      imgsize    å›¾åƒå ç”¨ç©ºé—´çš„å¤§å°
  *  @since      v5.0
 *  Sample usage:
-             ¾ßÌåÓÃ·¨²Î¿¼ÕâÌû×Ó:
-            ¡¾É½ÍâÉãÏñÍ·¡¿Ó¥ÑÛÉÏÎ»»úÀı³ÌºÍÎ¢½¹Ğ§¹û - ÖÇÄÜ³µ×ÊÁÏÇø
+             å…·ä½“ç”¨æ³•å‚è€ƒè¿™å¸–å­:
+            ã€å±±å¤–æ‘„åƒå¤´ã€‘é¹°çœ¼ä¸Šä½æœºä¾‹ç¨‹å’Œå¾®ç„¦æ•ˆæœ - æ™ºèƒ½è½¦èµ„æ–™åŒº
              http://vcan123.com/forum.php?mod=viewthread&tid=6242&ctid=27
  */
 void vcan_sendimg(void *imgaddr, uint32_t imgsize)
 {
 #define CMD_IMG     1
-    uint8_t cmdf[2] = {CMD_IMG, ~CMD_IMG};    //É½ÍâÉÏÎ»»ú Ê¹ÓÃµÄÃüÁî
-    uint8_t cmdr[2] = {~CMD_IMG, CMD_IMG};    //É½ÍâÉÏÎ»»ú Ê¹ÓÃµÄÃüÁî
+    uint8_t cmdf[2] = {CMD_IMG, ~CMD_IMG};    //å±±å¤–ä¸Šä½æœº ä½¿ç”¨çš„å‘½ä»¤
+    uint8_t cmdr[2] = {~CMD_IMG, CMD_IMG};    //å±±å¤–ä¸Šä½æœº ä½¿ç”¨çš„å‘½ä»¤
 
-    uart_putbuff(VCAN_PORT, cmdf, sizeof(cmdf));    //ÏÈ·¢ËÍÃüÁî
+    uart_putbuff(VCAN_PORT, cmdf, sizeof(cmdf));    //å…ˆå‘é€å‘½ä»¤
 
-    uart_putbuff(VCAN_PORT, (uint8_t *)imgaddr, imgsize); //ÔÙ·¢ËÍÍ¼Ïñ
+    uart_putbuff(VCAN_PORT, (uint8_t *)imgaddr, imgsize); //å†å‘é€å›¾åƒ
 
-    uart_putbuff(VCAN_PORT, cmdr, sizeof(cmdr));    //ÏÈ·¢ËÍÃüÁî
+    uart_putbuff(VCAN_PORT, cmdr, sizeof(cmdr));    //å…ˆå‘é€å‘½ä»¤
 }
 
 
 /*!
- *  @brief      É½Íâ¶à¹¦ÄÜµ÷ÊÔÖúÊÖÉÏÎ»»ú£¬ÏßĞÔCCDÏÔÊ¾º¯Êı
- *  @param      ccdaddr    CCDÍ¼ÏñÆğÊ¼µØÖ·
- *  @param      ccdsize    CCDÍ¼ÏñÕ¼ÓÃ¿Õ¼äµÄ´óĞ¡
+ *  @brief      å±±å¤–å¤šåŠŸèƒ½è°ƒè¯•åŠ©æ‰‹ä¸Šä½æœºï¼Œçº¿æ€§CCDæ˜¾ç¤ºå‡½æ•°
+ *  @param      ccdaddr    CCDå›¾åƒèµ·å§‹åœ°å€
+ *  @param      ccdsize    CCDå›¾åƒå ç”¨ç©ºé—´çš„å¤§å°
  *  @since      v5.0
 *  Sample usage:
-             ¾ßÌåÓÃ·¨²Î¿¼ÕâÌû×Ó:
-            ¡¾É½ÍâÏßĞÔCCD¡¿ÉÏÎ»»úÏÔÊ¾Àı³ÌºÍ³¬¹ã½Ç²É¼¯Ğ§¹û - ÖÇÄÜ³µ×ÊÁÏÇø
+             å…·ä½“ç”¨æ³•å‚è€ƒè¿™å¸–å­:
+            ã€å±±å¤–çº¿æ€§CCDã€‘ä¸Šä½æœºæ˜¾ç¤ºä¾‹ç¨‹å’Œè¶…å¹¿è§’é‡‡é›†æ•ˆæœ - æ™ºèƒ½è½¦èµ„æ–™åŒº
              http://vcan123.com/forum.php?mod=viewthread&tid=6340&ctid=27
  */
 void vcan_sendccd(void *ccdaddr, uint32_t ccdsize)
 {
 #define CMD_CCD     2
-    uint8_t cmdf[2] = {CMD_CCD, ~CMD_CCD};    //¿ªÍ·ÃüÁî
-    uint8_t cmdr[2] = {~CMD_CCD, CMD_CCD};    //½áÎ²ÃüÁî
+    uint8_t cmdf[2] = {CMD_CCD, ~CMD_CCD};    //å¼€å¤´å‘½ä»¤
+    uint8_t cmdr[2] = {~CMD_CCD, CMD_CCD};    //ç»“å°¾å‘½ä»¤
 
-    uart_putbuff(VCAN_PORT, cmdf, sizeof(cmdf));    //ÏÈ·¢ËÍÃüÁî
+    uart_putbuff(VCAN_PORT, cmdf, sizeof(cmdf));    //å…ˆå‘é€å‘½ä»¤
 
-    uart_putbuff(VCAN_PORT, (uint8_t *)ccdaddr, ccdsize); //ÔÙ·¢ËÍÍ¼Ïñ
+    uart_putbuff(VCAN_PORT, (uint8_t *)ccdaddr, ccdsize); //å†å‘é€å›¾åƒ
 
-    uart_putbuff(VCAN_PORT, cmdr, sizeof(cmdr));    //ÔÙ·¢ËÍÃüÁî
+    uart_putbuff(VCAN_PORT, cmdr, sizeof(cmdr));    //å†å‘é€å‘½ä»¤
 }
 
 
 /*!
- *  @brief      É½Íâ¶à¹¦ÄÜµ÷ÊÔÖúÊÖÉÏÎ»»ú£¬ĞéÄâÊ¾²¨Æ÷ÏÔÊ¾º¯Êı
- *  @param      wareaddr    ²¨ĞÎÊı×éÆğÊ¼µØÖ·
- *  @param      waresize    ²¨ĞÎÊı×éÕ¼ÓÃ¿Õ¼äµÄ´óĞ¡
+ *  @brief      å±±å¤–å¤šåŠŸèƒ½è°ƒè¯•åŠ©æ‰‹ä¸Šä½æœºï¼Œè™šæ‹Ÿç¤ºæ³¢å™¨æ˜¾ç¤ºå‡½æ•°
+ *  @param      wareaddr    æ³¢å½¢æ•°ç»„èµ·å§‹åœ°å€
+ *  @param      waresize    æ³¢å½¢æ•°ç»„å ç”¨ç©ºé—´çš„å¤§å°
  *  @since      v5.0
 *  Sample usage:
-             ¾ßÌåÓÃ·¨²Î¿¼ÕâÌû×Ó:
-            ¡¾É½Íâ×ÊÁÏ¡¿ÍÓÂİÒÇºÍ¼ÓËÙ¶È ÉÏÎ»»úÏÔÊ¾Àı³Ì - ÖÇÄÜ³µ×ÊÁÏÇø
+             å…·ä½“ç”¨æ³•å‚è€ƒè¿™å¸–å­:
+            ã€å±±å¤–èµ„æ–™ã€‘é™€èºä»ªå’ŒåŠ é€Ÿåº¦ ä¸Šä½æœºæ˜¾ç¤ºä¾‹ç¨‹ - æ™ºèƒ½è½¦èµ„æ–™åŒº
              http://vcan123.com/forum.php?mod=viewthread&tid=6253&ctid=27
  */
 void vcan_sendware(void *wareaddr, uint32_t waresize)
 {
 #define CMD_WARE     3
-    uint8_t cmdf[2] = {CMD_WARE, ~CMD_WARE};    //´®¿Úµ÷ÊÔ Ê¹ÓÃµÄÇ°ÃüÁî
-    uint8_t cmdr[2] = {~CMD_WARE, CMD_WARE};    //´®¿Úµ÷ÊÔ Ê¹ÓÃµÄºóÃüÁî
+    uint8_t cmdf[2] = {CMD_WARE, ~CMD_WARE};    //ä¸²å£è°ƒè¯• ä½¿ç”¨çš„å‰å‘½ä»¤
+    uint8_t cmdr[2] = {~CMD_WARE, CMD_WARE};    //ä¸²å£è°ƒè¯• ä½¿ç”¨çš„åå‘½ä»¤
 
-    uart_putbuff(VCAN_PORT, cmdf, sizeof(cmdf));    //ÏÈ·¢ËÍÇ°ÃüÁî
-    uart_putbuff(VCAN_PORT, (uint8_t *)wareaddr, waresize);    //·¢ËÍÊı¾İ
-    uart_putbuff(VCAN_PORT, cmdr, sizeof(cmdr));    //·¢ËÍºóÃüÁî
+    uart_putbuff(VCAN_PORT, cmdf, sizeof(cmdf));    //å…ˆå‘é€å‰å‘½ä»¤
+    uart_putbuff(VCAN_PORT, (uint8_t *)wareaddr, waresize);    //å‘é€æ•°æ®
+    uart_putbuff(VCAN_PORT, cmdr, sizeof(cmdr));    //å‘é€åå‘½ä»¤
 
 }

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       VCAN_SCCB.h
- * @brief      OVÉãÏñÍ·ÅäÖÃ×ÜÏßSCCBº¯Êý¿â
- * @author     É½Íâ¿Æ¼¼
+ * @brief      OVæ‘„åƒå¤´é…ç½®æ€»çº¿SCCBå‡½æ•°åº“
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-09-01
  */
@@ -18,8 +18,8 @@
 #ifndef _VCAN_SCCB_H_
 #define _VCAN_SCCB_H_
 
-//SCCB ¹Ü½ÅÅäÖÃ
-//¼ûmy.h
+//SCCB ç®¡è„šé…ç½®
+//è§my.h
 
 
 #define SCL_H()         PTXn_T(SCCB_SCL,OUT) = 1
@@ -36,7 +36,7 @@
 #define ADDR_OV7725   0x42
 #define ADDR_OV7620   0x42
 
-#define DEV_ADR  ADDR_OV7725             /*Éè±¸µØÖ·¶¨Òå*/
+#define DEV_ADR  ADDR_OV7725             /*è®¾å¤‡åœ°å€å®šä¹‰*/
 
 #define SCCB_DELAY()    SCCB_delay(400)
 

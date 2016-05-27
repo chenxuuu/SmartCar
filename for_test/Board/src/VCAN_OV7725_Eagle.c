@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,ɽ��Ƽ�
+ *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     �������ۣ�ɽ����̳ http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
- *     ��ע�������⣬�����������ݰ�Ȩ����ɽ��Ƽ����У�δ������������������ҵ��;��
- *     �޸�����ʱ���뱣��ɽ��Ƽ��İ�Ȩ������
+ *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
+ *     修改内容时必须保留山外科技的版权声明。
  *
  * @file       VCAN_OV7725_Eagle.c
- * @brief      ӥ��ov7725��������
- * @author     ɽ��Ƽ�
+ * @brief      鹰眼ov7725驱动代码
+ * @author     山外科技
  * @version    v5.0
  * @date       2013-09-07
  */
@@ -28,15 +28,15 @@
 
 uint8   *ov7725_eagle_img_buff;
 
-volatile IMG_STATUS_e      ov7725_eagle_img_flag = IMG_FINISH;   //ͼ��״̬
+volatile IMG_STATUS_e      ov7725_eagle_img_flag = IMG_FINISH;   //图像状态
 
-//�ڲ���������
+//内部函数声明
 static uint8 ov7725_eagle_reg_init(void);
 static void ov7725_eagle_port_init();
 
 
 /*!
- *  @brief      ӥ��ov7725��ʼ��
+ *  @brief      鹰眼ov7725初始化
  *  @since      v5.0
  */
 uint8 ov7725_eagle_init(uint8 *imgaddr)
@@ -48,93 +48,93 @@ uint8 ov7725_eagle_init(uint8 *imgaddr)
 }
 
 /*!
- *  @brief      ӥ��ov7725�ܽų�ʼ�����ڲ����ã�
+ *  @brief      鹰眼ov7725管脚初始化（内部调用）
  *  @since      v5.0
  */
 void ov7725_eagle_port_init()
 {
-    //DMAͨ��0��ʼ����PTA27����Դ(Ĭ��������)��Դ��ַΪPTB_B0_IN��Ŀ�ĵ�ַΪ��IMG_BUFF��ÿ�δ���1Byte
+    //DMA通道0初始化，PTA27触发源(默认上升沿)，源地址为PTB_B0_IN，目的地址为：IMG_BUFF，每次传输1Byte
     dma_portx2buff_init(CAMERA_DMA_CH, (void *)&PTB_B0_IN, (void *)ov7725_eagle_img_buff, CameraPCLKint, DMA_BYTE1, CAMERA_DMA_NUM, DADDR_KEEPON);
 
     DMA_DIS(CAMERA_DMA_CH);
-    disable_irq(PORTA_IRQn);                        //�ر�PTA���ж�
-    DMA_IRQ_CLEAN(CAMERA_DMA_CH);                   //���ͨ�������жϱ�־λ
+    disable_irq(PORTA_IRQn);                        //关闭PTA的中断
+    DMA_IRQ_CLEAN(CAMERA_DMA_CH);                   //清除通道传输中断标志位
     DMA_IRQ_EN(CAMERA_DMA_CH);
 
     port_init(PTB8, ALT1 | DMA_FALLING | PULLDOWN );         //PCLK
 
-    port_init(PTA29, ALT1 | IRQ_RISING  | PULLDOWN | PF);     //���жϣ��������Ͻ��ش����жϣ����˲�
+    port_init(PTA29, ALT1 | IRQ_RISING  | PULLDOWN | PF);     //场中断，上拉，上降沿触发中断，带滤波
 
 }
 
 /*!
- *  @brief      ӥ��ov7725���жϷ�����
+ *  @brief      鹰眼ov7725场中断服务函数
  *  @since      v5.0
  */
 void ov7725_eagle_vsync(void)
 {
 
-    //���ж���Ҫ�ж��ǳ��������ǳ���ʼ
-    if(ov7725_eagle_img_flag == IMG_START)                   //��Ҫ��ʼ�ɼ�ͼ��
+    //场中断需要判断是场结束还是场开始
+    if(ov7725_eagle_img_flag == IMG_START)                   //需要开始采集图像
     {
-        ov7725_eagle_img_flag = IMG_GATHER;                  //���ͼ��ɼ���
+        ov7725_eagle_img_flag = IMG_GATHER;                  //标记图像采集中
         disable_irq(PORTA_IRQn);
 
 #if 1
 
-        PORTA_ISFR = 1 <<  CameraPCLK;            //���PCLK��־λ
+        PORTA_ISFR = 1 <<  CameraPCLK;            //清空PCLK标志位
 
-        DMA_EN(CAMERA_DMA_CH);                  //ʹ��ͨ��CHn Ӳ������
-        PORTA_ISFR = 1 <<  CameraPCLK;            //���PCLK��־λ
-        DMA_DADDR(CAMERA_DMA_CH) = (uint32)ov7725_eagle_img_buff;    //�ָ���ַ
+        DMA_EN(CAMERA_DMA_CH);                  //使能通道CHn 硬件请求
+        PORTA_ISFR = 1 <<  CameraPCLK;            //清空PCLK标志位
+        DMA_DADDR(CAMERA_DMA_CH) = (uint32)ov7725_eagle_img_buff;    //恢复地址
 
 #else
-        PORTA_ISFR = 1 <<  CameraPCLK;            //���PCLK��־λ
+        PORTA_ISFR = 1 <<  CameraPCLK;            //清空PCLK标志位
         dma_repeat(CAMERA_DMA_CH, (void *)&PTB_B0_IN, (void *)ov7725_eagle_img_buff,CAMERA_DMA_NUM);
 #endif
     }
-    else                                        //ͼ��ɼ�����
+    else                                        //图像采集错误
     {
-        disable_irq(PORTA_IRQn);                        //�ر�PTA���ж�
-        ov7725_eagle_img_flag = IMG_FAIL;                    //���ͼ��ɼ�ʧ��
+        disable_irq(PORTA_IRQn);                        //关闭PTA的中断
+        ov7725_eagle_img_flag = IMG_FAIL;                    //标记图像采集失败
     }
 }
 
 /*!
- *  @brief      ӥ��ov7725 DMA�жϷ�����
+ *  @brief      鹰眼ov7725 DMA中断服务函数
  *  @since      v5.0
  */
 void ov7725_eagle_dma()
 {
     ov7725_eagle_img_flag = IMG_FINISH ;
-    DMA_IRQ_CLEAN(CAMERA_DMA_CH);           //���ͨ�������жϱ�־λ
+    DMA_IRQ_CLEAN(CAMERA_DMA_CH);           //清除通道传输中断标志位
 }
 
 /*!
- *  @brief      ӥ��ov7725�ɼ�ͼ�񣨲ɼ��������ݴ洢�� ��ʼ��ʱ���õĵ�ַ�ϣ�
+ *  @brief      鹰眼ov7725采集图像（采集到的数据存储在 初始化时配置的地址上）
  *  @since      v5.0
  */
 void ov7725_eagle_get_img()
 {
-    ov7725_eagle_img_flag = IMG_START;                   //��ʼ�ɼ�ͼ��
-    PORTA_ISFR = ~0;                        //д1���жϱ�־λ(����ģ���Ȼ�ص���һ���жϾ����ϴ����ж�)
-    enable_irq(PORTA_IRQn);                         //����PTA���ж�
-    while(ov7725_eagle_img_flag != IMG_FINISH)           //�ȴ�ͼ��ɼ����
+    ov7725_eagle_img_flag = IMG_START;                   //开始采集图像
+    PORTA_ISFR = ~0;                        //写1清中断标志位(必须的，不然回导致一开中断就马上触发中断)
+    enable_irq(PORTA_IRQn);                         //允许PTA的中断
+    while(ov7725_eagle_img_flag != IMG_FINISH)           //等待图像采集完毕
     {
-        if(ov7725_eagle_img_flag == IMG_FAIL)            //����ͼ��ɼ����������¿�ʼ�ɼ�
+        if(ov7725_eagle_img_flag == IMG_FAIL)            //假如图像采集错误，则重新开始采集
         {
-            ov7725_eagle_img_flag = IMG_START;           //��ʼ�ɼ�ͼ��
-            PORTA_ISFR = ~0;                //д1���жϱ�־λ(����ģ���Ȼ�ص���һ���жϾ����ϴ����ж�)
-            enable_irq(PORTA_IRQn);                 //����PTA���ж�
+            ov7725_eagle_img_flag = IMG_START;           //开始采集图像
+            PORTA_ISFR = ~0;                //写1清中断标志位(必须的，不然回导致一开中断就马上触发中断)
+            enable_irq(PORTA_IRQn);                 //允许PTA的中断
         }
     }
 }
 
 
-/*OV7725��ʼ�����ñ�*/
+/*OV7725初始化配置表*/
 reg_s ov7725_eagle_reg[] =
 {
-    //�Ĵ������Ĵ���ֵ��
+    //寄存器，寄存器值次
     {OV7725_COM4         , 0x41},
     {OV7725_CLKRC        , 0x00},
     {OV7725_COM2         , 0x03},
@@ -203,19 +203,19 @@ reg_s ov7725_eagle_reg[] =
     {OV7725_BDMStep      , 0x03},
     {OV7725_SDE          , 0x04},
     {OV7725_BRIGHT       , 0x00},
-    {OV7725_CNST         , 0x70},  //��ֵ
+    {OV7725_CNST         , 0x70},  //阈值
     {OV7725_SIGN         , 0x06},
     {OV7725_UVADJ0       , 0x11},
     {OV7725_UVADJ1       , 0x02},
 
 };
 
-uint8 ov7725_eagle_cfgnum = ARR_SIZE( ov7725_eagle_reg ) ; /*�ṹ�������Ա��Ŀ*/
+uint8 ov7725_eagle_cfgnum = ARR_SIZE( ov7725_eagle_reg ) ; /*结构体数组成员数目*/
 
 
 /*!
- *  @brief      ӥ��ov7725�Ĵ��� ��ʼ��
- *  @return     ��ʼ�������0��ʾʧ�ܣ�1��ʾ�ɹ���
+ *  @brief      鹰眼ov7725寄存器 初始化
+ *  @return     初始化结果（0表示失败，1表示成功）
  *  @since      v5.0
  */
 uint8 ov7725_eagle_reg_init(void)
@@ -225,20 +225,20 @@ uint8 ov7725_eagle_reg_init(void)
     SCCB_GPIO_init();
 
     //OV7725_Delay_ms(50);
-    if( 0 == SCCB_WriteByte ( OV7725_COM7, 0x80 ) ) /*��λsensor */
+    if( 0 == SCCB_WriteByte ( OV7725_COM7, 0x80 ) ) /*复位sensor */
     {
-        DEBUG_PRINTF("\n����:SCCBд���ݴ���");
+        DEBUG_PRINTF("\n警告:SCCB写数据错误");
         return 0 ;
     }
 
     OV7725_EAGLE_Delay_ms(50);
 
-    if( 0 == SCCB_ReadByte( &Sensor_IDCode, 1, OV7725_VER ) )    /* ��ȡsensor ID��*/
+    if( 0 == SCCB_ReadByte( &Sensor_IDCode, 1, OV7725_VER ) )    /* 读取sensor ID号*/
     {
-        DEBUG_PRINTF("\n����:��ȡIDʧ��");
+        DEBUG_PRINTF("\n警告:读取ID失败");
         return 0;
     }
-    DEBUG_PRINTF("\nGet ID success��SENSOR ID is 0x%x", Sensor_IDCode);
+    DEBUG_PRINTF("\nGet ID success，SENSOR ID is 0x%x", Sensor_IDCode);
     DEBUG_PRINTF("\nConfig Register Number is %d ", ov7725_eagle_cfgnum);
     if(Sensor_IDCode == OV7725_ID)
     {
@@ -246,7 +246,7 @@ uint8 ov7725_eagle_reg_init(void)
         {
             if( 0 == SCCB_WriteByte(ov7725_eagle_reg[i].addr, ov7725_eagle_reg[i].val) )
             {
-                DEBUG_PRINTF("\n����:д�Ĵ���0x%xʧ��", ov7725_eagle_reg[i].addr);
+                DEBUG_PRINTF("\n警告:写寄存器0x%x失败", ov7725_eagle_reg[i].addr);
                 return 0;
             }
         }

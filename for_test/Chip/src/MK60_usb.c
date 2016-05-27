@@ -1,18 +1,18 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       MK60_usb.c
- * @brief      USB ´úÂë¿â(Ä¿Ç° ½ö ÓÐ ÐéÄâ ´®¿Ú )
- * @author     É½Íâ¿Æ¼¼
+ * @brief      USB ä»£ç åº“(ç›®å‰ ä»… æœ‰ è™šæ‹Ÿ ä¸²å£ )
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-09-26
- * @note       ±¾Àý³Ì ÒÆÖ² ·ÉË¼¿¨¶û¹«Ë¾ Ìá¹©µÄ K60 ²Î¿¼´úÂë
+ * @note       æœ¬ä¾‹ç¨‹ ç§»æ¤ é£žæ€å¡å°”å…¬å¸ æä¾›çš„ K60 å‚è€ƒä»£ç 
  */
 
 
@@ -22,18 +22,18 @@
 
 
 /*!
- *  @brief      USBÄ£¿é ³õÊ¼»¯
+ *  @brief      USBæ¨¡å— åˆå§‹åŒ–
  *  @since      v5.0
  */
 void usb_init(void)
 {
-    /* Èí¼þÅäÖÃ */
+    /* è½¯ä»¶é…ç½® */
     Setup_Pkt = (tUSB_Setup *)BufferPointer[bEP0OUT_ODD];
-    gu8USB_State = uPOWER;                          //±ê¼Ç×´Ì¬ÎªÉÏµç×´Ì¬
-    /* MPU ÅäÖÃ */
+    gu8USB_State = uPOWER;                          //æ ‡è®°çŠ¶æ€ä¸ºä¸Šç”µçŠ¶æ€
+    /* MPU é…ç½® */
     MPU_CESR = 0;                                   // MPU is disable. All accesses from all bus masters are allowed
 
-    /* SIM ÅäÖÃ */
+    /* SIM é…ç½® */
 #ifdef USB_CLOCK_CLKIN
     FLAG_SET(SIM_SCGC5_PORTE_SHIFT, SIM_SCGC5);
     PORTE_PCR26 = (0 | PORT_PCR_MUX(7));            // Enabling PTE26 as CLK input
@@ -52,12 +52,12 @@ void usb_init(void)
 #endif
 
     SIM_CLKDIV2 = ((SIM_CLKDIV2 & ~( SIM_CLKDIV2_USBDIV_MASK | SIM_CLKDIV2_USBFRAC_MASK ))
-                   | SIM_CLKDIV2_USBDIV(USB_CLK_DIV)                    //USB ·ÖÆµÒò×Ó
-                   | (USB_CLK_FRAC << SIM_CLKDIV2_USBFRAC_SHIFT)        //USB ±¶ÆµÒò×Ó
-                   //USB clk = PLL ¡Á [ (USBFRAC+1) / (USBDIV+1) ]
+                   | SIM_CLKDIV2_USBDIV(USB_CLK_DIV)                    //USB åˆ†é¢‘å› å­
+                   | (USB_CLK_FRAC << SIM_CLKDIV2_USBFRAC_SHIFT)        //USB å€é¢‘å› å­
+                   //USB clk = PLL Ã— [ (USBFRAC+1) / (USBDIV+1) ]
                   );
     SIM_SCGC4 |= SIM_SCGC4_USBOTG_MASK;             //USB Clock Gating
-                                                    //¿ªÆôUSBÄ£¿éµÄÊ±ÖÓÔ´
+                                                    //å¼€å¯USBæ¨¡å—çš„æ—¶é’Ÿæº
 #elif defined(MK60F15)
 #ifdef USB_CLOCK_PLL
     SIM_SOPT2 |=(0
@@ -74,32 +74,32 @@ void usb_init(void)
 #endif
 
     SIM_CLKDIV2 = ((SIM_CLKDIV2 & ~( SIM_CLKDIV2_USBFSDIV_MASK | SIM_CLKDIV2_USBFSFRAC_MASK ))
-                   | SIM_CLKDIV2_USBFSDIV(USB_CLK_DIV)                  //USB ·ÖÆµÒò×Ó
-                   | (USB_CLK_FRAC << SIM_CLKDIV2_USBFSFRAC_SHIFT)      //USB ±¶ÆµÒò×Ó
-                   //USB clk = PLL ¡Á [ (USBFRAC+1) / (USBDIV+1) ]
+                   | SIM_CLKDIV2_USBFSDIV(USB_CLK_DIV)                  //USB åˆ†é¢‘å› å­
+                   | (USB_CLK_FRAC << SIM_CLKDIV2_USBFSFRAC_SHIFT)      //USB å€é¢‘å› å­
+                   //USB clk = PLL Ã— [ (USBFRAC+1) / (USBDIV+1) ]
                   );
 
     //SIM_SCGC6 |= SIM_SCGC6_USB2OTG_MASK;
     SIM_SCGC4 |= SIM_SCGC4_USBFS_MASK;             //USB Clock Gating
-                                                    //¿ªÆôUSBÄ£¿éµÄÊ±ÖÓÔ´
+                                                    //å¼€å¯USBæ¨¡å—çš„æ—¶é’Ÿæº
 #endif
 
 
-    /* NVICÄ£¿éÅäÖÃ */
+    /* NVICæ¨¡å—é…ç½® */
     set_vector_handler(USB0_VECTORn, USB_ISR);
-    enable_irq(USB0_IRQn);                          //Ê¹ÄÜNVICÖÐµÄUSB OTGÖÐ¶Ï
+    enable_irq(USB0_IRQn);                          //ä½¿èƒ½NVICä¸­çš„USB OTGä¸­æ–­
 
-    /* USBÄ£¿éÅäÖÃ */
-    USB0_USBTRC0 |= USB_USBTRC0_USBRESET_MASK;      //¸´Î»USBÄ£¿é
+    /* USBæ¨¡å—é…ç½® */
+    USB0_USBTRC0 |= USB_USBTRC0_USBRESET_MASK;      //å¤ä½USBæ¨¡å—
     while(FLAG_CHK(USB_USBTRC0_USBRESET_SHIFT, USB0_USBTRC0));
-    USB0_BDTPAGE1 = (uint8)((uint32)tBDTtable >> 8); //ÅäÖÃµ±Ç°»º³åÃèÊö·û±íBDT
+    USB0_BDTPAGE1 = (uint8)((uint32)tBDTtable >> 8); //é…ç½®å½“å‰ç¼“å†²æè¿°ç¬¦è¡¨BDT
     USB0_BDTPAGE2 = (uint8)((uint32)tBDTtable >> 16);
     USB0_BDTPAGE3 = (uint8)((uint32)tBDTtable >> 24);
 
-    // Çå USB ¸´Î»±ê¼Ç
+    // æ¸… USB å¤ä½æ ‡è®°
     FLAG_SET(USB_ISTAT_USBRST_MASK, USB0_ISTAT);
 
-    // Ê¹ÄÜ USB ¸´Î»ÖÐ¶Ï
+    // ä½¿èƒ½ USB å¤ä½ä¸­æ–­
     FLAG_SET(USB_INTEN_USBRSTEN_SHIFT, USB0_INTEN);
 
     // Enable weak pull downs
@@ -109,36 +109,36 @@ void usb_init(void)
 
     USB0_CTL |= 0x01;
 
-    // ÉÏÀ­Ê¹ÄÜ
+    // ä¸Šæ‹‰ä½¿èƒ½
     FLAG_SET(USB_CONTROL_DPPULLUPNONOTG_SHIFT, USB0_CONTROL);
 }
 
 
 /*!
- *  @brief      USB ÐéÄâ´®¿Ú ³õÊ¼»¯
+ *  @brief      USB è™šæ‹Ÿä¸²å£ åˆå§‹åŒ–
  *  @since      v5.0
  */
 void usb_com_init(void)
 {
-    usb_init(); //³õÊ¼»¯USBÄ£¿é
+    usb_init(); //åˆå§‹åŒ–USBæ¨¡å—
 
-    CDC_Init(); //³õÊ¼»¯USB CDCÄ£Ê½
+    CDC_Init(); //åˆå§‹åŒ–USB CDCæ¨¡å¼
 }
 
 
 /*!
- *  @brief      USB µÈ´ýÃ¶¾Ù
+ *  @brief      USB ç­‰å¾…æžšä¸¾
  *  @since      v5.0
  */
 void usb_enum_wait(void)
 {
-    while(gu8USB_State != uENUMERATED);//µÈ´ýUSBÉè±¸±»Ã¶¾Ù
+    while(gu8USB_State != uENUMERATED);//ç­‰å¾…USBè®¾å¤‡è¢«æžšä¸¾
 }
 
 /*!
- *  @brief      USB ÐéÄâ´®¿Ú ½ÓÊÕ
- *  @param      rx_buf          Êý¾Ý½ÓÊÕ»º³åÇø
- *  @return     ½ÓÊÕµ½µÄ³¤¶È
+ *  @brief      USB è™šæ‹Ÿä¸²å£ æŽ¥æ”¶
+ *  @param      rx_buf          æ•°æ®æŽ¥æ”¶ç¼“å†²åŒº
+ *  @return     æŽ¥æ”¶åˆ°çš„é•¿åº¦
  *  @since      v5.0
  */
 uint8 usb_com_rx(uint8_t *rx_buf)
@@ -147,7 +147,7 @@ uint8 usb_com_rx(uint8_t *rx_buf)
     uint8 temp = 0;
     uint8 *pu8EPBuffer;
 
-    if(FLAG_CHK(EP_OUT, gu8USB_Flags)) // Èç¹ûÓÐÊý¾Ýµ½À´
+    if(FLAG_CHK(EP_OUT, gu8USB_Flags)) // å¦‚æžœæœ‰æ•°æ®åˆ°æ¥
     {
         len = USB_EP_OUT_SizeCheck(EP_OUT);
         temp = len;
@@ -165,9 +165,9 @@ uint8 usb_com_rx(uint8_t *rx_buf)
 
 
 /*!
- *  @brief      USB ÐéÄâ´®¿Ú ·¢ËÍ
- *  @param      tx_buf          Êý¾Ý·¢ËÍ»º³åÇø
- *  @param      ÐèÒª·¢ËÍµÄÊý¾Ý³¤¶È
+ *  @brief      USB è™šæ‹Ÿä¸²å£ å‘é€
+ *  @param      tx_buf          æ•°æ®å‘é€ç¼“å†²åŒº
+ *  @param      éœ€è¦å‘é€çš„æ•°æ®é•¿åº¦
  *  @since      v5.0
  */
 void usb_com_tx(uint8 *tx_buf, uint8 len)

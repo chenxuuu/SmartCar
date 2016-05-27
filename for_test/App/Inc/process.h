@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016£¬³¿Ðñ
+ *     Copyright (c) 2016ï¼Œæ™¨æ—­
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£º³¿ÐñµÄ²©¿Í http://www.chenxublog.com
+ *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
  *
- *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊô³¿ÐñËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£Áô³¿ÐñµÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žæ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜Žã€‚
  *
  * @file       process.h
- * @brief      ¸÷ÖÖÊý¾Ý´¦ÀíÍ·ÎÄ¼þ
- * @author     ³¿Ðñ
+ * @brief      å„ç§æ•°æ®å¤„ç†å¤´æ–‡ä»¶
+ * @author     æ™¨æ—­
  * @version    v1.0
  * @date       2016-3-29
  */
@@ -24,7 +24,7 @@ struct _slope
     int right_count;
     int left_initial_value[110];
     int right_initial_value[110];
-};    //¶¨Òå×óÓÒÐ±ÂÊ´æ´¢¿Õ¼ä£¬ÓÐÐ§µãÊý£¬³õÖµÊý×é
+};    //å®šä¹‰å·¦å³æ–œçŽ‡å­˜å‚¨ç©ºé—´ï¼Œæœ‰æ•ˆç‚¹æ•°ï¼Œåˆå€¼æ•°ç»„
 
 void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W],struct _slope *slope);
 

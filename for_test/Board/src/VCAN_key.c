@@ -1,22 +1,22 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,É½Íâ¿Æ¼¼
+ *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
+ *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       VCAN_KEY.c
- * @brief      KEYÇı¶¯º¯ÊıÊµÏÖ
- * @author     É½Íâ¿Æ¼¼
+ * @brief      KEYé©±åŠ¨å‡½æ•°å®ç°
+ * @author     å±±å¤–ç§‘æŠ€
  * @version    v5.0
  * @date       2013-07-10
  */
 
 
 /*
- * °üº¬Í·ÎÄ¼ş
+ * åŒ…å«å¤´æ–‡ä»¶
  */
 #include "common.h"
 #include "MK60_port.h"
@@ -25,47 +25,47 @@
 
 
 /*
- * ¶¨Òå KEY ±àºÅ¶ÔÓ¦µÄ¹Ü½Å
+ * å®šä¹‰ KEY ç¼–å·å¯¹åº”çš„ç®¡è„š
  */
 PTXn_e KEY_PTxn[KEY_MAX] = {PTA19, PTA24, PTA26, PTA25, PTA27, PTD13, PTC14, PTC15};
 
 
 /*!
- *  @brief      ³õÊ¼»¯key¶Ë¿Ú(key Ğ¡ÓÚ KEY_MAX Ê±³õÊ¼»¯ ¶ÔÓ¦¶Ë¿Ú£¬·ñÔò³õÊ¼»¯È«²¿¶Ë¿Ú)
- *  @param      KEY_e    KEY±àºÅ
+ *  @brief      åˆå§‹åŒ–keyç«¯å£(key å°äº KEY_MAX æ—¶åˆå§‹åŒ– å¯¹åº”ç«¯å£ï¼Œå¦åˆ™åˆå§‹åŒ–å…¨éƒ¨ç«¯å£)
+ *  @param      KEY_e    KEYç¼–å·
  *  @since      v5.0
- *  Sample usage:       key_init (KEY_U);    //³õÊ¼»¯ KEY_U
+ *  Sample usage:       key_init (KEY_U);    //åˆå§‹åŒ– KEY_U
  */
 void    key_init(KEY_e key)
 {
     if(key < KEY_MAX)
     {
         gpio_init(KEY_PTxn[key], GPI, 0);
-        port_init_NoALT(KEY_PTxn[key], PULLUP);         //±£³Ö¸´ÓÃ²»±ä£¬½ö½ö¸Ä±äÅäÖÃÑ¡Ïî
+        port_init_NoALT(KEY_PTxn[key], PULLUP);         //ä¿æŒå¤ç”¨ä¸å˜ï¼Œä»…ä»…æ”¹å˜é…ç½®é€‰é¡¹
     }
     else
     {
         key = KEY_MAX;
 
-        //³õÊ¼»¯È«²¿ °´¼ü
+        //åˆå§‹åŒ–å…¨éƒ¨ æŒ‰é”®
         while(key--)
         {
             gpio_init(KEY_PTxn[key], GPI, 0);
-            port_init_NoALT(KEY_PTxn[key], PULLUP);         //±£³Ö¸´ÓÃ²»±ä£¬½ö½ö¸Ä±äÅäÖÃÑ¡Ïî
+            port_init_NoALT(KEY_PTxn[key], PULLUP);         //ä¿æŒå¤ç”¨ä¸å˜ï¼Œä»…ä»…æ”¹å˜é…ç½®é€‰é¡¹
         }
 
     }
 }
 
 /*!
- *  @brief      »ñÈ¡key×´Ì¬£¨²»´øÑÓÊ±Ïû¶¶£©
- *  @param      KEY_e           KEY±àºÅ
- *  @return     KEY_STATUS_e    KEY×´Ì¬£¨KEY_DOWN¡¢KEY_DOWN£©
+ *  @brief      è·å–keyçŠ¶æ€ï¼ˆä¸å¸¦å»¶æ—¶æ¶ˆæŠ–ï¼‰
+ *  @param      KEY_e           KEYç¼–å·
+ *  @return     KEY_STATUS_e    KEYçŠ¶æ€ï¼ˆKEY_DOWNã€KEY_DOWNï¼‰
  *  @since      v5.0
  *  Sample usage:
                     if(key_get(KEY_U) ==  KEY_DOWN)
                     {
-                        printf("\n°´¼ü°´ÏÂ")
+                        printf("\næŒ‰é”®æŒ‰ä¸‹")
                     }
  */
 KEY_STATUS_e key_get(KEY_e key)
@@ -79,14 +79,14 @@ KEY_STATUS_e key_get(KEY_e key)
 
 
 /*!
- *  @brief      ¼ì²âkey×´Ì¬£¨´øÑÓÊ±Ïû¶¶£©
- *  @param      KEY_e           KEY±àºÅ
- *  @return     KEY_STATUS_e    KEY×´Ì¬£¨KEY_DOWN¡¢KEY_DOWN£©
+ *  @brief      æ£€æµ‹keyçŠ¶æ€ï¼ˆå¸¦å»¶æ—¶æ¶ˆæŠ–ï¼‰
+ *  @param      KEY_e           KEYç¼–å·
+ *  @return     KEY_STATUS_e    KEYçŠ¶æ€ï¼ˆKEY_DOWNã€KEY_DOWNï¼‰
  *  @since      v5.0
  *  Sample usage:
                     if(key_check(KEY_U) ==  KEY_DOWN)
                     {
-                        printf("\n°´¼ü°´ÏÂ")
+                        printf("\næŒ‰é”®æŒ‰ä¸‹")
                     }
  */
 KEY_STATUS_e key_check(KEY_e key)
@@ -103,42 +103,42 @@ KEY_STATUS_e key_check(KEY_e key)
 }
 
 
-/*********************  ÈçÏÂ´úÂëÊÇÊµÏÖ°´¼ü¶¨Ê±É¨Ãè£¬·¢ËÍÏûÏ¢µ½FIFO  ********************/
+/*********************  å¦‚ä¸‹ä»£ç æ˜¯å®ç°æŒ‰é”®å®šæ—¶æ‰«æï¼Œå‘é€æ¶ˆæ¯åˆ°FIFO  ********************/
 /*
- * ¶¨Òå°´¼üÏûÏ¢FIFO×´Ì¬
+ * å®šä¹‰æŒ‰é”®æ¶ˆæ¯FIFOçŠ¶æ€
  */
 typedef enum
 {
-    KEY_MSG_EMPTY,      //Ã»ÓĞ°´¼üÏûÏ¢
-    KEY_MSG_NORMAL,     //Õı³££¬ÓĞ°´¼üÏûÏ¢£¬µ«²»Âú
-    KEY_MSG_FULL,       //°´¼üÏûÏ¢Âú
+    KEY_MSG_EMPTY,      //æ²¡æœ‰æŒ‰é”®æ¶ˆæ¯
+    KEY_MSG_NORMAL,     //æ­£å¸¸ï¼Œæœ‰æŒ‰é”®æ¶ˆæ¯ï¼Œä½†ä¸æ»¡
+    KEY_MSG_FULL,       //æŒ‰é”®æ¶ˆæ¯æ»¡
 } key_msg_e;
 
 /*
- * ¶¨Òå°´¼üÏûÏ¢FIFOÏà¹ØµÄ±äÁ¿
+ * å®šä¹‰æŒ‰é”®æ¶ˆæ¯FIFOç›¸å…³çš„å˜é‡
  */
-KEY_MSG_t           key_msg[KEY_MSG_FIFO_SIZE];             //°´¼üÏûÏ¢FIFO
-volatile uint8      key_msg_front = 0, key_msg_rear = 0;    //½ÓÊÕFIFOµÄÖ¸Õë
-volatile uint8      key_msg_flag = KEY_MSG_EMPTY;           //°´¼üÏûÏ¢FIFO×´Ì¬
+KEY_MSG_t           key_msg[KEY_MSG_FIFO_SIZE];             //æŒ‰é”®æ¶ˆæ¯FIFO
+volatile uint8      key_msg_front = 0, key_msg_rear = 0;    //æ¥æ”¶FIFOçš„æŒ‡é’ˆ
+volatile uint8      key_msg_flag = KEY_MSG_EMPTY;           //æŒ‰é”®æ¶ˆæ¯FIFOçŠ¶æ€
 
 
 /*!
- *  @brief      ·¢ËÍ°´¼üÏûÏ¢µ½FIFO
- *  @param      KEY_MSG_t       °´¼üÏûÏ¢
+ *  @brief      å‘é€æŒ‰é”®æ¶ˆæ¯åˆ°FIFO
+ *  @param      KEY_MSG_t       æŒ‰é”®æ¶ˆæ¯
  *  @since      v5.0
  *  Sample usage:
                     KEY_MSG_t *keymsg;
                     keymsg.key      = KEY_U;
                     keymsg.status   = KEY_HOLD;
-                    send_key_msg(keymsg);                   //·¢ËÍ
+                    send_key_msg(keymsg);                   //å‘é€
  */
 void send_key_msg(KEY_MSG_t keymsg)
 {
     uint8 tmp;
-    //±£´æÔÚFIFOÀï
+    //ä¿å­˜åœ¨FIFOé‡Œ
     if(key_msg_flag == KEY_MSG_FULL)
     {
-        //ÂúÁËÖ±½Ó²»´¦Àí
+        //æ»¡äº†ç›´æ¥ä¸å¤„ç†
         return ;
     }
     key_msg[key_msg_rear].key = keymsg.key;
@@ -148,11 +148,11 @@ void send_key_msg(KEY_MSG_t keymsg)
 
     if(key_msg_rear >= KEY_MSG_FIFO_SIZE)
     {
-        key_msg_rear = 0;                       //ÖØÍ·¿ªÊ¼
+        key_msg_rear = 0;                       //é‡å¤´å¼€å§‹
     }
 
     tmp = key_msg_rear;
-    if(tmp == key_msg_front)                   //×·µ½Æ¨¹ÉÁË£¬ÂúÁË
+    if(tmp == key_msg_front)                   //è¿½åˆ°å±è‚¡äº†ï¼Œæ»¡äº†
     {
         key_msg_flag = KEY_MSG_FULL;
     }
@@ -164,38 +164,38 @@ void send_key_msg(KEY_MSG_t keymsg)
 
 
 /*!
- *  @brief      ´ÓFIFOÀï»ñÈ¡°´¼üÏûÏ¢
- *  @param      KEY_MSG_t       °´¼üÏûÏ¢
- *  @return     ÊÇ·ñ»ñÈ¡°´¼üÏûÏ¢£¨1Îª»ñÈ¡³É¹¦£¬0ÎªÃ»»ñÈ¡µ½°´¼üÏûÏ¢£©
+ *  @brief      ä»FIFOé‡Œè·å–æŒ‰é”®æ¶ˆæ¯
+ *  @param      KEY_MSG_t       æŒ‰é”®æ¶ˆæ¯
+ *  @return     æ˜¯å¦è·å–æŒ‰é”®æ¶ˆæ¯ï¼ˆ1ä¸ºè·å–æˆåŠŸï¼Œ0ä¸ºæ²¡è·å–åˆ°æŒ‰é”®æ¶ˆæ¯ï¼‰
  *  @since      v5.0
  *  Sample usage:
                     KEY_MSG_t keymsg;
                     if(get_key_msg(&keymsg) == 1)
                     {
-                        printf("\n°´ÏÂ°´¼üKEY%d,ÀàĞÍÎª%d£¨0Îª°´ÏÂ£¬1Îªµ¯Æğ£¬2Îª³¤°´£©",keymsg.key,keymsg.status);
+                        printf("\næŒ‰ä¸‹æŒ‰é”®KEY%d,ç±»å‹ä¸º%dï¼ˆ0ä¸ºæŒ‰ä¸‹ï¼Œ1ä¸ºå¼¹èµ·ï¼Œ2ä¸ºé•¿æŒ‰ï¼‰",keymsg.key,keymsg.status);
                     }
  */
 uint8 get_key_msg(KEY_MSG_t *keymsg)
 {
     uint8 tmp;
 
-    if(key_msg_flag == KEY_MSG_EMPTY)               //°´¼üÏûÏ¢FIFOÎª¿Õ£¬Ö±½Ó·µ»Ø0
+    if(key_msg_flag == KEY_MSG_EMPTY)               //æŒ‰é”®æ¶ˆæ¯FIFOä¸ºç©ºï¼Œç›´æ¥è¿”å›0
     {
         return 0;
     }
 
-    keymsg->key = key_msg[key_msg_front].key;       //´ÓFIFO¶ÓÊ×ÖĞ»ñÈ¡°´¼üÖµ
-    keymsg->status = key_msg[key_msg_front].status; //´ÓFIFO¶ÓÊ×ÖĞ»ñÈ¡°´¼üÀàĞÍ
+    keymsg->key = key_msg[key_msg_front].key;       //ä»FIFOé˜Ÿé¦–ä¸­è·å–æŒ‰é”®å€¼
+    keymsg->status = key_msg[key_msg_front].status; //ä»FIFOé˜Ÿé¦–ä¸­è·å–æŒ‰é”®ç±»å‹
 
-    key_msg_front++;                                //FIFO¶ÓÊ×Ö¸Õë¼Ó1£¬Ö¸ÏòÏÂÒ»¸öÏûÏ¢
+    key_msg_front++;                                //FIFOé˜Ÿé¦–æŒ‡é’ˆåŠ 1ï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªæ¶ˆæ¯
 
-    if(key_msg_front >= KEY_MSG_FIFO_SIZE)          //FIFOÖ¸Õë¶ÓÊ×Òç³öÔò´Ó0¿ªÊ¼¼ÆÊı
+    if(key_msg_front >= KEY_MSG_FIFO_SIZE)          //FIFOæŒ‡é’ˆé˜Ÿé¦–æº¢å‡ºåˆ™ä»0å¼€å§‹è®¡æ•°
     {
-        key_msg_front = 0;                          //ÖØÍ·¿ªÊ¼¼ÆÊı£¨Ñ­»·ÀûÓÃÊı×é£©
+        key_msg_front = 0;                          //é‡å¤´å¼€å§‹è®¡æ•°ï¼ˆå¾ªç¯åˆ©ç”¨æ•°ç»„ï¼‰
     }
 
     tmp = key_msg_rear;
-    if(key_msg_front == tmp)                        //±È½Ï¶ÓÊ×ºÍ¶ÓÎ²ÊÇ·ñÒ»Ñù£¬Ò»ÑùÔò±íÊ¾FIFOÒÑ¿ÕÁË
+    if(key_msg_front == tmp)                        //æ¯”è¾ƒé˜Ÿé¦–å’Œé˜Ÿå°¾æ˜¯å¦ä¸€æ ·ï¼Œä¸€æ ·åˆ™è¡¨ç¤ºFIFOå·²ç©ºäº†
     {
         key_msg_flag = KEY_MSG_EMPTY;
     }
@@ -208,62 +208,62 @@ uint8 get_key_msg(KEY_MSG_t *keymsg)
 }
 
 /*!
- *  @brief      ¶¨Ê±¼ì²âkey×´Ì¬
+ *  @brief      å®šæ—¶æ£€æµ‹keyçŠ¶æ€
  *  @since      v5.0
- *  @note       ´Ëº¯ÊıĞèÒª·ÅÈë ¶¨Ê±ÖĞ¶Ï·şÎñº¯ÊıÀï£¬¶¨Ê±10msÖ´ĞĞÒ»´Î
+ *  @note       æ­¤å‡½æ•°éœ€è¦æ”¾å…¥ å®šæ—¶ä¸­æ–­æœåŠ¡å‡½æ•°é‡Œï¼Œå®šæ—¶10msæ‰§è¡Œä¸€æ¬¡
  */
 void key_IRQHandler(void)
 {
 
     KEY_e   keynum;
-    static uint8 keytime[KEY_MAX];                          //¾²Ì¬Êı×é£¬±£´æ¸÷Êı×é°´ÏÂÊ±¼ä
+    static uint8 keytime[KEY_MAX];                          //é™æ€æ•°ç»„ï¼Œä¿å­˜å„æ•°ç»„æŒ‰ä¸‹æ—¶é—´
 
-    KEY_MSG_t keymsg;                                       //°´¼üÏûÏ¢
+    KEY_MSG_t keymsg;                                       //æŒ‰é”®æ¶ˆæ¯
 
-    for(keynum = (KEY_e)0 ; keynum < KEY_MAX; keynum ++)    //Ã¿¸ö°´¼üÂÖÑ¯
+    for(keynum = (KEY_e)0 ; keynum < KEY_MAX; keynum ++)    //æ¯ä¸ªæŒ‰é”®è½®è¯¢
     {
-        if(key_get(keynum) == KEY_DOWN)                     //ÅĞ¶Ï°´¼üÊÇ·ñ°´ÏÂ
+        if(key_get(keynum) == KEY_DOWN)                     //åˆ¤æ–­æŒ‰é”®æ˜¯å¦æŒ‰ä¸‹
         {
-            keytime[keynum]++;                              //°´ÏÂÊ±¼äÀÛ¼Ó
+            keytime[keynum]++;                              //æŒ‰ä¸‹æ—¶é—´ç´¯åŠ 
 
-            if(keytime[keynum] <= KEY_DOWN_TIME)            //ÅĞ¶ÏÊ±¼äÊÇ·ñÃ»³¬¹ıÏû¶¶È·ÈÏ°´ÏÂÊ±¼ä
+            if(keytime[keynum] <= KEY_DOWN_TIME)            //åˆ¤æ–­æ—¶é—´æ˜¯å¦æ²¡è¶…è¿‡æ¶ˆæŠ–ç¡®è®¤æŒ‰ä¸‹æ—¶é—´
             {
-                continue;                                   //Ã»´ïµ½£¬Ôò¼ÌĞøµÈ´ı
+                continue;                                   //æ²¡è¾¾åˆ°ï¼Œåˆ™ç»§ç»­ç­‰å¾…
             }
-            else if(keytime[keynum] == KEY_DOWN_TIME + 1 )  //ÅĞ¶ÏÊ±¼äÊÇ·ñÎªÏû¶¶È·ÈÏ°´ÏÂÊ±¼ä
+            else if(keytime[keynum] == KEY_DOWN_TIME + 1 )  //åˆ¤æ–­æ—¶é—´æ˜¯å¦ä¸ºæ¶ˆæŠ–ç¡®è®¤æŒ‰ä¸‹æ—¶é—´
             {
-                //È·ÈÏ°´¼ü°´ÏÂ
+                //ç¡®è®¤æŒ‰é”®æŒ‰ä¸‹
                 keymsg.key = keynum;
                 keymsg.status = KEY_DOWN;
-                send_key_msg(keymsg);                       //°Ñ°´¼üÖµºÍ°´¼üÀàĞÍ·¢ËÍÏûÏ¢µ½FIFO
+                send_key_msg(keymsg);                       //æŠŠæŒ‰é”®å€¼å’ŒæŒ‰é”®ç±»å‹å‘é€æ¶ˆæ¯åˆ°FIFO
             }
-            else if(keytime[keynum] <= KEY_HOLD_TIME)       //ÊÇ·ñÃ»³¬¹ı³¤°´HOLD°´¼üÈ·ÈÏÊ±¼ä
+            else if(keytime[keynum] <= KEY_HOLD_TIME)       //æ˜¯å¦æ²¡è¶…è¿‡é•¿æŒ‰HOLDæŒ‰é”®ç¡®è®¤æ—¶é—´
             {
-                continue;                                   //Ã»³¬¹ı£¬Ôò¼ÌĞøµÈ´ı
+                continue;                                   //æ²¡è¶…è¿‡ï¼Œåˆ™ç»§ç»­ç­‰å¾…
             }
-            else if(keytime[keynum]  == KEY_HOLD_TIME + 1)  //ÊÇ·ñÎª³¤°´holdÈ·ÈÏÊ±¼ä
+            else if(keytime[keynum]  == KEY_HOLD_TIME + 1)  //æ˜¯å¦ä¸ºé•¿æŒ‰holdç¡®è®¤æ—¶é—´
             {
-                //È·ÈÏ³¤°´HOLD
+                //ç¡®è®¤é•¿æŒ‰HOLD
                 keymsg.key = keynum;
                 keymsg.status = KEY_HOLD;
-                send_key_msg(keymsg);                       //·¢ËÍ
+                send_key_msg(keymsg);                       //å‘é€
                 keytime[keynum] = KEY_DOWN_TIME + 1;
             }
             else
             {
-                keytime[keynum] = KEY_DOWN_TIME + 1;        //¼ÌĞøÖØ¸´¼ì²â hold ×´Ì¬
+                keytime[keynum] = KEY_DOWN_TIME + 1;        //ç»§ç»­é‡å¤æ£€æµ‹ hold çŠ¶æ€
             }
         }
         else
         {
-            if(keytime[keynum] > KEY_DOWN_TIME)             //Èç¹ûÈ·ÈÏ¹ı°´ÏÂ°´¼ü
+            if(keytime[keynum] > KEY_DOWN_TIME)             //å¦‚æœç¡®è®¤è¿‡æŒ‰ä¸‹æŒ‰é”®
             {
                 keymsg.key = keynum;
                 keymsg.status = KEY_UP;
-                send_key_msg(keymsg);                       //·¢ËÍ°´¼üµ¯ÆğÏûÏ¢
+                send_key_msg(keymsg);                       //å‘é€æŒ‰é”®å¼¹èµ·æ¶ˆæ¯
             }
 
-            keytime[keynum] = 0;                            //Ê±¼äÀÛ¼ÆÇå0
+            keytime[keynum] = 0;                            //æ—¶é—´ç´¯è®¡æ¸…0
         }
     }
 }

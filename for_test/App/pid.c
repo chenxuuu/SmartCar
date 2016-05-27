@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016£¬³¿Ğñ
+ *     Copyright (c) 2016ï¼Œæ™¨æ—­
  *     All rights reserved.
- *     ¼¼ÊõÌÖÂÛ£º³¿ĞñµÄ²©¿Í http://www.chenxublog.com
+ *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
  *
- *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊô³¿ĞñËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
- *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£Áô³¿ĞñµÄ°æÈ¨ÉùÃ÷¡£
+ *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±æ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
+ *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜ã€‚
  *
  * @file       pid.c
  * @brief      PID
- * @author     ³¿Ğñ
+ * @author     æ™¨æ—­
  * @version    v1.0
  * @date       2016-3-7
  */
@@ -33,15 +33,15 @@ float p_gain       = 5.2,
 
 
 
-scanf( "%d", &process_point );// Éè¶¨PV,SPÖµ
+scanf( "%d", &process_point );// è®¾å®šPV,SPå€¼
 
-pid_init( &warm, process_point, set_point );// ³õÊ¼»¯PID²ÎÊıÖµ
+pid_init( &warm, process_point, set_point );// åˆå§‹åŒ–PIDå‚æ•°å€¼
 
-//PV - Êµ¼ÊµÄ²âÁ¿Öµ
-//SV - Éè¶¨µÄÄ¿±êÖµ
-//SP - Êä³öµÄ·§¿ª¶ÈÖµ£¨³£ÓÃ % ±íÊ¾£©
+//PV - å®é™…çš„æµ‹é‡å€¼
+//SV - è®¾å®šçš„ç›®æ ‡å€¼
+//SP - è¾“å‡ºçš„é˜€å¼€åº¦å€¼ï¼ˆå¸¸ç”¨ % è¡¨ç¤ºï¼‰
 
-pid_tune( &warm, p_gain, i_gain, d_gain, dead_band, integral_val );// ³õÊ¼»¯PIDÊä³öÖµ
+pid_tune( &warm, p_gain, i_gain, d_gain, dead_band, integral_val );// åˆå§‹åŒ–PIDè¾“å‡ºå€¼
 
 pid_setinteg( &warm, 0.0 );// Get input value for process point
 
@@ -52,9 +52,9 @@ printf( "%f\n", pid_calc( &warm ) );
 
 
 
-/*£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­
+/*ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 *  pid_init DESCRIPTION This function initializes the pointers in the _pid structure to the process variable and the setpoint. *pv and *sp are integer pointers.
-*  £­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­*/
+*  ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼*/
 void pid_init( struct _pid *warm, int process_point, int set_point )
 {
 	struct _pid *pid;
@@ -64,12 +64,12 @@ void pid_init( struct _pid *warm, int process_point, int set_point )
 }
 
 
-/*£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­
+/*ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
  * pid_tune DESCRIPTION Sets the proportional gain (p_gain), integral gain (i_gain),
  * derivitive gain (d_gain), and the dead band (dead_band) of a pid control structure _pid.
  *
- * Éè¶¨PID²ÎÊı £­£­£­£­ P,I,D,ËÀÇø
- * //£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­*/
+ * è®¾å®šPIDå‚æ•° ï¼ï¼ï¼ï¼ P,I,D,æ­»åŒº
+ * //ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼*/
 void pid_tune( struct _pid *pid, float p_gain, float i_gain, float d_gain, int dead_band ,float integral_val )
 {
 	pid->pgain	= p_gain;
@@ -81,12 +81,12 @@ void pid_tune( struct _pid *pid, float p_gain, float i_gain, float d_gain, int d
 }
 
 
-/*£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­
+/*ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
  * pid_setinteg DESCRIPTION Set a new value for the integral term of the pid equation.
  * This is useful for setting the initial output of the pid controller at start up.
  *
- * Éè¶¨Êä³ö³õÊ¼Öµ
- * //£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­*/
+ * è®¾å®šè¾“å‡ºåˆå§‹å€¼
+ * //ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼*/
 
 void pid_setinteg( struct _pid *pid, float new_integ )
 {
@@ -95,78 +95,78 @@ void pid_setinteg( struct _pid *pid, float new_integ )
 }
 
 
-/*£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­
+/*ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
  * pid_bumpless DESCRIPTION Bumpless transfer algorithim.
  * When suddenly changing setpoints, or when restarting the PID equation after an extended pause,
  * the derivative of the equation can cause a bump in the controller output. This function will help smooth out that bump.
  * The process value in *pv should be the updated just before this function is used.
  *
- * pid_bumpless ÊµÏÖÎŞÈÅÇĞ»»
- * µ±Í»È»¸Ä±äÉè¶¨ÖµÊ±£¬»òÖØĞÂÆô¶¯ºó£¬½«ÒıÆğÈÅ¶¯Êä³ö¡£Õâ¸öº¯Êı½«ÄÜÊµÏÖÆ½Ë³ÈÅ¶¯£¬ÔÚµ÷ÓÃ¸Ãº¯ÊıÖ®Ç°ĞèÒªÏÈ¸üĞÂPVÖµ
- * //£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­*/
+ * pid_bumpless å®ç°æ— æ‰°åˆ‡æ¢
+ * å½“çªç„¶æ”¹å˜è®¾å®šå€¼æ—¶ï¼Œæˆ–é‡æ–°å¯åŠ¨åï¼Œå°†å¼•èµ·æ‰°åŠ¨è¾“å‡ºã€‚è¿™ä¸ªå‡½æ•°å°†èƒ½å®ç°å¹³é¡ºæ‰°åŠ¨ï¼Œåœ¨è°ƒç”¨è¯¥å‡½æ•°ä¹‹å‰éœ€è¦å…ˆæ›´æ–°PVå€¼
+ * //ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼*/
 
 void pid_bumpless( struct _pid *pid )
 {
-	pid->last_error = (pid->sp) - (pid->pv); /* Éè¶¨ÖµÓë·´À¡ÖµÆ«²î */
+	pid->last_error = (pid->sp) - (pid->pv); /* è®¾å®šå€¼ä¸åé¦ˆå€¼åå·® */
 }
 
 
-/*£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­
+/*ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
  * pid_calc DESCRIPTION Performs PID calculations for the _pid structure *a.
  * This function uses the positional form of the pid equation, and incorporates an integral windup prevention algorithim.
  * Rectangular integration is used, so this function must be repeated on a consistent time basis for accurate control.
  * RETURN VALUE The new output value for the pid loop. USAGE #include "control.h"
- * ±¾º¯ÊıÊ¹ÓÃÎ»ÖÃÊ½PID¼ÆËã·½Ê½£¬²¢ÇÒ²ÉÈ¡ÁË»ı·Ö±¥ºÍÏŞÖÆÔËËã
- * PID¼ÆËã
- * //£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­£­*/
+ * æœ¬å‡½æ•°ä½¿ç”¨ä½ç½®å¼PIDè®¡ç®—æ–¹å¼ï¼Œå¹¶ä¸”é‡‡å–äº†ç§¯åˆ†é¥±å’Œé™åˆ¶è¿ç®—
+ * PIDè®¡ç®—
+ * //ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼*/
 
 float pid_calc( struct _pid *pid )
 {
 	int	err;
 	float	pterm, dterm, result, ferror;
 
-/* ¼ÆËãÆ«²î */
+/* è®¡ç®—åå·® */
 	err = (pid->sp) - (pid->pv);
 
-/* ÅĞ¶ÏÊÇ·ñ´óÓÚËÀÇø */
+/* åˆ¤æ–­æ˜¯å¦å¤§äºæ­»åŒº */
 	if ( abs( err ) > pid->deadband )
 	{
-		ferror = (float) err; /* do integer to float conversion only once Êı¾İÀàĞÍ×ª»» */
+		ferror = (float) err; /* do integer to float conversion only once æ•°æ®ç±»å‹è½¬æ¢ */
 
-/* ±ÈÀıÏî */
+/* æ¯”ä¾‹é¡¹ */
 		pterm = pid->pgain * ferror;
 
 		if ( pterm > 100 || pterm < -100 )
 		{
 			pid->integral = 0.0;
 		}else  {
-/* »ı·ÖÏî */
+/* ç§¯åˆ†é¡¹ */
 			pid->integral += pid->igain * ferror;
 
 /*
- * Êä³öÎª0£­£­100%
- * Èç¹û¼ÆËã½á¹û´óÓÚ100£¬ÔòµÈÓÚ100
+ * è¾“å‡ºä¸º0ï¼ï¼100%
+ * å¦‚æœè®¡ç®—ç»“æœå¤§äº100ï¼Œåˆ™ç­‰äº100
  */
 			if ( pid->integral > 100.0 )
 			{
 				pid->integral = 100.0;
 			}
-/* Èç¹û¼ÆËã½á¹ûĞ¡ÓÚ0.0£¬ÔòµÈÓÚ0 */
+/* å¦‚æœè®¡ç®—ç»“æœå°äº0.0ï¼Œåˆ™ç­‰äº0 */
 			else if ( pid->integral < 0.0 )
 				pid->integral = 0.0;
 		}
 
-/* Î¢·ÖÏî */
+/* å¾®åˆ†é¡¹ */
 		dterm = ( (float) (err - pid->last_error) ) * pid->dgain;
 
 		result = pterm + pid->integral + dterm;
 	}else
-		result = pid->integral;  /* ÔÚËÀÇø·¶Î§ÄÚ£¬±£³ÖÏÖÓĞÊä³ö */
+		result = pid->integral;  /* åœ¨æ­»åŒºèŒƒå›´å†…ï¼Œä¿æŒç°æœ‰è¾“å‡º */
 
-/* ±£´æÉÏ´ÎÆ«²î */
+/* ä¿å­˜ä¸Šæ¬¡åå·® */
 	pid->last_error = err;
 
-/* Êä³öPIDÖµ(0-100) */
+/* è¾“å‡ºPIDå€¼(0-100) */
 	return(result);
 }
 
@@ -182,7 +182,7 @@ void main( void )
 // scanf("%d%d%f%f%f", &process_point, &set_point, &p_gain, &i_gain, &d_gain);
 //
 
-// ³õÊ¼»¯²ÎÊı
+// åˆå§‹åŒ–å‚æ•°
 	process_point	= 30;
 	set_point	= 40;
 	p_gain		= (float) (5.2);
@@ -199,13 +199,13 @@ void main( void )
 	{
 		scanf( "%d", &process_point );
 
-// Éè¶¨PV,SPÖµ
+// è®¾å®šPV,SPå€¼
 		pid_init( &warm, process_point, set_point );
 
-// ³õÊ¼»¯PID²ÎÊıÖµ
+// åˆå§‹åŒ–PIDå‚æ•°å€¼
 		pid_tune( &warm, p_gain, i_gain, d_gain, dead_band, integral_val );
 
-// ³õÊ¼»¯PIDÊä³öÖµ
+// åˆå§‹åŒ–PIDè¾“å‡ºå€¼
 		pid_setinteg( &warm, 0.0 );
 // pid_setinteg(&warm,30.0);
 

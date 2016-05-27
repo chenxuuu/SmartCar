@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,ɽ��Ƽ�
+ *     Copyright (c) 2013,山外科技
  *     All rights reserved.
- *     �������ۣ�ɽ����̳ http://www.vcan123.com
+ *     技术讨论：山外论坛 http://www.vcan123.com
  *
- *     ��ע�������⣬�����������ݰ�Ȩ����ɽ��Ƽ����У�δ������������������ҵ��;��
- *     �޸�����ʱ���뱣��ɽ��Ƽ��İ�Ȩ������
+ *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
+ *     修改内容时必须保留山外科技的版权声明。
  *
  * @file       main.c
- * @brief      ɽ��K60 ƽ̨������
- * @author     ɽ��Ƽ�
+ * @brief      山外K60 平台主程序
+ * @author     山外科技
  * @version    v5.2
  * @date       2014-11-03
  */
@@ -40,14 +40,14 @@ char ch;
 //0x87,0x80,0x86,0x81,0x80,0x80,0x80,0x84,0x84,0x84,0x87,0x80,0x80,0x80,0x80,0x80,
 //0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x87,0x87,0x87,0x87,
 //0xFF,0xFF,0xFF,0xC0,0xC0,0xC9,0xC9,0xC9,0xC9,0xCF,0xC0,0xC0,0xC0,0xCF,0xC9,0xC9,
-//0xC9,0xC0,0xC0,0xC0,0xCC,0xC4,0xC7,0xC1,0xCE,0xCA,0xCE,0xC0,0xFF,0xFF,/*"E:\Desktop\�ޱ���1.bmp",0*/
+//0xC9,0xC0,0xC0,0xC0,0xCC,0xC4,0xC7,0xC1,0xCE,0xCA,0xCE,0xC0,0xFF,0xFF,/*"E:\Desktop\无标题1.bmp",0*/
 //};
 
 
 
 
 
-/************ADC��������*************/
+/************ADC按键函数*************/
 //void keyt()
 //{
 //
@@ -85,9 +85,9 @@ char ch;
 //}
 
 /*!
- *  @brief      main����
+ *  @brief      main函数
  *  @since      v5.2
- *  @note       FTM PWM �����������
+ *  @note       FTM PWM 电机驱动测试
  */
 
 void main(void)
@@ -96,18 +96,18 @@ void main(void)
 //    adc_init (ADC1_SE10);
 //    adc_init (ADC1_SE11);
 //    adc_init (ADC1_SE12);
-//    adc_init (ADC1_SE13);                               //������ʼ��
-//    printf("\n*****FTM PWM �������*****\n");
+//    adc_init (ADC1_SE13);                               //按键初始化
+//    printf("\n*****FTM PWM 电机测试*****\n");
       mk60int();
 
-                                                    // FTM0_PRECISON ���� Ϊ 100 ����ռ�ձ� Ϊ 100%
-                                                    // port_cfg.h �� ���� FTM0_CH3 ��ӦΪ PTA6
-//    gpio_init(PTD15,GPO,0);                         // ʹ�ܶ� ����Ϊ 0
+                                                    // FTM0_PRECISON 配置 为 100 ，即占空比 为 100%
+                                                    // port_cfg.h 里 配置 FTM0_CH3 对应为 PTA6
+//    gpio_init(PTD15,GPO,0);                         // 使能端 输入为 0
     //led_init(LED1);
 
-    //ɽ��ĵ������ģ�飬���� MOS �� ������롣
-    //K60 ��� PWM Ϊ 100% ��ʵ�ʽ��� ����������� 0%
-    //K60 ��� ʹ�ܶ� Ϊ �͵�ƽ��ʵ�ʽ��� ������� ʹ�ܶ˾��� �ߵ�ƽ
+    //山外的电机驱动模块，经过 MOS 管 反相隔离。
+    //K60 输出 PWM 为 100% ，实际接入 电机驱动就是 0%
+    //K60 输出 使能端 为 低电平，实际接入 电机驱动 使能端就是 高电平
 
     while(1)
     {
@@ -135,14 +135,14 @@ void PIT0_IRQHandler(void)
 {
 
 //    Draw_BMP(0,0,127,1,head);
-//    OLED_P14x16Str(36,2,"�й���ͨ");
-//    //OLED_P14x16Str(0,4,"��ǰռ�ձȣ�");
+//    OLED_P14x16Str(36,2,"中国联通");
+//    //OLED_P14x16Str(0,4,"当前占空比：");
 //    Display_number7(0,5,(int16)(pwmc*100));
 //    //OLED_P6x8Str(102,5,"%");
-//    OLED_P14x16Str(0,6,"�˵�");
+//    OLED_P14x16Str(0,6,"菜单");
 //    OLED_P8x16Str(57,6,"OK");
-//    OLED_P14x16Str(85,6,"�绰��");
-//    PIT_Flag_Clear(PIT0);       //���жϱ�־λ
+//    OLED_P14x16Str(85,6,"电话簿");
+//    PIT_Flag_Clear(PIT0);       //清中断标志位
 //    uint8 temp=(uint8)ch;
     OLED_P8x16Str(2,0,"one");
 //    OLED_P8x16Str(0,0,&temp);
@@ -156,10 +156,10 @@ void PIT0_IRQHandler(void)
 //{
 //    char ch;
 //
-//    if(uart_query    (UART3) == 1)   //�������ݼĴ�����
+//    if(uart_query    (UART3) == 1)   //接收数据寄存器满
 //    {
-//        //�û���Ҫ������������
-//        uart_getchar   (UART3, &ch);                    //���޵ȴ�����1���ֽ�
-//        uart_putchar   (UART3 , ch);                    //�����ַ���
+//        //用户需要处理接收数据
+//        uart_getchar   (UART3, &ch);                    //无限等待接受1个字节
+//        uart_putchar   (UART3 , ch);                    //发送字符串
 //    }
 //}
