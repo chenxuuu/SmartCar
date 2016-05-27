@@ -1,23 +1,23 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       main.c
- * @brief      å±±å¤–K60 å¹³å°ä¸»ç¨‹åº
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      É½ÍâK60 Æ½Ì¨Ö÷³ÌĞò
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-08-28
  */
 
 #include "include.h"
 
-uint8 imgbuff[CAMERA_SIZE];                             //å®šä¹‰å­˜å‚¨æ¥æ”¶å›¾åƒçš„æ•°ç»„
-uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //å®šä¹‰å­˜å‚¨è§£å‹å›¾åƒçš„æ•°ç»„
+uint8 imgbuff[CAMERA_SIZE];                             //¶¨Òå´æ´¢½ÓÊÕÍ¼ÏñµÄÊı×é
+uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //¶¨Òå´æ´¢½âÑ¹Í¼ÏñµÄÊı×é
 float speed = 0.2, duoji = 0, duoji1 = 0, way = 0;
 
 float out[5];
@@ -25,13 +25,13 @@ float out[5];
 struct _slope slope;
 
 struct _pid actuator_pid;
-int process_point  = 0,      // pv å®é™…å€¼
-    set_point      = 0,      // sp è®¾å®šå€¼
-    dead_band      = 0;       // æ­»åŒº
+int process_point  = 0,      // pv Êµ¼ÊÖµ
+    set_point      = 0,      // sp Éè¶¨Öµ
+    dead_band      = 0;       // ËÀÇø
 float p_gain       = 14,
       i_gain       = 0.0,
       d_gain       = 0.01,
-      integral_val = 0.01,    //ç§¯åˆ†å€¼
+      integral_val = 0.01,    //»ı·ÖÖµ
       new_integ;
 
 int oled_place = 0,initial_value_get=0,i;
@@ -49,13 +49,13 @@ const int right_initial[110] ={
     40, 39, 39, 38, 38, 37, 36, 36, 35, 35, 34, 34, 33, 33, 32, 32, 31, 31, 30, 29, 29, 28, 28, 27, 27, 26, 26, 25, 25,
     24, 24, 23, 23, 22, 22, 21, 21, 20, 20, 19, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13};
 
-//å‡½æ•°å£°æ˜
+//º¯ÊıÉùÃ÷
 void PORTA_IRQHandler();
 void DMA0_IRQHandler();
 
 
 /*!
- *  @brief      æ‰«é”®å‡½æ•°
+ *  @brief      É¨¼üº¯Êı
  *  @since
  *  @note
  */
@@ -70,7 +70,7 @@ void oled_display_key()
             duoji+=0.01;
         if(key_check(KEY_A) == KEY_DOWN)
         {
-            printf("èˆµæœºï¼š%d/100ï¼Œå·¦æ–œç‡ï¼š%d/1000,å³æ–œç‡ï¼š%d/1000ï¼Œå·¦æœ‰æ•ˆï¼š%dï¼Œå³æœ‰æ•ˆï¼š%d\n",
+            printf("¶æ»ú£º%d/100£¬×óĞ±ÂÊ£º%d/1000,ÓÒĞ±ÂÊ£º%d/1000£¬×óÓĞĞ§£º%d£¬ÓÒÓĞĞ§£º%d\n",
                    (int)(duoji*100),
                    (int)(slope.left*1000),
                    (int)(slope.right*1000),
@@ -101,7 +101,7 @@ void oled_display_key()
                 printf("%d, ", slope.right_initial_value[i]);
                 //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
             }
-            printf("};//æ³¨æ„åˆ æ‰æœ€åçš„é€—å·\n");
+            printf("};//×¢ÒâÉ¾µô×îºóµÄ¶ººÅ\n");
             //initial_value_get=1;
         }
         break;
@@ -112,26 +112,26 @@ void oled_display_key()
 //        OLED_P8x16Str(0,0,"Actuator:");
 //        Display_number(80,0,(int32)(dj*100));
 //
-//        OLED_P14x16Str(0,2,"æ‘„åƒå¤´åå·®ï¼š");
+//        OLED_P14x16Str(0,2,"ÉãÏñÍ·Æ«²î£º");
 //        Display_number(80,2,get_camere_center(img,10));
 //        Display_number(80,3,get_camere_center(img,40));
 //
 
 
-    OLED_P14x16Str(0, 0, "æ–œç‡ï¼š");
+    OLED_P14x16Str(0, 0, "Ğ±ÂÊ£º");
     DisplayFloat(42, 0, slope.left);
     DisplayFloat(42, 1, slope.right);
 
-    OLED_P14x16Str(0, 2, "æœ‰æ•ˆç‚¹ï¼š");
+    OLED_P14x16Str(0, 2, "ÓĞĞ§µã£º");
     OLED_P6x8fig3(56, 2, slope.left_count);
     OLED_P6x8fig3(56, 3, slope.right_count);
 
-//    OLED_P14x16Str(0, 4, "èµ›é“ä¿¡æ¯ï¼š");
+//    OLED_P14x16Str(0, 4, "ÈüµÀĞÅÏ¢£º");
 //    if(initial_value_get)
-//        OLED_P14x16Str(70, 4, "å·²æå–");
+//        OLED_P14x16Str(70, 4, "ÒÑÌáÈ¡");
 //    else
-//        OLED_P14x16Str(70, 4, "æœªæå–");
-    OLED_P14x16Str(0, 4, "æ›´æ–°èµ›é“ä¿¡æ¯");
+//        OLED_P14x16Str(70, 4, "Î´ÌáÈ¡");
+    OLED_P14x16Str(0, 4, "¸üĞÂÈüµÀĞÅÏ¢");
 
     DisplayFloat(0, 6, duoji);
 
@@ -148,16 +148,16 @@ void oled_display_key()
             oled_place = 0;
         OLED_Init();
     }
-    OLED_P14x16Str(110, 0, "ã€€");
-    OLED_P14x16Str(110, 2, "ã€€");
-    OLED_P14x16Str(110, 4, "ã€€");
-    OLED_P14x16Str(110, 6, "ã€€");
-    OLED_P14x16Str(110, oled_place * 2, "â†");
+    OLED_P14x16Str(110, 0, "¡¡");
+    OLED_P14x16Str(110, 2, "¡¡");
+    OLED_P14x16Str(110, 4, "¡¡");
+    OLED_P14x16Str(110, 6, "¡¡");
+    OLED_P14x16Str(110, oled_place * 2, "¡û");
 }
 
 
 /*!
- *  @brief      mainå‡½æ•°
+ *  @brief      mainº¯Êı
  *  @since
  *  @note
  */
@@ -171,9 +171,9 @@ void  main(void)
     }
     camera_init(imgbuff);
 
-    //é…ç½®ä¸­æ–­æœåŠ¡å‡½æ•°
-    set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //è®¾ç½®LPTMRçš„ä¸­æ–­æœåŠ¡å‡½æ•°ä¸º PORTA_IRQHandler
-    set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //è®¾ç½®LPTMRçš„ä¸­æ–­æœåŠ¡å‡½æ•°ä¸º PORTA_IRQHandler
+    //ÅäÖÃÖĞ¶Ï·şÎñº¯Êı
+    set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯ÊıÎª PORTA_IRQHandler
+    set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //ÉèÖÃLPTMRµÄÖĞ¶Ï·şÎñº¯ÊıÎª PORTA_IRQHandler
 
     pid_init( &actuator_pid, process_point, set_point );
     pid_tune( &actuator_pid, p_gain, i_gain, d_gain, dead_band, integral_val );
@@ -181,13 +181,13 @@ void  main(void)
     mk60int();
     while(1)
     {
-        camera_get_img();  //æ‘„åƒå¤´è·å–å›¾åƒ
+        camera_get_img();  //ÉãÏñÍ·»ñÈ¡Í¼Ïñ
 
-        img_extract(img, imgbuff, CAMERA_SIZE); //è§£å‹åˆ°imgä¸­
+        img_extract(img, imgbuff, CAMERA_SIZE); //½âÑ¹µ½imgÖĞ
 
-        oled_display_key();   //OLEDæ˜¾ç¤º
+        oled_display_key();   //OLEDÏÔÊ¾
 
-        get_slope(img, &slope);  //è·å–æ–œç‡ä¿¡æ¯
+        get_slope(img, &slope);  //»ñÈ¡Ğ±ÂÊĞÅÏ¢
 
 //        if(slope.left_count<10 && slope.right_count<10)
 //            control_actuator(0);
@@ -261,8 +261,8 @@ void  main(void)
 //        out[2] = (float)slope.left_count / 10;
 //        out[3] = (float)slope.right_count / 10;
 //        out[4] = pid_calc( &actuator_pid );
-//        vcan_sendware(out, sizeof(out));    //ç¤ºæ³¢å™¨
-        //vcan_sendimg(imgbuff, CAMERA_SIZE); //æ‘„åƒå¤´ä¸²å£æ˜¾ç¤º
+//        vcan_sendware(out, sizeof(out));    //Ê¾²¨Æ÷
+        //vcan_sendimg(imgbuff, CAMERA_SIZE); //ÉãÏñÍ·´®¿ÚÏÔÊ¾
         //android_sendimg(img);
 
     }
@@ -271,26 +271,26 @@ void  main(void)
 
 
 /*!
- *  @brief      PORTAä¸­æ–­æœåŠ¡å‡½æ•°
+ *  @brief      PORTAÖĞ¶Ï·şÎñº¯Êı
  *  @since      v5.0
  */
 void PORTA_IRQHandler()
 {
-    uint8  n;    //å¼•è„šå·
+    uint8  n;    //Òı½ÅºÅ
     uint32 flag;
 
     while(!PORTA_ISFR);
     flag = PORTA_ISFR;
-    PORTA_ISFR  = ~0;                                   //æ¸…ä¸­æ–­æ ‡å¿—ä½
+    PORTA_ISFR  = ~0;                                   //ÇåÖĞ¶Ï±êÖ¾Î»
 
-    n = 29;                                             //åœºä¸­æ–­
-    if(flag & (1 << n))                                 //PTA29è§¦å‘ä¸­æ–­
+    n = 29;                                             //³¡ÖĞ¶Ï
+    if(flag & (1 << n))                                 //PTA29´¥·¢ÖĞ¶Ï
     {
         camera_vsync();
     }
-#if ( CAMERA_USE_HREF == 1 )                            //ä½¿ç”¨è¡Œä¸­æ–­
+#if ( CAMERA_USE_HREF == 1 )                            //Ê¹ÓÃĞĞÖĞ¶Ï
     n = 28;
-    if(flag & (1 << n))                                 //PTA28è§¦å‘ä¸­æ–­
+    if(flag & (1 << n))                                 //PTA28´¥·¢ÖĞ¶Ï
     {
         camera_href();
     }
@@ -300,7 +300,7 @@ void PORTA_IRQHandler()
 }
 
 /*!
- *  @brief      DMA0ä¸­æ–­æœåŠ¡å‡½æ•°
+ *  @brief      DMA0ÖĞ¶Ï·şÎñº¯Êı
  *  @since      v5.0
  */
 void DMA0_IRQHandler()

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_LCD.h
- * @brief      LCD å‡½æ•°åº“
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      LCD º¯Êı¿â
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.1
  * @date       2013-09-02
  */
@@ -21,24 +21,24 @@
 #include "VCAN_LCD_ST7735R.h"
 
 #include "VCAN_ASCII.h"
-#include "VCAN_LCD_CH.h"                        //æ±‰å­—æ˜¾ç¤º
+#include "VCAN_LCD_CH.h"                        //ºº×ÖÏÔÊ¾
 
 
-/******å¸¸ç”¨é¢œè‰²*****/
-#define RED     0XF800    //çº¢è‰²
-#define GREEN   0X07E0    //ç»¿è‰²
-#define BLUE    0X001F    //è“è‰²
+/******³£ÓÃÑÕÉ«*****/
+#define RED     0XF800    //ºìÉ«
+#define GREEN   0X07E0    //ÂÌÉ«
+#define BLUE    0X001F    //À¶É«
 #define BRED    0XF81F
-#define GRED    0XFFE0    //ç°è‰²
+#define GRED    0XFFE0    //»ÒÉ«
 #define GBLUE   0X07FF    //
-#define BLACK   0X0000    //é»‘è‰²
-#define WHITE   0XFFFF    //ç™½è‰²
-#define YELLOW  0xFFE0    //é»„è‰²
+#define BLACK   0X0000    //ºÚÉ«
+#define WHITE   0XFFFF    //°×É«
+#define YELLOW  0xFFE0    //»ÆÉ«
 
-#define FCOLOUR         BLUE    //å®šä¹‰å­—ä½“é¢œè‰²
-#define BCOLOUR         RED     //å®šä¹‰èƒŒæ™¯é¢œè‰²
+#define FCOLOUR         BLUE    //¶¨Òå×ÖÌåÑÕÉ«
+#define BCOLOUR         RED     //¶¨Òå±³¾°ÑÕÉ«
 
-//æå–RGBçš„3å…ƒç´ ï¼Œrgb565å¿…é¡»æ˜¯16ä½
+//ÌáÈ¡RGBµÄ3ÔªËØ£¬rgb565±ØĞëÊÇ16Î»
 #define RGB565_R(rgb565)                ((uint8)(((uint16)(rgb565)>>11) &0x1F))
 #define RGB565_G(rgb565)                ((uint8)(((uint16)(rgb565)>> 5) &0x3F))
 #define RGB565_B(rgb565)                ((uint8)( (uint16)(rgb565)      &0x1F))
@@ -58,67 +58,67 @@
 
 
 
-//éœ€è¦åº•å±‚å®ç°çš„å‡ ä¸ªå®å®šä¹‰ï¼š
-//LCD_H                         //é«˜
-//LCD_W                         //å®½
+//ĞèÒªµ×²ãÊµÏÖµÄ¼¸¸öºê¶¨Òå£º
+//LCD_H                         //¸ß
+//LCD_W                         //¿í
 
-//LCD_INIT()                    //åˆå§‹åŒ–
-//LCD_PTLON(site,size)          //å¼€çª—
-//LCD_RAMWR()                   //å†™æ¨¡å¼
-//LCD_WR_DATA(data)             //å†™æ•°æ®
-//LCD_WR_DATA_B(data)           //å†™æ•°æ®(å¤§ç«¯)ï¼Œ16ä½æ¶²æ™¶ä¸LCD_WR_DATAä¸€è‡´å³å¯ï¼Œ8ä½æ¶²æ™¶äº¤æ¢é¡ºåº
+//LCD_INIT()                    //³õÊ¼»¯
+//LCD_PTLON(site,size)          //¿ª´°
+//LCD_RAMWR()                   //Ğ´Ä£Ê½
+//LCD_WR_DATA(data)             //Ğ´Êı¾İ
+//LCD_WR_DATA_B(data)           //Ğ´Êı¾İ(´ó¶Ë)£¬16Î»Òº¾§ÓëLCD_WR_DATAÒ»ÖÂ¼´¿É£¬8Î»Òº¾§½»»»Ë³Ğò
 
-//å¦‚ä¸‹ä¸ºå¯é€‰
-//LCD_RAMRD()                   //è¯»æ¨¡å¼
-//LCD_SET_DIR(opt)              //è®¾ç½®æ˜¾ç¤ºæ–¹å‘(0~3)
-//LCD_DIR                       //è·å–æ˜¾ç¤ºæ–¹å‘(0~3)
-
-
-//å¦‚ä¸‹ä¸ºå†…éƒ¨è°ƒç”¨ï¼Œæˆ–è€…ä¸Šé¢çš„å®å®šä¹‰è°ƒç”¨
-//LCD_WR_CMD(cmd)               //å‘½ä»¤
-//LCD_RD_DATA()                 //è¯»æ•°æ®
-
-//8ä½æ¶²æ™¶å¯èƒ½éœ€è¦ï¼ˆä¸Šé¢é»˜è®¤æ˜¯16ä½ï¼‰
-//LCD_WR_8CMD(cmd)               //å‘½ä»¤
-//LCD_WR_8DATA(data)            //å†™æ•°æ®
+//ÈçÏÂÎª¿ÉÑ¡
+//LCD_RAMRD()                   //¶ÁÄ£Ê½
+//LCD_SET_DIR(opt)              //ÉèÖÃÏÔÊ¾·½Ïò(0~3)
+//LCD_DIR                       //»ñÈ¡ÏÔÊ¾·½Ïò(0~3)
 
 
-//æ ¹æ®å­—åº“å®šä¹‰ è‹±æ–‡å­—æ¯çš„ å®½é«˜ã€‚
+//ÈçÏÂÎªÄÚ²¿µ÷ÓÃ£¬»òÕßÉÏÃæµÄºê¶¨Òåµ÷ÓÃ
+//LCD_WR_CMD(cmd)               //ÃüÁî
+//LCD_RD_DATA()                 //¶ÁÊı¾İ
+
+//8Î»Òº¾§¿ÉÄÜĞèÒª£¨ÉÏÃæÄ¬ÈÏÊÇ16Î»£©
+//LCD_WR_8CMD(cmd)               //ÃüÁî
+//LCD_WR_8DATA(data)            //Ğ´Êı¾İ
+
+
+//¸ù¾İ×Ö¿â¶¨Òå Ó¢ÎÄ×ÖÄ¸µÄ ¿í¸ß¡£
 #define LCD_EN_W        8
 #define LCD_EN_H        16
 
 
-/***************  LCDåˆå§‹åŒ–  ***************/
+/***************  LCD³õÊ¼»¯  ***************/
 
-void LCD_init(void);                                                                                    //LCDåˆå§‹åŒ–
+void LCD_init(void);                                                                                    //LCD³õÊ¼»¯
 
-/***************  LCDç»˜ç”»  ***************/
+/***************  LCD»æ»­  ***************/
 
-extern void LCD_point          (Site_t,                                        uint16 rgb565);                 //ç”»ç‚¹
-extern void LCD_points         (Site_t *site,  uint32 point_num,               uint16 rgb565);                 //ç”»ä¸€å †ç‚¹
-extern void LCD_rectangle      (Site_t, Size_t,                                uint16 rgb565);                 //ç”»çŸ©å½¢
-extern void LCD_char           (Site_t,        uint8 ascii,                    uint16 Color, uint16 bkColor);  //æ˜¾ç¤º8*16å­—ç¬¦
-extern void LCD_str            (Site_t,        uint8 *Str,                     uint16 Color, uint16 bkColor);  //æ˜¾ç¤º8*16å­—ç¬¦ä¸²
+extern void LCD_point          (Site_t,                                        uint16 rgb565);                 //»­µã
+extern void LCD_points         (Site_t *site,  uint32 point_num,               uint16 rgb565);                 //»­Ò»¶Ñµã
+extern void LCD_rectangle      (Site_t, Size_t,                                uint16 rgb565);                 //»­¾ØĞÎ
+extern void LCD_char           (Site_t,        uint8 ascii,                    uint16 Color, uint16 bkColor);  //ÏÔÊ¾8*16×Ö·û
+extern void LCD_str            (Site_t,        uint8 *Str,                     uint16 Color, uint16 bkColor);  //ÏÔÊ¾8*16×Ö·û´®
 
-extern void LCD_cross          (Site_t,uint16 len,                              uint16 rgb565);                 //ç”»åå­—å½¢
+extern void LCD_cross          (Site_t,uint16 len,                              uint16 rgb565);                 //»­Ê®×ÖĞÎ
 
-extern void LCD_clear          (uint16 rgb565);     //æ¸…å±
+extern void LCD_clear          (uint16 rgb565);     //ÇåÆÁ
 
 
-extern void LCD_num            (Site_t,        uint32 num,                     uint16 Color, uint16 bkColor);  //æ˜¾ç¤ºæ•°å­—
-#define MAX_NUM_BIT 5                                                                                   //æ•°å­—çš„æœ€å¤§ä½æ•°ï¼ˆç”¨äºæ¸…æ‰å¤šä½™çš„å±å¹•æ®‹ç•™æ•°å­—ï¼‰
-#define LCD_num_C(site,num,color,bkColor)           LCD_num_BC(site, num,MAX_NUM_BIT,color,bkColor)     //æ˜¾ç¤ºæ•°å­—ï¼ˆæ¸…æ‰å¤šä½™çš„å±å¹•æ®‹ç•™æ•°å­—ï¼‰
-extern void LCD_num_BC         (Site_t,        uint32 num, uint8 max_num_bit,  uint16 Color, uint16 bkColor);  //æ˜¾ç¤ºæ•°å­—ï¼ˆæ¸…æ‰å¤šä½™çš„å±å¹•æ®‹ç•™æ•°å­—ï¼‰
+extern void LCD_num            (Site_t,        uint32 num,                     uint16 Color, uint16 bkColor);  //ÏÔÊ¾Êı×Ö
+#define MAX_NUM_BIT 5                                                                                   //Êı×ÖµÄ×î´óÎ»Êı£¨ÓÃÓÚÇåµô¶àÓàµÄÆÁÄ»²ĞÁôÊı×Ö£©
+#define LCD_num_C(site,num,color,bkColor)           LCD_num_BC(site, num,MAX_NUM_BIT,color,bkColor)     //ÏÔÊ¾Êı×Ö£¨Çåµô¶àÓàµÄÆÁÄ»²ĞÁôÊı×Ö£©
+extern void LCD_num_BC         (Site_t,        uint32 num, uint8 max_num_bit,  uint16 Color, uint16 bkColor);  //ÏÔÊ¾Êı×Ö£¨Çåµô¶àÓàµÄÆÁÄ»²ĞÁôÊı×Ö£©
 
-extern void LCD_Img_gray       (Site_t site, Size_t size, uint8 *img);                   //æ˜¾ç¤ºç°åº¦å›¾åƒ
-extern void LCD_Img_gray_Z     (Site_t site, Size_t size, uint8 *img, Size_t imgsize);   //æ˜¾ç¤ºç°åº¦å›¾åƒ(å¯ç¼©æ”¾)
+extern void LCD_Img_gray       (Site_t site, Size_t size, uint8 *img);                   //ÏÔÊ¾»Ò¶ÈÍ¼Ïñ
+extern void LCD_Img_gray_Z     (Site_t site, Size_t size, uint8 *img, Size_t imgsize);   //ÏÔÊ¾»Ò¶ÈÍ¼Ïñ(¿ÉËõ·Å)
 
-#define BINARY_BGCOLOR  WHITE       //å®šä¹‰äºŒå€¼åŒ–å›¾åƒèƒŒæ™¯é¢œè‰²
-#define BINARY_COLOR    BLACK       //å®šä¹‰äºŒå€¼åŒ–å›¾åƒå‰æ™¯é¢œè‰²
-extern void LCD_Img_Binary     (Site_t site, Size_t size, uint8 *img);                   //æ˜¾ç¤ºäºŒå€¼åŒ–å›¾åƒ
-extern void LCD_Img_Binary_Z   (Site_t site, Size_t size, uint8 *img, Size_t imgsize);   //æ˜¾ç¤ºäºŒå€¼åŒ–å›¾åƒ(å¯ç¼©æ”¾)
+#define BINARY_BGCOLOR  WHITE       //¶¨Òå¶şÖµ»¯Í¼Ïñ±³¾°ÑÕÉ«
+#define BINARY_COLOR    BLACK       //¶¨Òå¶şÖµ»¯Í¼ÏñÇ°¾°ÑÕÉ«
+extern void LCD_Img_Binary     (Site_t site, Size_t size, uint8 *img);                   //ÏÔÊ¾¶şÖµ»¯Í¼Ïñ
+extern void LCD_Img_Binary_Z   (Site_t site, Size_t size, uint8 *img, Size_t imgsize);   //ÏÔÊ¾¶şÖµ»¯Í¼Ïñ(¿ÉËõ·Å)
 
-extern void LCD_wave(Site_t site,Size_t size,uint8 *img,uint8 maxval,uint16 Color ,uint16 bkColor); //æ³¢å½¢æ˜¾ç¤ºï¼Œå¸¦èƒŒæ™¯é¢œè‰²ï¼ˆmaxval æœ€å¤§å€¼è¡¨ç¤ºè¶…è¿‡æ­¤å€¼çš„æ•°éƒ½å½“ä½œæœ€å¤§å€¼å¤„ç†ï¼‰
-extern void LCD_wave_display(Site_t site,Size_t size,uint8 *img,uint8 maxval,uint16 Color);        //æ³¢å½¢æ˜¾ç¤ºï¼Œä¸å¸¦èƒŒæ™¯é¢œè‰²
+extern void LCD_wave(Site_t site,Size_t size,uint8 *img,uint8 maxval,uint16 Color ,uint16 bkColor); //²¨ĞÎÏÔÊ¾£¬´ø±³¾°ÑÕÉ«£¨maxval ×î´óÖµ±íÊ¾³¬¹ı´ËÖµµÄÊı¶¼µ±×÷×î´óÖµ´¦Àí£©
+extern void LCD_wave_display(Site_t site,Size_t size,uint8 *img,uint8 maxval,uint16 Color);        //²¨ĞÎÏÔÊ¾£¬²»´ø±³¾°ÑÕÉ«
 
 

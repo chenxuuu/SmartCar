@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_uart.c
- * @brief      uartä¸²å£å‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      uart´®¿Úº¯Êı
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.2
  * @date       2014-10-09
  */
@@ -18,29 +18,29 @@
 #include "common.h"
 #include "MK60_uart.h"
 
-UART_MemMapPtr UARTN[UART_MAX] = {UART0_BASE_PTR, UART1_BASE_PTR, UART2_BASE_PTR, UART3_BASE_PTR, UART4_BASE_PTR, UART5_BASE_PTR}; //å®šä¹‰äº”ä¸ªæŒ‡é’ˆæ•°ç»„ä¿å­˜ UARTN çš„åœ°å€
+UART_MemMapPtr UARTN[UART_MAX] = {UART0_BASE_PTR, UART1_BASE_PTR, UART2_BASE_PTR, UART3_BASE_PTR, UART4_BASE_PTR, UART5_BASE_PTR}; //¶¨ÒåÎå¸öÖ¸ÕëÊı×é±£´æ UARTN µÄµØÖ·
 
 
 /*!
- *  @brief      åˆå§‹åŒ–ä¸²å£ï¼Œè®¾ç½®æ³¢ç‰¹ç‡
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      baud        æ³¢ç‰¹ç‡ï¼Œå¦‚9600ã€19200ã€56000ã€115200ç­‰
+ *  @brief      ³õÊ¼»¯´®¿Ú£¬ÉèÖÃ²¨ÌØÂÊ
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      baud        ²¨ÌØÂÊ£¬Èç9600¡¢19200¡¢56000¡¢115200µÈ
  *  @since      v5.0
- *  @note       UARTæ‰€ç”¨çš„ç®¡è„šåœ¨ App\Inc\PORT_cfg.h é‡Œè¿›è¡Œé…ç½®ï¼Œ
-                printfæ‰€ç”¨çš„ç®¡è„šå’Œæ³¢ç‰¹ç‡åœ¨ App\Inc\MK60_conf.h é‡Œè¿›è¡Œé…ç½®
- *  Sample usage:       uart_init (UART3, 9600);        //åˆå§‹åŒ–ä¸²å£3ï¼Œæ³¢ç‰¹ç‡ä¸º9600
+ *  @note       UARTËùÓÃµÄ¹Ü½ÅÔÚ App\Inc\PORT_cfg.h Àï½øĞĞÅäÖÃ£¬
+                printfËùÓÃµÄ¹Ü½ÅºÍ²¨ÌØÂÊÔÚ App\Inc\MK60_conf.h Àï½øĞĞÅäÖÃ
+ *  Sample usage:       uart_init (UART3, 9600);        //³õÊ¼»¯´®¿Ú3£¬²¨ÌØÂÊÎª9600
  */
 void uart_init (UARTn_e uratn, uint32 baud)
 {
     register uint16 sbr, brfa;
     uint8 temp;
-    uint32 sysclk;     //æ—¶é’Ÿ
+    uint32 sysclk;     //Ê±ÖÓ
 
-    /* é…ç½® UARTåŠŸèƒ½çš„ å¤ç”¨ç®¡è„š */
+    /* ÅäÖÃ UART¹¦ÄÜµÄ ¸´ÓÃ¹Ü½Å */
     switch(uratn)
     {
     case UART0:
-        SIM_SCGC4 |= SIM_SCGC4_UART0_MASK;      //ä½¿èƒ½ UART0 æ—¶é’Ÿ
+        SIM_SCGC4 |= SIM_SCGC4_UART0_MASK;      //Ê¹ÄÜ UART0 Ê±ÖÓ
 
         if(UART0_RX_PIN == PTA1)
         {
@@ -52,7 +52,7 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         if(UART0_TX_PIN == PTA2)
@@ -65,7 +65,7 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         break;
@@ -79,7 +79,7 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         if((UART1_TX_PIN == PTC4) || (UART1_TX_PIN == PTE0))
@@ -88,7 +88,7 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         break;
@@ -101,7 +101,7 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
 
@@ -111,7 +111,7 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         break;
@@ -125,16 +125,16 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         if((UART3_TX_PIN == PTB11) || (UART3_TX_PIN == PTC17) || (UART3_TX_PIN == PTE4) )
         {
-            port_init( UART3_TX_PIN, ALT3);             //åœ¨PTB11ä¸Šä½¿èƒ½UART3_RXD
+            port_init( UART3_TX_PIN, ALT3);             //ÔÚPTB11ÉÏÊ¹ÄÜUART3_RXD
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
         break;
 
@@ -143,11 +143,11 @@ void uart_init (UARTn_e uratn, uint32 baud)
 
         if((UART4_RX_PIN == PTC14) || (UART4_RX_PIN == PTE25)  )
         {
-            port_init( UART4_RX_PIN, ALT3);            //åœ¨PTC14ä¸Šä½¿èƒ½UART4_RXD
+            port_init( UART4_RX_PIN, ALT3);            //ÔÚPTC14ÉÏÊ¹ÄÜUART4_RXD
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         if((UART4_TX_PIN == PTC15) || (UART4_TX_PIN == PTE24)  )
@@ -156,7 +156,7 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
         break;
 
@@ -169,210 +169,210 @@ void uart_init (UARTn_e uratn, uint32 baud)
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
 
         if((UART5_TX_PIN == PTD9) ||(UART5_TX_PIN == PTE8))
         {
-            port_init( UART5_TX_PIN, ALT3);             //åœ¨PTD9ä¸Šä½¿èƒ½UART5_RXD
+            port_init( UART5_TX_PIN, ALT3);             //ÔÚPTD9ÉÏÊ¹ÄÜUART5_RXD
         }
         else
         {
-            ASSERT(0);                           //ä¸Šè¯‰æ¡ä»¶éƒ½ä¸æ»¡è¶³ï¼Œç›´æ¥æ–­è¨€å¤±è´¥äº†ï¼Œè®¾ç½®ç®¡è„šæœ‰è¯¯ï¼Ÿ
+            ASSERT(0);                           //ÉÏËßÌõ¼ş¶¼²»Âú×ã£¬Ö±½Ó¶ÏÑÔÊ§°ÜÁË£¬ÉèÖÃ¹Ü½ÅÓĞÎó£¿
         }
         break;
     default:
         break;
     }
 
-    //è®¾ç½®çš„æ—¶å€™ï¼Œåº”è¯¥ç¦æ­¢å‘é€æ¥å—
+    //ÉèÖÃµÄÊ±ºò£¬Ó¦¸Ã½ûÖ¹·¢ËÍ½ÓÊÜ
     UART_C2_REG(UARTN[uratn]) &= ~(0
                                    | UART_C2_TE_MASK
                                    | UART_C2_RE_MASK
                                   );
 
 
-    //é…ç½®æˆ8ä½æ— æ ¡éªŒæ¨¡å¼
-    //è®¾ç½® UART æ•°æ®æ ¼å¼ã€æ ¡éªŒæ–¹å¼å’Œåœæ­¢ä½ä½æ•°ã€‚é€šè¿‡è®¾ç½® UART æ¨¡å—æ§åˆ¶å¯„å­˜å™¨ C1 å®ç°ï¼›
+    //ÅäÖÃ³É8Î»ÎŞĞ£ÑéÄ£Ê½
+    //ÉèÖÃ UART Êı¾İ¸ñÊ½¡¢Ğ£Ñé·½Ê½ºÍÍ£Ö¹Î»Î»Êı¡£Í¨¹ıÉèÖÃ UART Ä£¿é¿ØÖÆ¼Ä´æÆ÷ C1 ÊµÏÖ£»
     UART_C1_REG(UARTN[uratn]) |= (0
-                                  //| UART_C1_M_MASK                    //9 ä½æˆ– 8 ä½æ¨¡å¼é€‰æ‹© : 0 ä¸º 8ä½ ï¼Œ1 ä¸º 9ä½ï¼ˆæ³¨é‡Šäº†è¡¨ç¤º0ï¼Œå³8ä½ï¼‰ ï¼ˆå¦‚æœæ˜¯9ä½ï¼Œä½8åœ¨UARTx_C3é‡Œï¼‰
-                                  //| UART_C1_PE_MASK                   //å¥‡å¶æ ¡éªŒä½¿èƒ½ï¼ˆæ³¨é‡Šäº†è¡¨ç¤ºç¦ç”¨ï¼‰
-                                  //| UART_C1_PT_MASK                   //æ ¡éªŒä½ç±»å‹ : 0 ä¸º å¶æ ¡éªŒ ï¼Œ1 ä¸º å¥‡æ ¡éªŒ
+                                  //| UART_C1_M_MASK                    //9 Î»»ò 8 Î»Ä£Ê½Ñ¡Ôñ : 0 Îª 8Î» £¬1 Îª 9Î»£¨×¢ÊÍÁË±íÊ¾0£¬¼´8Î»£© £¨Èç¹ûÊÇ9Î»£¬Î»8ÔÚUARTx_C3Àï£©
+                                  //| UART_C1_PE_MASK                   //ÆæÅ¼Ğ£ÑéÊ¹ÄÜ£¨×¢ÊÍÁË±íÊ¾½ûÓÃ£©
+                                  //| UART_C1_PT_MASK                   //Ğ£ÑéÎ»ÀàĞÍ : 0 Îª Å¼Ğ£Ñé £¬1 Îª ÆæĞ£Ñé
                                  );
 
-    //è®¡ç®—æ³¢ç‰¹ç‡ï¼Œä¸²å£0ã€1ä½¿ç”¨å†…æ ¸æ—¶é’Ÿï¼Œå…¶å®ƒä¸²å£ä½¿ç”¨busæ—¶é’Ÿ
+    //¼ÆËã²¨ÌØÂÊ£¬´®¿Ú0¡¢1Ê¹ÓÃÄÚºËÊ±ÖÓ£¬ÆäËü´®¿ÚÊ¹ÓÃbusÊ±ÖÓ
     if ((uratn == UART0) || (uratn == UART1))
     {
-        sysclk = core_clk_khz * 1000;                                   //å†…æ ¸æ—¶é’Ÿ
+        sysclk = core_clk_khz * 1000;                                   //ÄÚºËÊ±ÖÓ
     }
     else
     {
-        sysclk = bus_clk_khz * 1000;                                    //busæ—¶é’Ÿ
+        sysclk = bus_clk_khz * 1000;                                    //busÊ±ÖÓ
     }
 
-    //UART æ³¢ç‰¹ç‡ = UART æ¨¡å—æ—¶é’Ÿ / (16 Ã— (SBR[12:0] + BRFA))
-    //ä¸è€ƒè™‘ BRFA çš„æƒ…å†µä¸‹ï¼Œ SBR = UART æ¨¡å—æ—¶é’Ÿ / (16 * UART æ³¢ç‰¹ç‡)
+    //UART ²¨ÌØÂÊ = UART Ä£¿éÊ±ÖÓ / (16 ¡Á (SBR[12:0] + BRFA))
+    //²»¿¼ÂÇ BRFA µÄÇé¿öÏÂ£¬ SBR = UART Ä£¿éÊ±ÖÓ / (16 * UART ²¨ÌØÂÊ)
     sbr = (uint16)(sysclk / (baud * 16));
-    if(sbr > 0x1FFF)sbr = 0x1FFF;                                       //SBR æ˜¯ 13bitï¼Œæœ€å¤§ä¸º 0x1FFF
+    if(sbr > 0x1FFF)sbr = 0x1FFF;                                       //SBR ÊÇ 13bit£¬×î´óÎª 0x1FFF
 
-    //å·²çŸ¥ SBR ï¼Œåˆ™ BRFA =  = UART æ¨¡å—æ—¶é’Ÿ / UART æ³¢ç‰¹ç‡ - 16 Ã—SBR[12:0]
+    //ÒÑÖª SBR £¬Ôò BRFA =  = UART Ä£¿éÊ±ÖÓ / UART ²¨ÌØÂÊ - 16 ¡ÁSBR[12:0]
     brfa = (sysclk / baud)  - (sbr * 16);
-    ASSERT( brfa <= 0x1F);                  //æ–­è¨€ï¼Œå¦‚æœæ­¤å€¼ä¸ç¬¦åˆæ¡ä»¶ï¼Œåˆ™è®¾ç½®çš„æ¡ä»¶ä¸æ»¡è¶³å¯„å­˜å™¨çš„è®¾ç½®
-                                            //å¯ä»¥é€šè¿‡å¢å¤§æ³¢ç‰¹ç‡æ¥è§£å†³è¿™ä¸ªé—®é¢˜
+    ASSERT( brfa <= 0x1F);                  //¶ÏÑÔ£¬Èç¹û´ËÖµ²»·ûºÏÌõ¼ş£¬ÔòÉèÖÃµÄÌõ¼ş²»Âú×ã¼Ä´æÆ÷µÄÉèÖÃ
+                                            //¿ÉÒÔÍ¨¹ıÔö´ó²¨ÌØÂÊÀ´½â¾öÕâ¸öÎÊÌâ
 
-    //å†™ SBR
-    temp = UART_BDH_REG(UARTN[uratn]) & (~UART_BDH_SBR_MASK);           //ç¼“å­˜ æ¸…ç©º SBR çš„ UARTx_BDHçš„å€¼
-    UART_BDH_REG(UARTN[uratn]) = temp |  UART_BDH_SBR(sbr >> 8);        //å…ˆå†™å…¥SBRé«˜ä½
-    UART_BDL_REG(UARTN[uratn]) = UART_BDL_SBR(sbr);                     //å†å†™å…¥SBRä½ä½
+    //Ğ´ SBR
+    temp = UART_BDH_REG(UARTN[uratn]) & (~UART_BDH_SBR_MASK);           //»º´æ Çå¿Õ SBR µÄ UARTx_BDHµÄÖµ
+    UART_BDH_REG(UARTN[uratn]) = temp |  UART_BDH_SBR(sbr >> 8);        //ÏÈĞ´ÈëSBR¸ßÎ»
+    UART_BDL_REG(UARTN[uratn]) = UART_BDL_SBR(sbr);                     //ÔÙĞ´ÈëSBRµÍÎ»
 
-    //å†™ BRFD
-    temp = UART_C4_REG(UARTN[uratn]) & (~UART_C4_BRFA_MASK) ;           //ç¼“å­˜ æ¸…ç©º BRFA çš„ UARTx_C4 çš„å€¼
-    UART_C4_REG(UARTN[uratn]) = temp |  UART_C4_BRFA(brfa);             //å†™å…¥BRFA
+    //Ğ´ BRFD
+    temp = UART_C4_REG(UARTN[uratn]) & (~UART_C4_BRFA_MASK) ;           //»º´æ Çå¿Õ BRFA µÄ UARTx_C4 µÄÖµ
+    UART_C4_REG(UARTN[uratn]) = temp |  UART_C4_BRFA(brfa);             //Ğ´ÈëBRFA
 
 
 
-    //è®¾ç½®FIFO(FIFOçš„æ·±åº¦æ˜¯ç”±ç¡¬ä»¶å†³å®šçš„ï¼Œè½¯ä»¶ä¸èƒ½è®¾ç½®)
+    //ÉèÖÃFIFO(FIFOµÄÉî¶ÈÊÇÓÉÓ²¼ş¾ö¶¨µÄ£¬Èí¼ş²»ÄÜÉèÖÃ)
     UART_PFIFO_REG(UARTN[uratn]) |= (0
-                                     | UART_PFIFO_TXFE_MASK               //ä½¿èƒ½TX FIFO(æ³¨é‡Šè¡¨ç¤ºç¦æ­¢)
-                                     //| UART_PFIFO_TXFIFOSIZE(0)         //ï¼ˆåªè¯»ï¼‰TX FIFO å¤§å°ï¼Œ0ä¸º1å­—èŠ‚ï¼Œ1~6ä¸º 2^(n+1)å­—èŠ‚
-                                     | UART_PFIFO_RXFE_MASK               //ä½¿èƒ½RX FIFO(æ³¨é‡Šè¡¨ç¤ºç¦æ­¢)
-                                     //| UART_PFIFO_RXFIFOSIZE(0)         //ï¼ˆåªè¯»ï¼‰RX FIFO å¤§å°ï¼Œ0ä¸º1å­—èŠ‚ï¼Œ1~6ä¸º 2^(n+1)å­—èŠ‚
+                                     | UART_PFIFO_TXFE_MASK               //Ê¹ÄÜTX FIFO(×¢ÊÍ±íÊ¾½ûÖ¹)
+                                     //| UART_PFIFO_TXFIFOSIZE(0)         //£¨Ö»¶Á£©TX FIFO ´óĞ¡£¬0Îª1×Ö½Ú£¬1~6Îª 2^(n+1)×Ö½Ú
+                                     | UART_PFIFO_RXFE_MASK               //Ê¹ÄÜRX FIFO(×¢ÊÍ±íÊ¾½ûÖ¹)
+                                     //| UART_PFIFO_RXFIFOSIZE(0)         //£¨Ö»¶Á£©RX FIFO ´óĞ¡£¬0Îª1×Ö½Ú£¬1~6Îª 2^(n+1)×Ö½Ú
                                     );
 
-    /* å…è®¸å‘é€å’Œæ¥æ”¶ */
+    /* ÔÊĞí·¢ËÍºÍ½ÓÊÕ */
     UART_C2_REG(UARTN[uratn]) |= (0
-                                  | UART_C2_TE_MASK                     //å‘é€ä½¿èƒ½
-                                  | UART_C2_RE_MASK                     //æ¥æ”¶ä½¿èƒ½
-                                  //| UART_C2_TIE_MASK                  //å‘é€ä¸­æ–­æˆ–DMAä¼ è¾“è¯·æ±‚ä½¿èƒ½ï¼ˆæ³¨é‡Šäº†è¡¨ç¤ºç¦ç”¨ï¼‰
-                                  //| UART_C2_TCIE_MASK                 //å‘é€å®Œæˆä¸­æ–­ä½¿èƒ½ï¼ˆæ³¨é‡Šäº†è¡¨ç¤ºç¦ç”¨ï¼‰
-                                  //| UART_C2_RIE_MASK                  //æ¥æ”¶æ»¡ä¸­æ–­æˆ–DMAä¼ è¾“è¯·æ±‚ä½¿èƒ½ï¼ˆæ³¨é‡Šäº†è¡¨ç¤ºç¦ç”¨ï¼‰
+                                  | UART_C2_TE_MASK                     //·¢ËÍÊ¹ÄÜ
+                                  | UART_C2_RE_MASK                     //½ÓÊÕÊ¹ÄÜ
+                                  //| UART_C2_TIE_MASK                  //·¢ËÍÖĞ¶Ï»òDMA´«ÊäÇëÇóÊ¹ÄÜ£¨×¢ÊÍÁË±íÊ¾½ûÓÃ£©
+                                  //| UART_C2_TCIE_MASK                 //·¢ËÍÍê³ÉÖĞ¶ÏÊ¹ÄÜ£¨×¢ÊÍÁË±íÊ¾½ûÓÃ£©
+                                  //| UART_C2_RIE_MASK                  //½ÓÊÕÂúÖĞ¶Ï»òDMA´«ÊäÇëÇóÊ¹ÄÜ£¨×¢ÊÍÁË±íÊ¾½ûÓÃ£©
                                  );
 
-    //è®¾ç½®æ˜¯å¦å…è®¸æ¥æ”¶å’Œå‘é€ä¸­æ–­ã€‚é€šè¿‡è®¾ç½® UART æ¨¡å—çš„ C2 å¯„å­˜å™¨çš„
-    //RIE å’Œ TIE ä½å®ç°ã€‚å¦‚æœä½¿èƒ½ä¸­æ–­ï¼Œå¿…é¡»é¦–å…ˆå®ç°ä¸­æ–­æœåŠ¡ç¨‹åºï¼›
+    //ÉèÖÃÊÇ·ñÔÊĞí½ÓÊÕºÍ·¢ËÍÖĞ¶Ï¡£Í¨¹ıÉèÖÃ UART Ä£¿éµÄ C2 ¼Ä´æÆ÷µÄ
+    //RIE ºÍ TIE Î»ÊµÏÖ¡£Èç¹ûÊ¹ÄÜÖĞ¶Ï£¬±ØĞëÊ×ÏÈÊµÏÖÖĞ¶Ï·şÎñ³ÌĞò£»
 }
 
 /*!
- *  @brief      ç­‰å¾…æ¥å—1ä¸ªå­—èŠ‚
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      ch          æ¥æ”¶åœ°å€
+ *  @brief      µÈ´ı½ÓÊÜ1¸ö×Ö½Ú
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      ch          ½ÓÊÕµØÖ·
  *  @since      v5.0
- *  @note       å¦‚æœéœ€è¦æŸ¥è¯¢æ¥æ”¶çŠ¶æ€ï¼Œå¯ç”¨ uart_query ï¼Œ
-                å¦‚æœéœ€è¦æŸ¥è¯¢æ¥æ”¶æ•°æ®ï¼Œå¯ç”¨ uart_querychar
+ *  @note       Èç¹ûĞèÒª²éÑ¯½ÓÊÕ×´Ì¬£¬¿ÉÓÃ uart_query £¬
+                Èç¹ûĞèÒª²éÑ¯½ÓÊÕÊı¾İ£¬¿ÉÓÃ uart_querychar
  *  Sample usage:
                         char ch;
-                        uart_getchar (UART3,&ch);   //ç­‰å¾…æ¥å—1ä¸ªå­—èŠ‚ï¼Œä¿å­˜åˆ° ché‡Œ
+                        uart_getchar (UART3,&ch);   //µÈ´ı½ÓÊÜ1¸ö×Ö½Ú£¬±£´æµ½ chÀï
  */
 void uart_getchar (UARTn_e uratn, char *ch)
 {
-    //ç­‰å¾…æ¥æ”¶åˆ°æ•°æ®ï¼ˆä½¿èƒ½äº†FIFOåï¼Œä»¥ä¸‹ä¸¤ç§æ–¹æ³•éƒ½å¯è¡Œï¼Œéƒ½æ˜¯ä¸€æ ·çš„æ„æ€ï¼‰
-    //while( !UART_RCFIFO_REG(UARTN[uratn]) );                                //ç­‰å¾…æ¥æ”¶åˆ°æ•°æ®æ•°é‡é0
-    //while( (UART_SFIFO_REG(UARTN[uratn]) & UART_SFIFO_RXEMPT_MASK)) ;     //ç­‰å¾…æ¥æ”¶ç¼“å†²åŒº/FIFO éç©ºçš„
+    //µÈ´ı½ÓÊÕµ½Êı¾İ£¨Ê¹ÄÜÁËFIFOºó£¬ÒÔÏÂÁ½ÖÖ·½·¨¶¼¿ÉĞĞ£¬¶¼ÊÇÒ»ÑùµÄÒâË¼£©
+    //while( !UART_RCFIFO_REG(UARTN[uratn]) );                                //µÈ´ı½ÓÊÕµ½Êı¾İÊıÁ¿·Ç0
+    //while( (UART_SFIFO_REG(UARTN[uratn]) & UART_SFIFO_RXEMPT_MASK)) ;     //µÈ´ı½ÓÊÕ»º³åÇø/FIFO ·Ç¿ÕµÄ
 
-    //å¦‚ä¸‹æ–¹æ³•æ˜¯é£æ€å¡å°”å®˜æ–¹ä¾‹ç¨‹æä¾›çš„æ–¹æ³•
-    while (!(UART_S1_REG(UARTN[uratn]) & UART_S1_RDRF_MASK));       //ç­‰å¾…æ¥æ”¶æ»¡äº†
+    //ÈçÏÂ·½·¨ÊÇ·ÉË¼¿¨¶û¹Ù·½Àı³ÌÌá¹©µÄ·½·¨
+    while (!(UART_S1_REG(UARTN[uratn]) & UART_S1_RDRF_MASK));       //µÈ´ı½ÓÊÕÂúÁË
 
-    // è·å–æ¥æ”¶åˆ°çš„8ä½æ•°æ®
+    // »ñÈ¡½ÓÊÕµ½µÄ8Î»Êı¾İ
     *ch =  UART_D_REG(UARTN[uratn]);
 
-    // è·å– 9ä½æ•°æ®ï¼Œåº”è¯¥æ˜¯ï¼ˆéœ€è¦ä¿®æ”¹å‡½æ•°çš„è¿”å›ç±»å‹ï¼‰ï¼š
-    // *ch =   ((( UARTx_C3_REG(UARTN[uratn]) & UART_C3_R8_MASK ) >> UART_C3_R8_SHIFT ) << 8)   |   UART_D_REG(UARTN[uratn]);  //è¿”å›9bit
+    // »ñÈ¡ 9Î»Êı¾İ£¬Ó¦¸ÃÊÇ£¨ĞèÒªĞŞ¸Äº¯ÊıµÄ·µ»ØÀàĞÍ£©£º
+    // *ch =   ((( UARTx_C3_REG(UARTN[uratn]) & UART_C3_R8_MASK ) >> UART_C3_R8_SHIFT ) << 8)   |   UART_D_REG(UARTN[uratn]);  //·µ»Ø9bit
 
 }
 
 
 /*!
- *  @brief      æŸ¥è¯¢æ¥æ”¶1ä¸ªå­—ç¬¦
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      ch          æ¥æ”¶åœ°å€
- *  @return     1ä¸ºæ¥æ”¶æˆåŠŸï¼Œ0ä¸ºæ¥æ”¶å¤±è´¥
+ *  @brief      ²éÑ¯½ÓÊÕ1¸ö×Ö·û
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      ch          ½ÓÊÕµØÖ·
+ *  @return     1Îª½ÓÊÕ³É¹¦£¬0Îª½ÓÊÕÊ§°Ü
  *  @since      v5.0
- *  @note       å¦‚æœéœ€è¦ç­‰å¾…æ¥æ”¶ï¼Œå¯ç”¨ uart_getchar
+ *  @note       Èç¹ûĞèÒªµÈ´ı½ÓÊÕ£¬¿ÉÓÃ uart_getchar
  *  Sample usage:       char ch ;
-                        if( uart_querychar (UART3,&ch) == 1)     //æŸ¥è¯¢æ¥æ”¶1ä¸ªå­—ç¬¦ï¼Œä¿å­˜åˆ° ché‡Œ
+                        if( uart_querychar (UART3,&ch) == 1)     //²éÑ¯½ÓÊÕ1¸ö×Ö·û£¬±£´æµ½ chÀï
                         {
-                            printf("æˆåŠŸæ¥æ”¶åˆ°ä¸€ä¸ªå­—èŠ‚");
+                            printf("³É¹¦½ÓÊÕµ½Ò»¸ö×Ö½Ú");
                         }
  */
 char uart_querychar (UARTn_e uratn, char *ch)
 {
-    if( UART_RCFIFO_REG(UARTN[uratn]) )         //æŸ¥è¯¢æ˜¯å¦æ¥å—åˆ°æ•°æ®
+    if( UART_RCFIFO_REG(UARTN[uratn]) )         //²éÑ¯ÊÇ·ñ½ÓÊÜµ½Êı¾İ
     {
-        *ch  =   UART_D_REG(UARTN[uratn]);      //æ¥å—åˆ°8ä½çš„æ•°æ®
-        return  1;                              //è¿”å› 1 è¡¨ç¤ºæ¥æ”¶æˆåŠŸ
+        *ch  =   UART_D_REG(UARTN[uratn]);      //½ÓÊÜµ½8Î»µÄÊı¾İ
+        return  1;                              //·µ»Ø 1 ±íÊ¾½ÓÊÕ³É¹¦
     }
 
-    *ch = 0;                                    //æ¥æ”¶ä¸åˆ°ï¼Œåº”è¯¥æ¸…ç©ºäº†æ¥æ”¶åŒº
-    return 0;                                   //è¿”å›0è¡¨ç¤ºæ¥æ”¶å¤±è´¥
+    *ch = 0;                                    //½ÓÊÕ²»µ½£¬Ó¦¸ÃÇå¿ÕÁË½ÓÊÕÇø
+    return 0;                                   //·µ»Ø0±íÊ¾½ÓÊÕÊ§°Ü
 }
 
 /*!
- *  @brief      æŸ¥è¯¢æ¥æ”¶å­—ç¬¦ä¸²
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      str         æ¥æ”¶åœ°å€
- *  @param      max_len     æœ€å¤§æ¥æ”¶é•¿åº¦
- *  @return     æ¥æ”¶åˆ°çš„å­—èŠ‚æ•°ç›®
+ *  @brief      ²éÑ¯½ÓÊÕ×Ö·û´®
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      str         ½ÓÊÕµØÖ·
+ *  @param      max_len     ×î´ó½ÓÊÕ³¤¶È
+ *  @return     ½ÓÊÕµ½µÄ×Ö½ÚÊıÄ¿
  *  @since      v5.0
  *  Sample usage:       char str[100];
                         uint32 num;
                         num = uart_querystr (UART3,&str,100);
                         if( num != 0 )
                         {
-                            printf("æˆåŠŸæ¥æ”¶åˆ°%dä¸ªå­—èŠ‚:%s",num,str);
+                            printf("³É¹¦½ÓÊÕµ½%d¸ö×Ö½Ú:%s",num,str);
                         }
  */
 uint32 uart_querystr (UARTn_e uratn, char *str, uint32 max_len)
 {
     uint32 i = 0,j;
 
-    for(j=0;j<10000;j++)                 // 10000 çš„ä½œç”¨æ˜¯å»¶æ—¶ï¼Œå¯è‡ªè¡Œæ ¹æ®æƒ…å†µä¿®æ”¹
+    for(j=0;j<10000;j++)                 // 10000 µÄ×÷ÓÃÊÇÑÓÊ±£¬¿É×ÔĞĞ¸ù¾İÇé¿öĞŞ¸Ä
     {
         while(uart_querychar(uratn, str + i)  )
         {
             j=0;
-            if( *(str + i) == NULL )    //æ¥æ”¶åˆ°å­—ç¬¦ä¸²ç»“æŸç¬¦
+            if( *(str + i) == NULL )    //½ÓÊÕµ½×Ö·û´®½áÊø·û
             {
                 return i;
             }
 
             i++;
-            if(i >= max_len)            //è¶…è¿‡è®¾å®šçš„æœ€å¤§å€¼ï¼Œé€€å‡º
+            if(i >= max_len)            //³¬¹ıÉè¶¨µÄ×î´óÖµ£¬ÍË³ö
             {
-                *(str + i) = 0;     //ç¡®ä¿å­—ç¬¦ä¸²ç»“å°¾æ˜¯0x00
+                *(str + i) = 0;     //È·±£×Ö·û´®½áÎ²ÊÇ0x00
                 return i;
             }
         }
     }
 
-    *(str + i) = 0;                     //ç¡®ä¿å­—ç¬¦ä¸²ç»“å°¾æ˜¯0x00
+    *(str + i) = 0;                     //È·±£×Ö·û´®½áÎ²ÊÇ0x00
     return i;
 }
 
 
 /*!
- *  @brief      æŸ¥è¯¢æ¥æ”¶buff
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      str         æ¥æ”¶åœ°å€
- *  @param      max_len     æœ€å¤§æ¥æ”¶é•¿åº¦
- *  @return     æ¥æ”¶åˆ°çš„å­—èŠ‚æ•°ç›®
+ *  @brief      ²éÑ¯½ÓÊÕbuff
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      str         ½ÓÊÕµØÖ·
+ *  @param      max_len     ×î´ó½ÓÊÕ³¤¶È
+ *  @return     ½ÓÊÕµ½µÄ×Ö½ÚÊıÄ¿
  *  @since      v5.0
  *  Sample usage:       char buff[100];
                         uint32 num;
                         num = uart_querybuff (UART3,&buff,100);
                         if( num != 0 )
                         {
-                            printf("æˆåŠŸæ¥æ”¶åˆ°%dä¸ªå­—èŠ‚:%s",num,buff);
+                            printf("³É¹¦½ÓÊÕµ½%d¸ö×Ö½Ú:%s",num,buff);
                         }
  */
 uint32 uart_querybuff (UARTn_e uratn, char *buff, uint32 max_len)
 {
     uint32 i = 0,j;
-    for(j=0;j<10000;j++)                 // 10000 çš„ä½œç”¨æ˜¯å»¶æ—¶ï¼Œå¯è‡ªè¡Œæ ¹æ®æƒ…å†µä¿®æ”¹
+    for(j=0;j<10000;j++)                 // 10000 µÄ×÷ÓÃÊÇÑÓÊ±£¬¿É×ÔĞĞ¸ù¾İÇé¿öĞŞ¸Ä
     {
         while(uart_querychar(uratn, buff + i)  )
         {
             i++;
-            if(i >= max_len)            //è¶…è¿‡è®¾å®šçš„æœ€å¤§å€¼ï¼Œé€€å‡º
+            if(i >= max_len)            //³¬¹ıÉè¶¨µÄ×î´óÖµ£¬ÍË³ö
             {
                 return i;
             }
@@ -384,37 +384,37 @@ uint32 uart_querybuff (UARTn_e uratn, char *buff, uint32 max_len)
 
 
 /*!
- *  @brief      ä¸²å£å‘é€ä¸€ä¸ªå­—èŠ‚
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      ch          éœ€è¦å‘é€çš„å­—èŠ‚
+ *  @brief      ´®¿Ú·¢ËÍÒ»¸ö×Ö½Ú
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      ch          ĞèÒª·¢ËÍµÄ×Ö½Ú
  *  @since      v5.0
- *  @note       printféœ€è¦ç”¨åˆ°æ­¤å‡½æ•°
+ *  @note       printfĞèÒªÓÃµ½´Ëº¯Êı
  *  @see        fputc
- *  Sample usage:       uart_putchar (UART3, 'A');  //å‘é€å­—èŠ‚'A'
+ *  Sample usage:       uart_putchar (UART3, 'A');  //·¢ËÍ×Ö½Ú'A'
  */
 void uart_putchar (UARTn_e uratn, char ch)
 {
-    //ç­‰å¾…å‘é€ç¼“å†²åŒºç©º
+    //µÈ´ı·¢ËÍ»º³åÇø¿Õ
     while(!(UART_S1_REG(UARTN[uratn]) & UART_S1_TDRE_MASK));
 
-    //å‘é€æ•°æ®
+    //·¢ËÍÊı¾İ
     UART_D_REG(UARTN[uratn]) = (uint8)ch;
 }
 
 /*!
- *  @brief      æŸ¥è¯¢æ˜¯å¦æ¥å—åˆ°ä¸€ä¸ªå­—èŠ‚
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @return     æ¥æ”¶åˆ°æ•°æ®è¿”å›1ï¼Œæ²¡æ¥æ”¶åˆ°æ•°æ®è¿”å›0
+ *  @brief      ²éÑ¯ÊÇ·ñ½ÓÊÜµ½Ò»¸ö×Ö½Ú
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @return     ½ÓÊÕµ½Êı¾İ·µ»Ø1£¬Ã»½ÓÊÕµ½Êı¾İ·µ»Ø0
  *  @since      v5.0
  *  Sample usage:       char ch;
-                        if(uart_query (UART3) == 1)     //æŸ¥è¯¢æ˜¯å¦æ¥æ”¶åˆ°æ•°æ®
+                        if(uart_query (UART3) == 1)     //²éÑ¯ÊÇ·ñ½ÓÊÕµ½Êı¾İ
                         {
-                            ch = uart_getchar (UART3);  //ç­‰å¾…æ¥æ”¶ä¸€ä¸ªæ•°æ®ï¼Œä¿å­˜åˆ° ché‡Œ
+                            ch = uart_getchar (UART3);  //µÈ´ı½ÓÊÕÒ»¸öÊı¾İ£¬±£´æµ½ chÀï
                         }
  */
 char uart_query (UARTn_e uratn)
 {
-    if(UART_RCFIFO_REG(UARTN[uratn]))                 //æ¥æ”¶åˆ°æ•°æ®æ•°é‡é0
+    if(UART_RCFIFO_REG(UARTN[uratn]))                 //½ÓÊÕµ½Êı¾İÊıÁ¿·Ç0
         //if(!(UART_SFIFO_REG(UARTN[uratn]) & UART_SFIFO_RXEMPT_MASK))
         //if(UART_S1_REG(UARTN[uratn]) & UART_S1_TDRE_MASK)
     {
@@ -428,12 +428,12 @@ char uart_query (UARTn_e uratn)
 }
 
 /*!
- *  @brief      å‘é€æŒ‡å®šlenä¸ªå­—èŠ‚é•¿åº¦æ•°ç»„ ï¼ˆåŒ…æ‹¬ NULL ä¹Ÿä¼šå‘é€ï¼‰
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      buff        æ•°ç»„åœ°å€
- *  @param      len         å‘é€æ•°ç»„çš„é•¿åº¦
+ *  @brief      ·¢ËÍÖ¸¶¨len¸ö×Ö½Ú³¤¶ÈÊı×é £¨°üÀ¨ NULL Ò²»á·¢ËÍ£©
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      buff        Êı×éµØÖ·
+ *  @param      len         ·¢ËÍÊı×éµÄ³¤¶È
  *  @since      v5.0
- *  Sample usage:       uart_putbuff (UART3,"1234567", 3); //å®é™…å‘é€äº†3ä¸ªå­—èŠ‚'1','2','3'
+ *  Sample usage:       uart_putbuff (UART3,"1234567", 3); //Êµ¼Ê·¢ËÍÁË3¸ö×Ö½Ú'1','2','3'
  */
 void uart_putbuff (UARTn_e uratn, uint8 *buff, uint32 len)
 {
@@ -446,11 +446,11 @@ void uart_putbuff (UARTn_e uratn, uint8 *buff, uint32 len)
 
 
 /*!
- *  @brief      å‘é€å­—ç¬¦ä¸²(é‡ NULL åœæ­¢å‘é€)
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
- *  @param      str         å­—ç¬¦ä¸²åœ°å€
+ *  @brief      ·¢ËÍ×Ö·û´®(Óö NULL Í£Ö¹·¢ËÍ)
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
+ *  @param      str         ×Ö·û´®µØÖ·
  *  @since      v5.0
- *  Sample usage:       uart_putstr (UART3,"1234567"); //å®é™…å‘é€äº†7ä¸ªå­—èŠ‚
+ *  Sample usage:       uart_putstr (UART3,"1234567"); //Êµ¼Ê·¢ËÍÁË7¸ö×Ö½Ú
  */
 void uart_putstr (UARTn_e uratn, const uint8 *str)
 {
@@ -461,111 +461,111 @@ void uart_putstr (UARTn_e uratn, const uint8 *str)
 }
 
 /*!
- *  @brief      å¼€ä¸²å£æ¥æ”¶ä¸­æ–­
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
+ *  @brief      ¿ª´®¿Ú½ÓÊÕÖĞ¶Ï
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
  *  @since      v5.0
- *  Sample usage:       uart_rx_irq_en(UART3);         //å¼€ä¸²å£3æ¥æ”¶ä¸­æ–­
+ *  Sample usage:       uart_rx_irq_en(UART3);         //¿ª´®¿Ú3½ÓÊÕÖĞ¶Ï
  */
 void uart_rx_irq_en(UARTn_e uratn)
 {
-    UART_C2_REG(UARTN[uratn]) |= UART_C2_RIE_MASK;                          //ä½¿èƒ½UARTæ¥æ”¶ä¸­æ–­
-    enable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));                  //ä½¿èƒ½IRQä¸­æ–­
+    UART_C2_REG(UARTN[uratn]) |= UART_C2_RIE_MASK;                          //Ê¹ÄÜUART½ÓÊÕÖĞ¶Ï
+    enable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));                  //Ê¹ÄÜIRQÖĞ¶Ï
 }
 
 /*!
- *  @brief      å¼€ä¸²å£å‘é€ä¸­æ–­
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
+ *  @brief      ¿ª´®¿Ú·¢ËÍÖĞ¶Ï
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
  *  @since      v5.0
- *  Sample usage:       uart_tx_irq_en(UART3);         //å¼€ä¸²å£3å‘é€ä¸­æ–­
+ *  Sample usage:       uart_tx_irq_en(UART3);         //¿ª´®¿Ú3·¢ËÍÖĞ¶Ï
  */
 void uart_tx_irq_en(UARTn_e uratn)
 {
-    UART_C2_REG(UARTN[uratn]) |= UART_C2_TIE_MASK;                          //ä½¿èƒ½UARTå‘é€ä¸­æ–­
-    enable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));                  //ä½¿èƒ½IRQä¸­æ–­
+    UART_C2_REG(UARTN[uratn]) |= UART_C2_TIE_MASK;                          //Ê¹ÄÜUART·¢ËÍÖĞ¶Ï
+    enable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));                  //Ê¹ÄÜIRQÖĞ¶Ï
 }
 
 /*!
- *  @brief      å¼€ä¸²å£å‘é€å®Œæˆä¸­æ–­
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
+ *  @brief      ¿ª´®¿Ú·¢ËÍÍê³ÉÖĞ¶Ï
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
  *  @since      v5.0
- *  Sample usage:       uart_tx_irq_en(UART3);         //å¼€ä¸²å£3å‘é€ä¸­æ–­
+ *  Sample usage:       uart_tx_irq_en(UART3);         //¿ª´®¿Ú3·¢ËÍÖĞ¶Ï
  */
 void uart_txc_irq_en(UARTn_e uratn)
 {
-    UART_C2_REG(UARTN[uratn]) |= UART_C2_TCIE_MASK;                         //ä½¿èƒ½UARTå‘é€ä¸­æ–­
-    enable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));                  //ä½¿èƒ½IRQä¸­æ–­
+    UART_C2_REG(UARTN[uratn]) |= UART_C2_TCIE_MASK;                         //Ê¹ÄÜUART·¢ËÍÖĞ¶Ï
+    enable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));                  //Ê¹ÄÜIRQÖĞ¶Ï
 }
 
 /*!
- *  @brief      å…³ä¸²å£æ¥æ”¶ä¸­æ–­
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
+ *  @brief      ¹Ø´®¿Ú½ÓÊÕÖĞ¶Ï
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
  *  @since      v5.0
- *  Sample usage:       uart_rx_irq_dis(UART3);         //å…³ä¸²å£3æ¥æ”¶ä¸­æ–­
+ *  Sample usage:       uart_rx_irq_dis(UART3);         //¹Ø´®¿Ú3½ÓÊÕÖĞ¶Ï
  */
 void uart_rx_irq_dis(UARTn_e uratn)
 {
-    UART_C2_REG(UARTN[uratn]) &= ~UART_C2_RIE_MASK;                         //ç¦æ­¢UARTæ¥æ”¶ä¸­æ–­
+    UART_C2_REG(UARTN[uratn]) &= ~UART_C2_RIE_MASK;                         //½ûÖ¹UART½ÓÊÕÖĞ¶Ï
 
-    //å¦‚æœå‘é€ä¸­æ–­è¿˜æ²¡æœ‰å…³ï¼Œåˆ™ä¸å…³é—­IRQ
+    //Èç¹û·¢ËÍÖĞ¶Ï»¹Ã»ÓĞ¹Ø£¬Ôò²»¹Ø±ÕIRQ
     if(!(UART_C2_REG(UARTN[uratn]) & (UART_C2_TIE_MASK | UART_C2_TCIE_MASK)) )
     {
-        disable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));             //å…³IRQä¸­æ–­
+        disable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));             //¹ØIRQÖĞ¶Ï
     }
 }
 
 /*!
- *  @brief      å…³ä¸²å£å‘é€ä¸­æ–­
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
+ *  @brief      ¹Ø´®¿Ú·¢ËÍÖĞ¶Ï
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
  *  @since      v5.0
- *  Sample usage:       uart_tx_irq_dis(UART3);         //å…³ä¸²å£3å‘é€ä¸­æ–­
+ *  Sample usage:       uart_tx_irq_dis(UART3);         //¹Ø´®¿Ú3·¢ËÍÖĞ¶Ï
  */
 void uart_txc_irq_dis(UARTn_e uratn)
 {
-    UART_C2_REG(UARTN[uratn]) &= ~UART_C2_TCIE_MASK;                        //ç¦æ­¢UARTå‘é€å®Œæˆä¸­æ–­
+    UART_C2_REG(UARTN[uratn]) &= ~UART_C2_TCIE_MASK;                        //½ûÖ¹UART·¢ËÍÍê³ÉÖĞ¶Ï
 
-    //å¦‚æœæ¥æ”¶ä¸­æ–­è¿˜æ²¡æœ‰å…³ï¼Œåˆ™ä¸å…³é—­IRQ
+    //Èç¹û½ÓÊÕÖĞ¶Ï»¹Ã»ÓĞ¹Ø£¬Ôò²»¹Ø±ÕIRQ
     if(!(UART_C2_REG(UARTN[uratn]) & UART_C2_RIE_MASK) )
     {
-        disable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));             //å…³IRQä¸­æ–­
+        disable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));             //¹ØIRQÖĞ¶Ï
     }
 }
 
 /*!
- *  @brief      å…³ä¸²å£å‘é€ä¸­æ–­
- *  @param      UARTn_e       æ¨¡å—å·ï¼ˆUART0~UART5ï¼‰
+ *  @brief      ¹Ø´®¿Ú·¢ËÍÖĞ¶Ï
+ *  @param      UARTn_e       Ä£¿éºÅ£¨UART0~UART5£©
  *  @since      v5.0
- *  Sample usage:       uart_tx_irq_dis(UART3);         //å…³ä¸²å£3å‘é€ä¸­æ–­
+ *  Sample usage:       uart_tx_irq_dis(UART3);         //¹Ø´®¿Ú3·¢ËÍÖĞ¶Ï
  */
 void uart_tx_irq_dis(UARTn_e uratn)
 {
-    UART_C2_REG(UARTN[uratn]) &= ~UART_C2_TIE_MASK;                         //ç¦æ­¢UARTå‘é€ä¸­æ–­
+    UART_C2_REG(UARTN[uratn]) &= ~UART_C2_TIE_MASK;                         //½ûÖ¹UART·¢ËÍÖĞ¶Ï
 
-    //å¦‚æœæ¥æ”¶ä¸­æ–­è¿˜æ²¡æœ‰å…³ï¼Œåˆ™ä¸å…³é—­IRQ
+    //Èç¹û½ÓÊÕÖĞ¶Ï»¹Ã»ÓĞ¹Ø£¬Ôò²»¹Ø±ÕIRQ
     if(!(UART_C2_REG(UARTN[uratn]) & UART_C2_RIE_MASK) )
     {
-        disable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));             //å…³IRQä¸­æ–­
+        disable_irq((IRQn_t)((uratn << 1) + UART0_RX_TX_IRQn));             //¹ØIRQÖĞ¶Ï
     }
 }
 
 /*!
- *  @brief      UART3æµ‹è¯•ä¸­æ–­æœåŠ¡å‡½æ•°
+ *  @brief      UART3²âÊÔÖĞ¶Ï·şÎñº¯Êı
  *  @since      v5.0
- *  @warning    æ­¤å‡½æ•°éœ€è¦ç”¨æˆ·æ ¹æ®è‡ªå·±éœ€æ±‚å®Œæˆï¼Œè¿™é‡Œä»…ä»…æ˜¯æä¾›ä¸€ä¸ªæ¨¡ç‰ˆ
- *  Sample usage:       set_vector_handler(UART3_RX_TX_VECTORn , uart3_test_handler);    //æŠŠ uart3_handler å‡½æ•°æ·»åŠ åˆ°ä¸­æ–­å‘é‡è¡¨ï¼Œä¸éœ€è¦æˆ‘ä»¬æ‰‹åŠ¨è°ƒç”¨
+ *  @warning    ´Ëº¯ÊıĞèÒªÓÃ»§¸ù¾İ×Ô¼ºĞèÇóÍê³É£¬ÕâÀï½ö½öÊÇÌá¹©Ò»¸öÄ£°æ
+ *  Sample usage:       set_vector_handler(UART3_RX_TX_VECTORn , uart3_test_handler);    //°Ñ uart3_handler º¯ÊıÌí¼Óµ½ÖĞ¶ÏÏòÁ¿±í£¬²»ĞèÒªÎÒÃÇÊÖ¶¯µ÷ÓÃ
  */
 void uart3_test_handler(void)
 {
     UARTn_e uratn = UART3;
 
-    if(UART_S1_REG(UARTN[uratn]) & UART_S1_RDRF_MASK)   //æ¥æ”¶æ•°æ®å¯„å­˜å™¨æ»¡
+    if(UART_S1_REG(UARTN[uratn]) & UART_S1_RDRF_MASK)   //½ÓÊÕÊı¾İ¼Ä´æÆ÷Âú
     {
-        //ç”¨æˆ·éœ€è¦å¤„ç†æ¥æ”¶æ•°æ®
+        //ÓÃ»§ĞèÒª´¦Àí½ÓÊÕÊı¾İ
 
     }
 
-    if(UART_S1_REG(UARTN[uratn]) & UART_S1_TDRE_MASK )  //å‘é€æ•°æ®å¯„å­˜å™¨ç©º
+    if(UART_S1_REG(UARTN[uratn]) & UART_S1_TDRE_MASK )  //·¢ËÍÊı¾İ¼Ä´æÆ÷¿Õ
     {
-        //ç”¨æˆ·éœ€è¦å¤„ç†å‘é€æ•°æ®
+        //ÓÃ»§ĞèÒª´¦Àí·¢ËÍÊı¾İ
 
     }
 }

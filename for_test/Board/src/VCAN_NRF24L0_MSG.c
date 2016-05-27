@@ -8,19 +8,19 @@
 #include "VCAN_TSL1401.h"
 #include "include.h"
 
-/**************************** å˜é‡æŽ¥æ”¶ä¸Žå‘é€ **********************************/
+/**************************** ±äÁ¿½ÓÊÕÓë·¢ËÍ **********************************/
 
 
 
 
-/**************************** å˜é‡æŽ¥æ”¶ä¸Žå‘é€ **********************************/
+/**************************** ±äÁ¿½ÓÊÕÓë·¢ËÍ **********************************/
 
-uint32 rxbuflen = 0;           //ç”¨äºŽæŽ¥æ”¶æ–¹è¿”å›žæŽ¥æ”¶åˆ°å¤šå°‘æ•°æ®ã€‚ï¼ˆåŒ…å«ç¬¬ä¸€æ¬¡ä¼ é€’è¿›åŽ»çš„é‚£ä¸ªåŒ…å¤§å°ï¼‰
+uint32 rxbuflen = 0;           //ÓÃÓÚ½ÓÊÕ·½·µ»Ø½ÓÊÕµ½¶àÉÙÊý¾Ý¡££¨°üº¬µÚÒ»´Î´«µÝ½øÈ¥µÄÄÇ¸ö°ü´óÐ¡£©
 
 
 const uint32 nrf_com_size[COM_MAX] = {CAMERA_SIZE , TSL1401_MAX *TSL1401_SIZE , 8, 0};
 
-uint32 nrf_com_totalsize[COM_MAX];                                                                  // æ‰€å ç”¨ åŒ… çš„ æ€» å ç”¨ç©ºé—´
+uint32 nrf_com_totalsize[COM_MAX];                                                                  // ËùÕ¼ÓÃ °ü µÄ ×Ü Õ¼ÓÃ¿Õ¼ä
 
 void nrf_msg_init()
 {
@@ -28,101 +28,101 @@ void nrf_msg_init()
 
     while(i--)
     {
-        nrf_com_totalsize[i] = (( nrf_com_size[i] + 2 * COM_LEN + DATA_PACKET - 1 ) / DATA_PACKET)  //æ±‚å¾—åŒ…çš„æ•°ç›®
-                               *DATA_PACKET;                                                      //æ€»å…±å ç”¨çš„ç©ºé—´
+        nrf_com_totalsize[i] = (( nrf_com_size[i] + 2 * COM_LEN + DATA_PACKET - 1 ) / DATA_PACKET)  //ÇóµÃ°üµÄÊýÄ¿
+                               *DATA_PACKET;                                                      //×Ü¹²Õ¼ÓÃµÄ¿Õ¼ä
     }
 
 }
 
 
-//å‘é€å‘½ä»¤ã€‚å‰ä¸¤ä¸ªå­—èŠ‚ç”¨åœ¨å‘½ä»¤è¯†åˆ«ï¼ŒåŽé¢å°±æ˜¯éœ€è¦ä¼ è¾“çš„å†…å®¹
+//·¢ËÍÃüÁî¡£Ç°Á½¸ö×Ö½ÚÓÃÔÚÃüÁîÊ¶±ð£¬ºóÃæ¾ÍÊÇÐèÒª´«ÊäµÄÄÚÈÝ
 nrf_result_e nrf_msg_tx(com_e  com, uint8 *sendbuf)
 {
-    ASSERT(com < COM_MAX);          //å‘½ä»¤ä¸èƒ½è¶…è¿‡æœ€å¤§çš„æ•°ç›®
+    ASSERT(com < COM_MAX);          //ÃüÁî²»ÄÜ³¬¹ý×î´óµÄÊýÄ¿
 
-    //æŠŠå‘½ä»¤å†™è¿›æ•°æ®ç¼“å†²åŒº
+    //°ÑÃüÁîÐ´½øÊý¾Ý»º³åÇø
     sendbuf[0] =  com;
     sendbuf[1] = ~com;
     sendbuf[nrf_com_size[com] + 2 * COM_LEN - 2] = ~com;
     sendbuf[nrf_com_size[com] + 2 * COM_LEN - 1] = com;
 
-    while( !nrf_tx(sendbuf , nrf_com_size[com] + 2 * COM_LEN)); //å‘é€æ•°æ®
+    while( !nrf_tx(sendbuf , nrf_com_size[com] + 2 * COM_LEN)); //·¢ËÍÊý¾Ý
 
     return NRF_RESULT_NULL;
 }
 
-//æŸ¥è¯¢æ˜¯å¦æœ‰æŽ¥æ”¶æ•°æ®ï¼Œå¹¶è¿›è¡Œå¤„ç†ã€‚rebuf ä¸ºå¯ä¾›ä½¿ç”¨çš„ç¼“å†²åŒº
+//²éÑ¯ÊÇ·ñÓÐ½ÓÊÕÊý¾Ý£¬²¢½øÐÐ´¦Àí¡£rebuf Îª¿É¹©Ê¹ÓÃµÄ»º³åÇø
 //
 nrf_result_e nrf_msg_rx(com_e  *com, uint8 *rebuf)
 {
     com_e   comtmp;
     uint32  len;
     uint32  tmplen;
-    uint32  relen;                              //æŽ¥æ”¶åˆ°çš„æ•°æ®é•¿åº¦
+    uint32  relen;                              //½ÓÊÕµ½µÄÊý¾Ý³¤¶È
     uint8   *buftemp;
 
-    uint32  totallen ;                          //æ€»éœ€è¦æŽ¥æ”¶åŒ…çš„æ•°ç›®(åŒ…çš„æ•´æ•°å€)
+    uint32  totallen ;                          //×ÜÐèÒª½ÓÊÕ°üµÄÊýÄ¿(°üµÄÕûÊý±¶)
     uint16  tmpcheck;
 
 RE_LOOP:
-    buftemp = rebuf;                            //åŠ è½½èµ·å§‹åœ°å€
+    buftemp = rebuf;                            //¼ÓÔØÆðÊ¼µØÖ·
 
-    relen = nrf_rx(buftemp, DATA_PACKET);       //æŽ¥æ”¶ ç¬¬ä¸€ä¸ªåŒ…
+    relen = nrf_rx(buftemp, DATA_PACKET);       //½ÓÊÕ µÚÒ»¸ö°ü
     if(relen == 0)
     {
-        //å¦‚æžœæ˜¯ é¢„æ ¡éªŒ å¤±è´¥ï¼Œé‚£ä¹ˆ è‚¯å®šå¯ä»¥æŽ¥æ”¶åˆ°æ•°æ®ï¼Œä¸ä¼šè¿›å…¥æ­¤å¤„
+        //Èç¹ûÊÇ Ô¤Ð£Ñé Ê§°Ü£¬ÄÇÃ´ ¿Ï¶¨¿ÉÒÔ½ÓÊÕµ½Êý¾Ý£¬²»»á½øÈë´Ë´¦
 
-        //åªæœ‰ ä¸€å¼€å§‹ è¿›å…¥å‡½æ•° ç¬¬ä¸€æ¬¡æŽ¥æ”¶çš„æ—¶å€™ï¼Œæ‰å‡ºçŽ°æŽ¥æ”¶å¤±è´¥
+        //Ö»ÓÐ Ò»¿ªÊ¼ ½øÈëº¯Êý µÚÒ»´Î½ÓÊÕµÄÊ±ºò£¬²Å³öÏÖ½ÓÊÕÊ§°Ü
 
-        return NRF_RESULT_RX_NO;                //æ²¡æŽ¥æ”¶åˆ°æ•°æ®
+        return NRF_RESULT_RX_NO;                //Ã»½ÓÊÕµ½Êý¾Ý
     }
 
     comtmp = (com_e)buftemp[0];
     if(((uint8)comtmp < (uint8)COM_MAX) && (buftemp[1] ==  (uint8)~comtmp) && (comtmp != COM_RETRAN) )
     {
-        //æ ¡éªŒæ­£ç¡®,ç»§ç»­æŽ¥æ”¶å‰©ä½™ çš„æ•°æ®
+        //Ð£ÑéÕýÈ·,¼ÌÐø½ÓÊÕÊ£Óà µÄÊý¾Ý
 
-        totallen = nrf_com_totalsize[comtmp];   //æ€»æŽ¥æ”¶å‚æ•°
+        totallen = nrf_com_totalsize[comtmp];   //×Ü½ÓÊÕ²ÎÊý
 
-        if(totallen > relen )                   //æ•°æ®é•¿åº¦ è¶…è¿‡ å·²æŽ¥æ”¶é•¿åº¦
+        if(totallen > relen )                   //Êý¾Ý³¤¶È ³¬¹ý ÒÑ½ÓÊÕ³¤¶È
         {
-            //éœ€è¦ç»§ç»­æŽ¥æ”¶
-            len = totallen - relen;             //å‰©ä½™æŽ¥æ”¶çš„ é•¿åº¦
+            //ÐèÒª¼ÌÐø½ÓÊÕ
+            len = totallen - relen;             //Ê£Óà½ÓÊÕµÄ ³¤¶È
 
-            //ç­‰å¾…æŽ¥æ”¶FIFOé‡Œçš„æ•°æ®æ ¡éªŒæ­£ç¡®æ‰æŽ¥æ”¶
-            while( !nrf_rx_fifo_check(nrf_com_size[comtmp] + 2 * COM_LEN - relen,&tmpcheck)  );   //ç­‰å¾…æŽ¥æ”¶
+            //µÈ´ý½ÓÊÕFIFOÀïµÄÊý¾ÝÐ£ÑéÕýÈ·²Å½ÓÊÕ
+            while( !nrf_rx_fifo_check(nrf_com_size[comtmp] + 2 * COM_LEN - relen,&tmpcheck)  );   //µÈ´ý½ÓÊÕ
             if( tmpcheck !=  (uint16)((uint8)~comtmp + (comtmp<<8)))
             {
-                goto RE_LOOP;                   //æ ¡éªŒå¤±è´¥ ï¼Œæ”¾å¼ƒåˆšæ‰æŽ¥æ”¶çš„ ç¬¬ä¸€ä¸ª åŒ… ï¼ˆé‡æ–°æŽ¥æ”¶æ•°æ®ï¼‰
+                goto RE_LOOP;                   //Ð£ÑéÊ§°Ü £¬·ÅÆú¸Õ²Å½ÓÊÕµÄ µÚÒ»¸ö °ü £¨ÖØÐÂ½ÓÊÕÊý¾Ý£©
             }
 
             tmplen = relen;
             do
             {
-                buftemp += tmplen;              //ç§»åŠ¨åˆ°å°šæœªæŽ¥æ”¶æ•°æ®çš„ç¼“å†²åŒº
-                tmplen = nrf_rx(buftemp, len);  //æŽ¥æ”¶æ•°æ®
+                buftemp += tmplen;              //ÒÆ¶¯µ½ÉÐÎ´½ÓÊÕÊý¾ÝµÄ»º³åÇø
+                tmplen = nrf_rx(buftemp, len);  //½ÓÊÕÊý¾Ý
                 //relen += tmplen;
                 len -= tmplen;
             }
             while(len);
         }
 
-        //æ ¡éªŒå°¾éƒ¨æ•°æ®æ˜¯å¦æ­£ç¡®
+        //Ð£ÑéÎ²²¿Êý¾ÝÊÇ·ñÕýÈ·
         if(
             (rebuf[nrf_com_size[comtmp] + 2 * COM_LEN - 2] ==   (uint8)~comtmp)
             &&  (rebuf[nrf_com_size[comtmp] + 2 * COM_LEN - 1] ==   (uint8) comtmp)   )
         {
-            *com = comtmp;                          //å­˜å‚¨å‘½ä»¤
+            *com = comtmp;                          //´æ´¢ÃüÁî
 
-            //å¯¹ å‘½ä»¤ æ•°æ®è¿›è¡Œ å¤„ç†
+            //¶Ô ÃüÁî Êý¾Ý½øÐÐ ´¦Àí
             switch(*com)
             {
             case COM_VAR:
-                last_tab = *((uint32 *)&rebuf[COM_LEN]);                                    //è¯»å–å˜é‡ç¼–å·
+                last_tab = *((uint32 *)&rebuf[COM_LEN]);                                    //¶ÁÈ¡±äÁ¿±àºÅ
                 if(last_tab < VAR_MAX)
                 {
-                    save_var((var_tab_e)last_tab, *((uint32 *)&rebuf[COM_LEN + sizeof(uint32)]));          //å­˜å‚¨ å˜é‡
-                    var_display(last_tab);                                                  //æ˜¾ç¤º å˜é‡
+                    save_var((var_tab_e)last_tab, *((uint32 *)&rebuf[COM_LEN + sizeof(uint32)]));          //´æ´¢ ±äÁ¿
+                    var_display(last_tab);                                                  //ÏÔÊ¾ ±äÁ¿
                 }
                 else
                 {
@@ -133,11 +133,11 @@ RE_LOOP:
                 break;
             }
 
-            return NRF_RESULT_RX_VALID;             //æŽ¥æ”¶æœ‰æ•ˆæ•°æ®
+            return NRF_RESULT_RX_VALID;             //½ÓÊÕÓÐÐ§Êý¾Ý
         }
     }
 
-    //æœ‰æŽ¥æ”¶åˆ°æ•°æ®ï¼Œä½†æŽ¥æ”¶æ•°æ®æ— æ•ˆ
+    //ÓÐ½ÓÊÕµ½Êý¾Ý£¬µ«½ÓÊÕÊý¾ÝÎÞÐ§
     return NRF_RESULT_RX_NOVALID;
 }
 

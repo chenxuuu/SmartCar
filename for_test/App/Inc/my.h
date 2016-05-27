@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016ï¼Œæ™¨æ—­
+ *     Copyright (c) 2016£¬³¿Ğñ
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
+ *     ¼¼ÊõÌÖÂÛ£º³¿ĞñµÄ²©¿Í http://www.chenxublog.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±æ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊô³¿ĞñËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£Áô³¿ĞñµÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       my.h
- * @brief      K60è‡ªç¼–å‡½æ•°å¤´æ–‡ä»¶
- * @author     æ™¨æ—­
+ * @brief      K60×Ô±àº¯ÊıÍ·ÎÄ¼ş
+ * @author     ³¿Ğñ
  * @version    v1.0
  * @date       2016-3-7
  */
@@ -19,9 +19,9 @@
 
 
 /*************************************
-                æ–œç‡
+                Ğ±ÂÊ
 **************************************/
-#define left_default   1.93          //ç›´é“æ—¶çš„å·¦å³æ–œç‡
+#define left_default   1.93          //Ö±µÀÊ±µÄ×óÓÒĞ±ÂÊ
 #define right_default -1.93
 
 /*************************************
@@ -30,49 +30,49 @@
 #define OLED_SCL  PTA14_OUT       //oled
 #define OLED_SDA  PTA15_OUT
 #define OLED_RST  PTA16_OUT
-#define OLED_DC   PTA17_OUT       //CSæ¥åœ°ï¼
+#define OLED_DC   PTA17_OUT       //CS½ÓµØ£¡
 #define OLEDPT1 PTA14        //SCL  D0
 #define OLEDPT2 PTA15        //SDA  D1
 #define OLEDPT3 PTA16        //RST
 #define OLEDPT4 PTA17        //DC
 
 /*************************************
-                é¹°çœ¼
+                Ó¥ÑÛ
 **************************************/
-#define CameraPCLK     PT8      //PCLKæ ‡å¿—ä½
+#define CameraPCLK     PT8      //PCLK±êÖ¾Î»
 #define CameraPCLKint  PTB8     //PCLK
 
-#define SCCB_SCL       PTB10    //SCCB ç®¡è„šé…ç½®
+#define SCCB_SCL       PTB10    //SCCB ¹Ü½ÅÅäÖÃ
 #define SCCB_SDA       PTB11
 
-#define OV7725_EAGLE_W            160                                 //å®šä¹‰æ‘„åƒå¤´å›¾åƒå®½åº¦
-#define OV7725_EAGLE_H            120                                 //å®šä¹‰æ‘„åƒå¤´å›¾åƒé«˜åº¦
+#define OV7725_EAGLE_W            160                                 //¶¨ÒåÉãÏñÍ·Í¼Ïñ¿í¶È
+#define OV7725_EAGLE_H            120                                 //¶¨ÒåÉãÏñÍ·Í¼Ïñ¸ß¶È
 
 
 /*************************************
-                èˆµæœº
+                ¶æ»ú
 **************************************/
-#define S3010_FTM   FTM3                        //èˆµæœºé€šé“     éœ€æ”¹
+#define S3010_FTM   FTM3                        //¶æ»úÍ¨µÀ     Ğè¸Ä
 #define S3010_CH    FTM_CH3
 #define S3010_HZ    (100)
 
-#define CAR_NUMBER 1       //å®šä¹‰è½¦å·
+#define CAR_NUMBER 1       //¶¨Òå³µºÅ
 
-#if ( CAR_NUMBER == 1 )                            //1Aè½¦
+#if ( CAR_NUMBER == 1 )                            //1A³µ
 #define control_actuator_center 1392
 #define control_actuator_min 1229
 #define control_actuator_max 1549
 #endif
 
-#if ( CAR_NUMBER == 2 )                            //2Bè½¦
+#if ( CAR_NUMBER == 2 )                            //2B³µ
 #define control_actuator_center 1357
 #define control_actuator_min 1050
 #define control_actuator_max 1532
 #endif
 /*************************************
-                ç”µæœº
+                µç»ú
 **************************************/
-#define	PERIOD				1000				//ç”µå‹è½¬æ¢PWMæ¯”ä¾‹
+#define	PERIOD				1000				//µçÑ¹×ª»»PWM±ÈÀı
 
 
 

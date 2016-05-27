@@ -1,7 +1,7 @@
 #ifndef __USB_CDC_H__
 #define __USB_CDC_H__
 
-/* å¤´æ–‡ä»¶ */
+/* Í·ÎÄ¼ş */
 #include "USB.h"
 #include "FslTypes.h"
 
@@ -36,12 +36,12 @@ typedef struct
 } CDC_Line_Coding;
 
 
-/* å¤–éƒ¨è°ƒç”¨çš„å˜é‡ */
+/* Íâ²¿µ÷ÓÃµÄ±äÁ¿ */
 extern uint8 CDC_OUT_Data[];
 extern CDC_Line_Coding com_cfg;
 
 
-/* å‡½æ•° */
+/* º¯Êı */
 void    CDC_Init(void);
 void    CDC_Engine(void);
 uint8   CDC_InterfaceReq_Handler(void);

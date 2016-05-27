@@ -1,13 +1,13 @@
 #ifndef _VCAN_SD_APP_H_
 #define _VCAN_SD_APP_H_
 
-#define UI_PIC_MAX_W    320    //å®šä¹‰uiæœ€å¤§çš„å®½åº¦
+#define UI_PIC_MAX_W    320    //¶¨Òåui×î´óµÄ¿í¶È
 
 
 #define USE_UI_PIC_NULL     0
 #define USE_UI_PIC_SD       1
 #define USE_UI_PIC_FLASH    2
-#define USE_UI_PIC          USE_UI_PIC_FLASH   //ui_pic æ˜¯å¦ä½¿ç”¨ sdå¡ï¼Œä¸ä½¿ç”¨ sd å¡ï¼Œåˆ™ç”¨ flash
+#define USE_UI_PIC          USE_UI_PIC_FLASH   //ui_pic ÊÇ·ñÊ¹ÓÃ sd¿¨£¬²»Ê¹ÓÃ sd ¿¨£¬ÔòÓÃ flash
 
 typedef enum
 {
@@ -32,7 +32,7 @@ extern uint8 ui_pic_init(void);
 extern void  LCD_ui_pic(uint16 num,Site_t site);
 
 
-//ä¸‹é¢å‡½æ•° ç”¨äº è®¡æ—¶å™¨ç•Œé¢
+//ÏÂÃæº¯Êı ÓÃÓÚ ¼ÆÊ±Æ÷½çÃæ
 void LCD_ui_time_init(void);
 void LCD_ui_time(uint16 ms);
 

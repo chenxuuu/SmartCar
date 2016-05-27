@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_mcg.c
- * @brief      MCG PLLé©±åŠ¨
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      MCG PLLÇı¶¯
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-06-29
  */
@@ -73,8 +73,8 @@ mcg_div_t mcg_div = {CORE_DIV, BUS_DIV, FLEX_DIV, FLASH_DIV};
 
 
 /*!
- *  @brief      MCG åˆ†é¢‘é…ç½®
- *  @param      PLL_e       é¢‘ç‡è®¾ç½®å‚æ•°
+ *  @brief      MCG ·ÖÆµÅäÖÃ
+ *  @param      PLL_e       ÆµÂÊÉèÖÃ²ÎÊı
  *  @since      v5.0
  */
 void mcg_div_count(PLL_e pll)
@@ -82,7 +82,7 @@ void mcg_div_count(PLL_e pll)
     uint16 clk = mcg_cfg[pll].clk;
     if( (pll > PLLUSR) && (pll < PLL_MAX) )
     {
-        //è®¾ç½®åˆ†é¢‘
+        //ÉèÖÃ·ÖÆµ
         mcg_div.core_div    = 0;                                        // core = MCG
 
         if     (clk <= 1 * MAX_BUS_CLK)   mcg_div.bus_div = 0;          // bus  = MCG
@@ -139,19 +139,19 @@ void mcg_div_count(PLL_e pll)
 }
 
 /*!
- *  @brief      PLLè¶…é¢‘
- *  @param      PLL_e       é¢‘ç‡è®¾ç½®å‚æ•°
- *  @return     è¶…é¢‘é¢‘ç‡ï¼ˆMHzï¼‰
+ *  @brief      PLL³¬Æµ
+ *  @param      PLL_e       ÆµÂÊÉèÖÃ²ÎÊı
+ *  @return     ³¬ÆµÆµÂÊ£¨MHz£©
  *  @since      v5.0
- *  @warning    æ­¤å‡½æ•°åªèƒ½åœ¨ å¤ä½åæ²¡è¿›è¡Œä»»ä½•é¢‘ç‡è®¾ç½®æƒ…å†µä¸‹è°ƒç”¨ï¼Œå³MCGåœ¨FEIæ¨¡å¼ä¸‹æ‰å¯è°ƒç”¨
- *  Sample usage:       uint8 clk = pll_init(PLL100);        //è¶…é¢‘
+ *  @warning    ´Ëº¯ÊıÖ»ÄÜÔÚ ¸´Î»ºóÃ»½øĞĞÈÎºÎÆµÂÊÉèÖÃÇé¿öÏÂµ÷ÓÃ£¬¼´MCGÔÚFEIÄ£Ê½ÏÂ²Å¿Éµ÷ÓÃ
+ *  Sample usage:       uint8 clk = pll_init(PLL100);        //³¬Æµ
  */
 uint8 pll_init(PLL_e pll)
 {
 
     mcg_div_count( pll);
 
-    //ä¸Šç”µå¤ä½åï¼Œå•ç‰‡æœºä¼šè‡ªåŠ¨è¿›å…¥ FEI æ¨¡å¼ï¼Œä½¿ç”¨ å†…éƒ¨å‚è€ƒæ—¶é’Ÿ
+    //ÉÏµç¸´Î»ºó£¬µ¥Æ¬»ú»á×Ô¶¯½øÈë FEI Ä£Ê½£¬Ê¹ÓÃ ÄÚ²¿²Î¿¼Ê±ÖÓ
 
     //FEI -> FBE
     MCG_C2 &= ~MCG_C2_LP_MASK;
@@ -159,43 +159,43 @@ uint8 pll_init(PLL_e pll)
 
     MCG_C1 = MCG_C1_CLKS(2) | MCG_C1_FRDIV(7);
 
-    while (MCG_S & MCG_S_IREFST_MASK) {};                       //ç­‰å¾…FLLå‚è€ƒæ—¶é’Ÿ ä¸º å¤–éƒ¨å‚è€ƒæ—¶é’Ÿï¼ˆS[IREFST]=0ï¼Œè¡¨ç¤ºä½¿ç”¨å¤–éƒ¨å‚è€ƒæ—¶é’Ÿï¼Œï¼‰
+    while (MCG_S & MCG_S_IREFST_MASK) {};                       //µÈ´ıFLL²Î¿¼Ê±ÖÓ Îª Íâ²¿²Î¿¼Ê±ÖÓ£¨S[IREFST]=0£¬±íÊ¾Ê¹ÓÃÍâ²¿²Î¿¼Ê±ÖÓ£¬£©
 
-    while (((MCG_S & MCG_S_CLKST_MASK) >> MCG_S_CLKST_SHIFT) != 0x2) {}; //ç­‰å¾…é€‰æ‹©å¤–éƒ¨å‚è€ƒæ—¶é’Ÿ
+    while (((MCG_S & MCG_S_CLKST_MASK) >> MCG_S_CLKST_SHIFT) != 0x2) {}; //µÈ´ıÑ¡ÔñÍâ²¿²Î¿¼Ê±ÖÓ
 
-    //ç°åœ¨å·²ç»è¿›å…¥äº† FBEæ¨¡å¼
+    //ÏÖÔÚÒÑ¾­½øÈëÁË FBEÄ£Ê½
 
     //FBE -> PBE
-    set_sys_dividers(mcg_div.core_div, mcg_div.bus_div, mcg_div.flex_div, mcg_div.flash_div); //è®¾ç½®ç³»ç»Ÿåˆ†é¢‘å› å­é€‰é¡¹
+    set_sys_dividers(mcg_div.core_div, mcg_div.bus_div, mcg_div.flex_div, mcg_div.flash_div); //ÉèÖÃÏµÍ³·ÖÆµÒò×ÓÑ¡Ïî
 
-    MCG_C5 = MCG_C5_PRDIV(mcg_cfg[pll].prdiv);                      //åˆ†é¢‘ï¼Œ EXTAL_IN_MHz/( PRDIV+1)
-    MCG_C6 = MCG_C6_PLLS_MASK | MCG_C6_VDIV(mcg_cfg[pll].vdiv) ;    //å€é¢‘ï¼Œ EXTAL_IN_MHz/( PRDIV+1)  * (VDIV+24)
+    MCG_C5 = MCG_C5_PRDIV(mcg_cfg[pll].prdiv);                      //·ÖÆµ£¬ EXTAL_IN_MHz/( PRDIV+1)
+    MCG_C6 = MCG_C6_PLLS_MASK | MCG_C6_VDIV(mcg_cfg[pll].vdiv) ;    //±¶Æµ£¬ EXTAL_IN_MHz/( PRDIV+1)  * (VDIV+24)
 
-    while (!(MCG_S & MCG_S_PLLST_MASK)) {};                         //ç­‰å¾…æ—¶é’Ÿæºé€‰æ‹©PLL
+    while (!(MCG_S & MCG_S_PLLST_MASK)) {};                         //µÈ´ıÊ±ÖÓÔ´Ñ¡ÔñPLL
 
-    while (!(MCG_S & MCG_S_LOCK_MASK)) {};                          //ç­‰å¾… PLLé”äº†ï¼ˆé”ç›¸ç¯ï¼‰
+    while (!(MCG_S & MCG_S_LOCK_MASK)) {};                          //µÈ´ı PLLËøÁË£¨ËøÏà»·£©
 
-    // ç°åœ¨å·²ç»è¿›å…¥äº† PBE æ¨¡å¼
+    // ÏÖÔÚÒÑ¾­½øÈëÁË PBE Ä£Ê½
 
     // PBE -> PEE
     MCG_C1 &= ~MCG_C1_CLKS_MASK;
 
-    while (((MCG_S & MCG_S_CLKST_MASK) >> MCG_S_CLKST_SHIFT) != 0x3) {};//ç­‰å¾…é€‰æ‹©è¾“å‡ºPLL
+    while (((MCG_S & MCG_S_CLKST_MASK) >> MCG_S_CLKST_SHIFT) != 0x3) {};//µÈ´ıÑ¡ÔñÊä³öPLL
 
-    // ç°åœ¨å·²ç»è¿›å…¥äº† PEE æ¨¡å¼
+    // ÏÖÔÚÒÑ¾­½øÈëÁË PEE Ä£Ê½
 
     return mcg_cfg[pll].clk;
 } //pll_init
 
 
 /*!
- *  @brief      æ—¶é’Ÿåˆ†é¢‘è®¾ç½®å‡½æ•°
- *  @param      outdiv1    å†…æ ¸åˆ†é¢‘ç³»æ•°ï¼Œ       core    clk = MCG / (outdiv1 +1)
- *  @param      outdiv2    busåˆ†é¢‘ç³»æ•°ï¼Œ        bus     clk = MCG / (outdiv2 +1)
- *  @param      outdiv3    flexbusåˆ†é¢‘ç³»æ•°ï¼Œ    flexbus clk = MCG / (outdiv3 +1)
- *  @param      outdiv4    flashåˆ†é¢‘ç³»æ•°ï¼Œ      flash   clk = MCG / (outdiv4 +1)
+ *  @brief      Ê±ÖÓ·ÖÆµÉèÖÃº¯Êı
+ *  @param      outdiv1    ÄÚºË·ÖÆµÏµÊı£¬       core    clk = MCG / (outdiv1 +1)
+ *  @param      outdiv2    bus·ÖÆµÏµÊı£¬        bus     clk = MCG / (outdiv2 +1)
+ *  @param      outdiv3    flexbus·ÖÆµÏµÊı£¬    flexbus clk = MCG / (outdiv3 +1)
+ *  @param      outdiv4    flash·ÖÆµÏµÊı£¬      flash   clk = MCG / (outdiv4 +1)
  *  @since      v1.0
- *  @author     é£æ€å¡å°”å…¬å¸
+ *  @author     ·ÉË¼¿¨¶û¹«Ë¾
  *  Sample usage:       set_sys_dividers(0,1, 9,3);     // core clk = MCG ; bus clk = MCG / 2 ; flexbus clk = MCG /10 ; flash clk = MCG / 4;
  */
 __RAMFUNC  void set_sys_dividers(uint32 outdiv1, uint32 outdiv2, uint32 outdiv3, uint32 outdiv4)

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_LCD_ST7735S.h
- * @brief      LCD å‡½æ•°åº“
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      LCD º¯Êý¿â
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-09-07
  */
@@ -20,42 +20,42 @@
 #include "MK60_gpio.h"
 #include "VCAN_LCD.h"
 
-//ç”¨æˆ·é…ç½®
-#define ST7735S_DIR_DEFAULT     0       //å®šä¹‰é»˜è®¤æ–¹å‘ (0~3)
+//ÓÃ»§ÅäÖÃ
+#define ST7735S_DIR_DEFAULT     0       //¶¨ÒåÄ¬ÈÏ·½Ïò (0~3)
 
 #if (USE_LCD == LCD_ST7735S)
 
-/*********************** APIæŽ¥å£ ******************************/
-//æä¾›APIæŽ¥å£ç»™LCDè°ƒç”¨
+/*********************** API½Ó¿Ú ******************************/
+//Ìá¹©API½Ó¿Ú¸øLCDµ÷ÓÃ
 
-#define LCD_H                   ST7735S_get_h()                 //é«˜
-#define LCD_W                   ST7735S_get_w()                 //å®½
+#define LCD_H                   ST7735S_get_h()                 //¸ß
+#define LCD_W                   ST7735S_get_w()                 //¿í
 
-#define LCD_INIT()              LCD_ST7735S_init()              //åˆå§‹åŒ–
-#define LCD_PTLON(site,size)    LCD_ST7735S_ptlon(site,size)    //å¼€çª—
-#define LCD_RAMWR()             LCD_WR_CMD(0x2C)                //å†™æ¨¡å¼
-#define LCD_WR_DATA(data)       do{LCD_ST7735S_WR_8DATA((uint8)((data)>>8) );LCD_ST7735S_WR_8DATA( (uint8)(data) );}while(0)       //å†™æ•°æ®
-#define LCD_WR_CMD(cmd)         LCD_ST7735S_WR_8CMD(cmd)        //å‘½ä»¤
-#define LCD_SET_DIR(opt)        LCD_ST7735S_dir(opt)            //æ–¹å‘
+#define LCD_INIT()              LCD_ST7735S_init()              //³õÊ¼»¯
+#define LCD_PTLON(site,size)    LCD_ST7735S_ptlon(site,size)    //¿ª´°
+#define LCD_RAMWR()             LCD_WR_CMD(0x2C)                //Ð´Ä£Ê½
+#define LCD_WR_DATA(data)       do{LCD_ST7735S_WR_8DATA((uint8)((data)>>8) );LCD_ST7735S_WR_8DATA( (uint8)(data) );}while(0)       //Ð´Êý¾Ý
+#define LCD_WR_CMD(cmd)         LCD_ST7735S_WR_8CMD(cmd)        //ÃüÁî
+#define LCD_SET_DIR(opt)        LCD_ST7735S_dir(opt)            //·½Ïò
 
-#define LCD_DIR                 ST7735S_get_dir()               //èŽ·å–æ–¹å‘
+#define LCD_DIR                 ST7735S_get_dir()               //»ñÈ¡·½Ïò
 
 
-//é€šè¿‡å‡½æ•°è°ƒç”¨ï¼Œé€Ÿåº¦å¤ªæ…¢äº†ï¼Œæ”¹æˆå®å®šä¹‰è°ƒç”¨
-//#define LCD_WR_8DATA(data)      LCD_ST7735S_wr_data(data)       //å†™æ•°æ®
-//#define LCD_WR_8CMD(cmd)        LCD_ST7735S_wr_cmd(cmd)         //å‘½ä»¤
+//Í¨¹ýº¯Êýµ÷ÓÃ£¬ËÙ¶ÈÌ«ÂýÁË£¬¸Ä³Éºê¶¨Òåµ÷ÓÃ
+//#define LCD_WR_8DATA(data)      LCD_ST7735S_wr_data(data)       //Ð´Êý¾Ý
+//#define LCD_WR_8CMD(cmd)        LCD_ST7735S_wr_cmd(cmd)         //ÃüÁî
 
 #endif  //(USE_LCD == LCD_ST7735S)
 
-/********************* ST7735Så†…éƒ¨å®žçŽ° ***********************/
-//LCD çš„ç®¡è„šå®šä¹‰
+/********************* ST7735SÄÚ²¿ÊµÏÖ ***********************/
+//LCD µÄ¹Ü½Å¶¨Òå
 #define     LCD_ST7735S_WR      PTC9
 #define     LCD_ST7735S_RD      PTC10
 #define     LCD_ST7735S_CS      PTC11
 #define     LCD_ST7735S_RS      PTC12
 #define     LCD_ST7735S_RST     PTC13
 
-//æ­¤éƒ¨åˆ†éœ€è¦ä¿®æ”¹åˆå§‹åŒ–é‡Œçš„ä»£ç 
+//´Ë²¿·ÖÐèÒªÐÞ¸Ä³õÊ¼»¯ÀïµÄ´úÂë
 #define     LCD_ST7735S_P0              PTC_B0_OUT
 #define     LCD_ST7735S_PIN             PTC_B0_IN
 #define     LCD_ST7735S_PDDR_OUT()      (DDRC_B0 = 0xff)
@@ -92,7 +92,7 @@ extern void LCD_ST7735S_wr_cmd(uint8 cmd);
                                 LCD_ST7735S_WR_OUT=0;\
                                 LCD_ST7735S_WR_OUT=1;\
                                 LCD_ST7735S_CS_OUT=1;\
-                            }while(0)   //LCD_WR=0;LCD_WR=1;äº§ç”Ÿä¸€ä¸ªä¸Šå‡æ²¿
+                            }while(0)   //LCD_WR=0;LCD_WR=1;²úÉúÒ»¸öÉÏÉýÑØ
 
 #define LCD_ST7735S_WR_8DATA(data)  do\
                             {\
@@ -103,10 +103,10 @@ extern void LCD_ST7735S_wr_cmd(uint8 cmd);
                                 LCD_ST7735S_WR_OUT=0;\
                                 LCD_ST7735S_WR_OUT=1;\
                                 LCD_ST7735S_CS_OUT=1;\
-                            }while(0)   //LCD_WR=0;åœ¨è¿™é‡Œå†™å…¥æ•°æ®åˆ°RAM
+                            }while(0)   //LCD_WR=0;ÔÚÕâÀïÐ´ÈëÊý¾Ýµ½RAM
 
 
-#define LCD_ST7735S_WR_DATA(data)       do{LCD_ST7735S_WR_8DATA((uint8)((data)>>8) );LCD_ST7735S_WR_8DATA( (uint8)(data) );}while(0)       //å†™æ•°æ®
+#define LCD_ST7735S_WR_DATA(data)       do{LCD_ST7735S_WR_8DATA((uint8)((data)>>8) );LCD_ST7735S_WR_8DATA( (uint8)(data) );}while(0)       //Ð´Êý¾Ý
 
 
 

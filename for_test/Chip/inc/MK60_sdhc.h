@@ -1,17 +1,17 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
- *     æœ¬é©±åŠ¨ç”±brtosä»£ç æå–å¹¶ä¿®æ”¹è€Œæˆ:http://code.google.com/p/brtos/downloads/detail?name=BRTOS%201.66%20Kinetis%20-%20SD%20card%20-%20BMP%2024%20bit.rar&can=2&q=
+ *     ±¾Çı¶¯ÓÉbrtos´úÂëÌáÈ¡²¢ĞŞ¸Ä¶ø³É:http://code.google.com/p/brtos/downloads/detail?name=BRTOS%201.66%20Kinetis%20-%20SD%20card%20-%20BMP%2024%20bit.rar&can=2&q=
  *
  * @file       MK60_sdhc.c
- * @brief      SDæ¨¡å—å‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€ & gustavo(brtosä½œè€…)
+ * @brief      SDÄ£¿éº¯Êı
+ * @author     É½Íâ¿Æ¼¼ & gustavo(brtos×÷Õß)
  * @version    v5.0
  * @date       2013-09-19
  */
@@ -22,17 +22,17 @@
 
 #define SDHC_CLOCK      (core_clk_khz * 1000)
 
-//SDå¡åˆå§‹æ•°æ®ä¼ è¾“éœ€å·¥ä½œåœ¨ä½äº400 kbï¼sçš„é¢‘ç‡
-#define     SDHC_INIT_BANDRATE      300000                  //å¯åŠ¨æ—¶çš„æ³¢ç‰¹ç‡
+//SD¿¨³õÊ¼Êı¾İ´«ÊäĞè¹¤×÷ÔÚµÍÓÚ400 kb£¯sµÄÆµÂÊ
+#define     SDHC_INIT_BANDRATE      300000                  //Æô¶¯Ê±µÄ²¨ÌØÂÊ
 
-#define     SDHC_BANDRATE           (24*1000*1000)          //æ­£å¸¸å·¥ä½œæ—¶çš„æ³¢ç‰¹ç‡
+#define     SDHC_BANDRATE           (24*1000*1000)          //Õı³£¹¤×÷Ê±µÄ²¨ÌØÂÊ
 
-#define     SDHC_BUS_WIDTH          ESDHC_BUS_WIDTH_4BIT    //å¸¦å®½ï¼Œç›®å‰ä»£ç ä»…æ”¯æŒ 1bit å’Œ 4bit
+#define     SDHC_BUS_WIDTH          ESDHC_BUS_WIDTH_4BIT    //´ø¿í£¬Ä¿Ç°´úÂë½öÖ§³Ö 1bit ºÍ 4bit
 
 
-#define     SDCARD_BLOCK_SIZE       512                     //SDå¡å—å¤§å°
+#define     SDCARD_BLOCK_SIZE       512                     //SD¿¨¿é´óĞ¡
 
-#define     SEND_OCR_TIME           100                     //å‘é€ CMD55 + ACMD41 å‘½ä»¤çš„æ¬¡æ•°
+#define     SEND_OCR_TIME           100                     //·¢ËÍ CMD55 + ACMD41 ÃüÁîµÄ´ÎÊı
 
 
 /* Error code returned by I/O functions */
@@ -49,37 +49,37 @@ typedef enum
 } ESDHC_IOCTL_CMD_e;
 
 
-/* å‘½ä»¤ç ç”¨äº disk_ioctrl å‡½æ•° */
-/* ESDHC é”™è¯¯ç  */
+/* ÃüÁîÂëÓÃÓÚ disk_ioctrl º¯Êı */
+/* ESDHC ´íÎóÂë */
 typedef enum
 {
     ESDHC_IOCTL_OK,             //OK
-    ESDHC_INIT_ERR,             //åˆå§‹åŒ–å¤±è´¥
-    ESDHC_CMD_ERR,              //å‘é€å‘½ä»¤å‡ºé”™
-    ESDHC_CMD_TIMEOUT,          //å‘é€å‘½ä»¤è¶…æ—¶
-    ESDHC_CMD_INVALID,          //æ— æ•ˆå‘½ä»¤
+    ESDHC_INIT_ERR,             //³õÊ¼»¯Ê§°Ü
+    ESDHC_CMD_ERR,              //·¢ËÍÃüÁî³ö´í
+    ESDHC_CMD_TIMEOUT,          //·¢ËÍÃüÁî³¬Ê±
+    ESDHC_CMD_INVALID,          //ÎŞĞ§ÃüÁî
 
-    ESDHC_PARAM_INVALID,        //å‚æ•°æ— æ•ˆ
-    ESDHC_BUS_WIDTH_INVALID,    //æ€»çº¿å®½åº¦æ— æ•ˆ
+    ESDHC_PARAM_INVALID,        //²ÎÊıÎŞĞ§
+    ESDHC_BUS_WIDTH_INVALID,    //×ÜÏß¿í¶ÈÎŞĞ§
 
-    ESDHC_BUSY,                 //è®¾å¤‡å¿™
+    ESDHC_BUSY,                 //Éè±¸Ã¦
 } ESDHC_IOCTL_ERR_e;
 
 
-/* ESDHC æ€»çº¿å®½åº¦ */
+/* ESDHC ×ÜÏß¿í¶È */
 typedef enum
 {
-    //å€¼æ˜¯æ ¹æ®å¯„å­˜å™¨ æ¥é…ç½®çš„
+    //ÖµÊÇ¸ù¾İ¼Ä´æÆ÷ À´ÅäÖÃµÄ
     ESDHC_BUS_WIDTH_1BIT    = 0,
     ESDHC_BUS_WIDTH_4BIT    = 1,
     ESDHC_BUS_WIDTH_8BIT    = 2,
 } ESDHC_BUS_WIDTH_e;
 
-/* ESDHC å¡ç±»å‹ */
+/* ESDHC ¿¨ÀàĞÍ */
 typedef enum
 {
-    ESDHC_CARD_NONE                      ,//æ²¡æœ‰å¡
-    ESDHC_CARD_UNKNOWN                   ,//ä¸èƒ½è¯†åˆ«å¡
+    ESDHC_CARD_NONE                      ,//Ã»ÓĞ¿¨
+    ESDHC_CARD_UNKNOWN                   ,//²»ÄÜÊ¶±ğ¿¨
     ESDHC_CARD_SD                        ,//SD
     ESDHC_CARD_SDHC                      ,//SDHC
     ESDHC_CARD_SDIO                      ,//SDIO
@@ -89,7 +89,7 @@ typedef enum
     ESDHC_CARD_CEATA                     ,
 } ESDHC_CARD_e;
 
-/* ESDHC å‘½ä»¤ç±»å‹ */
+/* ESDHC ÃüÁîÀàĞÍ */
 typedef enum
 {
     ESDHC_TYPE_NORMAL                    ,
@@ -98,7 +98,7 @@ typedef enum
     ESDHC_TYPE_ABORT                     ,
 } ESDHC_TYPE_e;
 
-/* ESDHC å‘½ä»¤ */
+/* ESDHC ÃüÁî */
 #define ESDHC_CMD0                           (0)
 #define ESDHC_CMD1                           (1)
 #define ESDHC_CMD2                           (2)
@@ -169,11 +169,11 @@ typedef enum
 
 typedef struct
 {
-    uint8  COMMAND;             //å‘½ä»¤
-    uint8  TYPE;                //å‘½ä»¤ç±»å‹ SDHC_XFERTYP_CMDTYP
+    uint8  COMMAND;             //ÃüÁî
+    uint8  TYPE;                //ÃüÁîÀàĞÍ SDHC_XFERTYP_CMDTYP
     uint8  READ;
-    uint8  RES;                 //ä¿ç•™
-    uint32 ARGUMENT;            //å‘½ä»¤çš„å‚æ•°å¯„å­˜å™¨ (SDHC_CMDARG)
+    uint8  RES;                 //±£Áô
+    uint32 ARGUMENT;            //ÃüÁîµÄ²ÎÊı¼Ä´æÆ÷ (SDHC_CMDARG)
     uint32 BLOCKS;
     uint32 RESPONSE[4];
 
@@ -181,26 +181,26 @@ typedef struct
 
 
 /*!
- *  @brief      SD Card ç»“æ„ä¿¡æ¯
+ *  @brief      SD Card ½á¹¹ĞÅÏ¢
  */
 typedef struct
 {
-    /* å®é™…å¡çŠ¶æ€                                   */
+    /* Êµ¼Ê¿¨×´Ì¬                                   */
     uint32                CARD;
 
-    /* åº•å±‚çš„å“åº”è¶…æ—¶ >= 250 ms                     */
+    /* µ×²ãµÄÏìÓ¦³¬Ê± >= 250 ms                     */
     uint32               SD_TIMEOUT;
 
-    /* è¯¥è®¾å¤‡çš„å—æ•°é‡                               */
+    /* ¸ÃÉè±¸µÄ¿éÊıÁ¿                               */
     uint32                NUM_BLOCKS;
 
-    /* å¡åœ°å€                                       */
+    /* ¿¨µØÖ·                                       */
     uint32                ADDRESS;
 
-    /* é«˜å®¹é‡ = å—å¯»å€ (SDæ˜¯å­—èŠ‚å¯»å€ï¼ŒSDHCæ˜¯å—å¯»å€) */
+    /* ¸ßÈİÁ¿ = ¿éÑ°Ö· (SDÊÇ×Ö½ÚÑ°Ö·£¬SDHCÊÇ¿éÑ°Ö·) */
     uint8                 SDHC;
 
-    /* è§„èŒƒ2æˆ–æ›´é«˜ç‰ˆæœ¬çš„å¡ = ä¸åŒçš„CSDå¯„å­˜å™¨        */
+    /* ¹æ·¶2»ò¸ü¸ß°æ±¾µÄ¿¨ = ²»Í¬µÄCSD¼Ä´æÆ÷        */
     uint8                 VERSION2;
 
     uint8                 RES[2];
@@ -212,10 +212,10 @@ typedef struct
 extern SDCARD_t        SDHC_card;
 
 
-extern void                 SDHC_init();                                        // SDHC åˆå§‹åŒ–
-extern ESDHC_IOCTL_ERR_e    SDHC_ioctl(ESDHC_IOCTL_CMD_e  cmd, void *param_ptr); // SDHC æ§åˆ¶å‘½ä»¤
-extern void                 SDHC_set_baudrate(uint32 baudrate);                 // SDHCæ³¢ç‰¹ç‡é…ç½®
-extern uint32               SDHC_cmd (pESDHC_CMD_t command);                    // SDHCå‘é€cmdå‘½ä»¤
+extern void                 SDHC_init();                                        // SDHC ³õÊ¼»¯
+extern ESDHC_IOCTL_ERR_e    SDHC_ioctl(ESDHC_IOCTL_CMD_e  cmd, void *param_ptr); // SDHC ¿ØÖÆÃüÁî
+extern void                 SDHC_set_baudrate(uint32 baudrate);                 // SDHC²¨ÌØÂÊÅäÖÃ
+extern uint32               SDHC_cmd (pESDHC_CMD_t command);                    // SDHC·¢ËÍcmdÃüÁî
 
 
 #define SDHC_is_running()     (0 != (SDHC_PRSSTAT & (SDHC_PRSSTAT_RTA_MASK | SDHC_PRSSTAT_WTA_MASK | SDHC_PRSSTAT_DLA_MASK | SDHC_PRSSTAT_CDIHB_MASK | SDHC_PRSSTAT_CIHB_MASK)))

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_NRF24L0.c
- * @brief      NRF24L0é©±åŠ¨å‡½æ•°å®ç°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      NRF24L0Çı¶¯º¯ÊıÊµÏÖ
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-07-9
  */
@@ -17,50 +17,50 @@
 #define _VCAN_NRF24L0_H_     1
 
 
-//ä»¥ä¸‹æ˜¯ç¡¬ä»¶é…ç½®
+//ÒÔÏÂÊÇÓ²¼şÅäÖÃ
 #define NRF_SPI         SPI0
 #define NRF_CS          SPI_PCS0
 
 #define NRF_CE_PTXn     PTE28
 #define NRF_IRQ_PTXn    PTE27
 
-//ä»¥ä¸‹æ˜¯ç”¨æˆ·é…ç½®çš„é€‰é¡¹
+//ÒÔÏÂÊÇÓÃ»§ÅäÖÃµÄÑ¡Ïî
 
-#define DATA_PACKET             32      //ä¸€æ¬¡ä¼ è¾“æœ€å¤§å¯æ”¯æŒçš„å­—èŠ‚æ•°ï¼ˆ1~32ï¼‰
-#define RX_FIFO_PACKET_NUM      80      //æ¥æ”¶ FIFO çš„ åŒ… æ•°ç›® ( æ€»ç©ºé—´ å¿…é¡»è¦å¤§äº ä¸€å‰¯å›¾åƒçš„å¤§å°ï¼Œå¦åˆ™ æ²¡æ³•æ¥æ”¶å®Œ )
-#define ADR_WIDTH               5       //å®šä¹‰åœ°å€é•¿åº¦ï¼ˆ3~5ï¼‰
-#define IS_CRC16                1       //1è¡¨ç¤ºä½¿ç”¨ CRC16ï¼Œ0è¡¨ç¤º ä½¿ç”¨CRC8 (0~1)
+#define DATA_PACKET             32      //Ò»´Î´«Êä×î´ó¿ÉÖ§³ÖµÄ×Ö½ÚÊı£¨1~32£©
+#define RX_FIFO_PACKET_NUM      80      //½ÓÊÕ FIFO µÄ °ü ÊıÄ¿ ( ×Ü¿Õ¼ä ±ØĞëÒª´óÓÚ Ò»¸±Í¼ÏñµÄ´óĞ¡£¬·ñÔò Ã»·¨½ÓÊÕÍê )
+#define ADR_WIDTH               5       //¶¨ÒåµØÖ·³¤¶È£¨3~5£©
+#define IS_CRC16                1       //1±íÊ¾Ê¹ÓÃ CRC16£¬0±íÊ¾ Ê¹ÓÃCRC8 (0~1)
 
 
-//é…ç½®åˆ°è¿™é‡Œç»“æŸ
+//ÅäÖÃµ½ÕâÀï½áÊø
 
 
 /**
- *  @brief NRFæ¨¡å—å‘é€çŠ¶æ€
+ *  @brief NRFÄ£¿é·¢ËÍ×´Ì¬
  */
 typedef enum
 {
-    NRF_TXING,              //å‘é€ä¸­
-    NRF_TX_ERROR,           //å‘é€é”™è¯¯
-    NRF_TX_OK,              //å‘é€å®Œæˆ
+    NRF_TXING,              //·¢ËÍÖĞ
+    NRF_TX_ERROR,           //·¢ËÍ´íÎó
+    NRF_TX_OK,              //·¢ËÍÍê³É
 } nrf_tx_state_e;
 
 
-//å‡½æ•°å£°æ˜
-extern  uint8   nrf_init(void);                     //åˆå§‹åŒ–NRF24L01+
+//º¯ÊıÉùÃ÷
+extern  uint8   nrf_init(void);                     //³õÊ¼»¯NRF24L01+
 
-extern  uint8   nrf_link_check(void);               //æ£€æµ‹NRF24L01+ä¸å•ç‰‡æœºæ˜¯å¦é€šä¿¡æ­£å¸¸
+extern  uint8   nrf_link_check(void);               //¼ì²âNRF24L01+Óëµ¥Æ¬»úÊÇ·ñÍ¨ĞÅÕı³£
 
-extern  uint32  nrf_rx(uint8 *rxbuf, uint32 len);   //æ¥æ”¶æ•°æ®
-extern  uint8   nrf_tx(uint8 *txbuf, uint32 len);   //å‘é€æ•°æ®
+extern  uint32  nrf_rx(uint8 *rxbuf, uint32 len);   //½ÓÊÕÊı¾İ
+extern  uint8   nrf_tx(uint8 *txbuf, uint32 len);   //·¢ËÍÊı¾İ
 
-extern  nrf_tx_state_e nrf_tx_state ();             //æ£€æŸ¥å‘é€çŠ¶æ€(å‘é€æ•°æ®åæŸ¥è¯¢æ˜¯å¦å‘é€æˆåŠŸ)
+extern  nrf_tx_state_e nrf_tx_state ();             //¼ì²é·¢ËÍ×´Ì¬(·¢ËÍÊı¾İºó²éÑ¯ÊÇ·ñ·¢ËÍ³É¹¦)
 
 
-extern  void    nrf_handler(void);                  //NRF24L01+ çš„ ä¸­æ–­æœåŠ¡å‡½æ•°
+extern  void    nrf_handler(void);                  //NRF24L01+ µÄ ÖĞ¶Ï·şÎñº¯Êı
 
-//ä¸‹é¢çš„å‡½æ•° ç•™ç»™ æ— çº¿æ¶ˆæ¯å¤„ç†æœºåˆ¶ çš„å‡½æ•°ä½¿ç”¨ï¼Œä¸€èˆ¬ç”¨æˆ·ç”¨ä¸ç€
-extern  uint8  nrf_rx_fifo_check(uint32 offset,uint16 * val);    //è·å– æ¥æ”¶FIFO çš„æ•°æ®
+//ÏÂÃæµÄº¯Êı Áô¸ø ÎŞÏßÏûÏ¢´¦Àí»úÖÆ µÄº¯ÊıÊ¹ÓÃ£¬Ò»°ãÓÃ»§ÓÃ²»×Å
+extern  uint8  nrf_rx_fifo_check(uint32 offset,uint16 * val);    //»ñÈ¡ ½ÓÊÕFIFO µÄÊı¾İ
 
 
 #endif      //_VCAN_NRF24L0_H_

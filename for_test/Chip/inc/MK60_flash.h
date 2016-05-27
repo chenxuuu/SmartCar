@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_flash.h
- * @brief      flashå‡½æ•°åº“
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      flashº¯Êı¿â
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-09-01
  */
@@ -18,45 +18,45 @@
 #ifndef _MK60_FLASH_H_
 #define _MK60_FLASH_H_
 
-//k60N512åŒ…å«512Kçš„ç¨‹åºFlash
-//512Kçš„ç¨‹åºFlashåˆ†ä¸º256ä¸ªæ‰‡åŒºï¼Œæ¯ä¸ªæ‰‡åŒº2Kå¤§å°
-//K60X256åŒ…å«256Kçš„ç¨‹åºFlash
-//512Kçš„ç¨‹åºFlashåˆ†ä¸º128ä¸ªæ‰‡åŒºï¼Œæ¯ä¸ªæ‰‡åŒº2Kå¤§å°
-//    sectorï¼ˆ2Kï¼‰ä¸ºæ“¦é™¤æœ€å°å•ä½
-//    é•¿å­—ï¼ˆ32bï¼‰ä¸ºå†™çš„æœ€å°å•ä½
+//k60N512°üº¬512KµÄ³ÌĞòFlash
+//512KµÄ³ÌĞòFlash·ÖÎª256¸öÉÈÇø£¬Ã¿¸öÉÈÇø2K´óĞ¡
+//K60X256°üº¬256KµÄ³ÌĞòFlash
+//512KµÄ³ÌĞòFlash·ÖÎª128¸öÉÈÇø£¬Ã¿¸öÉÈÇø2K´óĞ¡
+//    sector£¨2K£©Îª²Á³ı×îĞ¡µ¥Î»
+//    ³¤×Ö£¨32b£©ÎªĞ´µÄ×îĞ¡µ¥Î»
 
 #include "common.h"
 
 #if defined(MK60DZ10)
-#define     FLASH_SECTOR_SIZE       (2*1024)                //æ‰‡åŒºå¤§å° ä¸º 2k å­—èŠ‚
-#define     FLASH_SECTOR_NUM        (256)                   //æ‰‡åŒºæ•°
+#define     FLASH_SECTOR_SIZE       (2*1024)                //ÉÈÇø´óĞ¡ Îª 2k ×Ö½Ú
+#define     FLASH_SECTOR_NUM        (256)                   //ÉÈÇøÊı
 
-#define     FLASH_ALIGN_ADDR        4                       //åœ°å€å¯¹é½æ•´æ•°å€
-typedef     uint32                  FLASH_WRITE_TYPE;       //flash_write å‡½æ•°å†™å…¥ çš„æ•°æ®ç±»å‹
+#define     FLASH_ALIGN_ADDR        4                       //µØÖ·¶ÔÆëÕûÊı±¶
+typedef     uint32                  FLASH_WRITE_TYPE;       //flash_write º¯ÊıĞ´Èë µÄÊı¾İÀàĞÍ
 
 
 #elif defined(MK60FX15)
-#define     FLASH_SECTOR_SIZE       (4*1024)                //æ‰‡åŒºå¤§å° ä¸º 4k å­—èŠ‚
-#define     FLASH_SECTOR_NUM        (128)                   //æ‰‡åŒºæ•°
+#define     FLASH_SECTOR_SIZE       (4*1024)                //ÉÈÇø´óĞ¡ Îª 4k ×Ö½Ú
+#define     FLASH_SECTOR_NUM        (128)                   //ÉÈÇøÊı
 
-#define     FLASH_ALIGN_ADDR        8                       //åœ°å€å¯¹é½æ•´æ•°å€
-typedef     uint64                  FLASH_WRITE_TYPE;       //flash_write å‡½æ•°å†™å…¥ çš„æ•°æ®ç±»å‹
+#define     FLASH_ALIGN_ADDR        8                       //µØÖ·¶ÔÆëÕûÊı±¶
+typedef     uint64                  FLASH_WRITE_TYPE;       //flash_write º¯ÊıĞ´Èë µÄÊı¾İÀàĞÍ
 
 #elif defined(MK60FN15)
-#define     FLASH_SECTOR_SIZE       (4*1024)                //æ‰‡åŒºå¤§å° ä¸º 4k å­—èŠ‚
-#define     FLASH_SECTOR_NUM        (256)                   //æ‰‡åŒºæ•°
+#define     FLASH_SECTOR_SIZE       (4*1024)                //ÉÈÇø´óĞ¡ Îª 4k ×Ö½Ú
+#define     FLASH_SECTOR_NUM        (256)                   //ÉÈÇøÊı
 
-#define     FLASH_ALIGN_ADDR        8                       //åœ°å€å¯¹é½æ•´æ•°å€
-typedef     uint64                  FLASH_WRITE_TYPE;       //flash_write å‡½æ•°å†™å…¥ çš„æ•°æ®ç±»å‹
+#define     FLASH_ALIGN_ADDR        8                       //µØÖ·¶ÔÆëÕûÊı±¶
+typedef     uint64                  FLASH_WRITE_TYPE;       //flash_write º¯ÊıĞ´Èë µÄÊı¾İÀàĞÍ
 #endif
 
 
-__RAMFUNC    void    flash_init();                                                                               //åˆå§‹åŒ–Flash
+__RAMFUNC    void    flash_init();                                                                               //³õÊ¼»¯Flash
 
-__RAMFUNC    uint8   flash_erase_sector  (uint16 sectorNo);                                                      //æ“¦é™¤æŒ‡å®šflashæ‰‡åŒº
+__RAMFUNC    uint8   flash_erase_sector  (uint16 sectorNo);                                                      //²Á³ıÖ¸¶¨flashÉÈÇø
 
-__RAMFUNC    uint8   flash_write         (uint16 sectorNo, uint16 offset, FLASH_WRITE_TYPE data);                //å†™å…¥flashæ“ä½œ
-__RAMFUNC    uint8   flash_write_buf     (uint16 sectorNo, uint16 offset, uint16 cnt, uint8 buf[]);              //ä»ç¼“å­˜åŒºå†™å…¥flashæ“ä½œ
+__RAMFUNC    uint8   flash_write         (uint16 sectorNo, uint16 offset, FLASH_WRITE_TYPE data);                //Ğ´Èëflash²Ù×÷
+__RAMFUNC    uint8   flash_write_buf     (uint16 sectorNo, uint16 offset, uint16 cnt, uint8 buf[]);              //´Ó»º´æÇøĞ´Èëflash²Ù×÷
 
-#define     flash_read(sectorNo,offset,type)        (*(type *)((uint32)(((sectorNo)*FLASH_SECTOR_SIZE) + (offset))))          //è¯»å–æ‰‡åŒº
+#define     flash_read(sectorNo,offset,type)        (*(type *)((uint32)(((sectorNo)*FLASH_SECTOR_SIZE) + (offset))))          //¶ÁÈ¡ÉÈÇø
 #endif //_FLASH_H_

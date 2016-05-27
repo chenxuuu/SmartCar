@@ -1,11 +1,11 @@
-//支持24bit BMP图片显示
+//֧��24bit BMPͼƬ��ʾ
 #include "common.h"
 #include "VCAN_BMP.h"
 #include "ff.h"
 #include "vcan_lcd.h"
 
 
-#define BMP_SIZE(W,H)           ((((W)*4+3)/4)*(H))         //((w * 4)+3)/4  是 为了 进 1 ，因为 bmp 宽度 是 4 个 倍数
+#define BMP_SIZE(W,H)           ((((W)*4+3)/4)*(H))         //((w * 4)+3)/4  �� Ϊ�� �� 1 ����Ϊ bmp ���� �� 4 �� ����
 #define BMP_BYTECNT(W,H,BIT)    (BMP_SIZE(W,H)*BIT/8)
 
 #define MAX_BMP_SIZE            BMP_SIZE(MAX_BMP_W,MAX_BMP_H)
@@ -16,13 +16,13 @@
 
 
 
-//BMP一行图像
+//BMPһ��ͼ��
 uint8 BMP_Buffer[MAX_BMP_LINE_BYTE];
 
 
 int8 SD2LCD_BMP(char *file,Site_t site0)
 {
-    //文件系统相关的 变量
+    //�ļ�ϵͳ��ص� ����
     FATFS fs={0};
     FIL fsrc={0};   
     FRESULT res;
@@ -49,14 +49,14 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
 
     f_mount(0,&fs);
 
-    //打开文件
+    //���ļ�
     res=f_open(&fsrc,file,FA_OPEN_EXISTING | FA_READ);
     if(res)
     {
         goto bmp_exit_false;
     }
 
-    //读取BMP 头部文件
+    //��ȡBMP ͷ���ļ�
     res=f_read(&fsrc,&BmpHead,sizeof(BmpHead),&br);
     if(res)
     {
@@ -65,27 +65,27 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
 
     Width       = BmpHead.biWidth;
     Height      = BmpHead.biHeight;
-    OffBits     = BmpHead.bfOffBits;        //bmp颜色数据起始位置
+    OffBits     = BmpHead.bfOffBits;        //bmp��ɫ������ʼλ��
     Bitcnt      = BmpHead.biBitCount;
 
-    if((BmpHead.bfType != 0x4d42)||(BmpHead.biCompression))           //'BM' 和  没压缩
+    if((BmpHead.bfType != 0x4d42)||(BmpHead.biCompression))           //'BM' ��  ûѹ��
     {
-        DEBUG_PRINTF("\r\n不支持该图片显示！");
+        DEBUG_PRINTF("\r\n��֧�ָ�ͼƬ��ʾ��");
         goto bmp_exit_false;
     }
 
-    if(Width > MAX_BMP_W)                   //图片宽度不能超过MAX_BMP_W
+    if(Width > MAX_BMP_W)                   //ͼƬ���Ȳ��ܳ���MAX_BMP_W
     {
-        DEBUG_PRINTF("\r\n图片太大，无法显示！");
+        DEBUG_PRINTF("\r\nͼƬ̫���޷���ʾ��");
         goto bmp_exit_false;
     }
 
-    if(Height>0)                            //如果高度是 正数，图像从左下角往上读数据
+    if(Height>0)                            //����߶��� ������ͼ������½����϶�����
     {
         y = Height -1;
         Step = -1;
     }
-    else if(Height < 0)                     //如果高度是 负数，图像从左上角往下读数据
+    else if(Height < 0)                     //����߶��� ������ͼ������Ͻ����¶�����
     {
         Height = -Height;
         y = 0;
@@ -96,18 +96,18 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
         goto bmp_exit_false;
     }
 
-    //一行一行读取
+    //һ��һ�ж�ȡ
     size.H = 1;
     size.W = Width;
     site.x = site0.x;
-    BytesPerLine = BMP_LINE_BYTE(Width,Bitcnt);       //一行的数目
+    BytesPerLine = BMP_LINE_BYTE(Width,Bitcnt);       //һ�е���Ŀ
 
     switch(Bitcnt)
     {
-        case 24:        //24位真彩色 :BGR24
+        case 24:        //24λ���ɫ :BGR24
         {
-            //开始画图
-            res=f_lseek(&fsrc,OffBits); //找到bmp颜色数据起始位置
+            //��ʼ��ͼ
+            res=f_lseek(&fsrc,OffBits); //�ҵ�bmp��ɫ������ʼλ��
 
             for(;(y<Height)&&(y>=0);y+=Step)
             {
@@ -115,10 +115,10 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
                 if(res) goto bmp_exit_false;
                 pColor = BMP_Buffer;
 
-                //由于调用液晶顶层接口效率不高，这里直接调用底层
+                //���ڵ���Һ������ӿ�Ч�ʲ��ߣ�����ֱ�ӵ��õײ�
                 site.y = site0.y +y;
-                LCD_PTLON(site, size);              //开窗
-                LCD_RAMWR();                        //写内存
+                LCD_PTLON(site, size);              //����
+                LCD_RAMWR();                        //д�ڴ�
 
                 for(x=0;x<Width;x++)
                 {
@@ -135,12 +135,12 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
 
         }
 
-        //16位中，最低的5位表示蓝色分量，中间的5位表示绿色分量，高的5位表示红色分量，一共占用了15位，最高的一位保留，设为0。这种格式也被称作555 16位位图。
-        //如果是 RBG565 ,那么 biCompression = BI_BITFIELDS ，
-        case 16:        //16位高彩色
+        //16λ�У���͵�5λ��ʾ��ɫ�������м��5λ��ʾ��ɫ�������ߵ�5λ��ʾ��ɫ������һ��ռ����15λ����ߵ�һλ��������Ϊ0�����ָ�ʽҲ������555 16λλͼ��
+        //����� RBG565 ,��ô biCompression = BI_BITFIELDS ��
+        case 16:        //16λ�߲�ɫ
         {
-            //开始画图
-            res=f_lseek(&fsrc,OffBits); //找到bmp颜色数据起始位置
+            //��ʼ��ͼ
+            res=f_lseek(&fsrc,OffBits); //�ҵ�bmp��ɫ������ʼλ��
 
             for(;(y<Height)&&(y>=0);y+=Step)
             {
@@ -148,10 +148,10 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
                 if(res)goto bmp_exit_false;
                 pColor = BMP_Buffer;
 
-                //由于调用液晶顶层接口效率不高，这里直接调用底层
+                //���ڵ���Һ������ӿ�Ч�ʲ��ߣ�����ֱ�ӵ��õײ�
                 site.y = site0.y +y;
-                LCD_PTLON(site, size);              //开窗
-                LCD_RAMWR();                        //写内存
+                LCD_PTLON(site, size);              //����
+                LCD_RAMWR();                        //д�ڴ�
 
                 for(x=0;x<Width;x++)
                 {
@@ -166,20 +166,20 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
             break;
         }
 
-        //单色BMP，文件后头，还有2个RGBQUAD的调色板颜色，表示 0 和 1 分别对应的颜色。
-        //一般是 0为黑 ， 1 为 白
-        case 1:         //单色
+        //��ɫBMP���ļ���ͷ������2��RGBQUAD�ĵ�ɫ����ɫ����ʾ 0 �� 1 �ֱ��Ӧ����ɫ��
+        //һ���� 0Ϊ�� �� 1 Ϊ ��
+        case 1:         //��ɫ
         {
-            //读完文件头后，马上读 调试板
+            //�����ļ�ͷ�����϶� ���԰�
             res=f_read(&fsrc,BMP_Buffer,2*sizeof(RGBQUAD),&br);
             uint16 color[2];
             color[0] = RGB24_RGB565(BMP_Buffer[2],BMP_Buffer[1],BMP_Buffer[0]);
             color[1] = RGB24_RGB565(BMP_Buffer[6],BMP_Buffer[5],BMP_Buffer[4]);
 
-            //开始画图
-            res=f_lseek(&fsrc,OffBits);         //找到bmp颜色数据起始位置
+            //��ʼ��ͼ
+            res=f_lseek(&fsrc,OffBits);         //�ҵ�bmp��ɫ������ʼλ��
 
-            Width = (Width+7)/8;                //8个像素一个点(+7是进1)
+            Width = (Width+7)/8;                //8������һ����(+7�ǽ�1)
 
             for(;(y<Height)&&(y>=0);y+=Step)
             {
@@ -187,10 +187,10 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
                 if(res)goto bmp_exit_false;
                 pColor = BMP_Buffer;
 
-                //由于调用液晶顶层接口效率不高，这里直接调用底层
+                //���ڵ���Һ������ӿ�Ч�ʲ��ߣ�����ֱ�ӵ��õײ�
                 site.y = site0.y +y;
-                LCD_PTLON(site, size);              //开窗
-                LCD_RAMWR();                        //写内存
+                LCD_PTLON(site, size);              //����
+                LCD_RAMWR();                        //д�ڴ�
 
                 for(x=0;x<Width;x++)
                 {
@@ -220,7 +220,7 @@ int8 SD2LCD_BMP(char *file,Site_t site0)
         }
         
         default:
-        DEBUG_PRINTF("\r\n不支持该图片显示！");
+        DEBUG_PRINTF("\r\n��֧�ָ�ͼƬ��ʾ��");
         goto bmp_exit_false;
 
     }

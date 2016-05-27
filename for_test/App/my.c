@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016ï¼Œæ™¨æ—­
+ *     Copyright (c) 2016£¬³¿Ğñ
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
+ *     ¼¼ÊõÌÖÂÛ£º³¿ĞñµÄ²©¿Í http://www.chenxublog.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±æ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊô³¿ĞñËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£Áô³¿ĞñµÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       my.c
- * @brief      K60è‡ªç¼–å‡½æ•°
- * @author     æ™¨æ—­
+ * @brief      K60×Ô±àº¯Êı
+ * @author     ³¿Ğñ
  * @version    v1.0
  * @date       2016-3-7
  */
@@ -18,32 +18,32 @@
 
 
 /*!
- *  @brief      K60åˆå§‹åŒ–
+ *  @brief      K60³õÊ¼»¯
  *  @since      v1.0
- *  Sample usage:            mk60int();    //åˆå§‹åŒ–K60
+ *  Sample usage:            mk60int();    //³õÊ¼»¯K60
  */
 void mk60int()
 {
-    ftm_pwm_init(FTM0, FTM_CH2, 10 * 1000, 0);     //åˆå§‹åŒ– FTM PWM ï¼Œä½¿ç”¨ FTM0_CH3ï¼Œé¢‘ç‡ä¸º10k ï¼Œå ç©ºæ¯”ä¸º 100 / FTM0_PRECISON
+    ftm_pwm_init(FTM0, FTM_CH2, 10 * 1000, 0);     //³õÊ¼»¯ FTM PWM £¬Ê¹ÓÃ FTM0_CH3£¬ÆµÂÊÎª10k £¬Õ¼¿Õ±ÈÎª 100 / FTM0_PRECISON
     ftm_pwm_init(FTM0, FTM_CH3, 10 * 1000, 0);
     ftm_pwm_init(FTM0, FTM_CH4, 10 * 1000, 0);
     ftm_pwm_init(FTM0, FTM_CH5, 10 * 1000, 0);
 
-    ftm_quad_init(FTM1);                                    //FTM1 æ­£äº¤è§£ç åˆå§‹åŒ–
-    ftm_quad_init(FTM2);                                    //FTM2 æ­£äº¤è§£ç åˆå§‹åŒ–
+    ftm_quad_init(FTM1);                                    //FTM1 Õı½»½âÂë³õÊ¼»¯
+    ftm_quad_init(FTM2);                                    //FTM2 Õı½»½âÂë³õÊ¼»¯
 
     ftm_pwm_init(S3010_FTM, S3010_CH, S3010_HZ, 100);
     control_actuator(0);
 
-    OLED_Init();    //OLEDåˆå§‹åŒ–
+    OLED_Init();    //OLED³õÊ¼»¯
 
-    //pit_init_ms(PIT0, 1000);                                //åˆå§‹åŒ–PIT0ï¼Œå®šæ—¶æ—¶é—´ä¸ºï¼š 10000ms
-    //set_vector_handler(PIT0_VECTORn ,PIT0_IRQHandler);      //è®¾ç½®PIT0çš„ä¸­æ–­æœåŠ¡å‡½æ•°ä¸º PIT0_IRQHandler
-    //enable_irq (PIT0_IRQn);                                 //ä½¿èƒ½PIT0ä¸­æ–­
+    //pit_init_ms(PIT0, 1000);                                //³õÊ¼»¯PIT0£¬¶¨Ê±Ê±¼äÎª£º 10000ms
+    //set_vector_handler(PIT0_VECTORn ,PIT0_IRQHandler);      //ÉèÖÃPIT0µÄÖĞ¶Ï·şÎñº¯ÊıÎª PIT0_IRQHandler
+    //enable_irq (PIT0_IRQn);                                 //Ê¹ÄÜPIT0ÖĞ¶Ï
 
     //uart_init(UART4,115200);
-    //set_vector_handler(UART4_RX_TX_VECTORn,uart4_handler);   // è®¾ç½®ä¸­æ–­æœåŠ¡å‡½æ•°åˆ°ä¸­æ–­å‘é‡è¡¨é‡Œ
-    //uart_rx_irq_en (UART4);                                 //å¼€ä¸²å£æ¥æ”¶ä¸­æ–­
+    //set_vector_handler(UART4_RX_TX_VECTORn,uart4_handler);   // ÉèÖÃÖĞ¶Ï·şÎñº¯Êıµ½ÖĞ¶ÏÏòÁ¿±íÀï
+    //uart_rx_irq_en (UART4);                                 //¿ª´®¿Ú½ÓÊÕÖĞ¶Ï
 
     key_init(KEY_U);
     key_init(KEY_D);
@@ -51,17 +51,17 @@ void mk60int()
     key_init(KEY_R);
     key_init(KEY_A);
 
-    led_init(LED0);                         //åˆå§‹åŒ–LED0
-    led_init(LED1);                         //åˆå§‹åŒ–LED1
+    led_init(LED0);                         //³õÊ¼»¯LED0
+    led_init(LED1);                         //³õÊ¼»¯LED1
 }
 
 
 
 /*!
- *  @brief      å·®é€Ÿèˆµæœºè¾“å‡ºå‡½æ•°
+ *  @brief      ²îËÙ¶æ»úÊä³öº¯Êı
  *  @since      v1.1
- *  @note       è¾“å…¥å€¼èŒƒå›´-1ï½1   æµ®ç‚¹å‹
- *  Sample usage:            control_actuator(-0.2,0.3,0.3);    //è¾“å‡ºèˆµæœºåå‘0.2 ï¼Œç»™åŠ›0.3
+ *  @note       ÊäÈëÖµ·¶Î§-1¡«1   ¸¡µãĞÍ
+ *  Sample usage:            control_actuator(-0.2,0.3,0.3);    //Êä³ö¶æ»ú·´Ïò0.2 £¬¸øÁ¦0.3
  */
 void smart_control_actuator(float Voltage,float fLeftVoltage, float fRightVoltage)
 {
@@ -79,12 +79,12 @@ void smart_control_actuator(float Voltage,float fLeftVoltage, float fRightVoltag
 
 
 /*!
- *  @brief      å®‰å“è“ç‰™ä¸²å£æ‘„åƒå¤´è¾“å‡º
+ *  @brief      °²×¿À¶ÑÀ´®¿ÚÉãÏñÍ·Êä³ö
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹
- *  @note       ä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       å®¢æˆ·ç«¯ä¸‹è½½åœ°å€ï¼šhttp://pan.baidu.com/s/1eSk85qU
- *  Sample usage:            android_sendimg(img);    //å‘é€å›¾åƒ
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹
+ *  @note       Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ¿Í»§¶ËÏÂÔØµØÖ·£ºhttp://pan.baidu.com/s/1eSk85qU
+ *  Sample usage:            android_sendimg(img);    //·¢ËÍÍ¼Ïñ
  */
 void android_sendimg(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
@@ -104,22 +104,22 @@ void android_sendimg(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 
 
 /*!
- *  @brief      ç¼–ç å™¨æ•°å€¼è·å–å‡½æ•°
+ *  @brief      ±àÂëÆ÷ÊıÖµ»ñÈ¡º¯Êı
  *  @since      v1.1
- *  @note       è¾“å…¥å€¼èŒƒå›´1,2   æ•´å‹
- *  Sample usage:            encoder=encoder_get(1);    //è·å–ç¼–ç å™¨æ•°å€¼ï¼Œèµ‹ç»™encoder
+ *  @note       ÊäÈëÖµ·¶Î§1,2   ÕûĞÍ
+ *  Sample usage:            encoder=encoder_get(1);    //»ñÈ¡±àÂëÆ÷ÊıÖµ£¬¸³¸øencoder
  */
 int16 encoder_get(int encoderselect)
 {
     int16 val;
     if(encoderselect == 1)
     {
-        val = ftm_quad_get(FTM1);          //è·å–FTM1 æ­£äº¤è§£ç  çš„è„‰å†²æ•°(è´Ÿæ•°è¡¨ç¤ºåæ–¹å‘)
+        val = ftm_quad_get(FTM1);          //»ñÈ¡FTM1 Õı½»½âÂë µÄÂö³åÊı(¸ºÊı±íÊ¾·´·½Ïò)
         ftm_quad_clean(FTM1);
     }
     else if(encoderselect == 2)
     {
-        val = ftm_quad_get(FTM2);          //è·å–FTM2 æ­£äº¤è§£ç  çš„è„‰å†²æ•°(è´Ÿæ•°è¡¨ç¤ºåæ–¹å‘)
+        val = ftm_quad_get(FTM2);          //»ñÈ¡FTM2 Õı½»½âÂë µÄÂö³åÊı(¸ºÊı±íÊ¾·´·½Ïò)
         ftm_quad_clean(FTM2);
     }
     return val;
@@ -129,11 +129,11 @@ int16 encoder_get(int encoderselect)
 
 
 /*!
- *  @brief      èˆµæœºè¾“å‡ºå‡½æ•°
+ *  @brief      ¶æ»úÊä³öº¯Êı
  *  @since      v1.1
- *  @note       è¾“å…¥å€¼èŒƒå›´-1ï½1   æµ®ç‚¹å‹
- *  Sample usage:            control_actuator(-0.2);    //è¾“å‡ºèˆµæœºåå‘0.2
- *                           control_actuator((float)n);    //è¾“å‡ºèˆµæœºn
+ *  @note       ÊäÈëÖµ·¶Î§-1¡«1   ¸¡µãĞÍ
+ *  Sample usage:            control_actuator(-0.2);    //Êä³ö¶æ»ú·´Ïò0.2
+ *                           control_actuator((float)n);    //Êä³ö¶æ»ún
  */
 void control_actuator(float Voltage)
 {
@@ -154,10 +154,10 @@ void control_actuator(float Voltage)
 
 
 /*!
- *  @brief      ç”µæœºè¾“å‡ºå‡½æ•°
+ *  @brief      µç»úÊä³öº¯Êı
  *  @since      v1.2
- *  @note       è¾“å…¥å€¼èŒƒå›´-1ï½1   æµ®ç‚¹å‹
- *  Sample usage:            SetMotorVoltage(0.1,0.2);    //è¾“å‡ºå·¦ç”µæœºæ­£å‘0.1ï¼Œå³ç”µæœºæ­£å‘0.2
+ *  @note       ÊäÈëÖµ·¶Î§-1¡«1   ¸¡µãĞÍ
+ *  Sample usage:            SetMotorVoltage(0.1,0.2);    //Êä³ö×óµç»úÕıÏò0.1£¬ÓÒµç»úÕıÏò0.2
  */
 void SetMotorVoltage(float fLeftVoltage, float fRightVoltage)
 {
@@ -172,23 +172,23 @@ void SetMotorVoltage(float fLeftVoltage, float fRightVoltage)
 
     if(fLeftVoltage > 0)
     {
-        ftm_pwm_duty(FTM0, FTM_CH2, 0); //å·¦è½®æ­£å‘è¿åŠ¨PWMå ç©ºæ¯”ä¸º0
-        ftm_pwm_duty(FTM0, FTM_CH3, (int)(fLeftVoltage * PERIOD)); //å·¦è½®åå‘è¿åŠ¨PWMå ç©ºæ¯”ä¸ºnOut
-    }                                                   //å·¦ç”µæœºæ­£è½¬
+        ftm_pwm_duty(FTM0, FTM_CH2, 0); //×óÂÖÕıÏòÔË¶¯PWMÕ¼¿Õ±ÈÎª0
+        ftm_pwm_duty(FTM0, FTM_CH3, (int)(fLeftVoltage * PERIOD)); //×óÂÖ·´ÏòÔË¶¯PWMÕ¼¿Õ±ÈÎªnOut
+    }                                                   //×óµç»úÕı×ª
     else
     {
-        ftm_pwm_duty(FTM0, FTM_CH3, 0); //å·¦è½®åå‘è¿åŠ¨PWMå ç©ºæ¯”ä¸º0
-        ftm_pwm_duty(FTM0, FTM_CH2, (int)(-fLeftVoltage * PERIOD)); //å·¦è½®æ­£å‘è¿åŠ¨PWMå ç©ºæ¯”ä¸ºnOut
-    }                                                    //å·¦ç”µæœºåè½¬
+        ftm_pwm_duty(FTM0, FTM_CH3, 0); //×óÂÖ·´ÏòÔË¶¯PWMÕ¼¿Õ±ÈÎª0
+        ftm_pwm_duty(FTM0, FTM_CH2, (int)(-fLeftVoltage * PERIOD)); //×óÂÖÕıÏòÔË¶¯PWMÕ¼¿Õ±ÈÎªnOut
+    }                                                    //×óµç»ú·´×ª
 
     if(fRightVoltage > 0)
     {
-        ftm_pwm_duty(FTM0, FTM_CH4, 0); //å³è½®æ­£å‘è¿åŠ¨PWMå ç©ºæ¯”ä¸º0
-        ftm_pwm_duty(FTM0, FTM_CH5, (int)(fRightVoltage * PERIOD)); //å³è½®åå‘è¿åŠ¨PWMå ç©ºæ¯”ä¸ºnOut
-    }                                                     //å³ç”µæœºæ­£è½¬
+        ftm_pwm_duty(FTM0, FTM_CH4, 0); //ÓÒÂÖÕıÏòÔË¶¯PWMÕ¼¿Õ±ÈÎª0
+        ftm_pwm_duty(FTM0, FTM_CH5, (int)(fRightVoltage * PERIOD)); //ÓÒÂÖ·´ÏòÔË¶¯PWMÕ¼¿Õ±ÈÎªnOut
+    }                                                     //ÓÒµç»úÕı×ª
     else
     {
-        ftm_pwm_duty(FTM0, FTM_CH5, 0); //å³è½®åå‘è¿åŠ¨PWMå ç©ºæ¯”ä¸º0
-        ftm_pwm_duty(FTM0, FTM_CH4, (int)(-fRightVoltage * PERIOD)); //å³è½®æ­£å‘è¿åŠ¨PWMå ç©ºæ¯”ä¸ºnOut
-    }                                                     //å³ç”µæœºåè½¬
+        ftm_pwm_duty(FTM0, FTM_CH5, 0); //ÓÒÂÖ·´ÏòÔË¶¯PWMÕ¼¿Õ±ÈÎª0
+        ftm_pwm_duty(FTM0, FTM_CH4, (int)(-fRightVoltage * PERIOD)); //ÓÒÂÖÕıÏòÔË¶¯PWMÕ¼¿Õ±ÈÎªnOut
+    }                                                     //ÓÒµç»ú·´×ª
 }

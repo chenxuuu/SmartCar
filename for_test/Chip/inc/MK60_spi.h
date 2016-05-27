@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_spi.c
- * @brief      SPIé©±åŠ¨å‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      SPIÇı¶¯º¯Êı
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-07-16
  */
@@ -17,16 +17,16 @@
 #define __MK60_SPI_H__
 
 /**
- *  @brief ä¸»ä»æœºæ¨¡å¼
+ *  @brief Ö÷´Ó»úÄ£Ê½
  */
 typedef enum
 {
-    MASTER,    //ä¸»æœºæ¨¡å¼
-    SLAVE      //ä»æœºæ¨¡å¼
+    MASTER,    //Ö÷»úÄ£Ê½
+    SLAVE      //´Ó»úÄ£Ê½
 } SPI_CFG;
 
 /**
- *  @brief SPIæ¨¡å—å·
+ *  @brief SPIÄ£¿éºÅ
  */
 typedef enum
 {
@@ -36,7 +36,7 @@ typedef enum
 } SPIn_e;
 
 /**
- *  @brief SPIæ¨¡å—ç‰‡é€‰å·
+ *  @brief SPIÄ£¿éÆ¬Ñ¡ºÅ
  */
 typedef enum
 {
@@ -49,12 +49,12 @@ typedef enum
 } SPI_PCSn_e;
 
 
-extern uint32 spi_init       (SPIn_e, SPI_PCSn_e , SPI_CFG,uint32 baud);                                        //SPIåˆå§‹åŒ–ï¼Œé€‰æ‹©ç‰‡é€‰ä¿¡å·ï¼Œè®¾ç½®æ¨¡å¼ï¼Œæ³¢ç‰¹ç‡
+extern uint32 spi_init       (SPIn_e, SPI_PCSn_e , SPI_CFG,uint32 baud);                                        //SPI³õÊ¼»¯£¬Ñ¡ÔñÆ¬Ñ¡ĞÅºÅ£¬ÉèÖÃÄ£Ê½£¬²¨ÌØÂÊ
 uint32 spi_set_baud (SPIn_e,                      uint32 baud);
 
-//ä¸»æœºæ¥æ”¶å‘é€å‡½æ•°
-extern void spi_mosi       (SPIn_e, SPI_PCSn_e pcs,                              uint8 *modata, uint8 *midata,               uint32 len);    //SPIå‘é€æ¥æ”¶å‡½æ•°,å‘é€databuffæ•°æ®ï¼Œå¹¶æŠŠæ¥æ”¶åˆ°çš„æ•°æ®å­˜æ”¾åœ¨databuffé‡Œ(æ³¨æ„ï¼Œä¼šè¦†ç›–åŸæ¥çš„databuff)
-extern void spi_mosi_cmd   (SPIn_e, SPI_PCSn_e pcs, uint8 *mocmd , uint8 *micmd , uint8 *modata, uint8 *midata, uint32 cmdlen , uint32 len); //SPIå‘é€æ¥æ”¶å‡½æ•°,ä¸spi_mosiç›¸æ¯”ï¼Œå¤šäº†å…ˆå‘é€cmd ç¼“å†²åŒºçš„æ­¥éª¤ï¼Œå³åˆ†å¼€ä¸¤éƒ¨åˆ†å‘é€
+//Ö÷»ú½ÓÊÕ·¢ËÍº¯Êı
+extern void spi_mosi       (SPIn_e, SPI_PCSn_e pcs,                              uint8 *modata, uint8 *midata,               uint32 len);    //SPI·¢ËÍ½ÓÊÕº¯Êı,·¢ËÍdatabuffÊı¾İ£¬²¢°Ñ½ÓÊÕµ½µÄÊı¾İ´æ·ÅÔÚdatabuffÀï(×¢Òâ£¬»á¸²¸ÇÔ­À´µÄdatabuff)
+extern void spi_mosi_cmd   (SPIn_e, SPI_PCSn_e pcs, uint8 *mocmd , uint8 *micmd , uint8 *modata, uint8 *midata, uint32 cmdlen , uint32 len); //SPI·¢ËÍ½ÓÊÕº¯Êı,Óëspi_mosiÏà±È£¬¶àÁËÏÈ·¢ËÍcmd »º³åÇøµÄ²½Öè£¬¼´·Ö¿ªÁ½²¿·Ö·¢ËÍ
 
 
 

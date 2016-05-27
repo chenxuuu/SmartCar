@@ -1,40 +1,40 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016ï¼Œæ™¨æ—­
+ *     Copyright (c) 2016£¬³¿Ğñ
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
+ *     ¼¼ÊõÌÖÂÛ£º³¿ĞñµÄ²©¿Í http://www.chenxublog.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±æ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊô³¿ĞñËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£Áô³¿ĞñµÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       process.c
- * @brief      å„ç§æ•°æ®å¤„ç†
- * @author     æ™¨æ—­
+ * @brief      ¸÷ÖÖÊı¾İ´¦Àí
+ * @author     ³¿Ğñ
  * @version    v1.0
  * @date       2016-3-29
  */
 #include"include.h"
 
 /*!
- *  @brief      æ±‚æ–œç‡
+ *  @brief      ÇóĞ±ÂÊ
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œæ–œç‡ç»“æ„ä½“ï¼Œè¯·å…ˆè§£å‹ã€è¡Œæ•° æ•´å‹
- *  @note       æ‘„åƒå¤´æ•°ç»„è¯·å…ˆè§£å‹ï¼Œä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       æ— è¿”å›å€¼
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬Ğ±ÂÊ½á¹¹Ìå£¬ÇëÏÈ½âÑ¹¡¢ĞĞÊı ÕûĞÍ
+ *  @note       ÉãÏñÍ·Êı×éÇëÏÈ½âÑ¹£¬Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ÎŞ·µ»ØÖµ
  *  Sample usage:           get_slope(img,&slope);
  */
 void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 {
     int i, left, right, left_count = 0, right_count = 0,
         left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H],
-        min_left=OV7725_EAGLE_W/2,min_right=OV7725_EAGLE_W/2;      //å®šä¹‰ï¼Œä¸è§£é‡Šï¼Œçœ‹åé¢å°±æ‡‚äº†
+        min_left=OV7725_EAGLE_W/2,min_right=OV7725_EAGLE_W/2;      //¶¨Òå£¬²»½âÊÍ£¬¿´ºóÃæ¾Í¶®ÁË
 
-    for(i = 1; i < OV7725_EAGLE_H - 25 + 1; i++) //ç®—é«˜åº¦-25è¡Œï¼Œå¾…å®š
+    for(i = 1; i < OV7725_EAGLE_H - 25 + 1; i++) //Ëã¸ß¶È-25ĞĞ£¬´ı¶¨
     {
         if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
 
-        left = get_camere_left(img, i);                     //è·å–æœ€å·¦æœ€å³
+        left = get_camere_left(img, i);                     //»ñÈ¡×î×ó×îÓÒ
         right = get_camere_right(img, i);
 
 //        if(left <= min_left && left != 0)
@@ -49,14 +49,14 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 
 
 
-        if(left != 0)                                       //å¦‚æœæœªä¸¢çº¿
+        if(left != 0)                                       //Èç¹ûÎ´¶ªÏß
         {
-            left_x[left_count] = (int)((float)(left - OV7725_EAGLE_W / 2) * (float)slope->left_initial_value[0] / (float)slope->left_initial_value[i - 1]); //ä¿ç•™è¿™ä¸ªç‚¹ï¼Œå­˜å…¥æ•°ç»„
+            left_x[left_count] = (int)((float)(left - OV7725_EAGLE_W / 2) * (float)slope->left_initial_value[0] / (float)slope->left_initial_value[i - 1]); //±£ÁôÕâ¸öµã£¬´æÈëÊı×é
             left_y[left_count] = (int)(0.1092 * (float)i * (float)i + 5.359 * (float)i);
             //left_y[left_count] = i;
-            left_count++;                                   //è®¡æ•°å™¨åŠ ä¸€
+            left_count++;                                   //¼ÆÊıÆ÷¼ÓÒ»
         }
-        if(right != OV7725_EAGLE_W)                         //åŒä¸Š
+        if(right != OV7725_EAGLE_W)                         //Í¬ÉÏ
         {
             right_x[right_count] = (int)((float)(right - OV7725_EAGLE_W / 2) * (float)slope->right_initial_value[0] / (float)slope->right_initial_value[i - 1]);
             right_y[right_count] = (int)(0.1092 * (float)i * (float)i + 5.359 * (float)i);
@@ -71,39 +71,39 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
     if(left_count < 2)
         slope->left = 0;
     else
-        slope->left = fitting_slope(left_y, left_x, left_count);        //ç»™ç»“æ„ä½“èµ‹å€¼ï¼Œè¾“å‡ºæ•°æ®
+        slope->left = fitting_slope(left_y, left_x, left_count);        //¸ø½á¹¹Ìå¸³Öµ£¬Êä³öÊı¾İ
 
     if(right_count < 2)
         slope->right = 0;
     else
-        slope->right = fitting_slope(right_y, right_x, right_count);        //ç»™ç»“æ„ä½“èµ‹å€¼ï¼Œè¾“å‡ºæ•°æ®
+        slope->right = fitting_slope(right_y, right_x, right_count);        //¸ø½á¹¹Ìå¸³Öµ£¬Êä³öÊı¾İ
 }
 
 
 /*!
- *  @brief      è·å–åˆå€¼æ•°ç»„
+ *  @brief      »ñÈ¡³õÖµÊı×é
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹ã€è¡Œæ•° æ•´å‹
- *  @note       æ‘„åƒå¤´æ•°ç»„è¯·å…ˆè§£å‹ï¼Œä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       æ— è¿”å›å€¼
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹¡¢ĞĞÊı ÕûĞÍ
+ *  @note       ÉãÏñÍ·Êı×éÇëÏÈ½âÑ¹£¬Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ÎŞ·µ»ØÖµ
  *  Sample usage:           get_initial_value(img,&slope);
  */
 void get_initial_value(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 {
-    int i;      //å®šä¹‰ï¼Œä¸è§£é‡Šï¼Œçœ‹åé¢å°±æ‡‚äº†
+    int i;      //¶¨Òå£¬²»½âÊÍ£¬¿´ºóÃæ¾Í¶®ÁË
 
-    for(i = 1; i < 111; i++) //æ”¶é›†ä»ä¸‹å¾€ä¸Š110è¡Œï¼Œå¾…å®š
+    for(i = 1; i < 111; i++) //ÊÕ¼¯´ÓÏÂÍùÉÏ110ĞĞ£¬´ı¶¨
     {
-        slope->left_initial_value[i - 1] = get_camere_left(img, i) - OV7725_EAGLE_W / 2;   //è·å–æœ€å·¦æœ€å³ï¼Œå­˜åˆ°åˆå€¼æ•°ç»„ä¸­
+        slope->left_initial_value[i - 1] = get_camere_left(img, i) - OV7725_EAGLE_W / 2;   //»ñÈ¡×î×ó×îÓÒ£¬´æµ½³õÖµÊı×éÖĞ
         slope->right_initial_value[i - 1] = get_camere_right(img, i) - OV7725_EAGLE_W / 2;
     }
 }
 
 
 /*!
- *  @brief      èˆµæœºå¤„ç†
+ *  @brief      ¶æ»ú´¦Àí
  *  @since      v1.1
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šstruct _slope *slope
+ *  @note       ÊäÈëÖµ·¶Î§£ºstruct _slope *slope
  *  @note
  *  @note
  *  Sample usage:       get_control_deflection(&slope);
@@ -116,11 +116,11 @@ float get_control_deflection(struct _slope *slope)
 
 
 /*!
- *  @brief      å‰å››åè¡Œä¸­ç‚¹å¹³å‡å€¼
+ *  @brief      Ç°ËÄÊ®ĞĞÖĞµãÆ½¾ùÖµ
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹ã€è¡Œæ•° æ•´å‹
- *  @note       æ‘„åƒå¤´æ•°ç»„è¯·å…ˆè§£å‹ï¼Œä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       è¡Œæ•°å®šä¹‰æœ€ä¸‹é¢ä¸€è¡Œä¸ºç¬¬ä¸€è¡Œ
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹¡¢ĞĞÊı ÕûĞÍ
+ *  @note       ÉãÏñÍ·Êı×éÇëÏÈ½âÑ¹£¬Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ĞĞÊı¶¨Òå×îÏÂÃæÒ»ĞĞÎªµÚÒ»ĞĞ
  *  Sample usage:            get_camere_center(img,1);
  */
 int get_camere_center_5(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
@@ -134,11 +134,11 @@ int get_camere_center_5(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 
 
 /*!
- *  @brief      å–ä¸­ç‚¹
+ *  @brief      È¡ÖĞµã
  *  @since      v1.1
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹ã€è¡Œæ•° æ•´å‹
- *  @note       æ‘„åƒå¤´æ•°ç»„è¯·å…ˆè§£å‹ï¼Œä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       è¡Œæ•°å®šä¹‰æœ€ä¸‹é¢ä¸€è¡Œä¸ºç¬¬ä¸€è¡Œ
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹¡¢ĞĞÊı ÕûĞÍ
+ *  @note       ÉãÏñÍ·Êı×éÇëÏÈ½âÑ¹£¬Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ĞĞÊı¶¨Òå×îÏÂÃæÒ»ĞĞÎªµÚÒ»ĞĞ
  *  Sample usage:            get_camere_center(img,1);
  */
 int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
@@ -150,11 +150,11 @@ int get_camere_center(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
 
 
 /*!
- *  @brief      æµ‹è¯•æ˜¯å¦èƒ½ç»§ç»­å¼€è½¦
+ *  @brief      ²âÊÔÊÇ·ñÄÜ¼ÌĞø¿ª³µ
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹
- *  @note       è¿”å›å€¼ä¸º1å³ä¸ºä¸èƒ½å¼€
- *  @note       æœ¬å‡½æ•°å¾…ä¿®æ”¹ä¼˜åŒ–ï¼Œç›®å‰ä»…èƒ½åœ¨æœªåŠ åæŒ¯ç‰‡æ—¶åˆ¤æ–­å‡ºæ¥
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹
+ *  @note       ·µ»ØÖµÎª1¼´Îª²»ÄÜ¿ª
+ *  @note       ±¾º¯Êı´ıĞŞ¸ÄÓÅ»¯£¬Ä¿Ç°½öÄÜÔÚÎ´¼ÓÆ«ÕñÆ¬Ê±ÅĞ¶Ï³öÀ´
  *  Sample usage:           get_camere_ok(img);
  */
 int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
@@ -176,11 +176,11 @@ int get_camere_ok(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 
 
 /*!
- *  @brief      è®¡ç®—ä¸€è¡Œé»‘ç‚¹æ€»æ•°
+ *  @brief      ¼ÆËãÒ»ĞĞºÚµã×ÜÊı
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹ã€è¡Œæ•° æ•´å‹
- *  @note       æ‘„åƒå¤´æ•°ç»„è¯·å…ˆè§£å‹ï¼Œä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       è¡Œæ•°å®šä¹‰æœ€ä¸‹é¢ä¸€è¡Œä¸ºç¬¬ä¸€è¡Œ
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹¡¢ĞĞÊı ÕûĞÍ
+ *  @note       ÉãÏñÍ·Êı×éÇëÏÈ½âÑ¹£¬Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ĞĞÊı¶¨Òå×îÏÂÃæÒ»ĞĞÎªµÚÒ»ĞĞ
  *  Sample usage:            get_camere_white_count(img,10);
  */
 int get_camere_white_count(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
@@ -198,11 +198,11 @@ int get_camere_white_count(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line
 
 
 /*!
- *  @brief      å–æœ€å·¦è¾¹
+ *  @brief      È¡×î×ó±ß
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹ã€è¡Œæ•° æ•´å‹
- *  @note       æ‘„åƒå¤´æ•°ç»„è¯·å…ˆè§£å‹ï¼Œä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       è¡Œæ•°å®šä¹‰æœ€ä¸‹é¢ä¸€è¡Œä¸ºç¬¬ä¸€è¡Œ
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹¡¢ĞĞÊı ÕûĞÍ
+ *  @note       ÉãÏñÍ·Êı×éÇëÏÈ½âÑ¹£¬Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ĞĞÊı¶¨Òå×îÏÂÃæÒ»ĞĞÎªµÚÒ»ĞĞ
  *  Sample usage:            get_camere_left(img,1);
  */
 int get_camere_left(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
@@ -233,11 +233,11 @@ int get_camere_left(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)
 
 
 /*!
- *  @brief      å–æœ€å³è¾¹
+ *  @brief      È¡×îÓÒ±ß
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šæ‘„åƒå¤´æ•°ç»„ï¼Œè¯·å…ˆè§£å‹ã€è¡Œæ•° æ•´å‹
- *  @note       æ‘„åƒå¤´æ•°ç»„è¯·å…ˆè§£å‹ï¼Œä¾‹ï¼šimg_extract(img,imgbuff,CAMERA_SIZE);
- *  @note       è¡Œæ•°å®šä¹‰æœ€ä¸‹é¢ä¸€è¡Œä¸ºç¬¬ä¸€è¡Œ
+ *  @note       ÊäÈëÖµ·¶Î§£ºÉãÏñÍ·Êı×é£¬ÇëÏÈ½âÑ¹¡¢ĞĞÊı ÕûĞÍ
+ *  @note       ÉãÏñÍ·Êı×éÇëÏÈ½âÑ¹£¬Àı£ºimg_extract(img,imgbuff,CAMERA_SIZE);
+ *  @note       ĞĞÊı¶¨Òå×îÏÂÃæÒ»ĞĞÎªµÚÒ»ĞĞ
  *  Sample usage:            get_camere_right(img,1);
  */
 int get_camere_right(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], uint8 line)

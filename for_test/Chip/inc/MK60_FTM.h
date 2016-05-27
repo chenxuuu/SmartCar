@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,山外科技
+ *     Copyright (c) 2013,ɽ��Ƽ�
  *     All rights reserved.
- *     技术讨论：山外论坛 http://www.vcan123.com
+ *     �������ۣ�ɽ����̳ http://www.vcan123.com
  *
- *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
- *     修改内容时必须保留山外科技的版权声明。
+ *     ��ע�������⣬�����������ݰ�Ȩ����ɽ��Ƽ����У�δ������������������ҵ��;��
+ *     �޸�����ʱ���뱣��ɽ��Ƽ��İ�Ȩ������
  *
  * @file       MK60_ftm.c
- * @brief      FTM定时器函数库
- * @author     山外科技
+ * @brief      FTM��ʱ��������
+ * @author     ɽ��Ƽ�
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -18,7 +18,7 @@
 #ifndef _MK60_FTM_H_
 #define _MK60_FTM_H_
 
-//定义FTM模块号
+//����FTMģ���
 typedef enum
 {
     FTM0,
@@ -31,7 +31,7 @@ typedef enum
     FTM_MAX,
 } FTMn_e;
 
-//定义FTM 通道号
+//����FTM ͨ����
 typedef enum
 {
 
@@ -46,7 +46,7 @@ typedef enum
 
 } FTM_CHn_e;
 
-//分频系数
+//��Ƶϵ��
 typedef enum
 {
     FTM_PS_1,
@@ -59,46 +59,46 @@ typedef enum
     FTM_PS_128,
 
     FTM_PS_MAX,
-}FTM_PS_e;      //分频值 =  (1<< FTM_PS_e) ,例如  FTM_PS_2  对应的 分频值 = (1<<FTM_PS_2) = (1<<1) = 2
+}FTM_PS_e;      //��Ƶֵ =  (1<< FTM_PS_e) ,����  FTM_PS_2  ��Ӧ�� ��Ƶֵ = (1<<FTM_PS_2) = (1<<1) = 2
 
 extern FTM_MemMapPtr FTMN[FTM_MAX];
 
 /*********************** PWM **************************/
 
-#define FTM0_PRECISON 1000u     //定义占空比精度，100即精度为1%，1000u则精度为0.1%，用于占空比 duty 形参传入，即占空比为 duty/FTM_PRECISON
-#define FTM1_PRECISON 1000u     //定义占空比精度，100即精度为1%，1000u则精度为0.1%，用于占空比 duty 形参传入，即占空比为 duty/FTM_PRECISON
-#define FTM2_PRECISON 1000u     //定义占空比精度，100即精度为1%，1000u则精度为0.1%，用于占空比 duty 形参传入，即占空比为 duty/FTM_PRECISON
-#define FTM3_PRECISON 10000u     //定义占空比精度，100即精度为1%，1000u则精度为0.1%，用于占空比 duty 形参传入，即占空比为 duty/FTM_PRECISON
+#define FTM0_PRECISON 1000u     //����ռ�ձȾ��ȣ�100������Ϊ1%��1000u�򾫶�Ϊ0.1%������ռ�ձ� duty �βδ��룬��ռ�ձ�Ϊ duty/FTM_PRECISON
+#define FTM1_PRECISON 1000u     //����ռ�ձȾ��ȣ�100������Ϊ1%��1000u�򾫶�Ϊ0.1%������ռ�ձ� duty �βδ��룬��ռ�ձ�Ϊ duty/FTM_PRECISON
+#define FTM2_PRECISON 1000u     //����ռ�ձȾ��ȣ�100������Ϊ1%��1000u�򾫶�Ϊ0.1%������ռ�ձ� duty �βδ��룬��ռ�ձ�Ϊ duty/FTM_PRECISON
+#define FTM3_PRECISON 10000u     //����ռ�ձȾ��ȣ�100������Ϊ1%��1000u�򾫶�Ϊ0.1%������ռ�ձ� duty �βδ��룬��ռ�ձ�Ϊ duty/FTM_PRECISON
 
-extern void  ftm_pwm_init(FTMn_e, FTM_CHn_e, uint32 freq, uint32 duty);  //初始化FTM的PWM功能并设置频率、占空比。设置通道输出占空比。同一个FTM，各通道的PWM频率是一样的，共3个FTM(FX有4个)
+extern void  ftm_pwm_init(FTMn_e, FTM_CHn_e, uint32 freq, uint32 duty);  //��ʼ��FTM��PWM���ܲ�����Ƶ�ʡ�ռ�ձȡ�����ͨ�����ռ�ձȡ�ͬһ��FTM����ͨ����PWMƵ����һ���ģ���3��FTM(FX��4��)
 
-extern void  ftm_pwm_duty(FTMn_e, FTM_CHn_e,              uint32 duty);  //设置通道占空比,占空比为 （duty * 精度） % ，如果 FTM_PRECISON 定义为 1000 ，duty = 100 ，则占空比 100*0.1%=10%
-extern void  ftm_pwm_freq(FTMn_e,            uint32 freq);               //设置FTM的频率（改频率后，需要重新配置占空比）
+extern void  ftm_pwm_duty(FTMn_e, FTM_CHn_e,              uint32 duty);  //����ͨ��ռ�ձ�,ռ�ձ�Ϊ ��duty * ���ȣ� % ����� FTM_PRECISON ����Ϊ 1000 ��duty = 100 ����ռ�ձ� 100*0.1%=10%
+extern void  ftm_pwm_freq(FTMn_e,            uint32 freq);               //����FTM��Ƶ�ʣ���Ƶ�ʺ���Ҫ��������ռ�ձȣ�
 
 
-/*********************** 输入捕捉 **************************/
-//FTM 输入捕捉配置
+/*********************** ���벶׽ **************************/
+//FTM ���벶׽����
 typedef enum
 {
-    FTM_Rising,               //上升沿捕捉
-    FTM_Falling,              //下降沿捕捉
-    FTM_Rising_or_Falling     //跳变沿捕捉
+    FTM_Rising,               //�����ز�׽
+    FTM_Falling,              //�½��ز�׽
+    FTM_Rising_or_Falling     //�����ز�׽
 } FTM_Input_cfg;
 
 
-extern void     ftm_input_init  (FTMn_e, FTM_CHn_e, FTM_Input_cfg,FTM_PS_e ps);     //输入捕捉初始化函数
-extern uint16   ftm_input_get   (FTMn_e, FTM_CHn_e);                                //输入捕捉模式下，读取捕捉事件发生时的计数器值(根据两次捕捉之间的差值可判断周期频率)
-extern void     ftm_input_clean (FTMn_e );                                          //清空计数器的值
+extern void     ftm_input_init  (FTMn_e, FTM_CHn_e, FTM_Input_cfg,FTM_PS_e ps);     //���벶׽��ʼ������
+extern uint16   ftm_input_get   (FTMn_e, FTM_CHn_e);                                //���벶׽ģʽ�£���ȡ��׽�¼�����ʱ�ļ�����ֵ(�������β�׽֮��Ĳ�ֵ���ж�����Ƶ��)
+extern void     ftm_input_clean (FTMn_e );                                          //��ռ�������ֵ
 
-extern void     FTM1_Input_test_handler(void);                      //可供参考的 FTM1 输入捕捉中断服务函数
+extern void     FTM1_Input_test_handler(void);                      //�ɹ��ο��� FTM1 ���벶׽�жϷ�����
 
-#define FTM_IRQ_EN(FTMn,CHn)        FTM_CnSC_REG(FTMN[FTMn],CHn) |= FTM_CnSC_CHIE_MASK       //开启 FTMn_CHn 中断
-#define FTM_IRQ_DIS(FTMn,CHn)       FTM_CnSC_REG(FTMN[FTMn],CHn) &= ~FTM_CnSC_CHIE_MASK      //关闭 FTMn_CHn 中断
+#define FTM_IRQ_EN(FTMn,CHn)        FTM_CnSC_REG(FTMN[FTMn],CHn) |= FTM_CnSC_CHIE_MASK       //���� FTMn_CHn �ж�
+#define FTM_IRQ_DIS(FTMn,CHn)       FTM_CnSC_REG(FTMN[FTMn],CHn) &= ~FTM_CnSC_CHIE_MASK      //�ر� FTMn_CHn �ж�
 
-/*********************** 正交解码功能 **************************/
-extern void     ftm_quad_init   (FTMn_e);           //初始化FTM 的正交解码 功能
-extern int16    ftm_quad_get    (FTMn_e);           //获取FTM 正交解码 的脉冲数(负数表示反方向)
-extern void     ftm_quad_clean  (FTMn_e);           //清 FTM 正交解码 的脉冲数
+/*********************** �������빦�� **************************/
+extern void     ftm_quad_init   (FTMn_e);           //��ʼ��FTM ���������� ����
+extern int16    ftm_quad_get    (FTMn_e);           //��ȡFTM �������� ��������(������ʾ������)
+extern void     ftm_quad_clean  (FTMn_e);           //�� FTM �������� ��������
 
 #endif  //_MK60_FTM_H_
 

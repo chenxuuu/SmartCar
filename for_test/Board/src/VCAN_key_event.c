@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_key_event.h
- * @brief      KEY äº‹ä»¶å‡½æ•°å®ç°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      KEY ÊÂ¼şº¯ÊıÊµÏÖ
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2014-01-04
  */
@@ -22,22 +22,22 @@
 
 void key_event_init()
 {
-    //åˆå§‹åŒ– å…¨éƒ¨ æŒ‰é”®
+    //³õÊ¼»¯ È«²¿ °´¼ü
     key_init(KEY_MAX);
 
-    //åˆå§‹åŒ–ä¸´æ—¶å˜é‡
+    //³õÊ¼»¯ÁÙÊ±±äÁ¿
     var_init();
 
-    //åŒæ­¥å…¨éƒ¨æ•°æ®å¹¶æ˜¾ç¤º
-    var_syn(VAR_MAX);       //åŒæ­¥å…¨éƒ¨ ,å¿…é¡»å…ˆåŒæ­¥å†æ˜¾ç¤ºå…¨éƒ¨ï¼Œå› ä¸ºæœ‰å¯èƒ½åŒæ­¥å¤±è´¥ã€‚
-    var_display(VAR_MAX);   //æ˜¾ç¤ºå…¨éƒ¨
+    //Í¬²½È«²¿Êı¾İ²¢ÏÔÊ¾
+    var_syn(VAR_MAX);       //Í¬²½È«²¿ ,±ØĞëÏÈÍ¬²½ÔÙÏÔÊ¾È«²¿£¬ÒòÎªÓĞ¿ÉÄÜÍ¬²½Ê§°Ü¡£
+    var_display(VAR_MAX);   //ÏÔÊ¾È«²¿
 }
 
 void deal_key_event()
 {
     KEY_MSG_t keymsg;
 
-    while(get_key_msg(& keymsg))     //è·å¾—æŒ‰é”®å°±è¿›è¡Œå¤„ç†
+    while(get_key_msg(& keymsg))     //»ñµÃ°´¼ü¾Í½øĞĞ´¦Àí
     {
         if(keymsg.status == KEY_DOWN)
         {
@@ -102,9 +102,9 @@ void deal_key_event()
                 var_select(VAR_NEXT_HOLD);
                 break;
 
-            case KEY_B:                //é•¿æŒ‰ OK é”® åŒæ­¥å…¨éƒ¨æ•°æ®å¹¶æ˜¾ç¤º
-                var_syn(VAR_MAX);       //åŒæ­¥å…¨éƒ¨ ,å¿…é¡»å…ˆåŒæ­¥å†æ˜¾ç¤ºå…¨éƒ¨ï¼Œå› ä¸ºæœ‰å¯èƒ½åŒæ­¥å¤±è´¥ã€‚
-                var_display(VAR_MAX);   //æ˜¾ç¤ºå…¨éƒ¨
+            case KEY_B:                //³¤°´ OK ¼ü Í¬²½È«²¿Êı¾İ²¢ÏÔÊ¾
+                var_syn(VAR_MAX);       //Í¬²½È«²¿ ,±ØĞëÏÈÍ¬²½ÔÙÏÔÊ¾È«²¿£¬ÒòÎªÓĞ¿ÉÄÜÍ¬²½Ê§°Ü¡£
+                var_display(VAR_MAX);   //ÏÔÊ¾È«²¿
                 break;
 
             case KEY_START:
@@ -118,13 +118,13 @@ void deal_key_event()
                 while(var_syn(CAR_CTRL)==0);
                 var_display(CAR_CTRL);
 
-            default:            //ä¸éœ€è¦å¤„ç† cancel
+            default:            //²»ĞèÒª´¦Àí cancel
                 break;
             }
         }
         else
         {
-            //KEY_UP ,ä¸è¿›è¡Œå¤„ç†
+            //KEY_UP ,²»½øĞĞ´¦Àí
         }
     }
 }

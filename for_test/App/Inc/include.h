@@ -4,13 +4,13 @@
 #include  "common.h"
 
 /*
- * Include ç”¨æˆ·è‡ªå®šä¹‰çš„å¤´æ–‡ä»¶
+ * Include ÓÃ»§×Ô¶¨ÒåµÄÍ·ÎÄ¼ş
  */
 #include  "MK60_wdog.h"
-#include  "MK60_gpio.h"     //IOå£æ“ä½œ
-#include  "MK60_uart.h"     //ä¸²å£
+#include  "MK60_gpio.h"     //IO¿Ú²Ù×÷
+#include  "MK60_uart.h"     //´®¿Ú
 #include  "MK60_SysTick.h"
-#include  "MK60_lptmr.h"    //ä½åŠŸè€—å®šæ—¶å™¨(å»¶æ—¶)
+#include  "MK60_lptmr.h"    //µÍ¹¦ºÄ¶¨Ê±Æ÷(ÑÓÊ±)
 #include  "MK60_i2c.h"      //I2C
 #include  "MK60_spi.h"      //SPI
 #include  "MK60_ftm.h"      //FTM
@@ -26,28 +26,28 @@
 
 #include  "VCAN_LED.H"          //LED
 #include  "VCAN_KEY.H"          //KEY
-#include  "VCAN_MMA7455.h"      //ä¸‰è½´åŠ é€Ÿåº¦MMA7455
-#include  "VCAN_NRF24L0.h"      //æ— çº¿æ¨¡å—NRF24L01+
-#include  "VCAN_RTC_count.h"    //RTC æ—¶é—´è½¬æ¢
-#include  "VCAN_camera.h"       //æ‘„åƒå¤´æ€»å¤´æ–‡ä»¶
-#include  "VCAN_LCD.h"          //æ¶²æ™¶æ€»å¤´æ–‡ä»¶
+#include  "VCAN_MMA7455.h"      //ÈıÖá¼ÓËÙ¶ÈMMA7455
+#include  "VCAN_NRF24L0.h"      //ÎŞÏßÄ£¿éNRF24L01+
+#include  "VCAN_RTC_count.h"    //RTC Ê±¼ä×ª»»
+#include  "VCAN_camera.h"       //ÉãÏñÍ·×ÜÍ·ÎÄ¼ş
+#include  "VCAN_LCD.h"          //Òº¾§×ÜÍ·ÎÄ¼ş
 #include  "ff.h"                //FatFs
-#include  "VCAN_TSL1401.h"      //çº¿æ€§CCD
-#include  "VCAN_key_event.h"    //æŒ‰é”®æ¶ˆæ¯å¤„ç†
-#include  "VCAN_NRF24L0_MSG.h"  //æ— çº¿æ¨¡å—æ¶ˆæ¯å¤„ç†
+#include  "VCAN_TSL1401.h"      //ÏßĞÔCCD
+#include  "VCAN_key_event.h"    //°´¼üÏûÏ¢´¦Àí
+#include  "VCAN_NRF24L0_MSG.h"  //ÎŞÏßÄ£¿éÏûÏ¢´¦Àí
 
 #include  "VCAN_BMP.h"          //BMP
-#include  "vcan_img2sd.h"       //å­˜å‚¨å›¾åƒåˆ°sdå¡ä¸€ä¸ªæ–‡ä»¶
-#include  "vcan_sd_app.h"       //SDå¡åº”ç”¨ï¼ˆæ˜¾ç¤ºsdçœ‹ä¸Šå›¾ç‰‡å›ºä»¶ï¼‰
+#include  "vcan_img2sd.h"       //´æ´¢Í¼Ïñµ½sd¿¨Ò»¸öÎÄ¼ş
+#include  "vcan_sd_app.h"       //SD¿¨Ó¦ÓÃ£¨ÏÔÊ¾sd¿´ÉÏÍ¼Æ¬¹Ì¼ş£©
 
-#include  "Vcan_touch.h"        //è§¦æ‘¸é©±åŠ¨
+#include  "Vcan_touch.h"        //´¥ÃşÇı¶¯
 
-#include  "VCAN_computer.h"     //å¤šåŠŸèƒ½è°ƒè¯•åŠ©æ‰‹
+#include  "VCAN_computer.h"     //¶à¹¦ÄÜµ÷ÊÔÖúÊÖ
 
-#include  "my.h"     //è‡ªå·±çš„åº“
-#include  "process.h"//å¤„ç†åº“
+#include  "my.h"     //×Ô¼ºµÄ¿â
+#include  "process.h"//´¦Àí¿â
 #include  "oled.h"   //OLED
-#include  "fitting_slope.h"//æ‹Ÿåˆæ±‚æ–œç‡
+#include  "fitting_slope.h"//ÄâºÏÇóĞ±ÂÊ
 #include  "pid.h"   //PID
 
 #include "port_cfg.h"

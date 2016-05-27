@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_lptmr.h
- * @brief      lptmré©±åŠ¨å‡½æ•°ï¼ŒåŒ…æ‹¬å»¶æ—¶ï¼Œè„‰å†²è®¡æ•°ï¼Œå®šæ—¶åŠŸèƒ½å¾…å®ç°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      lptmrÇı¶¯º¯Êı£¬°üÀ¨ÑÓÊ±£¬Âö³å¼ÆÊı£¬¶¨Ê±¹¦ÄÜ´ıÊµÏÖ
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-06-26
  */
@@ -18,52 +18,52 @@
 #define __MK60_LPTMR_H__
 
 /**
- *  @brief LPTMRè„‰å†²è®¡æ•°è¾“å…¥ç®¡è„šé€‰é¡¹
+ *  @brief LPTMRÂö³å¼ÆÊıÊäÈë¹Ü½ÅÑ¡Ïî
  */
 typedef enum
 {
-    //åªæœ‰1ã€2ç®¡è„šï¼Œå¹¶æ²¡æœ‰0ã€3ç®¡è„š
+    //Ö»ÓĞ1¡¢2¹Ü½Å£¬²¢Ã»ÓĞ0¡¢3¹Ü½Å
     LPT0_ALT1 = 1,      // PTA19
     LPT0_ALT2 = 2       // PTC5
 } LPT0_ALTn;
 
 /**
- *  @brief LPTMRè„‰å†²è®¡æ•°è§¦å‘æ–¹å¼
+ *  @brief LPTMRÂö³å¼ÆÊı´¥·¢·½Ê½
  */
 typedef enum LPT_CFG
 {
-    LPT_Rising  = 0,    //ä¸Šå‡æ²¿è§¦å‘
-    LPT_Falling = 1     //ä¸‹é™æ²¿è§¦å‘
+    LPT_Rising  = 0,    //ÉÏÉıÑØ´¥·¢
+    LPT_Falling = 1     //ÏÂ½µÑØ´¥·¢
 } LPT_CFG;
 
-#define LPTMR_Flag_Clear()  (LPTMR0_CSR |= LPTMR_CSR_TCF_MASK)         //æ¸…é™¤LPTæ¯”è¾ƒæ ‡å¿—ä½
+#define LPTMR_Flag_Clear()  (LPTMR0_CSR |= LPTMR_CSR_TCF_MASK)         //Çå³ıLPT±È½Ï±êÖ¾Î»
 
-/*          ç”¨äºå»¶æ—¶         */
-extern void     lptmr_delay_ms(uint16 ms);      //å»¶æ—¶(ms)
-extern void     lptmr_delay_us(uint16 us);      //å»¶æ—¶(us)
+/*          ÓÃÓÚÑÓÊ±         */
+extern void     lptmr_delay_ms(uint16 ms);      //ÑÓÊ±(ms)
+extern void     lptmr_delay_us(uint16 us);      //ÑÓÊ±(us)
 
-/*       ç”¨äºå®šæ—¶           */
-extern void     lptmr_timing_ms(uint16 ms);     //å®šæ—¶(ms)
-extern void     lptmr_timing_us(uint16 ms);     //å®šæ—¶(us)
+/*       ÓÃÓÚ¶¨Ê±           */
+extern void     lptmr_timing_ms(uint16 ms);     //¶¨Ê±(ms)
+extern void     lptmr_timing_us(uint16 ms);     //¶¨Ê±(us)
 
-/*        ç”¨äºè®¡æ—¶           */
-extern void     lptmr_time_start_ms(void);      //å¼€å§‹è®¡æ—¶(ms)
-extern uint32   lptmr_time_get_ms(void);        //è·å–è®¡æ—¶æ—¶é—´
+/*        ÓÃÓÚ¼ÆÊ±           */
+extern void     lptmr_time_start_ms(void);      //¿ªÊ¼¼ÆÊ±(ms)
+extern uint32   lptmr_time_get_ms(void);        //»ñÈ¡¼ÆÊ±Ê±¼ä
 
-extern void     lptmr_time_start_us(void);      //å¼€å§‹è®¡æ—¶(ns)
-extern uint32   lptmr_time_get_us(void);        //è·å–è®¡æ—¶æ—¶é—´
+extern void     lptmr_time_start_us(void);      //¿ªÊ¼¼ÆÊ±(ns)
+extern uint32   lptmr_time_get_us(void);        //»ñÈ¡¼ÆÊ±Ê±¼ä
 
-extern void     lptmr_time_close();             //å…³é—­è®¡æ—¶å™¨
-
-
-/*       ç”¨äºè„‰å†²è®¡æ•°        */
-extern void     lptmr_pulse_init  (LPT0_ALTn, uint16 count, LPT_CFG);   //è„‰å†²è®¡æ•°å™¨åˆå§‹åŒ–è®¾ç½®
-extern uint16   lptmr_pulse_get   (void);                               //è·å–è®¡æ•°å€¼
-extern void     lptmr_pulse_clean (void);                               //æ¸…ç©ºè®¡æ•°å€¼
+extern void     lptmr_time_close();             //¹Ø±Õ¼ÆÊ±Æ÷
 
 
-/*      ä¸­æ–­æœåŠ¡å‡½æ•°æ¨¡ç‰ˆ    */
-extern void lptmr_test_handler(void);                                       //ä¸­æ–­æœåŠ¡å‡½æ•°ï¼Œä»…ä¾›å‚è€ƒï¼ˆéœ€ç”¨æˆ·è‡ªè¡Œå®ç°ï¼‰
+/*       ÓÃÓÚÂö³å¼ÆÊı        */
+extern void     lptmr_pulse_init  (LPT0_ALTn, uint16 count, LPT_CFG);   //Âö³å¼ÆÊıÆ÷³õÊ¼»¯ÉèÖÃ
+extern uint16   lptmr_pulse_get   (void);                               //»ñÈ¡¼ÆÊıÖµ
+extern void     lptmr_pulse_clean (void);                               //Çå¿Õ¼ÆÊıÖµ
+
+
+/*      ÖĞ¶Ï·şÎñº¯ÊıÄ£°æ    */
+extern void lptmr_test_handler(void);                                       //ÖĞ¶Ï·şÎñº¯Êı£¬½ö¹©²Î¿¼£¨ĞèÓÃ»§×ÔĞĞÊµÏÖ£©
 
 
 #endif /* __MK60_LPTMR_H__ */

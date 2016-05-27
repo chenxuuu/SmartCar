@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016ï¼Œæ™¨æ—­
+ *     Copyright (c) 2016£¬³¿Ðñ
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
+ *     ¼¼ÊõÌÖÂÛ£º³¿ÐñµÄ²©¿Í http://www.chenxublog.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žæ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊô³¿ÐñËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£Áô³¿ÐñµÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       fitting_slope.h
- * @brief      æœ€å°äºŒä¹˜æ³•æ‹Ÿåˆæ±‚æ–œçŽ‡å¤´æ–‡ä»¶
- * @author     æ™¨æ—­
+ * @brief      ×îÐ¡¶þ³Ë·¨ÄâºÏÇóÐ±ÂÊÍ·ÎÄ¼þ
+ * @author     ³¿Ðñ
  * @version    v1.0
  * @date       2016-4-21
  */

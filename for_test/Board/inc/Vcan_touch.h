@@ -2,7 +2,7 @@
 #define _VCAN_TOUCH_H_
 
 
-//ä»¥ä¸‹æ˜¯ç¡¬ä»¶é…ç½®
+//ÒÔÏÂÊÇÓ²¼şÅäÖÃ
 #define TOUCH_SPI         SPI1
 #define TOUCH_CS          SPI_PCS0
 
@@ -21,13 +21,13 @@
 
 typedef int touch_call_back_func(uint8 * buff,uint32 len);
 
-extern void touch_init(void);       //è§¦æ‘¸å±åˆå§‹åŒ–
+extern void touch_init(void);       //´¥ÃşÆÁ³õÊ¼»¯
 
 extern int touch_calibrate(void);
 extern int touch_get_point(Site_t *site);
 
-extern int touch_load(touch_call_back_func);    //åŠ è½½æ ¡éªŒå‚æ•°
-extern int touch_save(touch_call_back_func);    //ä¿å­˜æ ¡éªŒå‚æ•°
+extern int touch_load(touch_call_back_func);    //¼ÓÔØĞ£Ñé²ÎÊı
+extern int touch_save(touch_call_back_func);    //±£´æĞ£Ñé²ÎÊı
 
 extern uint16 xpt2046_read_ch(uint8_t _ucCh);
 extern void   xpt2046_get_xy(Site_t * site);

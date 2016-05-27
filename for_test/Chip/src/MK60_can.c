@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_can.c
- * @brief      CANå‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      CANº¯Êý
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -19,64 +19,64 @@
 #include "MK60_can.h"
 
 
-// CAN IDå€¼è¶Šä½Žï¼ŒæŠ¥æ–‡ä¼˜å…ˆçº§è¶Šé«˜
-// CAN æŽ©ç ç”¨äºŽå±è”½
+// CAN IDÖµÔ½µÍ£¬±¨ÎÄÓÅÏÈ¼¶Ô½¸ß
+// CAN ÑÚÂëÓÃÓÚÆÁ±Î
 
 
-// ç”¨äºŽå‘é€ç¼“å†²åŒºçš„æŠ¥æ–‡ç¼“å†²åŒºç å­—
-#define CAN_CS_CODE_TX_INACTIVE     B8(1000)            //MB å¤„äºŽéžæ¿€æ´»çŠ¶æ€
-#define CAN_CS_CODE_TX_ABORT        B8(1001)            //MB è¢«ä¸¢å¼ƒ
-#define CAN_CS_CODE_TX_DATA         B8(1100)            //MB ä¸ºä¸€ä¸ªå‘é€æ•°æ®å¸§ï¼ˆMB çš„ RTR ä½ä¸º 0ï¼‰
-#define CAN_CS_CODE_TX_REMOTE       B8(1100)            //MB ä¸ºä¸€ä¸ªå‘é€è¿œç¨‹è¯·æ±‚å¸§ï¼ˆMB çš„ RTR ä½ä¸º 1ï¼‰
-#define CAN_CS_CODE_TX_TANSWER      B8(1110)            //MB ä¸ºæ˜¯è¿œç¨‹è¯·æ±‚å¸§çš„ä¸€ä¸ªå‘é€å›žåº”å¸§
+// ÓÃÓÚ·¢ËÍ»º³åÇøµÄ±¨ÎÄ»º³åÇøÂë×Ö
+#define CAN_CS_CODE_TX_INACTIVE     B8(1000)            //MB ´¦ÓÚ·Ç¼¤»î×´Ì¬
+#define CAN_CS_CODE_TX_ABORT        B8(1001)            //MB ±»¶ªÆú
+#define CAN_CS_CODE_TX_DATA         B8(1100)            //MB ÎªÒ»¸ö·¢ËÍÊý¾ÝÖ¡£¨MB µÄ RTR Î»Îª 0£©
+#define CAN_CS_CODE_TX_REMOTE       B8(1100)            //MB ÎªÒ»¸ö·¢ËÍÔ¶³ÌÇëÇóÖ¡£¨MB µÄ RTR Î»Îª 1£©
+#define CAN_CS_CODE_TX_TANSWER      B8(1110)            //MB ÎªÊÇÔ¶³ÌÇëÇóÖ¡µÄÒ»¸ö·¢ËÍ»ØÓ¦Ö¡
 
-// ç”¨äºŽæŽ¥æ”¶ç¼“å†²åŒºçš„æŠ¥æ–‡ç¼“å†²åŒºç å­—
-#define CAN_CS_CODE_RX_INACTIVE     B8(0000)            //MB å¤„äºŽéžæ¿€æ´»çŠ¶æ€
-#define CAN_CS_CODE_RX_EMPTY        B8(0100)            //MB æ¿€æ´»å¹¶ä¸”ä¸ºç©º
-#define CAN_CS_CODE_RX_FULL         B8(0010)            //MB ä¸ºæ»¡
-#define CAN_CS_CODE_RX_OVERRUN      B8(0110)            //å†™å…¥åˆ°ä¸€ä¸ªæ»¡ç¼“å†²åŒº å¯¼è‡´ MB è¢«è¦†ç›–
-#define CAN_CS_CODE_RX_RANSWER      B8(1010)            //ä¸€ä¸ªæ–°å¸§è¢«é…ç½®ä¸ºç¡®è®¤ä¸€ä¸ªè¿œç¨‹è¯·æ±‚å¸§å¹¶ä¸”å‘é€ä¸€ä¸ªå›žå¤å¸§ã€‚
-#define CAN_CS_CODE_RX_BUSY         B8(0001)            //æ­£åœ¨æ›´æ–° MB çš„å†…å®¹ã€‚CPU ä¸å…è®¸è®¿é—®MB
+// ÓÃÓÚ½ÓÊÕ»º³åÇøµÄ±¨ÎÄ»º³åÇøÂë×Ö
+#define CAN_CS_CODE_RX_INACTIVE     B8(0000)            //MB ´¦ÓÚ·Ç¼¤»î×´Ì¬
+#define CAN_CS_CODE_RX_EMPTY        B8(0100)            //MB ¼¤»î²¢ÇÒÎª¿Õ
+#define CAN_CS_CODE_RX_FULL         B8(0010)            //MB ÎªÂú
+#define CAN_CS_CODE_RX_OVERRUN      B8(0110)            //Ð´Èëµ½Ò»¸öÂú»º³åÇø µ¼ÖÂ MB ±»¸²¸Ç
+#define CAN_CS_CODE_RX_RANSWER      B8(1010)            //Ò»¸öÐÂÖ¡±»ÅäÖÃÎªÈ·ÈÏÒ»¸öÔ¶³ÌÇëÇóÖ¡²¢ÇÒ·¢ËÍÒ»¸ö»Ø¸´Ö¡¡£
+#define CAN_CS_CODE_RX_BUSY         B8(0001)            //ÕýÔÚ¸üÐÂ MB µÄÄÚÈÝ¡£CPU ²»ÔÊÐí·ÃÎÊMB
 
 
 CAN_MemMapPtr CANN[] = {CAN0_BASE_PTR, CAN1_BASE_PTR};
 
 
-//ä»…é€‚ç”¨äºŽCANæ—¶é’Ÿæºä¸º 50.00MHz
+//½öÊÊÓÃÓÚCANÊ±ÖÓÔ´Îª 50.00MHz
 CAN_band_cfg_t can_band_cfg_50000K[CAN_BAUD_MAX] =
 {
     //BAND, PRESDIV, PROP_SEG, PSEG1,   PSEG2, RJW
-    {10,    624,    4,          0,      0,      0},         //é‡‡æ ·ç‚¹:87.50%
-    {20,    124,    12,         2,      2,      2},         //é‡‡æ ·ç‚¹:85.00%
-    {50,    124,    4,          0,      0,      0},         //é‡‡æ ·ç‚¹:87.50%
-    {100,   24,     12,         2,      2,      2},         //é‡‡æ ·ç‚¹:85.00%
-    {125,   24,     10,         1,      1,      1},         //é‡‡æ ·ç‚¹:87.50%
-    {250,   24,     4,          0,      0,      0},         //é‡‡æ ·ç‚¹:87.50%
-    {500,   4,      12,         2,      2,      2},         //é‡‡æ ·ç‚¹:85.00%
-    {1000,  1,      9,          6,      6,      3},         //é‡‡æ ·ç‚¹:72.00%
+    {10,    624,    4,          0,      0,      0},         //²ÉÑùµã:87.50%
+    {20,    124,    12,         2,      2,      2},         //²ÉÑùµã:85.00%
+    {50,    124,    4,          0,      0,      0},         //²ÉÑùµã:87.50%
+    {100,   24,     12,         2,      2,      2},         //²ÉÑùµã:85.00%
+    {125,   24,     10,         1,      1,      1},         //²ÉÑùµã:87.50%
+    {250,   24,     4,          0,      0,      0},         //²ÉÑùµã:87.50%
+    {500,   4,      12,         2,      2,      2},         //²ÉÑùµã:85.00%
+    {1000,  1,      9,          6,      6,      3},         //²ÉÑùµã:72.00%
 };
-//ä»…é€‚ç”¨äºŽCANæ—¶é’Ÿæºä¸º 60.00MHz
+//½öÊÊÓÃÓÚCANÊ±ÖÓÔ´Îª 60.00MHz
 CAN_band_cfg_t can_band_cfg_60000K[CAN_BAUD_MAX] =
 {
     //BAND, PRESDIV, PROP_SEG, PSEG1,   PSEG2, RJW
-    {10,    249,    16,         2,      2,      2},		//é‡‡æ ·ç‚¹:87.50%
-    {20,    124,    16,         2,      2,      2},		//é‡‡æ ·ç‚¹:87.50%
-    {50,    49,     16,         2,      2,      2},		//é‡‡æ ·ç‚¹:87.50%
-    {100,   24,     16,         2,      2,      2},		//é‡‡æ ·ç‚¹:87.50%
-    {125,   19,     16,         2,      2,      2},		//é‡‡æ ·ç‚¹:87.50%
-    {250,   9,      16,         2,      2,      2},		//é‡‡æ ·ç‚¹:87.50%
-    {500,   4,      16,         2,      2,      2},		//é‡‡æ ·ç‚¹:87.50%
-    {1000,  2,      8,          4,      4,      3},		//é‡‡æ ·ç‚¹:75.00%
+    {10,    249,    16,         2,      2,      2},		//²ÉÑùµã:87.50%
+    {20,    124,    16,         2,      2,      2},		//²ÉÑùµã:87.50%
+    {50,    49,     16,         2,      2,      2},		//²ÉÑùµã:87.50%
+    {100,   24,     16,         2,      2,      2},		//²ÉÑùµã:87.50%
+    {125,   19,     16,         2,      2,      2},		//²ÉÑùµã:87.50%
+    {250,   9,      16,         2,      2,      2},		//²ÉÑùµã:87.50%
+    {500,   4,      16,         2,      2,      2},		//²ÉÑùµã:87.50%
+    {1000,  2,      8,          4,      4,      3},		//²ÉÑùµã:75.00%
 };
 
 /*!
- *  @brief      CAN åˆå§‹åŒ–
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      CAN_BAUD_e      æ³¢ç‰¹çŽ‡ç¼–å·
- *  @param      CAN_mode_e      CAN æ¨¡å¼( æ­£å¸¸ ã€ å›žçŽ¯ æ¨¡å¼)
- *  @param      CAN_CLKSRC_e    CAN æ—¶é’Ÿæº( bus ã€ å¤–éƒ¨æ™¶æŒ¯)
+ *  @brief      CAN ³õÊ¼»¯
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      CAN_BAUD_e      ²¨ÌØÂÊ±àºÅ
+ *  @param      CAN_mode_e      CAN Ä£Ê½( Õý³£ ¡¢ »Ø»· Ä£Ê½)
+ *  @param      CAN_CLKSRC_e    CAN Ê±ÖÓÔ´( bus ¡¢ Íâ²¿¾§Õñ)
  *  @since      v5.0
- *  Sample usage:       can_init(CAN1,CAN_BAUD_20K,CAN_LOOPBACK);   //åˆå§‹åŒ– CAN1 ï¼Œæ³¢ç‰¹çŽ‡ 20Kb/s ï¼Œ å›žçŽ¯æ¨¡å¼
+ *  Sample usage:       can_init(CAN1,CAN_BAUD_20K,CAN_LOOPBACK);   //³õÊ¼»¯ CAN1 £¬²¨ÌØÂÊ 20Kb/s £¬ »Ø»·Ä£Ê½
  */
 void can_init(CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode,CAN_CLKSRC_e clksrc)
 {
@@ -86,45 +86,45 @@ void can_init(CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode,CAN_CLKSRC_e clksrc)
     switch(cann)
     {
     case CAN0:
-        SIM_SCGC6 |= SIM_SCGC6_FLEXCAN0_MASK ;                  //å¼€å¯ CAN0 æ—¶é’Ÿ
+        SIM_SCGC6 |= SIM_SCGC6_FLEXCAN0_MASK ;                  //¿ªÆô CAN0 Ê±ÖÓ
         port_init(CAN0_TX_PIN, ALT2);
         port_init(CAN0_RX_PIN, ALT2);
         break;
     case CAN1:
-        SIM_SCGC3 |= SIM_SCGC3_FLEXCAN1_MASK;                   //å¼€å¯ CAN1 æ—¶é’Ÿ
+        SIM_SCGC3 |= SIM_SCGC3_FLEXCAN1_MASK;                   //¿ªÆô CAN1 Ê±ÖÓ
         port_init(CAN1_TX_PIN, ALT2);
         port_init(CAN1_RX_PIN, ALT2);
         break;
     default:
-        ASSERT(0);                                              //æ–­è¨€ï¼Œcannå€¼æœ‰è¯¯ï¼Ÿ
+        ASSERT(0);                                              //¶ÏÑÔ£¬cannÖµÓÐÎó£¿
     }
 
-    //é€‰æ‹©æ—¶é’Ÿæº
+    //Ñ¡ÔñÊ±ÖÓÔ´
     if(clksrc == CAN_CLKSRC_BUS)
     {
-        CAN_CTRL1_REG(canptr)   |= CAN_CTRL1_CLKSRC_MASK;           //é€‰æ‹©ä¸ºbus æ—¶é’Ÿ
+        CAN_CTRL1_REG(canptr)   |= CAN_CTRL1_CLKSRC_MASK;           //Ñ¡ÔñÎªbus Ê±ÖÓ
     }
     else
     {
 #if defined(MK60DZ10)
-        OSC_CR |= OSC_CR_ERCLKEN_MASK;                              //ä½¿èƒ½ OSCERCLK
+        OSC_CR |= OSC_CR_ERCLKEN_MASK;                              //Ê¹ÄÜ OSCERCLK
 #elif  defined(MK60F15)
-        OSC0_CR |= OSC_CR_ERCLKEN_MASK;                              //ä½¿èƒ½ OSCERCLK
+        OSC0_CR |= OSC_CR_ERCLKEN_MASK;                              //Ê¹ÄÜ OSCERCLK
 #endif
         CAN_CTRL1_REG(canptr)   &= ~CAN_CTRL1_CLKSRC_MASK;
     }
 
-    CAN_MCR_REG(canptr) &= ~CAN_MCR_MDIS_MASK;                  //ä½¿èƒ½CANæ¨¡å—
+    CAN_MCR_REG(canptr) &= ~CAN_MCR_MDIS_MASK;                  //Ê¹ÄÜCANÄ£¿é
 
-    CAN_MCR_REG(canptr) |=  CAN_MCR_FRZ_MASK;                   //ä½¿èƒ½å†»ç»“æ¨¡å¼
+    CAN_MCR_REG(canptr) |=  CAN_MCR_FRZ_MASK;                   //Ê¹ÄÜ¶³½áÄ£Ê½
 
-    while((CAN_MCR_REG(canptr) & CAN_MCR_LPMACK_MASK ));        //ç­‰å¾…å¤ä½ï¼ˆä½ŽåŠŸè€—æ¨¡å¼æ— æ³•å¤ä½æˆåŠŸï¼‰
+    while((CAN_MCR_REG(canptr) & CAN_MCR_LPMACK_MASK ));        //µÈ´ý¸´Î»£¨µÍ¹¦ºÄÄ£Ê½ÎÞ·¨¸´Î»³É¹¦£©
 
-    CAN_MCR_REG(canptr) |= CAN_MCR_SOFTRST_MASK;                //è½¯ä»¶å¤ä½
+    CAN_MCR_REG(canptr) |= CAN_MCR_SOFTRST_MASK;                //Èí¼þ¸´Î»
 
-    while(!(CAN_MCR_REG(canptr) & CAN_MCR_FRZACK_MASK));        //ç­‰å¾…è¿›å…¥å†»ç»“æ¨¡å¼
+    while(!(CAN_MCR_REG(canptr) & CAN_MCR_FRZACK_MASK));        //µÈ´ý½øÈë¶³½áÄ£Ê½
 
-    //æ¸…ç©ºé‚®ç®±ç¼“å†²åŒºå†…å®¹æ¸…0
+    //Çå¿ÕÓÊÏä»º³åÇøÄÚÈÝÇå0
     i = 16;
     while(i)
     {
@@ -136,28 +136,28 @@ void can_init(CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode,CAN_CLKSRC_e clksrc)
     }
 
     CAN_CTRL2_REG(canptr) = (0
-                             //| CAN_CTRL2_EACEN_MASK            //æŽ¥æ”¶é‚®ç®±è¿‡æ»¤IDEåŒ¹é…ï¼ŒRTRä¸åŒ¹é…
-                             //| CAN_CTRL2_RRS_MASK              //ä¸è‡ªåŠ¨äº§ç”Ÿè¿œç¨‹è¯·æ±‚å¸§
-                             //| CAN_CTRL2_MRP_MASK              //é‚®ç®±é¦–å…ˆä»ŽæŽ¥æ”¶FIFOé˜Ÿåˆ—åŒ¹é…ç„¶åŽå†åœ¨é‚®ç®±ä¸­åŒ¹é…
+                             //| CAN_CTRL2_EACEN_MASK            //½ÓÊÕÓÊÏä¹ýÂËIDEÆ¥Åä£¬RTR²»Æ¥Åä
+                             //| CAN_CTRL2_RRS_MASK              //²»×Ô¶¯²úÉúÔ¶³ÌÇëÇóÖ¡
+                             //| CAN_CTRL2_MRP_MASK              //ÓÊÏäÊ×ÏÈ´Ó½ÓÊÕFIFO¶ÓÁÐÆ¥ÅäÈ»ºóÔÙÔÚÓÊÏäÖÐÆ¥Åä
                              | CAN_CTRL2_TASD(22)                //Tx Arbitration Start Delay
                             );
 
-    //ä½¿ç”¨ä¸€ä¸ª32ä½è¿‡æ»¤å™¨
+    //Ê¹ÓÃÒ»¸ö32Î»¹ýÂËÆ÷
     CAN_MCR_REG(canptr) = (CAN_MCR_REG(canptr) & (~CAN_MCR_IDAM_MASK)) | CAN_MCR_IDAM(0);
 
-    //è®¾ç½®æ³¢ç‰¹çŽ‡
+    //ÉèÖÃ²¨ÌØÂÊ
     can_setband(cann, band);
 
-    //å›žçŽ¯æ¨¡å¼
+    //»Ø»·Ä£Ê½
     if(mode == CAN_LOOPBACK)
     {
-        CAN_CTRL1_REG(canptr) |= CAN_CTRL1_LPB_MASK;//ä½¿ç”¨å›žçŽ¯æ¨¡å¼
+        CAN_CTRL1_REG(canptr) |= CAN_CTRL1_LPB_MASK;//Ê¹ÓÃ»Ø»·Ä£Ê½
     }
 
-    //é»˜è®¤ä½¿ç”¨ ç‹¬ç«‹ æŽ©ç 
+    //Ä¬ÈÏÊ¹ÓÃ ¶ÀÁ¢ ÑÚÂë
     CAN_MCR_REG(canptr) |= CAN_MCR_IRMQ_MASK;
 
-    //åˆå§‹åŒ–æŽ©ç å¯„å­˜å™¨
+    //³õÊ¼»¯ÑÚÂë¼Ä´æÆ÷
     i = NUMBER_OF_MB;
     while(i)
     {
@@ -169,27 +169,27 @@ void can_init(CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode,CAN_CLKSRC_e clksrc)
     CAN_RX14MASK_REG(canptr) = 0x0;
     CAN_RX15MASK_REG(canptr) = 0x0;
 
-    //åªæœ‰åœ¨å†»ç»“æ¨¡å¼ä¸‹æ‰èƒ½é…ç½® é…ç½®å®Œé€€å‡ºå†»ç»“æ¨¡å¼
+    //Ö»ÓÐÔÚ¶³½áÄ£Ê½ÏÂ²ÅÄÜÅäÖÃ ÅäÖÃÍêÍË³ö¶³½áÄ£Ê½
     CAN_MCR_REG(canptr) &= ~(CAN_MCR_HALT_MASK);
 
-    //ç­‰å¾…æ¨¡å—æŽ¨å‡ºå†»ç»“æ¨¡å¼
+    //µÈ´ýÄ£¿éÍÆ³ö¶³½áÄ£Ê½
     while( CAN_MCR_REG(canptr) & CAN_MCR_FRZACK_MASK);
 
-    //ç­‰å¾…åŒæ­¥
-    //ç­‰åˆ°ä¸åœ¨å†»ç»“æ¨¡å¼ï¼Œä¼‘çœ æ¨¡å¼æˆ–è€…åœæ­¢æ¨¡å¼
+    //µÈ´ýÍ¬²½
+    //µÈµ½²»ÔÚ¶³½áÄ£Ê½£¬ÐÝÃßÄ£Ê½»òÕßÍ£Ö¹Ä£Ê½
     while(CAN_MCR_REG(canptr) & CAN_MCR_NOTRDY_MASK);
 }
 
 
 /*!
- *  @brief      CAN å‘é€æ•°æ®
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
- *  @param      CAN_USR_ID_t    IDç¼–å·
- *  @param      len             æ•°æ®é•¿åº¦
- *  @param      buff            ç¼“å†²åŒºåœ°å€
+ *  @brief      CAN ·¢ËÍÊý¾Ý
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
+ *  @param      CAN_USR_ID_t    ID±àºÅ
+ *  @param      len             Êý¾Ý³¤¶È
+ *  @param      buff            »º³åÇøµØÖ·
  *  @since      v5.0
- *  Sample usage:       can_tx(CAN1,CAN_TX_MB,can_tx_id,DATA_LEN, txbuff);  //CANå‘é€æ•°æ®ã€‚ç¼“å†²åŒºCAN_TX_MBï¼ŒæŠ¥æ–‡ID:tx_IDï¼Œæ•°æ®ç¼“å†²åŒºtxbuffï¼Œé•¿åº¦ DATA_LEN
+ *  Sample usage:       can_tx(CAN1,CAN_TX_MB,can_tx_id,DATA_LEN, txbuff);  //CAN·¢ËÍÊý¾Ý¡£»º³åÇøCAN_TX_MB£¬±¨ÎÄID:tx_ID£¬Êý¾Ý»º³åÇøtxbuff£¬³¤¶È DATA_LEN
  */
 void can_tx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8 len, void *buff)
 {
@@ -197,21 +197,21 @@ void can_tx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8 len, void *buff)
     CAN_MemMapPtr canptr = CANN[cann];
 
 
-    ASSERT(len <= 8 );       //æ–­è¨€ï¼Œä¸€æ¬¡å‘é€æœ€å¤§é•¿åº¦ä¸º 8å­—èŠ‚
+    ASSERT(len <= 8 );       //¶ÏÑÔ£¬Ò»´Î·¢ËÍ×î´ó³¤¶ÈÎª 8×Ö½Ú
 
 
-    //ä»¥ä¸‹å››æ­¥éª¤ä¸ºå‘é€è¿‡ç¨‹
+    //ÒÔÏÂËÄ²½ÖèÎª·¢ËÍ¹ý³Ì
     CAN_CS_REG(canptr, nMB)   = ( 0
-                                  | CAN_CS_CODE(CAN_CS_CODE_TX_INACTIVE)    //ç¼“å†²åŒºå†™éžæ¿€æ´»ä»£ç 
-                                  | (id.IDE << CAN_CS_IDE_SHIFT)            //ç¼“å†²åŒºå†™IDEä½
-                                  | (id.RTR << CAN_CS_RTR_SHIFT)            //ç¼“å†²åŒºå†™RTRä½
-                                  | CAN_CS_DLC(len)                         //ç¼“å†²åŒºå†™æ•°æ®é•¿åº¦
+                                  | CAN_CS_CODE(CAN_CS_CODE_TX_INACTIVE)    //»º³åÇøÐ´·Ç¼¤»î´úÂë
+                                  | (id.IDE << CAN_CS_IDE_SHIFT)            //»º³åÇøÐ´IDEÎ»
+                                  | (id.RTR << CAN_CS_RTR_SHIFT)            //»º³åÇøÐ´RTRÎ»
+                                  | CAN_CS_DLC(len)                         //»º³åÇøÐ´Êý¾Ý³¤¶È
                                 );
 
-    //ç¼“å†²åŒºå†™ID
+    //»º³åÇøÐ´ID
     if(id.IDE)
     {
-        //æ‹“å±•å¸§
+        //ÍØÕ¹Ö¡
         CAN_ID_REG(canptr, nMB)   = ( 0
                                       | CAN_ID_PRIO(1)
                                       | CAN_ID_EXT(id.ID)
@@ -219,54 +219,54 @@ void can_tx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8 len, void *buff)
     }
     else
     {
-        //æ ‡å‡†å¸§
+        //±ê×¼Ö¡
         CAN_ID_REG(canptr, nMB)   = ( 0
                                       | CAN_ID_PRIO(1)
                                       | CAN_ID_STD(id.ID)
                                     );
     }
 
-    //ç¼“å†²åŒºå†™å†…å®¹
+    //»º³åÇøÐ´ÄÚÈÝ
     word = *(uint32 *)buff;
     CAN_WORD0_REG(canptr, nMB) = SWAP32(word);
 
     word = *((uint32 *)buff + 1);
     CAN_WORD1_REG(canptr, nMB) = SWAP32(word);
 
-    //å¼€å§‹å‘é€
+    //¿ªÊ¼·¢ËÍ
     CAN_CS_REG(canptr, nMB)   =   ( 0
-                                    | CAN_CS_CODE(CAN_CS_CODE_TX_DATA)              //å†™æ¿€æ´»ä»£ç ï¼ŒMB ä¸ºä¸€ä¸ªå‘é€æ•°æ®å¸§ï¼ˆMB çš„ RTR ä½ä¸º 0ï¼‰
+                                    | CAN_CS_CODE(CAN_CS_CODE_TX_DATA)              //Ð´¼¤»î´úÂë£¬MB ÎªÒ»¸ö·¢ËÍÊý¾ÝÖ¡£¨MB µÄ RTR Î»Îª 0£©
                                     //| CAN_CS_RTR_MASK
-                                    | CAN_CS_DLC(len)                               //ç¼“å†²åŒºå†™æ•°æ®é•¿åº¦
+                                    | CAN_CS_DLC(len)                               //»º³åÇøÐ´Êý¾Ý³¤¶È
                                   );
 
-    //é™æ—¶ç­‰å¾…å‘é€å®Œæˆï¼ˆå¦‚æžœä½¿ç”¨ä¸­æ–­åˆ™é™æ—¶ç­‰å¾…è¯­å¥å¯åˆ é™¤ï¼‰
+    //ÏÞÊ±µÈ´ý·¢ËÍÍê³É£¨Èç¹ûÊ¹ÓÃÖÐ¶ÏÔòÏÞÊ±µÈ´ýÓï¾ä¿ÉÉ¾³ý£©
     while(!(CAN_IFLAG1_REG(canptr) & (1 << nMB)));
 
 
-    //æ¸…æŠ¥æ–‡ç¼“å†²åŒºä¸­æ–­æ ‡å¿—
+    //Çå±¨ÎÄ»º³åÇøÖÐ¶Ï±êÖ¾
     CAN_IFLAG1_REG(canptr)  = (1 << nMB);
 
 }
 
 /*!
- *  @brief      ä½¿èƒ½ CAN æŽ¥æ”¶ç¼“å†²åŒº
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
- *  @param      CAN_USR_ID_t    IDç¼–å·
+ *  @brief      Ê¹ÄÜ CAN ½ÓÊÕ»º³åÇø
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
+ *  @param      CAN_USR_ID_t    ID±àºÅ
  *  @since      v5.0
  *  Sample usage:      can_rxbuff_enble(CAN1,CAN_RX_MB,can_my_id);
- *                                   //ä½¿èƒ½æŽ¥æ”¶ç¼“å†²åŒº
+ *                                   //Ê¹ÄÜ½ÓÊÕ»º³åÇø
  */
 void can_rxbuff_enble(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id)
 {
     CAN_MemMapPtr canptr = CANN[cann];
 
-    //å°†MBé…ç½®ä¸ºéžæ¿€æ´»çŠ¶æ€
+    //½«MBÅäÖÃÎª·Ç¼¤»î×´Ì¬
     CAN_CS_REG(canptr, nMB) = CAN_CS_CODE(CAN_CS_CODE_RX_INACTIVE);
 
 
-    if(id.IDE )         //æ‰©å±•å¸§
+    if(id.IDE )         //À©Õ¹Ö¡
     {
         CAN_ID_REG(canptr, nMB) =   ( 0
                                       | CAN_ID_EXT( id.ID)
@@ -276,33 +276,33 @@ void can_rxbuff_enble(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id)
         CAN_CS_REG(canptr, nMB) = (0
                                    | CAN_CS_IDE_MASK
                                    | (id.RTR << CAN_CS_IDE_SHIFT)
-                                   | CAN_CS_CODE(CAN_CS_CODE_RX_EMPTY)//æ¿€æ´»æŽ¥æ”¶ç¼“å†²åŒº
+                                   | CAN_CS_CODE(CAN_CS_CODE_RX_EMPTY)//¼¤»î½ÓÊÕ»º³åÇø
                                   );
     }
     else
     {
-        //æ ‡å‡†å¸§
+        //±ê×¼Ö¡
         CAN_ID_REG(canptr, nMB) =   ( 0
                                       | CAN_ID_STD( id.ID)
                                     );
 
         CAN_CS_REG(canptr, nMB) = (0
                                    | (id.RTR << CAN_CS_IDE_SHIFT)
-                                   | CAN_CS_CODE(CAN_CS_CODE_RX_EMPTY)//æ¿€æ´»æŽ¥æ”¶ç¼“å†²åŒº
+                                   | CAN_CS_CODE(CAN_CS_CODE_RX_EMPTY)//¼¤»î½ÓÊÕ»º³åÇø
                                   );
 
     }
 }
 
 /*!
- *  @brief      CAN æŽ¥æ”¶æŽ©ç é…ç½®
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
- *  @param      mask            æŽ©ç 
- *  @param      isIRMQ          æ˜¯å¦é€‰æ‹©ç‹¬ç«‹æŽ©ç ï¼ˆ0ä¸ºå…¨å±€æŽ©ç ï¼Œå…¶ä»–ä¸ºç‹¬ç«‹æŽ©ç ï¼‰
+ *  @brief      CAN ½ÓÊÕÑÚÂëÅäÖÃ
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
+ *  @param      mask            ÑÚÂë
+ *  @param      isIRMQ          ÊÇ·ñÑ¡Ôñ¶ÀÁ¢ÑÚÂë£¨0ÎªÈ«¾ÖÑÚÂë£¬ÆäËûÎª¶ÀÁ¢ÑÚÂë£©
  *  @since      v5.0
  *  Sample usage:      can_rxbuff_mask(CAN1,CAN_RX_MB,0x00FF,1);
- *                              //CAN1 çš„CAN_RX_MB ç¼“å†²åŒº é…ç½®æŽ©ç ä¸º 0x00FF
+ *                              //CAN1 µÄCAN_RX_MB »º³åÇø ÅäÖÃÑÚÂëÎª 0x00FF
  */
 
 void can_rxbuff_mask(CANn_e cann, mb_num_e nMB, uint32 mask,uint8 isIRMQ)
@@ -310,12 +310,12 @@ void can_rxbuff_mask(CANn_e cann, mb_num_e nMB, uint32 mask,uint8 isIRMQ)
     uint8           bFreezeMode;
     CAN_MemMapPtr   canptr = CANN[cann];
 
-    //è¿›å…¥å†»ç»“æ¨¡å¼
+    //½øÈë¶³½áÄ£Ê½
     if(!(CAN_MCR_REG(canptr) & CAN_MCR_HALT_MASK))
     {
         CAN_MCR_REG(canptr)  |= (CAN_MCR_HALT_MASK);
 
-        // ç­‰å¾…è¿›å…¥ è¿›å…¥å†»ç»“æ¨¡å¼
+        // µÈ´ý½øÈë ½øÈë¶³½áÄ£Ê½
         while(!(CAN_MCR_REG(canptr) & CAN_MCR_FRZACK_MASK));
 
         bFreezeMode = 0;
@@ -325,18 +325,18 @@ void can_rxbuff_mask(CANn_e cann, mb_num_e nMB, uint32 mask,uint8 isIRMQ)
         bFreezeMode = 1;
     }
 
-    if(isIRMQ != 0)       //ä½¿ç”¨ç‹¬ç«‹æŽ©ç 
+    if(isIRMQ != 0)       //Ê¹ÓÃ¶ÀÁ¢ÑÚÂë
     {
         CAN_MCR_REG(canptr) |=  CAN_MCR_IRMQ_MASK;
 
-        // ç‹¬ç«‹æŽ©ç 
+        // ¶ÀÁ¢ÑÚÂë
         CAN_RXIMR_REG(canptr, nMB) = mask;
     }
     else
     {
         CAN_MCR_REG(canptr) &=  ~CAN_MCR_IRMQ_MASK;
 
-        // 14/15 æ˜¯ä½¿ç”¨ç‹¬ç«‹çš„
+        // 14/15 ÊÇÊ¹ÓÃ¶ÀÁ¢µÄ
         if(nMB == MB_NUM_14)
         {
             CAN_RX14MASK_REG(canptr)  = mask;
@@ -347,11 +347,11 @@ void can_rxbuff_mask(CANn_e cann, mb_num_e nMB, uint32 mask,uint8 isIRMQ)
         }
         else
         {
-            // å‰©ä½™çš„æ”¯æŒå…¨å±€æŽ©ç 
+            // Ê£ÓàµÄÖ§³ÖÈ«¾ÖÑÚÂë
             CAN_RXMGMASK_REG(canptr)  = mask;
         }
     }
-    // æ¢å¤CAN æ“ä½œæ¨¡å¼
+    // »Ö¸´CAN ²Ù×÷Ä£Ê½
     if(!bFreezeMode)
     {
         // De-assert Freeze Mode
@@ -366,14 +366,14 @@ void can_rxbuff_mask(CANn_e cann, mb_num_e nMB, uint32 mask,uint8 isIRMQ)
 }
 
 /*!
- *  @brief      CAN æŽ¥æ”¶æ•°æ®
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
- *  @param      CAN_USR_ID_t    IDç¼–å·
- *  @param      len             æ•°æ®é•¿åº¦
- *  @param      buff            ç¼“å†²åŒºåœ°å€
+ *  @brief      CAN ½ÓÊÕÊý¾Ý
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
+ *  @param      CAN_USR_ID_t    ID±àºÅ
+ *  @param      len             Êý¾Ý³¤¶È
+ *  @param      buff            »º³åÇøµØÖ·
  *  @since      v5.0
- *  Sample usage:       can_rx(CAN1,CAN_RX_MB,&can_rx_id,&can_rx_len,can_rx_data);  //CAN ä»Ž CAN_RX_MB æŽ¥æ”¶æ•°æ® ï¼ŒæŽ¥æ”¶åˆ°çš„ ID ä¿å­˜åœ¨ can_rx_id é‡Œï¼Œé•¿åº¦ä¿å­˜åœ¨ can_rx_lenï¼Œæ•°æ®ä¿å­˜åœ¨ can_rx_data
+ *  Sample usage:       can_rx(CAN1,CAN_RX_MB,&can_rx_id,&can_rx_len,can_rx_data);  //CAN ´Ó CAN_RX_MB ½ÓÊÕÊý¾Ý £¬½ÓÊÕµ½µÄ ID ±£´æÔÚ can_rx_id Àï£¬³¤¶È±£´æÔÚ can_rx_len£¬Êý¾Ý±£´æÔÚ can_rx_data
  */
 void can_rx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void   *buff)
 {
@@ -384,7 +384,7 @@ void can_rx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void   *buf
 
     *(uint32 *)id = 0;
 
-    if((CAN_CS_REG(canptr, nMB)  & CAN_CS_CODE_MASK) != CAN_CS_CODE(CAN_CS_CODE_RX_FULL) ) //ç¼“å†²åŒºæ²¡æœ‰æŽ¥æ”¶åˆ°æ•°æ®ï¼Œè¿”å›žé”™è¯¯
+    if((CAN_CS_REG(canptr, nMB)  & CAN_CS_CODE_MASK) != CAN_CS_CODE(CAN_CS_CODE_RX_FULL) ) //»º³åÇøÃ»ÓÐ½ÓÊÕµ½Êý¾Ý£¬·µ»Ø´íÎó
     {
         *len = 0;
         return;
@@ -392,26 +392,26 @@ void can_rx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void   *buf
 
     length = ( CAN_CS_REG(canptr, nMB) & CAN_CS_DLC_MASK ) >> CAN_CS_DLC_SHIFT;
 
-    if(length < 1) //æŽ¥æ”¶åˆ°çš„æ•°æ®é•¿åº¦å°äºŽ1ï¼Œè¿”å›žé”™è¯¯
+    if(length < 1) //½ÓÊÕµ½µÄÊý¾Ý³¤¶ÈÐ¡ÓÚ1£¬·µ»Ø´íÎó
     {
         *len = 0;
         return;
     }
 
-    //åˆ¤æ–­æ˜¯æ ‡å‡†å¸§è¿˜æ˜¯æ‰©å±•å¸§
+    //ÅÐ¶ÏÊÇ±ê×¼Ö¡»¹ÊÇÀ©Õ¹Ö¡
     if(! ( CAN_CS_REG(canptr, nMB) & CAN_CS_IDE_MASK ) )
     {
-        id->ID = ( CAN_ID_REG(canptr, nMB) & CAN_ID_STD_MASK ) >> CAN_ID_STD_SHIFT; // èŽ·å¾—æ ‡å‡†ID
+        id->ID = ( CAN_ID_REG(canptr, nMB) & CAN_ID_STD_MASK ) >> CAN_ID_STD_SHIFT; // »ñµÃ±ê×¼ID
     }
     else
     {
-        id->ID = ( CAN_ID_REG(canptr, nMB) & CAN_ID_EXT_MASK ) >> CAN_ID_EXT_SHIFT; // èŽ·å– æ‰©å±•ID
-        id->IDE = 1 ; //æ ‡è®°æ‰©å±•çš„ID
+        id->ID = ( CAN_ID_REG(canptr, nMB) & CAN_ID_EXT_MASK ) >> CAN_ID_EXT_SHIFT; // »ñÈ¡ À©Õ¹ID
+        id->IDE = 1 ; //±ê¼ÇÀ©Õ¹µÄID
     }
 
     if(CAN_CS_REG(canptr, nMB) & CAN_CS_RTR_MASK)
     {
-        id->RTR = 1; //æ ‡è®°ä¸ºè¿œç¨‹å¸§ç±»åž‹
+        id->RTR = 1; //±ê¼ÇÎªÔ¶³ÌÖ¡ÀàÐÍ
     }
 
     word = CAN_WORD0_REG(canptr, nMB);
@@ -422,13 +422,13 @@ void can_rx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void   *buf
 
     *len = length;
 
-    CAN_TIMER_REG(canptr);      //è§£é” MB
+    CAN_TIMER_REG(canptr);      //½âËø MB
 }
 
 /*!
- *  @brief      ä½¿èƒ½ CAN ç¼“å†²åŒºæŽ¥æ”¶å’Œå‘é€ä¸­æ–­
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
+ *  @brief      Ê¹ÄÜ CAN »º³åÇø½ÓÊÕºÍ·¢ËÍÖÐ¶Ï
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
  *  @since      v5.0
  *  Sample usage:       can_irq_en(CAN1,MB_NUM_5);
  */
@@ -450,9 +450,9 @@ void can_irq_en(CANn_e cann, mb_num_e nMB)
 }
 
 /*!
- *  @brief      ç¦æ­¢ CAN ç¼“å†²åŒºæŽ¥æ”¶å’Œå‘é€ä¸­æ–­
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
+ *  @brief      ½ûÖ¹ CAN »º³åÇø½ÓÊÕºÍ·¢ËÍÖÐ¶Ï
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
  *  @since      v5.0
  *  Sample usage:       can_irq_dis(CAN1,MB_NUM_5);
  */
@@ -473,9 +473,9 @@ void can_irq_dis(CANn_e cann, mb_num_e nMB)
 }
 
 /*!
- *  @brief      æ¸… CAN ç¼“å†²åŒºä¸­æ–­æ ‡å¿—
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
+ *  @brief      Çå CAN »º³åÇøÖÐ¶Ï±êÖ¾
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
  *  @since      v5.0
  *  Sample usage:       can_clear_flag(CAN1,MB_NUM_5);
  */
@@ -488,9 +488,9 @@ void can_clear_flag(CANn_e cann, mb_num_e nMB)
 
 
 /*!
- *  @brief      èŽ·å¾— CAN ç¼“å†²åŒºä¸­æ–­æ ‡å¿—
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      mb_num_e        ç¼“å†²åŒºç¼–å·
+ *  @brief      »ñµÃ CAN »º³åÇøÖÐ¶Ï±êÖ¾
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      mb_num_e        »º³åÇø±àºÅ
  *  @since      v5.0
  *  Sample usage:       can_get_flag(CAN1,MB_NUM_5);
  */
@@ -503,9 +503,9 @@ uint32 can_get_flag(CANn_e cann, mb_num_e nMB)
 
 
 /*!
- *  @brief      è®¾ç½® CAN çš„æ³¢ç‰¹çŽ‡
- *  @param      CANn_e          CAN æ¨¡å—å·
- *  @param      CAN_BAUD_e      æ³¢ç‰¹çŽ‡ç¼–å·
+ *  @brief      ÉèÖÃ CAN µÄ²¨ÌØÂÊ
+ *  @param      CANn_e          CAN Ä£¿éºÅ
+ *  @param      CAN_BAUD_e      ²¨ÌØÂÊ±àºÅ
  *  @since      v5.0
  *  Sample usage:       can_setband(CAN1, CAN_BAUD_20K)
  */
@@ -516,11 +516,11 @@ void can_setband(CANn_e cann, CAN_BAUD_e band)
     uint32  can_clk_khz;
     uint8   bFreezeMode;
 
-    if(CAN_CTRL1_REG(canptr) & CAN_CTRL1_CLKSRC_MASK)     //busæ—¶é’Ÿ
+    if(CAN_CTRL1_REG(canptr) & CAN_CTRL1_CLKSRC_MASK)     //busÊ±ÖÓ
     {
         can_clk_khz =  bus_clk_khz;
     }
-    else                                                //å¤–éƒ¨æ™¶æŒ¯æ—¶é’Ÿ
+    else                                                //Íâ²¿¾§ÕñÊ±ÖÓ
     {
         can_clk_khz = EXTAL_IN_MHz *1000;
     }
@@ -535,15 +535,15 @@ void can_setband(CANn_e cann, CAN_BAUD_e band)
     }
     else
     {
-        ASSERT(0);          //ä»…æ”¯æŒ bus æ—¶é’Ÿä¸º 50M æˆ– 60M
+        ASSERT(0);          //½öÖ§³Ö bus Ê±ÖÓÎª 50M »ò 60M
     }
 
-    //è¿›å…¥å†»ç»“æ¨¡å¼
+    //½øÈë¶³½áÄ£Ê½
     if(!(CAN_MCR_REG(canptr) & CAN_MCR_HALT_MASK))
     {
         CAN_MCR_REG(canptr)  |= (CAN_MCR_HALT_MASK);
 
-        // ç­‰å¾…è¿›å…¥ è¿›å…¥å†»ç»“æ¨¡å¼
+        // µÈ´ý½øÈë ½øÈë¶³½áÄ£Ê½
         while(!(CAN_MCR_REG(canptr) & CAN_MCR_FRZACK_MASK));
 
         bFreezeMode = 0;
@@ -553,7 +553,7 @@ void can_setband(CANn_e cann, CAN_BAUD_e band)
         bFreezeMode = 1;
     }
 
-    //æ¸…ç©ºéœ€è¦é…ç½®çš„ä½
+    //Çå¿ÕÐèÒªÅäÖÃµÄÎ»
     CAN_CTRL1_REG(canptr) &= ~(0
                                | CAN_CTRL1_PROPSEG_MASK
                                | CAN_CTRL1_RJW_MASK
@@ -561,7 +561,7 @@ void can_setband(CANn_e cann, CAN_BAUD_e band)
                                | CAN_CTRL1_PSEG2_MASK
                                | CAN_CTRL1_PRESDIV_MASK
                                );
-    //è®¾ç½®æ³¢ç‰¹çŽ‡
+    //ÉèÖÃ²¨ÌØÂÊ
     CAN_CTRL1_REG(canptr) |= (0
                              | CAN_CTRL1_PROPSEG(pcan_ban_cfg->prop_seg)
                              | CAN_CTRL1_RJW(pcan_ban_cfg->rjw)
@@ -570,7 +570,7 @@ void can_setband(CANn_e cann, CAN_BAUD_e band)
                              | CAN_CTRL1_PRESDIV(pcan_ban_cfg->presdiv)
                             );
 
-    // æ¢å¤CAN æ“ä½œæ¨¡å¼
+    // »Ö¸´CAN ²Ù×÷Ä£Ê½
     if(!bFreezeMode)
     {
         // De-assert Freeze Mode

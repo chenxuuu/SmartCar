@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_NRF24L0_MSG.h
- * @brief      æ— çº¿è°ƒè¯• æ¶ˆæ¯æœºåˆ¶ å‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      ÎÞÏßµ÷ÊÔ ÏûÏ¢»úÖÆ º¯Êý
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2014-01-04
  */
@@ -23,62 +23,62 @@
 
 
 
-#define COM_LEN     2   //comå‘½ä»¤å ç”¨çš„å­—èŠ‚
+#define COM_LEN     2   //comÃüÁîÕ¼ÓÃµÄ×Ö½Ú
 
 
 
-//æŽ§åˆ¶å‘½ä»¤COMæ‰§è¡Œå‡½æ•°è¿”å›žç»“æžœ
-//COMå‘½ä»¤ï¼Œéœ€è¦æ‰§è¡Œå¯¹åº”çš„å‡½æ•°
-//MSGæ¶ˆæ¯ï¼Œå‘é€æ–¹ä¸»åŠ¨é€šçŸ¥ï¼Œä¸éœ€è¦æ‰§è¡Œä»»ä½•å‡½æ•°
+//¿ØÖÆÃüÁîCOMÖ´ÐÐº¯Êý·µ»Ø½á¹û
+//COMÃüÁî£¬ÐèÒªÖ´ÐÐ¶ÔÓ¦µÄº¯Êý
+//MSGÏûÏ¢£¬·¢ËÍ·½Ö÷¶¯Í¨Öª£¬²»ÐèÒªÖ´ÐÐÈÎºÎº¯Êý
 typedef enum
 {
-    NRF_RESULT_FALSE = 0,                   //å‡ã€å¤±è´¥ã€äº‹ä»¶æ²¡å‘ç”Ÿ
-    NRF_RESULT_TRUE = 1,                    //çœŸã€æˆåŠŸã€äº‹ä»¶å‘ç”Ÿäº†
-    NRF_RESULT_QUIT,                    //é€€å‡º
+    NRF_RESULT_FALSE = 0,                   //¼Ù¡¢Ê§°Ü¡¢ÊÂ¼þÃ»·¢Éú
+    NRF_RESULT_TRUE = 1,                    //Õæ¡¢³É¹¦¡¢ÊÂ¼þ·¢ÉúÁË
+    NRF_RESULT_QUIT,                    //ÍË³ö
 
-    NRF_RESULT_NULL,                    //ä¸è¿›è¡Œä»»ä½•å¤„ç†
+    NRF_RESULT_NULL,                    //²»½øÐÐÈÎºÎ´¦Àí
 
-    //æŽ¥æ”¶æ•°æ®
-    NRF_RESULT_RX_NO,                   //æ²¡æŽ¥æ”¶åˆ°æ•°æ®
-    NRF_RESULT_RX_VALID,                //æŽ¥æ”¶æœ‰æ•ˆæ•°æ®
-    NRF_RESULT_RX_NOVALID,              //æŽ¥æ”¶åˆ°æ•°æ®ï¼Œä½†æ— æ•ˆ
+    //½ÓÊÕÊý¾Ý
+    NRF_RESULT_RX_NO,                   //Ã»½ÓÊÕµ½Êý¾Ý
+    NRF_RESULT_RX_VALID,                //½ÓÊÕÓÐÐ§Êý¾Ý
+    NRF_RESULT_RX_NOVALID,              //½ÓÊÕµ½Êý¾Ý£¬µ«ÎÞÐ§
 
 
-    /*** EVENT äº‹ä»¶ ***/
-    //  NRF_RESULT_EVENT_FALSE,             //æ²¡äº‹ä»¶å‘ç”Ÿï¼Œæˆ–ä¼ è¾“äº‹ä»¶æ•°æ®æœ‰è¯¯
-    //  NRF_RESULT_EVENT_FINIST,            //äº‹ä»¶ä¼ è¾“å®Œæ¯•
-    //  NRF_RESULT_EVENT_CONTINUE,          //äº‹ä»¶ç»§ç»­ä¼ è¾“ï¼ˆå¤šä¸ªäº‹ä»¶å‘é€äº†ï¼Œéœ€è¦ç»§ç»­ä¼ è¾“ï¼‰
+    /*** EVENT ÊÂ¼þ ***/
+    //  NRF_RESULT_EVENT_FALSE,             //Ã»ÊÂ¼þ·¢Éú£¬»ò´«ÊäÊÂ¼þÊý¾ÝÓÐÎó
+    //  NRF_RESULT_EVENT_FINIST,            //ÊÂ¼þ´«ÊäÍê±Ï
+    //  NRF_RESULT_EVENT_CONTINUE,          //ÊÂ¼þ¼ÌÐø´«Êä£¨¶à¸öÊÂ¼þ·¢ËÍÁË£¬ÐèÒª¼ÌÐø´«Êä£©
 
 } nrf_result_e;
 
-//æŽ§åˆ¶å‘½ä»¤æ¶ˆæ¯ç±»åž‹
+//¿ØÖÆÃüÁîÏûÏ¢ÀàÐÍ
 typedef enum
 {
-    ////////////////// COMå‘½ä»¤ /////////////////////
-    //éœ€è¦æ ¡éªŒæŽ¥æ”¶çš„å‘½ä»¤æ˜¯å¦æ­£ç¡®
-    //å‘é€çš„æ•°æ®ï¼š XXX_COM ï¼Œ~XXX_COM    åŽé¢ç»§ç»­å‘é€éœ€è¦å‘é€çš„ä¿¡æ¯ï¼Œç”±å¯¹åº”çš„æ‰§è¡Œå‡½æ•°è¿›è¡Œå¤„ç†
+    ////////////////// COMÃüÁî /////////////////////
+    //ÐèÒªÐ£Ñé½ÓÊÕµÄÃüÁîÊÇ·ñÕýÈ·
+    //·¢ËÍµÄÊý¾Ý£º XXX_COM £¬~XXX_COM    ºóÃæ¼ÌÐø·¢ËÍÐèÒª·¢ËÍµÄÐÅÏ¢£¬ÓÉ¶ÔÓ¦µÄÖ´ÐÐº¯Êý½øÐÐ´¦Àí
 
-    //å›¾åƒä¼ è¾“
+    //Í¼Ïñ´«Êä
     COM_IMG,
 
-    //çº¿æ€§CCD
+    //ÏßÐÔCCD
     COM_CCD,
 
-    //å˜é‡ä¼ è¾“æŽ§åˆ¶
+    //±äÁ¿´«Êä¿ØÖÆ
     COM_VAR,
 
-    COM_RETRAN,//å¤ä½ä¼ è¾“ï¼Œä¸¢å¼ƒä¹‹å‰æŽ¥æ”¶åˆ°çš„æ•°æ®
+    COM_RETRAN,//¸´Î»´«Êä£¬¶ªÆúÖ®Ç°½ÓÊÕµ½µÄÊý¾Ý
 
-    /*  éœ€è¦æ·»åŠ åŠŸèƒ½ï¼Œè¯·æ”¾å…¥æ­¤ä½ç½®  */
+    /*  ÐèÒªÌí¼Ó¹¦ÄÜ£¬Çë·ÅÈë´ËÎ»ÖÃ  */
 
 
-    COM_MAX     ,       //æœ€å¤§æŽ§åˆ¶å‘½ä»¤æ•°ç›®                                                  ********************************
+    COM_MAX     ,       //×î´ó¿ØÖÆÃüÁîÊýÄ¿                                                  ********************************
 
 } com_e;
 
-extern void             nrf_msg_init();                                //åˆå§‹åŒ–æ¶ˆæ¯å¤„ç†(å¹¶æ²¡æœ‰åˆå§‹åŒ– nrf æ¨¡å—)
-extern nrf_result_e     nrf_msg_tx(com_e   com, uint8 *sendbuf);       //å‘é€æ•°æ®ï¼Œå‘é€é•¿åº¦ç”±comå†³å®š
-extern nrf_result_e     nrf_msg_rx(com_e  *com, uint8 *rebuf);         //æŽ¥æ”¶æ•°æ®,å¹¶è¿›è¡Œå¤„ç†
+extern void             nrf_msg_init();                                //³õÊ¼»¯ÏûÏ¢´¦Àí(²¢Ã»ÓÐ³õÊ¼»¯ nrf Ä£¿é)
+extern nrf_result_e     nrf_msg_tx(com_e   com, uint8 *sendbuf);       //·¢ËÍÊý¾Ý£¬·¢ËÍ³¤¶ÈÓÉcom¾ö¶¨
+extern nrf_result_e     nrf_msg_rx(com_e  *com, uint8 *rebuf);         //½ÓÊÕÊý¾Ý,²¢½øÐÐ´¦Àí
 
 
 

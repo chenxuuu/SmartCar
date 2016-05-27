@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,山外科技
+ *     Copyright (c) 2013,ɽ��Ƽ�
  *     All rights reserved.
- *     技术讨论：山外论坛 http://www.vcan123.com
+ *     �������ۣ�ɽ����̳ http://www.vcan123.com
  *
- *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
- *     修改内容时必须保留山外科技的版权声明。
+ *     ��ע�������⣬�����������ݰ�Ȩ����ɽ��Ƽ����У�δ������������������ҵ��;��
+ *     �޸�����ʱ���뱣��ɽ��Ƽ��İ�Ȩ������
  *
  * @file       vectors.c
- * @brief      中断向量表
- * @author     山外科技
+ * @brief      �ж�������
+ * @author     ɽ��Ƽ�
  * @version    v5.0
  * @date       2013-07-02
  */
@@ -22,11 +22,11 @@
 
 
 
-#pragma location = ".intvec"                    //指定 如下数组放入 intvec 段
+#pragma location = ".intvec"                    //ָ�� ����������� intvec ��
 const vector_entry  __vector_table[] =          //@ ".intvec" =
 {
-    VECTOR_000,           /* 此值复位启动时复制到 SP ，即指定栈地址          */
-    VECTOR_001,           /* 此值复位启动时复制到 PC ，即启动马上执行的函数  */
+    VECTOR_000,           /* ��ֵ��λ����ʱ���Ƶ� SP ����ָ��ջ��ַ          */
+    VECTOR_001,           /* ��ֵ��λ����ʱ���Ƶ� PC ������������ִ�еĺ���  */
     VECTOR_002,
     VECTOR_003,
     VECTOR_004,

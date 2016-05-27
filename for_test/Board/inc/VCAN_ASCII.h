@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_ASCII.h
- * @brief      å¸¸ç”¨ASCIIè¡¨
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      ³£ÓÃASCII±í
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-09-02
  */
@@ -20,11 +20,11 @@
 extern unsigned char vcan_str[4*16*2];
 
 
-//å¸¸ç”¨ASCIIè¡¨
-//åç§»é‡32
-//ASCIIå­—ç¬¦é›†
-//åç§»é‡32
-//å¤§å°:12*6
+//³£ÓÃASCII±í
+//Æ«ÒÆÁ¿32
+//ASCII×Ö·û¼¯
+//Æ«ÒÆÁ¿32
+//´óÐ¡:12*6
 extern unsigned char const ascii_8x16[1536];
 
 

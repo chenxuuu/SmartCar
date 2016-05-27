@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_LCD.c
- * @brief      LCD å‡½æ•°åº“
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      LCD º¯Êı¿â
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-06-26
  */
@@ -21,7 +21,7 @@
 
 
 /*!
- *  @brief      LCDåˆå§‹åŒ–
+ *  @brief      LCD³õÊ¼»¯
  *  @since      v5.0
  */
 void LCD_init(void)
@@ -29,22 +29,22 @@ void LCD_init(void)
     Site_t site = {0, 0};
     Size_t size ;
 
-    LCD_INIT();                             //åˆå§‹åŒ–LCD
+    LCD_INIT();                             //³õÊ¼»¯LCD
 
     //LCD_SET_DIR(LCD_DIR+1);
 
-    //ç”±äºåˆå§‹åŒ–çš„æ—¶å€™è¿›è¡Œ å±å¹•æ–¹å‘ é€‰æ‹©ï¼Œå› è€Œåˆå§‹åŒ–å®Œæˆåï¼Œæ‰è·å–å®½é«˜
+    //ÓÉÓÚ³õÊ¼»¯µÄÊ±ºò½øĞĞ ÆÁÄ»·½Ïò Ñ¡Ôñ£¬Òò¶ø³õÊ¼»¯Íê³Éºó£¬²Å»ñÈ¡¿í¸ß
     size.W = LCD_W;
     size.H = LCD_H;
 
-    LCD_rectangle(site, size, BCOLOUR);     //åˆå§‹åŒ–èƒŒæ™¯
+    LCD_rectangle(site, size, BCOLOUR);     //³õÊ¼»¯±³¾°
 }
 
 /*!
- *  @brief      æ˜¾ç¤ºå®å¿ƒçŸ©å½¢
- *  @param      site    å·¦ä¸Šè§’åæ ‡
- *  @param      size    çŸ©å½¢å¤§å°
- *  @param      rgb565  é¢œè‰²
+ *  @brief      ÏÔÊ¾ÊµĞÄ¾ØĞÎ
+ *  @param      site    ×óÉÏ½Ç×ø±ê
+ *  @param      size    ¾ØĞÎ´óĞ¡
+ *  @param      rgb565  ÑÕÉ«
  *  @since      v5.0
 *  Sample usage:        Site_t site = {10,20};   //x = 10 ,y = 20
                         Size_t size = {50,60};  // W = 50 ,H = 60
@@ -54,17 +54,17 @@ void LCD_rectangle(Site_t site, Size_t size, uint16 rgb565)
 {
     uint32 n, temp;
 
-    LCD_PTLON(site, size);              //å¼€çª—
+    LCD_PTLON(site, size);              //¿ª´°
 
     temp = (uint32)size.W * size.H;
-    LCD_RAMWR();                        //å†™å†…å­˜
+    LCD_RAMWR();                        //Ğ´ÄÚ´æ
     for(n = 0; n < temp; n++)
     {
-        LCD_WR_DATA( rgb565 );          //å†™æ•°æ®
+        LCD_WR_DATA( rgb565 );          //Ğ´Êı¾İ
     }
 }
 
-void LCD_clear(uint16 rgb565)     //æ¸…å±
+void LCD_clear(uint16 rgb565)     //ÇåÆÁ
 {
     Site_t site = {0,0};
     Size_t size;
@@ -75,18 +75,18 @@ void LCD_clear(uint16 rgb565)     //æ¸…å±
 
 }
 
-//ç”»åå­—å½¢
+//»­Ê®×ÖĞÎ
 void LCD_cross(Site_t site,uint16 len,uint16 Color)
 {
-    //ç”»ä¸¤æ¡ç›´çº¿
+    //»­Á½ÌõÖ±Ïß
     Site_t sitetmp;
     Size_t size;
     int16  stmp,etmp;
     uint16 w = LCD_W,h = LCD_H;
 
-    ASSERT((site.x<LCD_W) && (site.y<LCD_H));       //åå­—çº¿çš„ä¸­å¿ƒä¸èƒ½è¶…å‡ºæ¶²æ™¶èŒƒå›´
+    ASSERT((site.x<LCD_W) && (site.y<LCD_H));       //Ê®×ÖÏßµÄÖĞĞÄ²»ÄÜ³¬³öÒº¾§·¶Î§
 
-    stmp = site.x - len/2;                          //è®¡ç®—æ°´å¹³çº¿çš„xè½´èµ·ç‚¹å’Œç»“æŸç‚¹ï¼Œé™åˆ¶ä¸è¶…å‡ºæ¶²æ™¶èŒƒå›´
+    stmp = site.x - len/2;                          //¼ÆËãË®Æ½ÏßµÄxÖáÆğµãºÍ½áÊøµã£¬ÏŞÖÆ²»³¬³öÒº¾§·¶Î§
     if(stmp < 0)stmp = 0;
     etmp = site.x + len/2;
     if(etmp >= w)etmp= w-1;
@@ -97,7 +97,7 @@ void LCD_cross(Site_t site,uint16 len,uint16 Color)
     size.H = 1;
     LCD_rectangle(sitetmp,size, Color);
 
-    stmp = site.y - len/2;                          //è®¡ç®—æ°´å¹³çº¿çš„xè½´èµ·ç‚¹å’Œç»“æŸç‚¹ï¼Œé™åˆ¶ä¸è¶…å‡ºæ¶²æ™¶èŒƒå›´
+    stmp = site.y - len/2;                          //¼ÆËãË®Æ½ÏßµÄxÖáÆğµãºÍ½áÊøµã£¬ÏŞÖÆ²»³¬³öÒº¾§·¶Î§
     if(stmp < 0)stmp = 0;
     etmp = site.y + len/2;
     if(etmp >= h)etmp= h-1;
@@ -113,9 +113,9 @@ void LCD_cross(Site_t site,uint16 len,uint16 Color)
 }
 
 /*!
- *  @brief      ç”»ç‚¹
- *  @param      site    å·¦ä¸Šè§’åæ ‡
- *  @param      rgb565  é¢œè‰²
+ *  @brief      »­µã
+ *  @param      site    ×óÉÏ½Ç×ø±ê
+ *  @param      rgb565  ÑÕÉ«
  *  @since      v5.0
 *  Sample usage:        Site_t site = {10,20};   //x = 10 ,y = 20
                         LCD_point(site, RED);
@@ -124,33 +124,33 @@ void LCD_point(Site_t site, uint16 rgb565)
 {
     Size_t size = {1, 1};
     LCD_PTLON(site, size);
-    LCD_RAMWR();                        //å†™å†…å­˜
-    LCD_WR_DATA(rgb565);                //å†™æ•°æ®
+    LCD_RAMWR();                        //Ğ´ÄÚ´æ
+    LCD_WR_DATA(rgb565);                //Ğ´Êı¾İ
 }
 
 /*!
- *  @brief      ç”»ä¸€å †ç‚¹
- *  @param      site        ç‚¹åæ ‡æ•°ç»„
- *  @param      point_num   ç‚¹çš„æ•°é‡
- *  @param      rgb565      é¢œè‰²
+ *  @brief      »­Ò»¶Ñµã
+ *  @param      site        µã×ø±êÊı×é
+ *  @param      point_num   µãµÄÊıÁ¿
+ *  @param      rgb565      ÑÕÉ«
  *  @since      v5.0
-*  Sample usage:        Site_t site[3] = {{10,20},{11,21},{12,22}};   //3ä¸ªç‚¹ï¼Œåæ ‡åˆ†åˆ«æ˜¯  {10,20},{11,21},{12,22}
+*  Sample usage:        Site_t site[3] = {{10,20},{11,21},{12,22}};   //3¸öµã£¬×ø±ê·Ö±ğÊÇ  {10,20},{11,21},{12,22}
                         LCD_points(site,3, RED);
  */
-void LCD_points          (Site_t *site,uint32 point_num, uint16 rgb565)                 //ç”»ä¸€å †ç‚¹
+void LCD_points          (Site_t *site,uint32 point_num, uint16 rgb565)                 //»­Ò»¶Ñµã
 {
     while(point_num--)
     {
-        LCD_point(site[point_num],rgb565);                 //ç”»ç‚¹
+        LCD_point(site[point_num],rgb565);                 //»­µã
     }
 }
 
 /*!
- *  @brief      æ˜¾ç¤ºå­—ç¬¦
- *  @param      site    å·¦ä¸Šè§’åæ ‡
- *  @param      ascii   å­—ç¬¦
- *  @param      Color   å­—ä½“é¢œè‰²
- *  @param      bkColor èƒŒæ™¯é¢œè‰²
+ *  @brief      ÏÔÊ¾×Ö·û
+ *  @param      site    ×óÉÏ½Ç×ø±ê
+ *  @param      ascii   ×Ö·û
+ *  @param      Color   ×ÖÌåÑÕÉ«
+ *  @param      bkColor ±³¾°ÑÕÉ«
  *  @since      v5.0
 *  Sample usage:        Site_t site = {10,20};   //x = 10 ,y = 20
                         LCD_char(site,'0', BLUE,RED);
@@ -170,7 +170,7 @@ void LCD_char(Site_t site, uint8 ascii, uint16 Color, uint16 bkColor)
 
     LCD_PTLON(site, size);
 
-    LCD_RAMWR();                    //å†™å†…å­˜
+    LCD_RAMWR();                    //Ğ´ÄÚ´æ
 
     for (pos = 0; pos < 16; pos++)
     {
@@ -196,11 +196,11 @@ void LCD_char(Site_t site, uint8 ascii, uint16 Color, uint16 bkColor)
 }
 
 /*!
- *  @brief      æ˜¾ç¤ºå­—ç¬¦ä¸²
- *  @param      site    å·¦ä¸Šè§’åæ ‡
- *  @param      Str     å­—ç¬¦ä¸²åœ°å€
- *  @param      Color   å­—ä½“é¢œè‰²
- *  @param      bkColor èƒŒæ™¯é¢œè‰²
+ *  @brief      ÏÔÊ¾×Ö·û´®
+ *  @param      site    ×óÉÏ½Ç×ø±ê
+ *  @param      Str     ×Ö·û´®µØÖ·
+ *  @param      Color   ×ÖÌåÑÕÉ«
+ *  @param      bkColor ±³¾°ÑÕÉ«
  *  @since      v5.0
 *  Sample usage:        Site_t site = {10,20};   //x = 10 ,y = 20
                         LCD_str(site,"www.vcan123.com", BLUE,RED);
@@ -213,13 +213,13 @@ void LCD_str(Site_t site, uint8 *Str, uint16 Color, uint16 bkColor)
     {
         if(site.x > MAX_CHAR_POSX )
         {
-            //æ¢è¡Œ
+            //»»ĞĞ
             site.x = 0;
             site.y += 16;
         }
         if(site.y > MAX_CHAR_POSY )
         {
-            //ä¸€å±
+            //Ò»ÆÁ
             site.y = 0;
             site.x = 0;
         }
@@ -233,11 +233,11 @@ void LCD_str(Site_t site, uint8 *Str, uint16 Color, uint16 bkColor)
 }
 
 /*!
- *  @brief      æ˜¾ç¤ºæ•°å­—
- *  @param      site    å·¦ä¸Šè§’åæ ‡
- *  @param      num     æ•°å­—
- *  @param      Color   å­—ä½“é¢œè‰²
- *  @param      bkColor èƒŒæ™¯é¢œè‰²
+ *  @brief      ÏÔÊ¾Êı×Ö
+ *  @param      site    ×óÉÏ½Ç×ø±ê
+ *  @param      num     Êı×Ö
+ *  @param      Color   ×ÖÌåÑÕÉ«
+ *  @param      bkColor ±³¾°ÑÕÉ«
  *  @since      v5.0
 *  Sample usage:        Site_t site = {10,20};   //x = 10 ,y = 20
                         LCD_num(site,123, BLUE,RED);
@@ -254,7 +254,7 @@ void LCD_num(Site_t site, uint32 num, uint16 Color, uint16 bkColor)
         LCD_char(site, '0', Color, bkColor);
         return;
     }
-    while( res )  /*å¾—åˆ°æ•°å­—é•¿åº¦t*/
+    while( res )  /*µÃµ½Êı×Ö³¤¶Èt*/
     {
         res /= 10;
         t++;
@@ -269,12 +269,12 @@ void LCD_num(Site_t site, uint32 num, uint16 Color, uint16 bkColor)
 }
 
 /*!
- *  @brief      æ˜¾ç¤ºæ•°å­—ï¼ˆæ¸…ç©ºå¤šä½™çš„ä½ï¼‰
- *  @param      site            å·¦ä¸Šè§’åæ ‡
- *  @param      num             æ•°å­—
- *  @param      max_num_bit     æœ€å¤§çš„ä½æ•°
- *  @param      Color           å­—ä½“é¢œè‰²
- *  @param      bkColor         èƒŒæ™¯é¢œè‰²
+ *  @brief      ÏÔÊ¾Êı×Ö£¨Çå¿Õ¶àÓàµÄÎ»£©
+ *  @param      site            ×óÉÏ½Ç×ø±ê
+ *  @param      num             Êı×Ö
+ *  @param      max_num_bit     ×î´óµÄÎ»Êı
+ *  @param      Color           ×ÖÌåÑÕÉ«
+ *  @param      bkColor         ±³¾°ÑÕÉ«
  *  @since      v5.0
 *  Sample usage:        Site_t site = {10,20};   //x = 10 ,y = 20
                         LCD_num_BC(site,123,5, BLUE,RED);
@@ -299,12 +299,12 @@ void LCD_num_BC(Site_t site, uint32 num, uint8 max_num_bit, uint16 Color, uint16
 
         return;
     }
-    while( res )            /*å¾—åˆ°æ•°å­—é•¿åº¦t*/
+    while( res )            /*µÃµ½Êı×Ö³¤¶Èt*/
     {
         res /= 10;
         t++;
     }
-    if(t >= max_num_bit )    //é™åˆ¶æœ€å¤§é•¿åº¦
+    if(t >= max_num_bit )    //ÏŞÖÆ×î´ó³¤¶È
     {
         t = max_num_bit;
     }
@@ -328,10 +328,10 @@ void LCD_num_BC(Site_t site, uint32 num, uint8 max_num_bit, uint16 Color, uint16
 }
 
 /*!
- *  @brief      ç°åº¦å›¾åƒæ˜¾ç¤º
- *  @param      site            å·¦ä¸Šè§’åæ ‡
- *  @param      size            æ˜¾ç¤ºå›¾åƒå¤§å°
- *  @param      img             å›¾åƒåœ°å€
+ *  @brief      »Ò¶ÈÍ¼ÏñÏÔÊ¾
+ *  @param      site            ×óÉÏ½Ç×ø±ê
+ *  @param      size            ÏÔÊ¾Í¼Ïñ´óĞ¡
+ *  @param      img             Í¼ÏñµØÖ·
  *  @since      v5.0
  *  Sample usage:       Site_t site = {10,20};      //x = 10 ,y = 20
                         Size_t size = {320,240};    //W = 320,H = 240
@@ -343,23 +343,23 @@ void LCD_Img_gray(Site_t site, Size_t size, uint8 *img)
     uint16     imgtemp;
     uint8     *pimg = (uint8 *)img;
 
-    LCD_PTLON(site, size);                      //å¼€çª—
-    LCD_RAMWR();                                //å†™å†…å­˜
+    LCD_PTLON(site, size);                      //¿ª´°
+    LCD_RAMWR();                                //Ğ´ÄÚ´æ
 
     while(total--)
     {
         imgtemp     = (uint16) * (pimg++);
         imgtemp = GRAY_2_RGB565(imgtemp);
-        LCD_WR_DATA( imgtemp );               //å†™å›¾åƒæ•°æ®
+        LCD_WR_DATA( imgtemp );               //Ğ´Í¼ÏñÊı¾İ
     }
 }
 
 /*!
- *  @brief      ç¼©æ”¾ç°åº¦å›¾åƒæ˜¾ç¤º
- *  @param      site            å·¦ä¸Šè§’åæ ‡
- *  @param      size            æ˜¾ç¤ºå›¾åƒå¤§å°
- *  @param      img             å›¾åƒåœ°å€
- *  @param      imgsize         å›¾åƒå¤§å°
+ *  @brief      Ëõ·Å»Ò¶ÈÍ¼ÏñÏÔÊ¾
+ *  @param      site            ×óÉÏ½Ç×ø±ê
+ *  @param      size            ÏÔÊ¾Í¼Ïñ´óĞ¡
+ *  @param      img             Í¼ÏñµØÖ·
+ *  @param      imgsize         Í¼Ïñ´óĞ¡
  *  @since      v5.0
  *  Sample usage:       Site_t site = {10,20};          //x = 10 ,y = 20
                         Size_t size = {80,60};          //W = 80,H = 60
@@ -375,9 +375,9 @@ void LCD_Img_gray_Z(Site_t site, Size_t size, uint8 *img, Size_t imgsize)
     uint8 *pimg = (uint8 *)img;
     uint16 rgb;
 
-    LCD_PTLON(site, size);                      //å¼€çª—
+    LCD_PTLON(site, size);                      //¿ª´°
 
-    LCD_RAMWR();                                //å†™å†…å­˜
+    LCD_RAMWR();                                //Ğ´ÄÚ´æ
 
     for(y = 0; y < size.H; y++)
     {
@@ -403,9 +403,9 @@ void LCD_Img_Binary(Site_t site, Size_t size, uint8 *img)
     uint8       bitindex;
     uint8     *pimg = (uint8 *)img;
 
-    LCD_PTLON(site, size);                      //å¼€çª—
+    LCD_PTLON(site, size);                      //¿ª´°
 
-    LCD_RAMWR();                                //å†™å†…å­˜
+    LCD_RAMWR();                                //Ğ´ÄÚ´æ
 
     while(total--)
     {
@@ -415,11 +415,11 @@ void LCD_Img_Binary(Site_t site, Size_t size, uint8 *img)
         {
             if( imgtemp & (0x01 << bitindex) )
             {
-                LCD_WR_DATA( BINARY_COLOR );      //å†™å›¾åƒæ•°æ®
+                LCD_WR_DATA( BINARY_COLOR );      //Ğ´Í¼ÏñÊı¾İ
             }
             else
             {
-                LCD_WR_DATA(  BINARY_BGCOLOR  );      //å†™å›¾åƒæ•°æ®
+                LCD_WR_DATA(  BINARY_BGCOLOR  );      //Ğ´Í¼ÏñÊı¾İ
             }
         }
     }
@@ -433,9 +433,9 @@ void LCD_Img_Binary_Z(Site_t site, Size_t size, uint8 *img, Size_t imgsize)
     uint16 X, Y;
     uint8 *pimg = (uint8 *)img;
 
-    LCD_PTLON(site, size);                      //å¼€çª—
+    LCD_PTLON(site, size);                      //¿ª´°
 
-    LCD_RAMWR();                                //å†™å†…å­˜
+    LCD_RAMWR();                                //Ğ´ÄÚ´æ
 
     for(y = 0; y < size.H; y++)
     {
@@ -448,11 +448,11 @@ void LCD_Img_Binary_Z(Site_t site, Size_t size, uint8 *img, Size_t imgsize)
             temp = tempY + X;
             if( (pimg[temp>>3] & (1 << (7 - (temp & 0x07))) ) == 0  )
             {
-                LCD_WR_DATA( BINARY_BGCOLOR );        //å†™å›¾åƒæ•°æ®
+                LCD_WR_DATA( BINARY_BGCOLOR );        //Ğ´Í¼ÏñÊı¾İ
             }
             else
             {
-                LCD_WR_DATA( BINARY_COLOR );      //å†™å›¾åƒæ•°æ®
+                LCD_WR_DATA( BINARY_COLOR );      //Ğ´Í¼ÏñÊı¾İ
             }
         }
     }

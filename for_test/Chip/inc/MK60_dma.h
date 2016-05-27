@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,山外科技
+ *     Copyright (c) 2013,ɽ��Ƽ�
  *     All rights reserved.
- *     技术讨论：山外论坛 http://www.vcan123.com
+ *     �������ۣ�ɽ����̳ http://www.vcan123.com
  *
- *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
- *     修改内容时必须保留山外科技的版权声明。
+ *     ��ע�������⣬�����������ݰ�Ȩ����ɽ��Ƽ����У�δ������������������ҵ��;��
+ *     �޸�����ʱ���뱣��ɽ��Ƽ��İ�Ȩ������
  *
  * @file       MK60_dma.h
- * @brief      DMA函数库
- * @author     山外科技
+ * @brief      DMA������
+ * @author     ɽ��Ƽ�
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -21,7 +21,7 @@
 
 typedef enum
 {
-    /*        禁用通道            */
+    /*        ����ͨ��            */
     Channel_Disabled        = 0,
 
     /*        UART            */
@@ -109,11 +109,11 @@ typedef enum
 
 typedef enum
 {
-    DADDR_RECOVER = 0,        //恢复目的地址
-    DADDR_KEEPON  = 1,        //目的地址保持不变
+    DADDR_RECOVER = 0,        //�ָ�Ŀ�ĵ�ַ
+    DADDR_KEEPON  = 1,        //Ŀ�ĵ�ַ���ֲ���
 } DMA_cfg;
 
-typedef enum      //DMA每次传输字节数
+typedef enum      //DMAÿ�δ����ֽ���
 {
     DMA_BYTE1 = 0,
     DMA_BYTE2 = 1,
@@ -143,35 +143,35 @@ typedef enum
 } DMA_CHn;
 
 
-#define  DMA_IRQ_EN(DMA_CHn)    enable_irq((IRQn_t)((IRQn_t)DMA_CHn + DMA0_IRQn))               //允许DMA通道传输完成中断
-#define  DMA_IRQ_DIS(DMA_CHn)   disable_irq((IRQn_t)((IRQn_t)DMA_CHn + DMA0_IRQn))              //禁止DMA通道传输完成中断
+#define  DMA_IRQ_EN(DMA_CHn)    enable_irq((IRQn_t)((IRQn_t)DMA_CHn + DMA0_IRQn))               //����DMAͨ����������ж�
+#define  DMA_IRQ_DIS(DMA_CHn)   disable_irq((IRQn_t)((IRQn_t)DMA_CHn + DMA0_IRQn))              //��ֹDMAͨ����������ж�
 
-#define  DMA_IRQ_CLEAN(DMA_CHn) DMA_INT|=(DMA_INT_INT0_MASK<<DMA_CHn)           //清除通道传输中断标志位
+#define  DMA_IRQ_CLEAN(DMA_CHn) DMA_INT|=(DMA_INT_INT0_MASK<<DMA_CHn)           //���ͨ�������жϱ�־λ
 
-#define  DMA_EN(DMA_CHn)        DMA_ERQ |= (DMA_ERQ_ERQ0_MASK<<(DMA_CHn))       //使能通道硬件DMA请求
-#define  DMA_DIS(DMA_CHn)       DMA_ERQ &=~(DMA_ERQ_ERQ0_MASK<<(DMA_CHn))       //禁止通道硬件DMA请求
+#define  DMA_EN(DMA_CHn)        DMA_ERQ |= (DMA_ERQ_ERQ0_MASK<<(DMA_CHn))       //ʹ��ͨ��Ӳ��DMA����
+#define  DMA_DIS(DMA_CHn)       DMA_ERQ &=~(DMA_ERQ_ERQ0_MASK<<(DMA_CHn))       //��ֹͨ��Ӳ��DMA����
 
 #if defined(MK60DZ10)
-#define  DMA_CHn_DIS(DMA_CHn)   DMAMUX_CHCFG_REG(DMAMUX_BASE_PTR,DMA_CHn) &= ~DMAMUX_CHCFG_SOURCE(Channel_Disabled)  //禁用通道
+#define  DMA_CHn_DIS(DMA_CHn)   DMAMUX_CHCFG_REG(DMAMUX_BASE_PTR,DMA_CHn) &= ~DMAMUX_CHCFG_SOURCE(Channel_Disabled)  //����ͨ��
 #elif defined(MK60F15)
-#define  DMA_CHn_DIS(DMA_CHn)   DMAMUX_CHCFG_REG(DMAMUX0_BASE_PTR,DMA_CHn) &= ~DMAMUX_CHCFG_SOURCE(Channel_Disabled)  //禁用通道
+#define  DMA_CHn_DIS(DMA_CHn)   DMAMUX_CHCFG_REG(DMAMUX0_BASE_PTR,DMA_CHn) &= ~DMAMUX_CHCFG_SOURCE(Channel_Disabled)  //����ͨ��
 #endif
 
 
-//初始化DMA，使得PORT端口数据通过DMA传输到BUFF缓冲区
+//��ʼ��DMA��ʹ��PORT�˿�����ͨ��DMA���䵽BUFF������
 extern void dma_portx2buff_init(DMA_CHn, void *SADDR, void *DADDR, PTXn_e, DMA_BYTEn, uint32 count, uint32 cfg);
 
-//DMA 重新配置，传输完毕后，一些参数会改变，需要重新赋值
+//DMA �������ã�������Ϻ�һЩ������ı䣬��Ҫ���¸�ֵ
 static inline void dma_repeat(DMA_CHn CHn,void *SADDR, void *DADDR,uint32 count)
 {
     DMA_IRQ_CLEAN(CHn);
-    DMA_CITER_ELINKNO(CHn)  = DMA_CITER_ELINKNO_CITER(count);   //当前主循环次数
-    DMA_BITER_ELINKNO(CHn)  = DMA_BITER_ELINKNO_BITER(count);   //起始主循环次数
+    DMA_CITER_ELINKNO(CHn)  = DMA_CITER_ELINKNO_CITER(count);   //��ǰ��ѭ������
+    DMA_BITER_ELINKNO(CHn)  = DMA_BITER_ELINKNO_BITER(count);   //��ʼ��ѭ������
 
-    DMA_SADDR(CHn) =    (uint32)SADDR;                      // 设置  源地址
-    DMA_DADDR(CHn) =    (uint32)DADDR;                      // 设置目的地址
+    DMA_SADDR(CHn) =    (uint32)SADDR;                      // ����  Դ��ַ
+    DMA_DADDR(CHn) =    (uint32)DADDR;                      // ����Ŀ�ĵ�ַ
 
-    DMA_EN(DMA_CH0);                        //使能DMA 硬件请求
+    DMA_EN(DMA_CH0);                        //ʹ��DMA Ӳ������
 
 
 }

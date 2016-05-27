@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_dac.c
- * @brief      DACå‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      DACº¯Êý
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-08-28
  */
@@ -17,52 +17,52 @@
 #include "common.h"
 #include "MK60_dac.h"
 
-DAC_MemMapPtr DACN[2] = {DAC0_BASE_PTR, DAC1_BASE_PTR}; //å®šä¹‰ä¸¤ä¸ªæŒ‡é’ˆæ•°ç»„ä¿å­˜ DACN çš„åœ°å€
+DAC_MemMapPtr DACN[2] = {DAC0_BASE_PTR, DAC1_BASE_PTR}; //¶¨ÒåÁ½¸öÖ¸ÕëÊý×é±£´æ DACN µÄµØÖ·
 
 
 /*!
- *  @brief      DACåˆå§‹åŒ–
- *  @param      DACn_e      DACæ¨¡å—å·
+ *  @brief      DAC³õÊ¼»¯
+ *  @param      DACn_e      DACÄ£¿éºÅ
  *  @since      v5.0
- *  Sample usage:       dac_init (DAC1 );    //åˆå§‹åŒ– DAC1
+ *  Sample usage:       dac_init (DAC1 );    //³õÊ¼»¯ DAC1
  */
 void dac_init(DACn_e dacn)
 {
-    /* ä½¿èƒ½æ—¶é’Ÿ */
-    SIM_SCGC2 |= (SIM_SCGC2_DAC0_MASK << dacn) ;    //ä½¿èƒ½DACæ¨¡å—
+    /* Ê¹ÄÜÊ±ÖÓ */
+    SIM_SCGC2 |= (SIM_SCGC2_DAC0_MASK << dacn) ;    //Ê¹ÄÜDACÄ£¿é
 
-    /*  é…ç½®DACå¯„å­˜å™¨  */
+    /*  ÅäÖÃDAC¼Ä´æÆ÷  */
 
-    //é…ç½®DAC_C0å¯„å­˜å™¨
+    //ÅäÖÃDAC_C0¼Ä´æÆ÷
     DAC_C0_REG(DACN[dacn])  = ( 0
-                                |  DAC_C0_DACTRGSEL_MASK                //é€‰æ‹©è½¯ä»¶è§¦å‘
-                                |  DAC_C0_DACRFS_MASK                   //é€‰æ‹©å‚è€ƒVDDç”µåŽ‹(3.3V)
-                                |  DAC_C0_DACEN_MASK                    //ä½¿èƒ½DACæ¨¡å—
+                                |  DAC_C0_DACTRGSEL_MASK                //Ñ¡ÔñÈí¼þ´¥·¢
+                                |  DAC_C0_DACRFS_MASK                   //Ñ¡Ôñ²Î¿¼VDDµçÑ¹(3.3V)
+                                |  DAC_C0_DACEN_MASK                    //Ê¹ÄÜDACÄ£¿é
                               );
 
-    //é…ç½®DAC_C1å¯„å­˜å™¨
+    //ÅäÖÃDAC_C1¼Ä´æÆ÷
     DAC_C1_REG(DACN[dacn]) = ( 0
                              ) ;
-    //é…ç½®DAC_C2å¯„å­˜å™¨
+    //ÅäÖÃDAC_C2¼Ä´æÆ÷
     DAC_C2_REG(DACN[dacn]) = ( 0
-                               | DAC_C2_DACBFRP(0)             //è®¾ç½®ç¼“å†²åŒºè¯»æŒ‡é’ˆæŒ‡å‘0
+                               | DAC_C2_DACBFRP(0)             //ÉèÖÃ»º³åÇø¶ÁÖ¸ÕëÖ¸Ïò0
                              );
 
-    DAC_DATH_REG(DACN[dacn], 0) = 0;   //é»˜è®¤è¾“å‡ºæœ€ä½Žç”µåŽ‹
+    DAC_DATH_REG(DACN[dacn], 0) = 0;   //Ä¬ÈÏÊä³ö×îµÍµçÑ¹
     DAC_DATL_REG(DACN[dacn], 0) = 0;
 }
 
 /*!
- *  @brief      DACè¾“å‡º
- *  @param      DACn_e      DACæ¨¡å—å·
- *  @param      val         è¾“å‡ºæ¨¡æ‹Ÿé‡æ‰€å¯¹åº”çš„æ•°å­—é‡ï¼ˆ12bitï¼‰
+ *  @brief      DACÊä³ö
+ *  @param      DACn_e      DACÄ£¿éºÅ
+ *  @param      val         Êä³öÄ£ÄâÁ¿Ëù¶ÔÓ¦µÄÊý×ÖÁ¿£¨12bit£©
  *  @since      v5.0
- *  Sample usage:       dac_out (DAC1 ,0x100);    //åˆå§‹åŒ– DAC1 è¾“å‡º 0x100 æ•°å­—é‡å¯¹åº”çš„æ¨¡æ‹Ÿé‡
+ *  Sample usage:       dac_out (DAC1 ,0x100);    //³õÊ¼»¯ DAC1 Êä³ö 0x100 Êý×ÖÁ¿¶ÔÓ¦µÄÄ£ÄâÁ¿
  */
 void dac_out(DACn_e dacn, uint16 val)
 {
-    ASSERT(val < 0x1000);               //val ä¸º 12bit
+    ASSERT(val < 0x1000);               //val Îª 12bit
 
-    DAC_DATH_REG(DACN[dacn], 0) = (val >> 8);   //è¾“å‡ºç”µåŽ‹
+    DAC_DATH_REG(DACN[dacn], 0) = (val >> 8);   //Êä³öµçÑ¹
     DAC_DATL_REG(DACN[dacn], 0) = (val & 0xFF);
 }

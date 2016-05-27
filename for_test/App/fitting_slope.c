@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2016ï¼Œæ™¨æ—­
+ *     Copyright (c) 2016£¬³¿Ðñ
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šæ™¨æ—­çš„åšå®¢ http://www.chenxublog.com
+ *     ¼¼ÊõÌÖÂÛ£º³¿ÐñµÄ²©¿Í http://www.chenxublog.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žæ™¨æ—­æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™æ™¨æ—­çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊô³¿ÐñËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£Áô³¿ÐñµÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       fitting_slope.c
- * @brief      æœ€å°äºŒä¹˜æ³•æ‹Ÿåˆæ±‚æ–œçŽ‡
- * @author     æ™¨æ—­
+ * @brief      ×îÐ¡¶þ³Ë·¨ÄâºÏÇóÐ±ÂÊ
+ * @author     ³¿Ðñ
  * @version    v1.0
  * @date       2016-3-7
  */
@@ -23,7 +23,7 @@ float average(int n, float *x)
     for(i = 0; i < n; i++) av += *(x + i);
     av = av / n;
     return(av);
-} // å¹³æ–¹å’Œ
+} // Æ½·½ºÍ
 float spfh(int n,float *x)
 {
     int i;
@@ -32,7 +32,7 @@ float spfh(int n,float *x)
     for(i = 0; i < n; i++)
         a += (*(x + i)) * (*(x + i));
     return(a);
-} // å’Œå¹³æ–¹
+} // ºÍÆ½·½
 float shpf(int n, float *x)
 {
     int i;
@@ -41,7 +41,7 @@ float shpf(int n, float *x)
     for(i = 0; i < n; i++) a = a + *(x + i);
     b = a * a / n;
     return(b);
-} // ä¸¤æ•°å…ˆç›¸ä¹˜ï¼Œå†ç›¸åŠ 
+} // Á½ÊýÏÈÏà³Ë£¬ÔÙÏà¼Ó
 float dcj(int n, float *x, float *y)
 {
     int i;
@@ -51,14 +51,14 @@ float dcj(int n, float *x, float *y)
         a += (*(x + i)) * (*(y + i));
     return(a);
 }
-// ä¸¤æ•°å…ˆç›¸åŠ ï¼Œå†ç›¸ä¹˜
+// Á½ÊýÏÈÏà¼Ó£¬ÔÙÏà³Ë
 float djc(int n, float *x, float *y)
 {
     int i;
     float a = 0, b = 0;
     for(i = 0; i < n; i++)
     {
-        a = a + *(x + i);    // ç³»æ•° a
+        a = a + *(x + i);    // ÏµÊý a
         b = b + *(y + i);
     }
     a = a * b / n;
@@ -93,10 +93,10 @@ float xsb(int n, float *x, float *y, float a)
 }
 
 /*!
- *  @brief      æœ€å°äºŒä¹˜æ³•æ‹Ÿåˆæ±‚æ–œçŽ‡
+ *  @brief      ×îÐ¡¶þ³Ë·¨ÄâºÏÇóÐ±ÂÊ
  *  @since      v1.0
- *  @note       è¾“å…¥å€¼èŒƒå›´ï¼šxä¸Žyæ•°ç»„ï¼Œæœ‰æ•ˆç‚¹ä¸ªæ•°
- *  @note       è¾“å‡ºä¸ºfloat
+ *  @note       ÊäÈëÖµ·¶Î§£ºxÓëyÊý×é£¬ÓÐÐ§µã¸öÊý
+ *  @note       Êä³öÎªfloat
  *  Sample usage:            fitting_slope(x,y,3)
  */
 
@@ -108,13 +108,13 @@ float fitting_slope(int input_x[OV7725_EAGLE_H],int input_y[OV7725_EAGLE_H],int 
 //    if(x == NULL)
 //    {
 //    	while(1)
-//            printf("xå†…å­˜åˆ†é…å¤±è´¥ï¼Œé”™è¯¯ä½ç½®ï¼šæœ€å°äºŒä¹˜æ³•æ‹Ÿåˆæ±‚æ–œçŽ‡\n");
+//            printf("xÄÚ´æ·ÖÅäÊ§°Ü£¬´íÎóÎ»ÖÃ£º×îÐ¡¶þ³Ë·¨ÄâºÏÇóÐ±ÂÊ\n");
 //    }
 //    y = (float *)calloc(sum, sizeof(float));
 //    if(y == NULL)
 //    {
 //    	while(1)
-//            printf("yå†…å­˜åˆ†é…å¤±è´¥ï¼Œé”™è¯¯ä½ç½®ï¼šæœ€å°äºŒä¹˜æ³•æ‹Ÿåˆæ±‚æ–œçŽ‡\n");
+//            printf("yÄÚ´æ·ÖÅäÊ§°Ü£¬´íÎóÎ»ÖÃ£º×îÐ¡¶þ³Ë·¨ÄâºÏÇóÐ±ÂÊ\n");
 //    }
 //    for(i = 0; i < sum; i++)
 //    {
@@ -140,24 +140,24 @@ void main()
 {
     int n, i;
     float *x, *y, a, b;
-    printf("è¯·è¾“å…¥å°†è¦è¾“å…¥çš„æœ‰æ•ˆæ•°å€¼ç»„æ•° n çš„å€¼");
+    printf("ÇëÊäÈë½«ÒªÊäÈëµÄÓÐÐ§ÊýÖµ×éÊý n µÄÖµ");
     scanf("%d", &n);
     printf("n=%d\n", n);
     x = (float *)calloc(n, sizeof(float));
     if(x == NULL)
     {
-        printf(" å†…å­˜åˆ†é…å¤±è´¥ ");
+        printf(" ÄÚ´æ·ÖÅäÊ§°Ü ");
         exit(1);
     }
     y = (float *)calloc(n, sizeof(float));
     if(y == NULL)
     {
-        printf(" å†…å­˜åˆ†é…å¤±è´¥ ");
+        printf(" ÄÚ´æ·ÖÅäÊ§°Ü ");
         exit(1);
     }
-    printf("è¯·è¾“å…¥ x çš„å€¼");
+    printf("ÇëÊäÈë x µÄÖµ");
     for(i = 0; i < n; i++)scanf("%f", x + i);
-    printf("è¯·è¾“å…¥ y çš„å€¼, è¯·æ³¨æ„ä¸Ž x çš„å€¼ä¸€ä¸€å¯¹åº”");
+    printf("ÇëÊäÈë y µÄÖµ, Çë×¢ÒâÓë x µÄÖµÒ»Ò»¶ÔÓ¦");
     for(i = 0; i < n; i++)
     scanf("%f", y + i);
     //x[0]=0.1;x[1]=0.3;x[2]=0.4;x[3]=0.55;x[4]=0.7;x[5]=0.8;x[6]=0.95;
@@ -166,7 +166,7 @@ void main()
     printf("y[%d]=%5.4f\n", i, *(y + i));
     a = xsa(n, x, y);
     b = xsb(n, x, y, a);
-    printf("ç»æœ€å°äºŒä¹˜æ³•æ‹Ÿåˆå¾—åˆ°çš„ä¸€å…ƒçº¿æ€§æ–¹ç¨‹ä¸º:\n");
+    printf("¾­×îÐ¡¶þ³Ë·¨ÄâºÏµÃµ½µÄÒ»ÔªÏßÐÔ·½³ÌÎª:\n");
     printf("f(x)=%5.4fx+%5.4f\n", a, b);
 }
 */

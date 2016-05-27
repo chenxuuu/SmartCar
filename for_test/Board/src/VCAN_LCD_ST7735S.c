@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_LCD_ST7735S.c
- * @brief      LCD å‡½æ•°åº“
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      LCD º¯Êı¿â
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.1
  * @date       2014-04-26
  */
@@ -23,8 +23,8 @@
 
 
 
-//å®šä¹‰æ‰€ç”¨åˆ°çš„ IOç®¡è„š
-#define LCD_RST    PTC13                //å¤ä½
+//¶¨ÒåËùÓÃµ½µÄ IO¹Ü½Å
+#define LCD_RST    PTC13                //¸´Î»
 
 #define ST7735S_H       128
 #define ST7735S_W       128
@@ -63,7 +63,7 @@ void LCD_ST7735S_wr_cmd(uint8 cmd)
 }
 
 /*!
- *  @brief      LCD_ST7735Såˆå§‹åŒ–
+ *  @brief      LCD_ST7735S³õÊ¼»¯
  *  @since      v5.0
  */
 void    LCD_ST7735S_init()
@@ -87,22 +87,22 @@ void    LCD_ST7735S_init()
     port_init  (LCD_ST7735S_CS , ALT1 | HDS);
     port_init  (LCD_ST7735S_RS , ALT1 | HDS);
 
-    //åˆå§‹åŒ–æ€»çº¿
+    //³õÊ¼»¯×ÜÏß
     LCD_ST7735S_RST_OUT = 0;
     ST7735S_DELAY();
     LCD_ST7735S_RST_OUT = 1;
-    ST7735S_DELAY_MS(500);      //ä¸Šç”µç»™è¶³å¤Ÿæ—¶é—´
+    ST7735S_DELAY_MS(500);      //ÉÏµç¸ø×ã¹»Ê±¼ä
 
-    LCD_ST7735S_WR_8CMD(0x11);           //Sleep out   é€€å‡ºç¡çœ æ¨¡å¼
+    LCD_ST7735S_WR_8CMD(0x11);           //Sleep out   ÍË³öË¯ÃßÄ£Ê½
     ST7735S_DELAY_MS(120);      //Delay 120ms
     //------------------------------------ST7735S Frame Rate-----------------------------------------//
     /* Set the frame frequency of the full colors normal mode. */
-    LCD_ST7735S_WR_8CMD(0xB1);     //In Normal Mode (Full Colors)    å…¨å±æ¨¡å¼
-    LCD_ST7735S_WR_8DATA(0x05);    //è®¾ç½® RTNA Set 1-line  Period  ä¸€è¡Œå‘¨æœŸ
-    LCD_ST7735S_WR_8DATA(0x3A);    //è®¾ç½® FPA: Front Porch
-    LCD_ST7735S_WR_8DATA(0x3A);    //è®¾ç½® BPA: Back Porch
+    LCD_ST7735S_WR_8CMD(0xB1);     //In Normal Mode (Full Colors)    È«ÆÁÄ£Ê½
+    LCD_ST7735S_WR_8DATA(0x05);    //ÉèÖÃ RTNA Set 1-line  Period  Ò»ĞĞÖÜÆÚ
+    LCD_ST7735S_WR_8DATA(0x3A);    //ÉèÖÃ FPA: Front Porch
+    LCD_ST7735S_WR_8DATA(0x3A);    //ÉèÖÃ BPA: Back Porch
     //Frame rate=fosc/((RTNA x 2 + 40) x (LINE + FPA + BPA +2))
-    //å…¶ä¸­ fosc = 850kHz
+    //ÆäÖĞ fosc = 850kHz
 
     /* Set the frame frequency of the Idle mode.  */
     LCD_ST7735S_WR_8CMD(0xB2);     //In Idle Mode (8-colors)
@@ -120,13 +120,13 @@ void    LCD_ST7735S_init()
     LCD_ST7735S_WR_8DATA(0x3A);
 
     //------------------------------------End ST7735S Frame Rate-----------------------------------------//
-    LCD_ST7735S_WR_8CMD(0xB4);   //Display Inversion Control  æ˜¾ç¤ºåè½¬æ§åˆ¶
+    LCD_ST7735S_WR_8CMD(0xB4);   //Display Inversion Control  ÏÔÊ¾·´×ª¿ØÖÆ
 
-    LCD_ST7735S_WR_8DATA(0x07);  //LCD_ST7735S_WR_8DATA(0x03); åŸæ¥ä¸º3ï¼Œæ”¹ä¸º7
-    // ä½ä¸‰ä½ä»é«˜åˆ°ä½ï¼Œåˆ†åˆ«ä¸º  full colors normal mode ã€Idle mode ã€
-    // full Colors partial mode  çš„ ç‚¹åè½¬ æˆ– åˆ—åè½¬ ï¼Œ1ä¸ºåˆ—åè½¬
+    LCD_ST7735S_WR_8DATA(0x07);  //LCD_ST7735S_WR_8DATA(0x03); Ô­À´Îª3£¬¸ÄÎª7
+    // µÍÈıÎ»´Ó¸ßµ½µÍ£¬·Ö±ğÎª  full colors normal mode ¡¢Idle mode ¡¢
+    // full Colors partial mode  µÄ µã·´×ª »ò ÁĞ·´×ª £¬1ÎªÁĞ·´×ª
 
-    LCD_ST7735S_WR_8CMD(0xC0);   //Power Control Setting  ç”µæºæ§åˆ¶è®¾ç½®
+    LCD_ST7735S_WR_8CMD(0xC0);   //Power Control Setting  µçÔ´¿ØÖÆÉèÖÃ
     LCD_ST7735S_WR_8DATA(0x28);
     LCD_ST7735S_WR_8DATA(0x08);
     LCD_ST7735S_WR_8DATA(0x84);
@@ -142,7 +142,7 @@ void    LCD_ST7735S_init()
     LCD_ST7735S_WR_8DATA(0x8A);
     LCD_ST7735S_WR_8DATA(0xEE);
     //---------------------------------End ST7735S Power Sequence-------------------------------------//
-    LCD_ST7735S_WR_8CMD(0xC5);   //  VCOM ç”µå‹é…ç½®
+    LCD_ST7735S_WR_8CMD(0xC5);   //  VCOM µçÑ¹ÅäÖÃ
     LCD_ST7735S_WR_8DATA(0x0C); //  -0.725
     //------------------------------------ST7735S Gamma Sequence-----------------------------------------//
     LCD_ST7735S_WR_8CMD(0xE0);
@@ -183,7 +183,7 @@ void    LCD_ST7735S_init()
 
     LCD_ST7735S_WR_8CMD(0x3A); //65k mode
     LCD_ST7735S_WR_8DATA(0x05);
-    LCD_ST7735S_WR_8CMD(0x29); //å¼€æ˜¾ç¤º Display on
+    LCD_ST7735S_WR_8CMD(0x29); //¿ªÏÔÊ¾ Display on
     LCD_ST7735S_WR_8CMD(0x2c); //
 
     LCD_ST7735S_dir(st7735s_dir);
@@ -191,8 +191,8 @@ void    LCD_ST7735S_init()
 }
 
 /*!
- *  @brief      è®¾ç½®ST7735S GRAMæŒ‡é’ˆæ‰«ææ–¹å‘
- *  @param      option    æ–¹å‘é€‰æ‹©ï¼ˆæ­£çœ‹ï¼ˆç„Šæ¥æ’çº¿åœ¨ä¸‹é¢ï¼‰ ä¸º 0 ï¼Œ90åº¦ä¸º1ï¼Œ180åº¦ä¸º2ï¼Œ270åº¦ä¸º2ï¼‰
+ *  @brief      ÉèÖÃST7735S GRAMÖ¸ÕëÉ¨Ãè·½Ïò
+ *  @param      option    ·½ÏòÑ¡Ôñ£¨Õı¿´£¨º¸½ÓÅÅÏßÔÚÏÂÃæ£© Îª 0 £¬90¶ÈÎª1£¬180¶ÈÎª2£¬270¶ÈÎª2£©
  *  @since      v5.0
  */
 void LCD_ST7735S_dir(uint8 option)
@@ -203,7 +203,7 @@ void LCD_ST7735S_dir(uint8 option)
     switch(option)
     {
     case 0:
-        LCD_ST7735S_WR_8CMD(0x36); // å†…å­˜æ•°æ®è®¿é—®æ§åˆ¶  MX åˆ—åœ°å€é¡ºåº, MY è¡Œåœ°å€é¡ºåº ï¼ŒMV è¡Œåˆ—äº¤æ¢ ï¼ŒML å‚ç›´åˆ·æ–°é¡ºåº ,RGB  RGB-BGAé¡ºåº
+        LCD_ST7735S_WR_8CMD(0x36); // ÄÚ´æÊı¾İ·ÃÎÊ¿ØÖÆ  MX ÁĞµØÖ·Ë³Ğò, MY ĞĞµØÖ·Ë³Ğò £¬MV ĞĞÁĞ½»»» £¬ML ´¹Ö±Ë¢ĞÂË³Ğò ,RGB  RGB-BGAË³Ğò
         LCD_ST7735S_WR_8DATA(0xc8);//0xc8  0xA8 0x08 0x68
 
         LCD_ST7735S_WR_8CMD(0x2a);
@@ -222,7 +222,7 @@ void LCD_ST7735S_dir(uint8 option)
         st7735s_w   = ST7735S_W;
         break;
     case 1:
-        LCD_ST7735S_WR_8CMD(0x36); // å†…å­˜æ•°æ®è®¿é—®æ§åˆ¶  MX åˆ—åœ°å€é¡ºåº, MY è¡Œåœ°å€é¡ºåº ï¼ŒMV è¡Œåˆ—äº¤æ¢ ï¼ŒML å‚ç›´åˆ·æ–°é¡ºåº ,RGB  RGB-BGAé¡ºåº
+        LCD_ST7735S_WR_8CMD(0x36); // ÄÚ´æÊı¾İ·ÃÎÊ¿ØÖÆ  MX ÁĞµØÖ·Ë³Ğò, MY ĞĞµØÖ·Ë³Ğò £¬MV ĞĞÁĞ½»»» £¬ML ´¹Ö±Ë¢ĞÂË³Ğò ,RGB  RGB-BGAË³Ğò
         LCD_ST7735S_WR_8DATA(0xA8);//0xc8  0xA8 0x08 0x68
 
         LCD_ST7735S_WR_8CMD(0x2a);
@@ -241,7 +241,7 @@ void LCD_ST7735S_dir(uint8 option)
         st7735s_w   = ST7735S_H;
         break;
     case 2:
-        LCD_ST7735S_WR_8CMD(0x36); // å†…å­˜æ•°æ®è®¿é—®æ§åˆ¶  MX åˆ—åœ°å€é¡ºåº, MY è¡Œåœ°å€é¡ºåº ï¼ŒMV è¡Œåˆ—äº¤æ¢ ï¼ŒML å‚ç›´åˆ·æ–°é¡ºåº ,RGB  RGB-BGAé¡ºåº
+        LCD_ST7735S_WR_8CMD(0x36); // ÄÚ´æÊı¾İ·ÃÎÊ¿ØÖÆ  MX ÁĞµØÖ·Ë³Ğò, MY ĞĞµØÖ·Ë³Ğò £¬MV ĞĞÁĞ½»»» £¬ML ´¹Ö±Ë¢ĞÂË³Ğò ,RGB  RGB-BGAË³Ğò
         LCD_ST7735S_WR_8DATA(0x08);//0xc8  0xA8 0x08 0x68
 
         LCD_ST7735S_WR_8CMD(0x2a);
@@ -260,7 +260,7 @@ void LCD_ST7735S_dir(uint8 option)
         st7735s_w   = ST7735S_W;
         break;
     case 3:
-        LCD_ST7735S_WR_8CMD(0x36); // å†…å­˜æ•°æ®è®¿é—®æ§åˆ¶  MX åˆ—åœ°å€é¡ºåº, MY è¡Œåœ°å€é¡ºåº ï¼ŒMV è¡Œåˆ—äº¤æ¢ ï¼ŒML å‚ç›´åˆ·æ–°é¡ºåº ,RGB  RGB-BGAé¡ºåº
+        LCD_ST7735S_WR_8CMD(0x36); // ÄÚ´æÊı¾İ·ÃÎÊ¿ØÖÆ  MX ÁĞµØÖ·Ë³Ğò, MY ĞĞµØÖ·Ë³Ğò £¬MV ĞĞÁĞ½»»» £¬ML ´¹Ö±Ë¢ĞÂË³Ğò ,RGB  RGB-BGAË³Ğò
         LCD_ST7735S_WR_8DATA(0x68);//0xc8  0xA8 0x08 0x68
 
         LCD_ST7735S_WR_8CMD(0x2a);
@@ -285,30 +285,30 @@ void LCD_ST7735S_dir(uint8 option)
 }
 
 /*!
- *  @brief      è®¾ç½® ST7735S å¼€çª—
- *  @param      site        å·¦ä¸Šè§’åæ ‡ä½ç½®
- *  @param      size        å¼€çª—å¤§å°
+ *  @brief      ÉèÖÃ ST7735S ¿ª´°
+ *  @param      site        ×óÉÏ½Ç×ø±êÎ»ÖÃ
+ *  @param      size        ¿ª´°´óĞ¡
  *  @since      v5.0
  */
 void LCD_ST7735S_ptlon(Site_t site, Size_t size)
 {
     if(st7735s_dir&0x01)
     {
-        site.x += 3;     //æ¶²æ™¶éœ€è¦åç§»ä¸€ä¸‹ï¼Œé¿å…å››å‘¨çœ‹ä¸åˆ°çš„è¡Œ
+        site.x += 3;     //Òº¾§ĞèÒªÆ«ÒÆÒ»ÏÂ£¬±ÜÃâËÄÖÜ¿´²»µ½µÄĞĞ
         site.y += 2;
     }
     else
     {
-        site.x += 2;     //æ¶²æ™¶éœ€è¦åç§»ä¸€ä¸‹ï¼Œé¿å…å››å‘¨çœ‹ä¸åˆ°çš„è¡Œ
+        site.x += 2;     //Òº¾§ĞèÒªÆ«ÒÆÒ»ÏÂ£¬±ÜÃâËÄÖÜ¿´²»µ½µÄĞĞ
         site.y += 3;
     }
-    LCD_ST7735S_WR_8CMD(0x2a);   //Partial Mode On  å±€éƒ¨æ¨¡å¼
-    LCD_ST7735S_WR_8DATA((uint8)(site.x >> 8)); //é«˜8ä½ Sx
-    LCD_ST7735S_WR_8DATA((uint8)site.x);   //ä½8ä½ Sx
+    LCD_ST7735S_WR_8CMD(0x2a);   //Partial Mode On  ¾Ö²¿Ä£Ê½
+    LCD_ST7735S_WR_8DATA((uint8)(site.x >> 8)); //¸ß8Î» Sx
+    LCD_ST7735S_WR_8DATA((uint8)site.x);   //µÍ8Î» Sx
     LCD_ST7735S_WR_8DATA((uint8)((site.x + size.W - 1) >> 8));
     LCD_ST7735S_WR_8DATA((uint8)(site.x + size.W - 1));
 
-    LCD_ST7735S_WR_8CMD(0x2B);//Row Address Set  è¡Œåœ°å€è®¾ç½®
+    LCD_ST7735S_WR_8CMD(0x2B);//Row Address Set  ĞĞµØÖ·ÉèÖÃ
     LCD_ST7735S_WR_8DATA((uint8)(site.y >> 8));
     LCD_ST7735S_WR_8DATA((uint8)site.y);
     LCD_ST7735S_WR_8DATA((uint8)((site.y + size.H - 1) >> 8));
@@ -317,8 +317,8 @@ void LCD_ST7735S_ptlon(Site_t site, Size_t size)
 }
 
 /*!
- *  @brief      è·å– ST7735S é«˜åº¦
- *  @return     ILI9341 é«˜åº¦
+ *  @brief      »ñÈ¡ ST7735S ¸ß¶È
+ *  @return     ILI9341 ¸ß¶È
  *  @since      v5.0
  */
 uint16 ST7735S_get_h()
@@ -327,8 +327,8 @@ uint16 ST7735S_get_h()
 }
 
 /*!
- *  @brief      è·å– ST7735S å®½åº¦
- *  @return     ILI9341 å®½åº¦
+ *  @brief      »ñÈ¡ ST7735S ¿í¶È
+ *  @return     ILI9341 ¿í¶È
  *  @since      v5.0
  */
 uint16 ST7735S_get_w()
@@ -337,8 +337,8 @@ uint16 ST7735S_get_w()
 }
 
 /*!
- *  @brief      è·å– ST7735S æ˜¾ç¤ºæ–¹å‘
- *  @return     ST7735S æ–¹å‘
+ *  @brief      »ñÈ¡ ST7735S ÏÔÊ¾·½Ïò
+ *  @return     ST7735S ·½Ïò
  *  @since      v5.0
  */
 uint8 ST7735S_get_dir()

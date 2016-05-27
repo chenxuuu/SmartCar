@@ -1,11 +1,11 @@
 #include "common.h"
 #include "vcan_img2sd.h"
 #include "ff.h"
-#include "VCAN_camera.h"       //æ‘„åƒå¤´æ€»å¤´æ–‡ä»¶
+#include "VCAN_camera.h"       //ÉãÏñÍ·×ÜÍ·ÎÄ¼ş
 #include "include.h"
 
-static FATFS vcanfs;    //æ–‡ä»¶ç³»ç»Ÿ
-static FIL   vcansrc;   //æ–‡ä»¶
+static FATFS vcanfs;    //ÎÄ¼şÏµÍ³
+static FIL   vcansrc;   //ÎÄ¼ş
 
 
 void img_sd_init(void)
@@ -16,7 +16,7 @@ void img_sd_init(void)
                             CAMERA_H,
                             CAMERA_W,
                             //CAMERA_COLOR,
-                         };      //é«˜ã€å®½ã€æ‘„åƒå¤´é¢œè‰²ç±»å‹
+                         };      //¸ß¡¢¿í¡¢ÉãÏñÍ·ÑÕÉ«ÀàĞÍ
     uint32  mybw;
     uint32  Imag_num = 0;
 
@@ -34,11 +34,11 @@ void img_sd_init(void)
             return;
         }
 
-    }while(vcanres == FR_EXIST);        //å¦‚æœæ–‡ä»¶å­˜åœ¨ï¼Œåˆ™å‘½åç»§ç»­åŠ 1
+    }while(vcanres == FR_EXIST);        //Èç¹ûÎÄ¼ş´æÔÚ£¬ÔòÃüÃû¼ÌĞø¼Ó1
 
     if ( vcanres == FR_OK )
     {
-        vcanres = f_write(&vcansrc, imgsize, sizeof(imgsize),&mybw);  //å…ˆå†™å…¥é«˜å’Œå®½ï¼Œæ–¹ä¾¿ä¸Šä½æœºå¤„ç†
+        vcanres = f_write(&vcansrc, imgsize, sizeof(imgsize),&mybw);  //ÏÈĞ´Èë¸ßºÍ¿í£¬·½±ãÉÏÎ»»ú´¦Àí
     }
     else
     {
@@ -52,7 +52,7 @@ void img_sd_init(void)
 
 void img_sd_save(uint8 * imgaddr,uint32 size)
 {
-#define F_SYNC_TIME   30      //ä¿å­˜ n æ¬¡å æ‰ åŒæ­¥
+#define F_SYNC_TIME   30      //±£´æ n ´Îºó ²Å Í¬²½
 
     int   vcanres;
     uint32 mybw;

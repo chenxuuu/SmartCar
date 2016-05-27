@@ -15,7 +15,7 @@
 #define  TOUCH_COUNT    5
 
 typedef struct {
-    //x[5]/y[5] æ˜¯è§¦æ‘¸å€¼ï¼Œxfb[5]/yfb[5] æ˜¯LCDåæ ‡ã€‚a[7]æ˜¯æ ¡æ­£å‚æ•°
+    //x[5]/y[5] ÊÇ´¥ÃþÖµ£¬xfb[5]/yfb[5] ÊÇLCD×ø±ê¡£a[7]ÊÇÐ£Õý²ÎÊý
     int x[TOUCH_COUNT], xfb[TOUCH_COUNT];
     int y[TOUCH_COUNT], yfb[TOUCH_COUNT];
     int a[7];
@@ -25,7 +25,7 @@ typedef struct {
 #define  TOUCH_COUNT    4
 
 typedef struct {
-    //x[5]/y[5] æ˜¯è§¦æ‘¸å€¼ï¼Œxfb[5]/yfb[5] æ˜¯LCDåæ ‡ã€‚a[7]æ˜¯æ ¡æ­£å‚æ•°
+    //x[5]/y[5] ÊÇ´¥ÃþÖµ£¬xfb[5]/yfb[5] ÊÇLCD×ø±ê¡£a[7]ÊÇÐ£Õý²ÎÊý
     int x[TOUCH_COUNT], xfb[TOUCH_COUNT];
     int y[TOUCH_COUNT], yfb[TOUCH_COUNT];
     float a[7];
@@ -44,13 +44,13 @@ static int perform_calibration(calibration *cal);
 
 
 /*
- * è§¦æ‘¸æ¨¡æ‹ŸSPI IO å’Œ ä¸­æ–­ IO åˆå§‹åŒ–
+ * ´¥ÃþÄ£ÄâSPI IO ºÍ ÖÐ¶Ï IO ³õÊ¼»¯
  */
 void touch_init(void)
 {
-    touch_baud = spi_init(TOUCH_SPI, TOUCH_CS, MASTER,150*1000);               //åˆå§‹åŒ–SPI,ä¸»æœºæ¨¡å¼
+    touch_baud = spi_init(TOUCH_SPI, TOUCH_CS, MASTER,150*1000);               //³õÊ¼»¯SPI,Ö÷»úÄ£Ê½
 
-    port_init(TOUCH_INT_PTXn,ALT1  | PULLUP | IRQ_FALLING);         //ä¸Šæ‹‰ã€ä¸‹é™æ²¿è§¦å‘ä¸­æ–­
+    port_init(TOUCH_INT_PTXn,ALT1  | PULLUP | IRQ_FALLING);         //ÉÏÀ­¡¢ÏÂ½µÑØ´¥·¢ÖÐ¶Ï
 
     touch_delay = 8*1000*1000 / touch_baud;
 
@@ -58,13 +58,13 @@ void touch_init(void)
 }
 
 /******************************************************
-* å‡½æ•°åï¼šTouchl_Calibrate
-* æè¿°  ï¼šè§¦æ‘¸å±æ ¡æ­£å‡½æ•°
-* è¾“å…¥  : æ— 
-* è¾“å‡º  ï¼š1 --- æ ¡æ­£æˆåŠŸ
-                    0   --- æ ¡æ­£å¤±è´¥
-* ä¸¾ä¾‹  ï¼šæ— 
-* æ³¨æ„  ï¼šæ— 
+* º¯ÊýÃû£ºTouchl_Calibrate
+* ÃèÊö  £º´¥ÃþÆÁÐ£Õýº¯Êý
+* ÊäÈë  : ÎÞ
+* Êä³ö  £º1 --- Ð£Õý³É¹¦
+                    0   --- Ð£ÕýÊ§°Ü
+* ¾ÙÀý  £ºÎÞ
+* ×¢Òâ  £ºÎÞ
 *********************************************************/
 int touch_calibrate(void)
 {
@@ -73,7 +73,7 @@ int touch_calibrate(void)
     uint8 i;
     Site_t site;
 
-    //è®¾ç½®è§¦æ‘¸å±æ ¡éªŒç‚¹çš„ä½ç½®
+    //ÉèÖÃ´¥ÃþÆÁÐ£ÑéµãµÄÎ»ÖÃ
     cal.xfb[0] = 40;
     cal.yfb[0] = 40;
 
@@ -91,26 +91,26 @@ int touch_calibrate(void)
     cal.yfb[4] = lcd_h/2;
 #endif
 
-    //å¾ªçŽ¯æ˜¾ç¤º5ä¸ªè§¦æ‘¸æ ¡éªŒç‚¹ï¼Œå¹¶èŽ·å–è§¦æ‘¸å€¼
+    //Ñ­»·ÏÔÊ¾5¸ö´¥ÃþÐ£Ñéµã£¬²¢»ñÈ¡´¥ÃþÖµ
     for(i = 0; i< TOUCH_COUNT;i++)
     {
-        LCD_clear(BCOLOUR);                     //æ¸…å±
+        LCD_clear(BCOLOUR);                     //ÇåÆÁ
 
-        DELAY_MS(500);                          //å»¶æ—¶ï¼Œå¦åˆ™æŒ‰å¾—å¤ªå¿«ï¼Œå¯¼è‡´è§¦æ‘¸å¤±è´¥
+        DELAY_MS(500);                          //ÑÓÊ±£¬·ñÔò°´µÃÌ«¿ì£¬µ¼ÖÂ´¥ÃþÊ§°Ü
 
-        site.x = cal.xfb[i];            //LCDæ˜¾ç¤ºè§¦æ‘¸ç‚¹åå­—å›¾æ¡ˆ
+        site.x = cal.xfb[i];            //LCDÏÔÊ¾´¥ÃþµãÊ®×ÖÍ¼°¸
         site.y = cal.yfb[i];
         LCD_cross(site,10,FCOLOUR);
 
-        while(!xpt2046_read(&site));            //ç­‰å¾…èŽ·å–è§¦æ‘¸ç‚¹ä½ç½®
+        while(!xpt2046_read(&site));            //µÈ´ý»ñÈ¡´¥ÃþµãÎ»ÖÃ
         cal.x[i] = site.x;
         cal.y[i] = site.y;
     }
 
-    LCD_clear(BCOLOUR);                     //æ¸…å±
+    LCD_clear(BCOLOUR);                     //ÇåÆÁ
 
 
-    //è¿›è¡Œè§¦æ‘¸æ ¡æ­£
+    //½øÐÐ´¥ÃþÐ£Õý
     if( perform_calibration(&cal) )
     {
         return 1;
@@ -255,7 +255,7 @@ int perform_calibration(calibration *cal) {
     uint16 gap_x=0, gap_y=0;
 
 
-    /* Kï¼(X0ï¼X2) (Y1ï¼Y2)ï¼(X1ï¼X2) (Y0ï¼Y2) */
+    /* K£½(X0£­X2) (Y1£­Y2)£­(X1£­X2) (Y0£­Y2) */
     cal->a[6] = ((cal->x[0] - cal->x[2]) * (cal->y[1] - cal->y[2])) -
                     ((cal->x[1] - cal->x[2]) * (cal->y[0] - cal->y[2])) ;
 
@@ -265,47 +265,47 @@ int perform_calibration(calibration *cal) {
     }
     else
     {
-        /* Aï¼((XD0ï¼XD2) (Y1ï¼Y2)ï¼(XD1ï¼XD2) (Y0ï¼Y2))ï¼K */
+        /* A£½((XD0£­XD2) (Y1£­Y2)£­(XD1£­XD2) (Y0£­Y2))£¯K */
         cal->a[0] = (((cal->xfb[0] - cal->xfb[2]) * (cal->y[1] - cal->y[2])) -
                    ((cal->xfb[1] - cal->xfb[2]) * (cal->y[0] - cal->y[2])));
 
-        /* Bï¼((X0ï¼X2) (XD1ï¼XD2)ï¼(XD0ï¼XD2) (X1ï¼X2))ï¼K */
+        /* B£½((X0£­X2) (XD1£­XD2)£­(XD0£­XD2) (X1£­X2))£¯K */
         cal->a[1] = (((cal->x[0] - cal->x[2]) * (cal->xfb[1] - cal->xfb[2])) -
                    ((cal->xfb[0] - cal->xfb[2]) * (cal->x[1] - cal->x[2])));
 
-        /* Cï¼(Y0(X2XD1ï¼X1XD2)+Y1(X0XD2ï¼X2XD0)+Y2(X1XD0ï¼X0XD1))ï¼K */
+        /* C£½(Y0(X2XD1£­X1XD2)+Y1(X0XD2£­X2XD0)+Y2(X1XD0£­X0XD1))£¯K */
         cal->a[2] = ((cal->x[2] * cal->xfb[1] - cal->x[1] * cal->xfb[2]) * cal->y[0] +
                    (cal->x[0] * cal->xfb[2] - cal->x[2] * cal->xfb[0]) * cal->y[1] +
                    (cal->x[1] * cal->xfb[0] - cal->x[0] * cal->xfb[1]) * cal->y[2]);
 
-        /* Dï¼((YD0ï¼YD2) (Y1ï¼Y2)ï¼(YD1ï¼YD2) (Y0ï¼Y2))ï¼K */
+        /* D£½((YD0£­YD2) (Y1£­Y2)£­(YD1£­YD2) (Y0£­Y2))£¯K */
         cal->a[3] = (((cal->yfb[0] - cal->yfb[2]) * (cal->y[1] - cal->y[2])) -
                    ((cal->yfb[1] - cal->yfb[2]) * (cal->y[0] - cal->y[2]))) ;
 
-        /* Eï¼((X0ï¼X2) (YD1ï¼YD2)ï¼(YD0ï¼YD2) (X1ï¼X2))ï¼K */
+        /* E£½((X0£­X2) (YD1£­YD2)£­(YD0£­YD2) (X1£­X2))£¯K */
         cal->a[4] = (((cal->x[0] - cal->x[2]) * (cal->yfb[1] - cal->yfb[2])) -
                    ((cal->yfb[0] - cal->yfb[2]) * (cal->x[1] - cal->x[2]))) ;
 
 
-        /* Fï¼(Y0(X2YD1ï¼X1YD2)+Y1(X0YD2ï¼X2YD0)+Y2(X1YD0ï¼X0YD1))ï¼K */
+        /* F£½(Y0(X2YD1£­X1YD2)+Y1(X0YD2£­X2YD0)+Y2(X1YD0£­X0YD1))£¯K */
         cal->a[5] = ((cal->x[2] * cal->yfb[1] - cal->x[1] * cal->yfb[2]) * cal->y[0] +
                    (cal->x[0] * cal->yfb[2] - cal->x[2] * cal->yfb[0]) * cal->y[1] +
                    (cal->x[1] * cal->yfb[0] - cal->x[0] * cal->yfb[1]) * cal->y[2]);
 
-        //æ ¡éªŒç¬¬4ä¸ªç‚¹
-            /*å–ä¸€ä¸ªç‚¹è®¡ç®—Xå€¼*/
+        //Ð£ÑéµÚ4¸öµã
+            /*È¡Ò»¸öµã¼ÆËãXÖµ*/
         test_x = (( (cal->a[0] * cal->x[3]) +
                    (cal->a[1] * cal->y[3]) +
                     cal->a[2]
                  )) / cal->a[6] ;
 
-            /*å–ä¸€ä¸ªç‚¹è®¡ç®—Yå€¼*/
+            /*È¡Ò»¸öµã¼ÆËãYÖµ*/
         test_y = (( (cal->a[3] * cal->x[3]) +
                    (cal->a[4] * cal->y[3]) +
                    cal->a[5]
                  )) / cal->a[6] ;
 
-        /* å®žé™…åæ ‡ä¸Žè®¡ç®—åæ ‡çš„å·® */
+        /* Êµ¼Ê×ø±êÓë¼ÆËã×ø±êµÄ²î */
         gap_x = abs(test_x - cal->xfb[3]);
         if(gap_x > 10)return 0;
         gap_y = abs(test_y - cal->yfb[3]);
@@ -321,18 +321,18 @@ int perform_calibration(calibration *cal) {
 
 /*
 *********************************************************************************************************
-*   å‡½ æ•° å: TSC2046_ReadAdc
-*   åŠŸèƒ½è¯´æ˜Ž: é€‰æ‹©ä¸€ä¸ªæ¨¡æ‹Ÿé€šé“ï¼Œå¯åŠ¨ADCï¼Œå¹¶è¿”å›žADCé‡‡æ ·ç»“æžœ
-*   å½¢    å‚ï¼š_ucCh = 0x90 è¡¨ç¤ºYé€šé“ï¼› 0xd0 è¡¨ç¤ºXé€šé“
-*   è¿” å›ž å€¼: 12ä½ADCå€¼
+*   º¯ Êý Ãû: TSC2046_ReadAdc
+*   ¹¦ÄÜËµÃ÷: Ñ¡ÔñÒ»¸öÄ£ÄâÍ¨µÀ£¬Æô¶¯ADC£¬²¢·µ»ØADC²ÉÑù½á¹û
+*   ÐÎ    ²Î£º_ucCh = 0x90 ±íÊ¾YÍ¨µÀ£» 0xd0 ±íÊ¾XÍ¨µÀ
+*   ·µ »Ø Öµ: 12Î»ADCÖµ
 *********************************************************************************************************
 */
 uint16 xpt2046_read_ch(uint8_t _ucCh)
 {
     uint16 tmp;
     uint8 buff[2]={0,0};
-    spi_mosi_cmd(TOUCH_SPI,TOUCH_CS, &_ucCh ,NULL ,buff, buff, 1 , 2); //SPIå‘é€æŽ¥æ”¶å‡½æ•°
-                                                                                //å‘é€å‘½ä»¤ _ucCh ï¼Œè¯»2ä¸ªæ•°æ®
+    spi_mosi_cmd(TOUCH_SPI,TOUCH_CS, &_ucCh ,NULL ,buff, buff, 1 , 2); //SPI·¢ËÍ½ÓÊÕº¯Êý
+                                                                                //·¢ËÍÃüÁî _ucCh £¬¶Á2¸öÊý¾Ý
 
 #if 1
     //if(_ucCh == 0x90)
@@ -359,7 +359,7 @@ uint16 xpt2046_read_ch(uint8_t _ucCh)
 
 
 /*
- * è¯»å–TP x y çš„ADå€¼(12bitï¼Œæœ€å¤§æ˜¯4096)
+ * ¶ÁÈ¡TP x y µÄADÖµ(12bit£¬×î´óÊÇ4096)
  */
 void xpt2046_get_xy(Site_t * site)
 {
@@ -374,12 +374,12 @@ void xpt2046_get_xy(Site_t * site)
 
 
 /******************************************************
-* å‡½æ•°åï¼šRead_2046
-* æè¿°  ï¼šå¾—åˆ°ç®€å•æ»¤æ³¢ä¹‹åŽçš„X Y
-* è¾“å…¥  ï¼šCoordinateç»“æž„ä½“åœ°å€
-* è¾“å‡º  ï¼š1æˆåŠŸï¼Œ0å¤±è´¥
-* ä¸¾ä¾‹  ï¼šæ— 
-* æ³¨æ„  ï¼šâ€ç”»æ¿åº”ç”¨å®žä¾‹"ä¸“ç”¨,ä¸æ˜¯å¾ˆç²¾å‡†ï¼Œä½†æ˜¯é€Ÿåº¦æ¯”è¾ƒå¿«
+* º¯ÊýÃû£ºRead_2046
+* ÃèÊö  £ºµÃµ½¼òµ¥ÂË²¨Ö®ºóµÄX Y
+* ÊäÈë  £ºCoordinate½á¹¹ÌåµØÖ·
+* Êä³ö  £º1³É¹¦£¬0Ê§°Ü
+* ¾ÙÀý  £ºÎÞ
+* ×¢Òâ  £º¡±»­°åÓ¦ÓÃÊµÀý"×¨ÓÃ,²»ÊÇºÜ¾«×¼£¬µ«ÊÇËÙ¶È±È½Ï¿ì
 *********************************************************/
 
 uint8 xpt2046_read(Site_t * site )
@@ -392,20 +392,20 @@ uint8 xpt2046_read(Site_t * site )
 
     uint32 sumx,sumy;
 
-    int buffer[2][READ_COUNT]={{0},{0}};  /*åæ ‡Xå’ŒYè¿›è¡Œå¤šæ¬¡é‡‡æ ·*/
+    int buffer[2][READ_COUNT]={{0},{0}};  /*×ø±êXºÍY½øÐÐ¶à´Î²ÉÑù*/
 
-    /* å¾ªçŽ¯é‡‡æ · READ_COUNT æ¬¡ */
+    /* Ñ­»·²ÉÑù READ_COUNT ´Î */
     do{
         xpt2046_get_xy(&sitexy);
-        if((sitexy.x == 0) || (sitexy.y == 0xFFF))return 0;//æ¾æ‰‹
+        if((sitexy.x == 0) || (sitexy.y == 0xFFF))return 0;//ËÉÊÖ
         buffer[0][count]=sitexy.x;
         buffer[1][count]=sitexy.y;
         count++;
-    }while(count<READ_COUNT); //ç”¨æˆ·ç‚¹å‡»è§¦æ‘¸å±æ—¶å³TP_INT_INä¿¡å·ä¸ºä½Ž å¹¶ä¸” count<10
+    }while(count<READ_COUNT); //ÓÃ»§µã»÷´¥ÃþÆÁÊ±¼´TP_INT_INÐÅºÅÎªµÍ ²¢ÇÒ count<10
 
     if(count == READ_COUNT)
     {
-        //åŽ»æŽ‰æœ€å°å€¼ å’Œ æœ€å¤§å€¼ ,å¹¶æ±‚å¹³å‡å€¼
+        //È¥µô×îÐ¡Öµ ºÍ ×î´óÖµ ,²¢ÇóÆ½¾ùÖµ
         sumx = buffer[0][0];
         sumy = buffer[1][0];
         for(i=1;i<READ_COUNT;i++)
@@ -417,7 +417,7 @@ uint8 xpt2046_read(Site_t * site )
         site->y = sumy /READ_COUNT;
 
 
-        //æ ¡éªŒã€‚åˆ¤æ–­æœ‰æ²¡æœ‰å…¶ä»–ç‚¹è¶…è¿‡ è¯¯å·®å€¼
+        //Ð£Ñé¡£ÅÐ¶ÏÓÐÃ»ÓÐÆäËûµã³¬¹ý Îó²îÖµ
         for(i=1;i<READ_COUNT;i++)
         {
             if(abs(buffer[0][i] -site->x ) > XPT2046_ERROR)

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       misc.h
- * @brief      å±±å¤–K60 å¹³å°å…¶ä»–éœ€è¦ç”¨åˆ°çš„å‡½æ•°çš„å®ç°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      É½ÍâK60 Æ½Ì¨ÆäËûĞèÒªÓÃµ½µÄº¯ÊıµÄÊµÏÖ
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -20,21 +20,21 @@
 #include "common.h"
 
 
-void write_vtor (int);                                              //è®¾ç½®ä¸­æ–­å‘é‡è¡¨çš„åœ°å€
-void set_vector_handler(VECTORn_t , void pfunc_handler(void));      //è®¾ç½®ä¸­æ–­å‡½æ•°åˆ°ä¸­æ–­å‘é‡è¡¨é‡Œ
+void write_vtor (int);                                              //ÉèÖÃÖĞ¶ÏÏòÁ¿±íµÄµØÖ·
+void set_vector_handler(VECTORn_t , void pfunc_handler(void));      //ÉèÖÃÖĞ¶Ïº¯Êıµ½ÖĞ¶ÏÏòÁ¿±íÀï
 
 
-//å…¼å®¹æ—§ä»£ç 
-#define enable_irq(irq)                 NVIC_EnableIRQ(irq)         //ä½¿èƒ½IRQ
-#define disable_irq(irq)                NVIC_DisableIRQ(irq)        //ç¦æ­¢IRQ
-#define set_irq_priority(irq,pri0)      NVIC_SetPriority(irq,pri0)  //è®¾ç½®ä¼˜å…ˆçº§
+//¼æÈİ¾É´úÂë
+#define enable_irq(irq)                 NVIC_EnableIRQ(irq)         //Ê¹ÄÜIRQ
+#define disable_irq(irq)                NVIC_DisableIRQ(irq)        //½ûÖ¹IRQ
+#define set_irq_priority(irq,pri0)      NVIC_SetPriority(irq,pri0)  //ÉèÖÃÓÅÏÈ¼¶
 
-#if 1    //ä¸¤ç§æ–¹æ³•ï¼Œä¸€ç§æ˜¯CMSISè‡ªå¸¦ï¼Œä¸€ç§æ˜¯ç›´æ¥æ±‡ç¼–å‘½ä»¤
-#define EnableInterrupts                __enable_irq()              //ä½¿èƒ½å…¨éƒ¨ä¸­æ–­
-#define DisableInterrupts               __disable_irq()             //ç¦æ­¢å…¨éƒ¨ä¸­æ–­
+#if 1    //Á½ÖÖ·½·¨£¬Ò»ÖÖÊÇCMSIS×Ô´ø£¬Ò»ÖÖÊÇÖ±½Ó»ã±àÃüÁî
+#define EnableInterrupts                __enable_irq()              //Ê¹ÄÜÈ«²¿ÖĞ¶Ï
+#define DisableInterrupts               __disable_irq()             //½ûÖ¹È«²¿ÖĞ¶Ï
 #else
-#define EnableInterrupts                asm(" CPSIE i");            //ä½¿èƒ½å…¨éƒ¨ä¸­æ–­
-#define DisableInterrupts               asm(" CPSID i");            //ç¦æ­¢å…¨éƒ¨ä¸­æ–­
+#define EnableInterrupts                asm(" CPSIE i");            //Ê¹ÄÜÈ«²¿ÖĞ¶Ï
+#define DisableInterrupts               asm(" CPSID i");            //½ûÖ¹È«²¿ÖĞ¶Ï
 #endif
 
 void vcan_cpy( uint8 *dst, uint8 *src, uint32 count);

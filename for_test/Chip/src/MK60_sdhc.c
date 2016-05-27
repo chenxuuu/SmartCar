@@ -1,17 +1,17 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
- *     æœ¬é©±åŠ¨ç”±brtosä»£ç æå–å¹¶ä¿®æ”¹è€Œæˆ:http://code.google.com/p/brtos/downloads/detail?name=BRTOS%201.66%20Kinetis%20-%20SD%20card%20-%20BMP%2024%20bit.rar&can=2&q=
+ *     ±¾Çý¶¯ÓÉbrtos´úÂëÌáÈ¡²¢ÐÞ¸Ä¶ø³É:http://code.google.com/p/brtos/downloads/detail?name=BRTOS%201.66%20Kinetis%20-%20SD%20card%20-%20BMP%2024%20bit.rar&can=2&q=
  *
  * @file       MK60_sdhc.c
- * @brief      SDæ¨¡å—å‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€ & gustavo(brtosä½œè€…)
+ * @brief      SDÄ£¿éº¯Êý
+ * @author     É½Íâ¿Æ¼¼ & gustavo(brtos×÷Õß)
  * @version    v5.0
  * @date       2013-09-19
  */
@@ -23,7 +23,7 @@
 SDCARD_t        SDHC_card;
 
 
-//SDå¡å‘½ä»¤
+//SD¿¨ÃüÁî
 const uint32 ESDHC_COMMAND_XFERTYP[] =
 {
     /* CMD0 */
@@ -110,7 +110,7 @@ const uint32 ESDHC_COMMAND_XFERTYP[] =
 
 
 /*!
- *  @brief      SDHCåˆå§‹åŒ–(ä»…åˆå§‹åŒ–æ¨¡å—ï¼Œä¸åˆå§‹åŒ–SDå¡)
+ *  @brief      SDHC³õÊ¼»¯(½ö³õÊ¼»¯Ä£¿é£¬²»³õÊ¼»¯SD¿¨)
  *  @since      v5.0
  */
 void SDHC_init()
@@ -119,31 +119,31 @@ void SDHC_init()
     SDHC_card.CARD = ESDHC_CARD_NONE;
 
 #if defined( MK60DZ10)
-    /* ä½¿èƒ½ SDHC æ¨¡å—æ—¶é’Ÿ */
+    /* Ê¹ÄÜ SDHC Ä£¿éÊ±ÖÓ */
     SIM_SCGC3 |= SIM_SCGC3_SDHC_MASK;
 
 #elif defined( MK60F15)
-    /* ä½¿èƒ½ SDHC æ¨¡å—æ—¶é’Ÿ */
+    /* Ê¹ÄÜ SDHC Ä£¿éÊ±ÖÓ */
     SIM_SCGC3 |= SIM_SCGC3_ESDHC_MASK;
 #endif
 
-    /* å¤ä½ ESDHC */
+    /* ¸´Î» ESDHC */
     SDHC_SYSCTL = SDHC_SYSCTL_RSTA_MASK | SDHC_SYSCTL_SDCLKFS(0x80);
     while (SDHC_SYSCTL & SDHC_SYSCTL_RSTA_MASK) {};
 
-    /* åˆå§‹åŒ–å€¼ */
+    /* ³õÊ¼»¯Öµ */
     SDHC_VENDOR     = 0;
     SDHC_BLKATTR    = SDHC_BLKATTR_BLKCNT(1) | SDHC_BLKATTR_BLKSIZE(512);
     SDHC_PROCTL     = SDHC_PROCTL_EMODE(ESDHC_PROCTL_EMODE_INVARIANT) | SDHC_PROCTL_D3CD_MASK;
     SDHC_WML        = SDHC_WML_RDWML(1) | SDHC_WML_WRWML(1);
 
-    /* é…ç½® ESDHC æ³¢ç‰¹çŽ‡ */
+    /* ÅäÖÃ ESDHC ²¨ÌØÂÊ */
     SDHC_set_baudrate ( SDHC_INIT_BANDRATE );
 
     /* Poll inhibit bits */
     while (SDHC_PRSSTAT & (SDHC_PRSSTAT_CIHB_MASK | SDHC_PRSSTAT_CDIHB_MASK)) {};
 
-    /* åˆå§‹åŒ–ç®¡è„šå¤ç”¨ */
+    /* ³õÊ¼»¯¹Ü½Å¸´ÓÃ */
     port_init(PTE0, ALT4 | HDS | PULLUP ); /* ESDHC.D1  */
     port_init(PTE1, ALT4 | HDS | PULLUP ); /* ESDHC.D0  */
     port_init(PTE2, ALT4 | HDS          ); /* ESDHC.CLK */
@@ -151,31 +151,31 @@ void SDHC_init()
     port_init(PTE4, ALT4 | HDS | PULLUP ); /* ESDHC.D3  */
     port_init(PTE5, ALT4 | HDS | PULLUP ); /* ESDHC.D2  */
 
-    /* ä½¿èƒ½è¯·æ±‚ */
+    /* Ê¹ÄÜÇëÇó */
     SDHC_IRQSTAT = 0xFFFF;
     SDHC_IRQSTATEN =      SDHC_IRQSTATEN_DEBESEN_MASK | SDHC_IRQSTATEN_DCESEN_MASK | SDHC_IRQSTATEN_DTOESEN_MASK
                           | SDHC_IRQSTATEN_CIESEN_MASK | SDHC_IRQSTATEN_CEBESEN_MASK | SDHC_IRQSTATEN_CCESEN_MASK | SDHC_IRQSTATEN_CTOESEN_MASK
                           | SDHC_IRQSTATEN_BRRSEN_MASK | SDHC_IRQSTATEN_BWRSEN_MASK | SDHC_IRQSTATEN_CRMSEN_MASK
                           | SDHC_IRQSTATEN_TCSEN_MASK | SDHC_IRQSTATEN_CCSEN_MASK;
 
-    /* å‘é€ 80 ä¸ª æœ€åˆçš„æ—¶é’Ÿå‘¨æœŸ åˆ°å¡ä¸Šï¼Œå¡ä¸Šç”µæœŸé—´æ˜¯éœ€è¦ç”¨åˆ° */
+    /* ·¢ËÍ 80 ¸ö ×î³õµÄÊ±ÖÓÖÜÆÚ µ½¿¨ÉÏ£¬¿¨ÉÏµçÆÚ¼äÊÇÐèÒªÓÃµ½ */
     SDHC_SYSCTL |= SDHC_SYSCTL_INITA_MASK;
-    while (SDHC_SYSCTL & SDHC_SYSCTL_INITA_MASK) {};        //ç­‰å¾… 80ä¸ªSDå‘¨æœŸå‘é€å®Œæˆ
+    while (SDHC_SYSCTL & SDHC_SYSCTL_INITA_MASK) {};        //µÈ´ý 80¸öSDÖÜÆÚ·¢ËÍÍê³É
 
-    /* æ£€æµ‹ å¡æ˜¯å¦æ’å…¥ */
-    if (SDHC_PRSSTAT & SDHC_PRSSTAT_CINS_MASK)              // CINS å­—æ®µ ç”± 0å˜1è¡¨ç¤ºæ’å…¥å¡ï¼Œç”±1å˜0è¡¨ç¤ºæ‹”å‡ºå¡
+    /* ¼ì²â ¿¨ÊÇ·ñ²åÈë */
+    if (SDHC_PRSSTAT & SDHC_PRSSTAT_CINS_MASK)              // CINS ×Ö¶Î ÓÉ 0±ä1±íÊ¾²åÈë¿¨£¬ÓÉ1±ä0±íÊ¾°Î³ö¿¨
     {
-        SDHC_card.CARD = ESDHC_CARD_UNKNOWN;          //æ’å…¥äº†å¡ï¼Œç±»åž‹æœªçŸ¥
+        SDHC_card.CARD = ESDHC_CARD_UNKNOWN;          //²åÈëÁË¿¨£¬ÀàÐÍÎ´Öª
     }
-    SDHC_IRQSTAT |= SDHC_IRQSTAT_CRM_MASK;                  //å†™1æ¸… CRM æ ‡å¿—ä½ã€‚0è¡¨ç¤ºæ’å…¥å¡ï¼Œ1è¡¨ç¤ºç§»é™¤å¡ã€‚å†™1æ¸…0åŽï¼Œå¡è¿˜æ˜¯æ²¡æœ‰æ’å…¥ï¼Œåˆ™æ¢å¤å€¼ä¸º1
+    SDHC_IRQSTAT |= SDHC_IRQSTAT_CRM_MASK;                  //Ð´1Çå CRM ±êÖ¾Î»¡£0±íÊ¾²åÈë¿¨£¬1±íÊ¾ÒÆ³ý¿¨¡£Ð´1Çå0ºó£¬¿¨»¹ÊÇÃ»ÓÐ²åÈë£¬Ôò»Ö¸´ÖµÎª1
 }
 
 
 
 
 /*!
- *  @brief      SDHCæ³¢ç‰¹çŽ‡é…ç½®
- *  @param      baudrate    æ³¢ç‰¹çŽ‡(Hz)
+ *  @brief      SDHC²¨ÌØÂÊÅäÖÃ
+ *  @param      baudrate    ²¨ÌØÂÊ(Hz)
  *  @since      v5.0
  */
 void SDHC_set_baudrate(uint32 baudrate)
@@ -184,20 +184,20 @@ void SDHC_set_baudrate(uint32 baudrate)
     int32  val;
     uint32 clock = SDHC_CLOCK;
 
-    /* è®¡ç®—æœ€ä½³é…ç½® */
-    //SDCLK æ—¶é’Ÿé¢‘çŽ‡ = åŸºæ—¶é’Ÿ/(é¢„åˆ†é¢‘å™¨*é™¤æ•°)
-    //SD æ—¶é’Ÿé¢‘çŽ‡çš„æœ€å¤§å€¼æ˜¯ 50MHz
-    //é¢„åˆ†é¢‘ = 2,4,8,16,32,64,128,256  ,ä¸” SDCLKFS = é¢„åˆ†é¢‘ >> 1;
-    //é™¤æ•° = DVS + 1 ,DVS çš„å–å€¼èŒƒå›´æ˜¯ 0~ 0xF
-    min = (uint32) - 1;                         //å…ˆæŠŠ min é…ç½®ä¸ºæœ€å¤§å€¼
-    for (pres = 2; pres <= 256; pres <<= 1)     //pres å³ é¢„åˆ†é¢‘å™¨ prescaler
+    /* ¼ÆËã×î¼ÑÅäÖÃ */
+    //SDCLK Ê±ÖÓÆµÂÊ = »ùÊ±ÖÓ/(Ô¤·ÖÆµÆ÷*³ýÊý)
+    //SD Ê±ÖÓÆµÂÊµÄ×î´óÖµÊÇ 50MHz
+    //Ô¤·ÖÆµ = 2,4,8,16,32,64,128,256  ,ÇÒ SDCLKFS = Ô¤·ÖÆµ >> 1;
+    //³ýÊý = DVS + 1 ,DVS µÄÈ¡Öµ·¶Î§ÊÇ 0~ 0xF
+    min = (uint32) - 1;                         //ÏÈ°Ñ min ÅäÖÃÎª×î´óÖµ
+    for (pres = 2; pres <= 256; pres <<= 1)     //pres ¼´ Ô¤·ÖÆµÆ÷ prescaler
     {
-        for (div = 1; div <= 16; div++)         //div å³ é™¤æ•°Divisor
+        for (div = 1; div <= 16; div++)         //div ¼´ ³ýÊýDivisor
         {
             val = pres * div * baudrate - clock;
-            if (val >= 0)                       //æ³¢ç‰¹çŽ‡ å¤§äºŽæˆ–ç­‰äºŽ è®¾å®šçš„ç›®æ ‡å€¼
+            if (val >= 0)                       //²¨ÌØÂÊ ´óÓÚ»òµÈÓÚ Éè¶¨µÄÄ¿±êÖµ
             {
-                if (min > val)                  //é€‰æ‹©æœ€æŽ¥è¿‘ ç›®æ ‡å€¼ çš„
+                if (min > val)                  //Ñ¡Ôñ×î½Ó½ü Ä¿±êÖµ µÄ
                 {
                     min = val;
                     minpres = pres;
@@ -207,32 +207,32 @@ void SDHC_set_baudrate(uint32 baudrate)
         }
     }
 
-    /* ç¦æ­¢ ESDHC æ—¶é’Ÿ */
+    /* ½ûÖ¹ ESDHC Ê±ÖÓ */
     SDHC_SYSCTL &= (~ SDHC_SYSCTL_SDCLKEN_MASK);
 
-    /* æ”¹å˜åˆ†é¢‘ç³»æ•° */
-    SDHC_SYSCTL = (   (SDHC_SYSCTL & (~ (SDHC_SYSCTL_DTOCV_MASK | SDHC_SYSCTL_SDCLKFS_MASK | SDHC_SYSCTL_DVS_MASK)) ) //å…ˆ æ¸… SDHC_SYSCTL çš„ DTOCV ã€SDCLKFS ã€DVS å­—æ®µ
-                      | SDHC_SYSCTL_DTOCV(0x0E)               //æ•°æ®è¶…æ—¶è®¡æ•°å™¨å€¼ = SDCLK x (DTOCV + 213)  ,DTOCV çš„èŒƒå›´æ˜¯ 0 - 0x0E
-                      | SDHC_SYSCTL_SDCLKFS(minpres >> 1)     //SDCLK é¢‘çŽ‡é€‰æ‹© = åŸºæ—¶é’Ÿ / (1 << SDCLKFS )
+    /* ¸Ä±ä·ÖÆµÏµÊý */
+    SDHC_SYSCTL = (   (SDHC_SYSCTL & (~ (SDHC_SYSCTL_DTOCV_MASK | SDHC_SYSCTL_SDCLKFS_MASK | SDHC_SYSCTL_DVS_MASK)) ) //ÏÈ Çå SDHC_SYSCTL µÄ DTOCV ¡¢SDCLKFS ¡¢DVS ×Ö¶Î
+                      | SDHC_SYSCTL_DTOCV(0x0E)               //Êý¾Ý³¬Ê±¼ÆÊýÆ÷Öµ = SDCLK x (DTOCV + 213)  ,DTOCV µÄ·¶Î§ÊÇ 0 - 0x0E
+                      | SDHC_SYSCTL_SDCLKFS(minpres >> 1)     //SDCLK ÆµÂÊÑ¡Ôñ = »ùÊ±ÖÓ / (1 << SDCLKFS )
                       | SDHC_SYSCTL_DVS(mindiv - 1)
 
                   );
 
-    /* ç­‰å¾… SD æ—¶é’Ÿç¨³å®š  */
+    /* µÈ´ý SD Ê±ÖÓÎÈ¶¨  */
     while (0 == (SDHC_PRSSTAT & SDHC_PRSSTAT_SDSTB_MASK));
 
 
-    /* ä½¿èƒ½ ESDHC æ—¶é’Ÿ */
+    /* Ê¹ÄÜ ESDHC Ê±ÖÓ */
     SDHC_SYSCTL |= SDHC_SYSCTL_SDCLKEN_MASK;
 
-    SDHC_IRQSTAT |= SDHC_IRQSTAT_DTOE_MASK;     //æ¸… æ•°æ®è¶…æ—¶é”™è¯¯ æ ‡å¿—
+    SDHC_IRQSTAT |= SDHC_IRQSTAT_DTOE_MASK;     //Çå Êý¾Ý³¬Ê±´íÎó ±êÖ¾
 }
 
 
 /*!
- *  @brief      SDHCå‘é€cmdå‘½ä»¤
- *  @param      command     å‘½ä»¤
- *  @return     å‘é€å‘½ä»¤ç»“æžœï¼Œ    0è¡¨ç¤ºæˆåŠŸï¼Œ1è¡¨ç¤ºé”™è¯¯ï¼Œ-1 è¡¨ç¤º è¶…æ—¶
+ *  @brief      SDHC·¢ËÍcmdÃüÁî
+ *  @param      command     ÃüÁî
+ *  @return     ·¢ËÍÃüÁî½á¹û£¬    0±íÊ¾³É¹¦£¬1±íÊ¾´íÎó£¬-1 ±íÊ¾ ³¬Ê±
  *  @since      v5.0
  */
 uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
@@ -240,24 +240,24 @@ uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
     uint32  xfertyp;
     uint32  blkattr;
 
-    //ASSERT(SDHC_CMD_MAX > command->COMMAND  );      //æ–­è¨€ï¼Œå‘½ä»¤ä¸èƒ½è¶…è¿‡ SDHC_CMD_MAX
+    //ASSERT(SDHC_CMD_MAX > command->COMMAND  );      //¶ÏÑÔ£¬ÃüÁî²»ÄÜ³¬¹ý SDHC_CMD_MAX
 
-    /* æ£€æŸ¥å‘½ä»¤ */
+    /* ¼ì²éÃüÁî */
     xfertyp = ESDHC_COMMAND_XFERTYP[command->COMMAND ];
 
-    ASSERT (~0 != xfertyp);                             //æ–­è¨€ï¼Œåˆæ³•çš„CMD,xfertyp ä¸èƒ½ä¸º ~0
+    ASSERT (~0 != xfertyp);                             //¶ÏÑÔ£¬ºÏ·¨µÄCMD,xfertyp ²»ÄÜÎª ~0
 
-    /* å‡†å¤‡æ£€æµ‹å¡æ’æ‹”çŠ¶æ€ */
+    /* ×¼±¸¼ì²â¿¨²å°Î×´Ì¬ */
     SDHC_IRQSTAT |= SDHC_IRQSTAT_CRM_MASK;
 
-    /* ç­‰å¾…CMD çº¿ç©ºé—² */
+    /* µÈ´ýCMD Ïß¿ÕÏÐ */
     while (SDHC_PRSSTAT & SDHC_PRSSTAT_CIHB_MASK) {};
 
-    /* è®¾ç½®å‘½ä»¤ */
+    /* ÉèÖÃÃüÁî */
     SDHC_CMDARG = command->ARGUMENT;
     xfertyp &= (~ SDHC_XFERTYP_CMDTYP_MASK);
     xfertyp |= SDHC_XFERTYP_CMDTYP(command->TYPE);
-    if (ESDHC_TYPE_RESUME == command->TYPE)     //æ¢å¤å‘½ä»¤ å¿…é¡» DPSEL ä½ ç½®ä½
+    if (ESDHC_TYPE_RESUME == command->TYPE)     //»Ö¸´ÃüÁî ±ØÐë DPSEL Î» ÖÃÎ»
     {
         xfertyp |= SDHC_XFERTYP_DPSEL_MASK;
     }
@@ -268,7 +268,7 @@ uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
         {
             xfertyp |= SDHC_XFERTYP_DPSEL_MASK;
         }
-        if (command->READ)       //å†™æ•°æ®
+        if (command->READ)       //Ð´Êý¾Ý
         {
            xfertyp |= SDHC_XFERTYP_DTDSEL_MASK;
         }
@@ -294,11 +294,11 @@ uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
     SDHC_BLKATTR = blkattr;
 
 
-    /* å‘å‡ºå‘½ä»¤ */
+    /* ·¢³öÃüÁî */
     SDHC_DSADDR = 0;
     SDHC_XFERTYP = xfertyp;
 
-    /* ç­‰å¾…å›žåº” */
+    /* µÈ´ý»ØÓ¦ */
     SDHC_STATUS_WAIT (SDHC_IRQSTAT_CIE_MASK | SDHC_IRQSTAT_CEBE_MASK | SDHC_IRQSTAT_CCE_MASK | SDHC_IRQSTAT_CC_MASK);
     if (SDHC_STATUS_GET(SDHC_IRQSTAT_CIE_MASK | SDHC_IRQSTAT_CEBE_MASK | SDHC_IRQSTAT_CCE_MASK | SDHC_IRQSTAT_CC_MASK) != SDHC_IRQSTAT_CC_MASK)
     {
@@ -306,26 +306,26 @@ uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
         return ESDHC_CMD_TIMEOUT;
     }
 
-    /* æ£€æµ‹å¡æ‹”æ’çŠ¶æ€ */
+    /* ¼ì²â¿¨°Î²å×´Ì¬ */
     if (SDHC_IRQSTAT & SDHC_IRQSTAT_CRM_MASK)
     {
         SDHC_IRQSTAT |= SDHC_IRQSTAT_CTOE_MASK | SDHC_IRQSTAT_CC_MASK;
         return ESDHC_CMD_ERR;
     }
 
-    /* å¦‚æžœæœ‰ï¼Œåˆ™èŽ·å–ç›¸åº” */
+    /* Èç¹ûÓÐ£¬Ôò»ñÈ¡ÏàÓ¦ */
     if (SDHC_IRQSTAT & SDHC_IRQSTAT_CTOE_MASK)
     {
         SDHC_IRQSTAT |= SDHC_IRQSTAT_CTOE_MASK | SDHC_IRQSTAT_CC_MASK;
         return ESDHC_CMD_TIMEOUT;
     }
 
-    //å¦‚æžœ å‘é€æœ‰ç›¸åº” å‘½ä»¤
+    //Èç¹û ·¢ËÍÓÐÏàÓ¦ ÃüÁî
     if ((xfertyp & SDHC_XFERTYP_RSPTYP_MASK) != SDHC_XFERTYP_RSPTYP(ESDHC_XFERTYP_RSPTYP_NO))
     {
         command->RESPONSE[0] = SDHC_CMDRSP(0);
 
-        //å¦‚æžœæŽ¥æ”¶åˆ°é•¿ç›¸åº”
+        //Èç¹û½ÓÊÕµ½³¤ÏàÓ¦
         if ((xfertyp & SDHC_XFERTYP_RSPTYP_MASK) == SDHC_XFERTYP_RSPTYP(ESDHC_XFERTYP_RSPTYP_136))
         {
             command->RESPONSE[1] = SDHC_CMDRSP(1);
@@ -334,7 +334,7 @@ uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
         }
     }
 
-    //å®Œæˆå‘½ä»¤
+    //Íê³ÉÃüÁî
     SDHC_IRQSTAT |= SDHC_IRQSTAT_CC_MASK;
 
     return 0;
@@ -343,9 +343,9 @@ uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
 
 
 /*!
- *  @brief      SDHC æŽ§åˆ¶å‘½ä»¤
- *  @param      ESDHC_IOCTL_CMD_e       å‘½ä»¤
- *  @return     ESDHC_IOCTL_ERR_e       æ“ä½œç»“æžœ
+ *  @brief      SDHC ¿ØÖÆÃüÁî
+ *  @param      ESDHC_IOCTL_CMD_e       ÃüÁî
+ *  @return     ESDHC_IOCTL_ERR_e       ²Ù×÷½á¹û
  *  @since      v5.0
  */
 ESDHC_IOCTL_ERR_e SDHC_ioctl(ESDHC_IOCTL_CMD_e cmd, void *param_ptr )
@@ -362,7 +362,7 @@ ESDHC_IOCTL_ERR_e SDHC_ioctl(ESDHC_IOCTL_CMD_e cmd, void *param_ptr )
     {
     case ESDHC_IOCTL_INIT:
 
-        SDHC_init();        //åˆå§‹åŒ– SDå¡æ¨¡å—
+        SDHC_init();        //³õÊ¼»¯ SD¿¨Ä£¿é
 
         mem = FALSE;
         io  = FALSE;
@@ -498,7 +498,7 @@ ESDHC_IOCTL_ERR_e SDHC_ioctl(ESDHC_IOCTL_CMD_e cmd, void *param_ptr )
                         val++;
 
                         /* CMD55 + ACMD41 - Send OCR */
-                        //MMCå¡å¯¹CMD55+ACMD41å‘½ä»¤ä¸ä½œå“åº”ï¼Œæ•…åœ¨åˆå§‹åŒ–è¿‡ç¨‹ä¸­ç”¨è¿™ä¸€å‘½ä»¤å¯ä»¥åŒºåˆ«SDå¡è·ŸMMCå¡
+                        //MMC¿¨¶ÔCMD55+ACMD41ÃüÁî²»×÷ÏìÓ¦£¬¹ÊÔÚ³õÊ¼»¯¹ý³ÌÖÐÓÃÕâÒ»ÃüÁî¿ÉÒÔÇø±ðSD¿¨¸úMMC¿¨
                         command.COMMAND = ESDHC_CMD55;
                         command.TYPE = ESDHC_TYPE_NORMAL;
                         command.ARGUMENT = 0;
@@ -583,15 +583,15 @@ ESDHC_IOCTL_ERR_e SDHC_ioctl(ESDHC_IOCTL_CMD_e cmd, void *param_ptr )
             }
         }
 
-        /* è®¾ç½® ESDHC é»˜è®¤æ³¢ç‰¹çŽ‡ */
+        /* ÉèÖÃ ESDHC Ä¬ÈÏ²¨ÌØÂÊ */
         SDHC_set_baudrate (SDHC_BANDRATE);
 
 #if defined( MK60DZ10)
-        /* ä½¿èƒ½ SDHC æ¨¡å—æ—¶é’Ÿ */
+        /* Ê¹ÄÜ SDHC Ä£¿éÊ±ÖÓ */
         SIM_SCGC3 |= SIM_SCGC3_SDHC_MASK;
 
 #elif defined( MK60F15)
-        /* ä½¿èƒ½ SDHC æ¨¡å—æ—¶é’Ÿ */
+        /* Ê¹ÄÜ SDHC Ä£¿éÊ±ÖÓ */
         SIM_SCGC3 |= SIM_SCGC3_ESDHC_MASK;
 #endif
         break;
@@ -613,7 +613,7 @@ ESDHC_IOCTL_ERR_e SDHC_ioctl(ESDHC_IOCTL_CMD_e cmd, void *param_ptr )
         }
         else
         {
-            /* èŽ·å– ESDHC æ€»çº¿å®½åº¦ */
+            /* »ñÈ¡ ESDHC ×ÜÏß¿í¶È */
             val = (SDHC_PROCTL & SDHC_PROCTL_DTW_MASK) >> SDHC_PROCTL_DTW_SHIFT;
             if (ESDHC_PROCTL_DTW_1BIT == val)
             {
@@ -640,7 +640,7 @@ ESDHC_IOCTL_ERR_e SDHC_ioctl(ESDHC_IOCTL_CMD_e cmd, void *param_ptr )
         }
         else
         {
-            /* è®¾ç½® ESDHC æ€»çº¿å®½åº¦ */
+            /* ÉèÖÃ ESDHC ×ÜÏß¿í¶È */
             if (! SDHC_is_running())
             {
                 if (ESDHC_BUS_WIDTH_1BIT == *param32_ptr)

@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜Žå‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±žå±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºŽå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜Žã€‚
+ *     ³ý×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓÐÄÚÈÝ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓÐ£¬Î´¾­ÔÊÐí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_gpio_cfg.h
- * @brief      gpioçš„ç«¯å£å®šä¹‰å¤´æ–‡ä»¶
- * @author     å±±å¤–
+ * @brief      gpioµÄ¶Ë¿Ú¶¨ÒåÍ·ÎÄ¼þ
+ * @author     É½Íâ
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -17,8 +17,8 @@
 #define __MK60_GPIO_CFG_H__
 
 
-#if 1       //å¯„å­˜å™¨ä½æ“ä½œï¼Œæœ‰ä¸¤ç§æ–¹æ³•ï¼Œå‰è€…æ•ˆçŽ‡æ›´é«˜ï¼Œå› è€Œæ­¤å¤„ä½¿ç”¨ç¬¬ä¸€ç§
-#define PT(X,n,REG)         BITBAND_REG(PT##X##_BASE_PTR->##REG,n)              //ä½æ“ä½œ
+#if 1       //¼Ä´æÆ÷Î»²Ù×÷£¬ÓÐÁ½ÖÖ·½·¨£¬Ç°ÕßÐ§ÂÊ¸ü¸ß£¬Òò¶ø´Ë´¦Ê¹ÓÃµÚÒ»ÖÖ
+#define PT(X,n,REG)         BITBAND_REG(PT##X##_BASE_PTR->##REG,n)              //Î»²Ù×÷
 #else
 #define PT(X,n,REG)         (((Dtype *)(&(PT##X##_BASE_PTR->##REG)))->b##n)
 #endif
@@ -29,29 +29,29 @@
 /* Sample usage:
 PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 
-## ï¼Œä¸€èˆ¬ç”¨äºŽæŠŠä¸¤ä¸ªå®å‚æ•°è´´åˆåœ¨ä¸€èµ·ï¼Œ
-è¿™é‡ŒæŠŠ PT A  _BASE_PTR-> PDOR ->B[0] ä¸²æŽ¥èµ·æ¥
+## £¬Ò»°ãÓÃÓÚ°ÑÁ½¸öºê²ÎÊýÌùºÏÔÚÒ»Æð£¬
+ÕâÀï°Ñ PT A  _BASE_PTR-> PDOR ->B[0] ´®½ÓÆðÀ´
 
 */
 
-//1ä½æ“ä½œ
+//1Î»²Ù×÷
 #define     _PTXn_T(ptxn,type)   (ptxn##_##type)
 #define     PTXn_T(ptxn,type)    _PTXn_T(ptxn,type)
 
-//8ä½æ“ä½œ
+//8Î»²Ù×÷
 #define     _PTX_Bn_T(ptx,n,type)  (ptx##_B##n##_##type)
 #define     PTX_Bn_T(ptx,n,type)   _PTX_Bn_T(ptx,n,type)
 
-//16ä½æ“ä½œ
+//16Î»²Ù×÷
 #define     _PTX_Wn_T(ptx,n,type)  (ptx##_W##n##_##type)
 #define     PTX_Wn_T(ptx,n,type)   _PTX_Wn_T(ptx,n,type)
 
-//32ä½æ“ä½œ
+//32Î»²Ù×÷
 #define     _PTX_T(ptx,type)  (ptx##_##type)
 #define     PTX_T(ptx,type)   _PTX_T(ptx,type)
 
 
-//å®šä¹‰PTAçš„ç«¯å£
+//¶¨ÒåPTAµÄ¶Ë¿Ú
 #define PTA0_OUT            PT(A,0,PDOR)
 #define PTA1_OUT            PT(A,1,PDOR)
 #define PTA2_OUT            PT(A,2,PDOR)
@@ -85,7 +85,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTA30_OUT           PT(A,30,PDOR)
 #define PTA31_OUT           PT(A,31,PDOR)
 
-//å®šä¹‰PTBçš„ç«¯å£
+//¶¨ÒåPTBµÄ¶Ë¿Ú
 #define PTB0_OUT           PT(B,0,PDOR)
 #define PTB1_OUT           PT(B,1,PDOR)
 #define PTB2_OUT           PT(B,2,PDOR)
@@ -119,7 +119,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTB30_OUT           PT(B,30,PDOR)
 #define PTB31_OUT           PT(B,31,PDOR)
 
-//å®šä¹‰PTCçš„ç«¯å£
+//¶¨ÒåPTCµÄ¶Ë¿Ú
 #define PTC0_OUT           PT(C,0,PDOR)
 #define PTC1_OUT           PT(C,1,PDOR)
 #define PTC2_OUT           PT(C,2,PDOR)
@@ -153,7 +153,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTC30_OUT           PT(C,30,PDOR)
 #define PTC31_OUT           PT(C,31,PDOR)
 
-//å®šä¹‰PTDçš„ç«¯å£
+//¶¨ÒåPTDµÄ¶Ë¿Ú
 #define PTD0_OUT           PT(D,0,PDOR)
 #define PTD1_OUT           PT(D,1,PDOR)
 #define PTD2_OUT           PT(D,2,PDOR)
@@ -187,7 +187,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTD30_OUT           PT(D,30,PDOR)
 #define PTD31_OUT           PT(D,31,PDOR)
 
-//å®šä¹‰PTEçš„ç«¯å£
+//¶¨ÒåPTEµÄ¶Ë¿Ú
 #define PTE0_OUT           PT(E,0,PDOR)
 #define PTE1_OUT           PT(E,1,PDOR)
 #define PTE2_OUT           PT(E,2,PDOR)
@@ -224,7 +224,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 
 
 
-//å®šä¹‰PTAçš„è¾“å‡ºè¾“å…¥æ–¹å‘
+//¶¨ÒåPTAµÄÊä³öÊäÈë·½Ïò
 #define PTA0_DDR            PT(A,0,PDDR)
 #define PTA1_DDR            PT(A,1,PDDR)
 #define PTA2_DDR            PT(A,2,PDDR)
@@ -258,7 +258,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTA30_DDR           PT(A,30,PDDR)
 #define PTA31_DDR           PT(A,31,PDDR)
 
-//å®šä¹‰PTBçš„è¾“å‡ºè¾“å…¥æ–¹å‘
+//¶¨ÒåPTBµÄÊä³öÊäÈë·½Ïò
 #define PTB0_DDR           PT(B,0,PDDR)
 #define PTB1_DDR           PT(B,1,PDDR)
 #define PTB2_DDR           PT(B,2,PDDR)
@@ -292,7 +292,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTB30_DDR           PT(B,30,PDDR)
 #define PTB31_DDR           PT(B,31,PDDR)
 
-//å®šä¹‰PTCçš„è¾“å‡ºè¾“å…¥æ–¹å‘
+//¶¨ÒåPTCµÄÊä³öÊäÈë·½Ïò
 #define PTC0_DDR           PT(C,0,PDDR)
 #define PTC1_DDR           PT(C,1,PDDR)
 #define PTC2_DDR           PT(C,2,PDDR)
@@ -326,7 +326,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTC30_DDR           PT(C,30,PDDR)
 #define PTC31_DDR           PT(C,31,PDDR)
 
-//å®šä¹‰PTDçš„è¾“å‡ºè¾“å…¥æ–¹å‘
+//¶¨ÒåPTDµÄÊä³öÊäÈë·½Ïò
 #define PTD0_DDR           PT(D,0,PDDR)
 #define PTD1_DDR           PT(D,1,PDDR)
 #define PTD2_DDR           PT(D,2,PDDR)
@@ -360,7 +360,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTD30_DDR           PT(D,30,PDDR)
 #define PTD31_DDR           PT(D,31,PDDR)
 
-//å®šä¹‰PTEçš„è¾“å‡ºè¾“å…¥æ–¹å‘
+//¶¨ÒåPTEµÄÊä³öÊäÈë·½Ïò
 #define PTE0_DDR           PT(E,0,PDDR)
 #define PTE1_DDR           PT(E,1,PDDR)
 #define PTE2_DDR           PT(E,2,PDDR)
@@ -396,7 +396,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 
 
 
-//å®šä¹‰PTAçš„è¾“å…¥ç«¯å£
+//¶¨ÒåPTAµÄÊäÈë¶Ë¿Ú
 #define PTA0_IN            PT(A,0,PDIR)
 #define PTA1_IN            PT(A,1,PDIR)
 #define PTA2_IN            PT(A,2,PDIR)
@@ -430,7 +430,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTA30_IN           PT(A,30,PDIR)
 #define PTA31_IN           PT(A,31,PDIR)
 
-//å®šä¹‰PTBçš„è¾“å…¥ç«¯å£
+//¶¨ÒåPTBµÄÊäÈë¶Ë¿Ú
 #define PTB0_IN           PT(B,0,PDIR)
 #define PTB1_IN           PT(B,1,PDIR)
 #define PTB2_IN           PT(B,2,PDIR)
@@ -464,7 +464,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTB30_IN           PT(B,30,PDIR)
 #define PTB31_IN           PT(B,31,PDIR)
 
-//å®šä¹‰PTCçš„è¾“å…¥ç«¯å£
+//¶¨ÒåPTCµÄÊäÈë¶Ë¿Ú
 #define PTC0_IN           PT(C,0,PDIR)
 #define PTC1_IN           PT(C,1,PDIR)
 #define PTC2_IN           PT(C,2,PDIR)
@@ -498,7 +498,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTC30_IN           PT(C,30,PDIR)
 #define PTC31_IN           PT(C,31,PDIR)
 
-//å®šä¹‰PTDçš„è¾“å…¥ç«¯å£
+//¶¨ÒåPTDµÄÊäÈë¶Ë¿Ú
 #define PTD0_IN           PT(D,0,PDIR)
 #define PTD1_IN           PT(D,1,PDIR)
 #define PTD2_IN           PT(D,2,PDIR)
@@ -532,7 +532,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTD30_IN           PT(D,30,PDIR)
 #define PTD31_IN           PT(D,31,PDIR)
 
-//å®šä¹‰PTEçš„è¾“å…¥ç«¯å£
+//¶¨ÒåPTEµÄÊäÈë¶Ë¿Ú
 #define PTE0_IN           PT(E,0,PDIR)
 #define PTE1_IN           PT(E,1,PDIR)
 #define PTE2_IN           PT(E,2,PDIR)
@@ -566,7 +566,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTE30_IN           PT(E,30,PDIR)
 #define PTE31_IN           PT(E,31,PDIR)
 
-//å®šä¹‰PTAçš„ç¿»è½¬ç”µå¹³è¾“å‡ºç«¯å£
+//¶¨ÒåPTAµÄ·­×ªµçÆ½Êä³ö¶Ë¿Ú
 #define PTA0_T            PT(A,0,PTOR)
 #define PTA1_T            PT(A,1,PTOR)
 #define PTA2_T            PT(A,2,PTOR)
@@ -600,7 +600,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTA30_T           PT(A,30,PTOR)
 #define PTA31_T           PT(A,31,PTOR)
 
-//å®šä¹‰PTBçš„ç¿»è½¬ç”µå¹³è¾“å‡ºç«¯å£
+//¶¨ÒåPTBµÄ·­×ªµçÆ½Êä³ö¶Ë¿Ú
 #define PTB0_T           PT(B,0,PTOR)
 #define PTB1_T           PT(B,1,PTOR)
 #define PTB2_T           PT(B,2,PTOR)
@@ -634,7 +634,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTB30_T           PT(B,30,PTOR)
 #define PTB31_T           PT(B,31,PTOR)
 
-//å®šä¹‰PTCçš„ç¿»è½¬ç”µå¹³è¾“å‡ºç«¯å£
+//¶¨ÒåPTCµÄ·­×ªµçÆ½Êä³ö¶Ë¿Ú
 #define PTC0_T           PT(C,0,PTOR)
 #define PTC1_T           PT(C,1,PTOR)
 #define PTC2_T           PT(C,2,PTOR)
@@ -668,7 +668,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTC30_T           PT(C,30,PTOR)
 #define PTC31_T           PT(C,31,PTOR)
 
-//å®šä¹‰PTDçš„ç¿»è½¬ç”µå¹³è¾“å‡ºç«¯å£
+//¶¨ÒåPTDµÄ·­×ªµçÆ½Êä³ö¶Ë¿Ú
 #define PTD0_T           PT(D,0,PTOR)
 #define PTD1_T           PT(D,1,PTOR)
 #define PTD2_T           PT(D,2,PTOR)
@@ -702,7 +702,7 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTD30_T           PT(D,30,PTOR)
 #define PTD31_T           PT(D,31,PTOR)
 
-//å®šä¹‰PTEçš„ç¿»è½¬ç”µå¹³è¾“å‡ºç«¯å£
+//¶¨ÒåPTEµÄ·­×ªµçÆ½Êä³ö¶Ë¿Ú
 #define PTE0_T           PT(E,0,PTOR)
 #define PTE1_T           PT(E,1,PTOR)
 #define PTE2_T           PT(E,2,PTOR)
@@ -737,32 +737,32 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTE31_T           PT(E,31,PTOR)
 
 
-//å®šä¹‰PTAçš„8ä½ç«¯å£
+//¶¨ÒåPTAµÄ8Î»¶Ë¿Ú
 #define PTA_B0_OUT        PT_BYTE(A,0,PDOR)
 #define PTA_B1_OUT        PT_BYTE(A,1,PDOR)
 #define PTA_B2_OUT        PT_BYTE(A,2,PDOR)
 #define PTA_B3_OUT        PT_BYTE(A,3,PDOR)
 
-//å®šä¹‰PTBçš„8ä½ç«¯å£
+//¶¨ÒåPTBµÄ8Î»¶Ë¿Ú
 #define PTB_B0_OUT        PT_BYTE(B,0,PDOR)
 #define PTB_B1_OUT        PT_BYTE(B,1,PDOR)
 #define PTB_B2_OUT        PT_BYTE(B,2,PDOR)
 #define PTB_B3_OUT        PT_BYTE(B,3,PDOR)
 
 
-//å®šä¹‰PTCçš„8ä½ç«¯å£
+//¶¨ÒåPTCµÄ8Î»¶Ë¿Ú
 #define PTC_B0_OUT        PT_BYTE(C,0,PDOR)
 #define PTC_B1_OUT        PT_BYTE(C,1,PDOR)
 #define PTC_B2_OUT        PT_BYTE(C,2,PDOR)
 #define PTC_B3_OUT        PT_BYTE(C,3,PDOR)
 
-//å®šä¹‰PTDçš„8ä½ç«¯å£
+//¶¨ÒåPTDµÄ8Î»¶Ë¿Ú
 #define PTD_B0_OUT        PT_BYTE(D,0,PDOR)
 #define PTD_B1_OUT        PT_BYTE(D,1,PDOR)
 #define PTD_B2_OUT        PT_BYTE(D,2,PDOR)
 #define PTD_B3_OUT        PT_BYTE(D,3,PDOR)
 
-//å®šä¹‰PTEçš„8ä½ç«¯å£
+//¶¨ÒåPTEµÄ8Î»¶Ë¿Ú
 #define PTE_B0_OUT        PT_BYTE(E,0,PDOR)
 #define PTE_B1_OUT        PT_BYTE(E,1,PDOR)
 #define PTE_B2_OUT        PT_BYTE(E,2,PDOR)
@@ -770,32 +770,32 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 
 
 
-//å®šä¹‰PTAçš„8ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTAµÄ8Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTA_B0_DDR        PT_BYTE(A,0,PDDR)
 #define PTA_B1_DDR        PT_BYTE(A,1,PDDR)
 #define PTA_B2_DDR        PT_BYTE(A,2,PDDR)
 #define PTA_B3_DDR        PT_BYTE(A,3,PDDR)
 
-//å®šä¹‰PTBçš„8ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTBµÄ8Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTB_B0_DDR        PT_BYTE(B,0,PDDR)
 #define PTB_B1_DDR        PT_BYTE(B,1,PDDR)
 #define PTB_B2_DDR        PT_BYTE(B,2,PDDR)
 #define PTB_B3_DDR        PT_BYTE(B,3,PDDR)
 
 
-//å®šä¹‰PTCçš„8ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTCµÄ8Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTC_B0_DDR        PT_BYTE(C,0,PDDR)
 #define PTC_B1_DDR        PT_BYTE(C,1,PDDR)
 #define PTC_B2_DDR        PT_BYTE(C,2,PDDR)
 #define PTC_B3_DDR        PT_BYTE(C,3,PDDR)
 
-//å®šä¹‰PTDçš„8ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTDµÄ8Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTD_B0_DDR        PT_BYTE(D,0,PDDR)
 #define PTD_B1_DDR        PT_BYTE(D,1,PDDR)
 #define PTD_B2_DDR        PT_BYTE(D,2,PDDR)
 #define PTD_B3_DDR        PT_BYTE(D,3,PDDR)
 
-//å®šä¹‰PTEçš„8ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTEµÄ8Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTE_B0_DDR        PT_BYTE(E,0,PDDR)
 #define PTE_B1_DDR        PT_BYTE(E,1,PDDR)
 #define PTE_B2_DDR        PT_BYTE(E,2,PDDR)
@@ -803,185 +803,185 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 
 
 
-//å®šä¹‰PTAçš„8ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTAµÄ8Î»ÊäÈë¶Ë¿Ú
 #define PTA_B0_IN        PT_BYTE(A,0,PDIR)
 #define PTA_B1_IN        PT_BYTE(A,1,PDIR)
 #define PTA_B2_IN        PT_BYTE(A,2,PDIR)
 #define PTA_B3_IN        PT_BYTE(A,3,PDIR)
 
-//å®šä¹‰PTBçš„8ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTBµÄ8Î»ÊäÈë¶Ë¿Ú
 #define PTB_B0_IN        PT_BYTE(B,0,PDIR)
 #define PTB_B1_IN        PT_BYTE(B,1,PDIR)
 #define PTB_B2_IN        PT_BYTE(B,2,PDIR)
 #define PTB_B3_IN        PT_BYTE(B,3,PDIR)
 
 
-//å®šä¹‰PTCçš„8ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTCµÄ8Î»ÊäÈë¶Ë¿Ú
 #define PTC_B0_IN        PT_BYTE(C,0,PDIR)
 #define PTC_B1_IN        PT_BYTE(C,1,PDIR)
 #define PTC_B2_IN        PT_BYTE(C,2,PDIR)
 #define PTC_B3_IN        PT_BYTE(C,3,PDIR)
 
-//å®šä¹‰PTDçš„8ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTDµÄ8Î»ÊäÈë¶Ë¿Ú
 #define PTD_B0_IN        PT_BYTE(D,0,PDIR)
 #define PTD_B1_IN        PT_BYTE(D,1,PDIR)
 #define PTD_B2_IN        PT_BYTE(D,2,PDIR)
 #define PTD_B3_IN        PT_BYTE(D,3,PDIR)
 
-//å®šä¹‰PTEçš„8ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTEµÄ8Î»ÊäÈë¶Ë¿Ú
 #define PTE_B0_IN        PT_BYTE(E,0,PDIR)
 #define PTE_B1_IN        PT_BYTE(E,1,PDIR)
 #define PTE_B2_IN        PT_BYTE(E,2,PDIR)
 #define PTE_B3_IN        PT_BYTE(E,3,PDIR)
 
 
-//å®šä¹‰PTAçš„8ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTAµÄ8Î»Êä³ö·´×ª
 #define PTA_B0_T        PT_BYTE(A,0,PTOR)
 #define PTA_B1_T        PT_BYTE(A,1,PTOR)
 #define PTA_B2_T        PT_BYTE(A,2,PTOR)
 #define PTA_B3_T        PT_BYTE(A,3,PTOR)
 
-//å®šä¹‰PTBçš„8ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTBµÄ8Î»Êä³ö·´×ª
 #define PTB_B0_T        PT_BYTE(B,0,PTOR)
 #define PTB_B1_T        PT_BYTE(B,1,PTOR)
 #define PTB_B2_T        PT_BYTE(B,2,PTOR)
 #define PTB_B3_T        PT_BYTE(B,3,PTOR)
 
 
-//å®šä¹‰PTCçš„8ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTCµÄ8Î»Êä³ö·´×ª
 #define PTC_B0_T        PT_BYTE(C,0,PTOR)
 #define PTC_B1_T        PT_BYTE(C,1,PTOR)
 #define PTC_B2_T        PT_BYTE(C,2,PTOR)
 #define PTC_B3_T        PT_BYTE(C,3,PTOR)
 
-//å®šä¹‰PTDçš„8ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTDµÄ8Î»Êä³ö·´×ª
 #define PTD_B0_T        PT_BYTE(D,0,PTOR)
 #define PTD_B1_T        PT_BYTE(D,1,PTOR)
 #define PTD_B2_T        PT_BYTE(D,2,PTOR)
 #define PTD_B3_T        PT_BYTE(D,3,PTOR)
 
-//å®šä¹‰PTEçš„8ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTEµÄ8Î»Êä³ö·´×ª
 #define PTE_B0_T        PT_BYTE(E,0,PTOR)
 #define PTE_B1_T        PT_BYTE(E,1,PTOR)
 #define PTE_B2_T        PT_BYTE(E,2,PTOR)
 #define PTE_B3_T        PT_BYTE(E,3,PTOR)
 
 
-//å®šä¹‰PTAçš„16ä½ç«¯å£
+//¶¨ÒåPTAµÄ16Î»¶Ë¿Ú
 #define PTA_W0_OUT        PT_WORD(A,0,PDOR)
 #define PTA_W1_OUT        PT_WORD(A,1,PDOR)
 
-//å®šä¹‰PTBçš„16ä½ç«¯å£
+//¶¨ÒåPTBµÄ16Î»¶Ë¿Ú
 #define PTB_W0_OUT        PT_WORD(B,0,PDOR)
 #define PTB_W1_OUT        PT_WORD(B,1,PDOR)
 
-//å®šä¹‰PTCçš„16ä½ç«¯å£
+//¶¨ÒåPTCµÄ16Î»¶Ë¿Ú
 #define PTC_W0_OUT        PT_WORD(C,0,PDOR)
 #define PTC_W1_OUT        PT_WORD(C,1,PDOR)
 
 
-//å®šä¹‰PTDçš„16ä½ç«¯å£
+//¶¨ÒåPTDµÄ16Î»¶Ë¿Ú
 #define PTD_W0_OUT        PT_WORD(D,0,PDOR)
 #define PTD_W1_OUT        PT_WORD(D,1,PDOR)
 
 
-//å®šä¹‰PTEçš„16ä½ç«¯å£
+//¶¨ÒåPTEµÄ16Î»¶Ë¿Ú
 #define PTE_W0_OUT        PT_WORD(E,0,PDOR)
 #define PTE_W1_OUT        PT_WORD(E,1,PDOR)
 
 
-//å®šä¹‰PTAçš„16ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTAµÄ16Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTA_W0_DDR        PT_WORD(A,0,PDDR)
 #define PTA_W1_DDR        PT_WORD(A,1,PDDR)
 
-//å®šä¹‰PTBçš„16ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTBµÄ16Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTB_W0_DDR        PT_WORD(B,0,PDDR)
 #define PTB_W1_DDR        PT_WORD(B,1,PDDR)
 
-//å®šä¹‰PTCçš„16ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTCµÄ16Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTC_W0_DDR        PT_WORD(C,0,PDDR)
 #define PTC_W1_DDR        PT_WORD(C,1,PDDR)
 
 
-//å®šä¹‰PTDçš„16ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTDµÄ16Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTD_W0_DDR        PT_WORD(D,0,PDDR)
 #define PTD_W1_DDR        PT_WORD(D,1,PDDR)
 
 
-//å®šä¹‰PTEçš„16ä½è¾“å‡ºè¾“å…¥æ–¹å‘ç«¯å£
+//¶¨ÒåPTEµÄ16Î»Êä³öÊäÈë·½Ïò¶Ë¿Ú
 #define PTE_W0_DDR        PT_WORD(E,0,PDDR)
 #define PTE_W1_DDR        PT_WORD(E,1,PDDR)
 
 
 
-//å®šä¹‰PTAçš„16ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTAµÄ16Î»ÊäÈë¶Ë¿Ú
 #define PTA_W0_IN        PT_WORD(A,0,PDIR)
 #define PTA_W1_IN        PT_WORD(A,1,PDIR)
 
-//å®šä¹‰PTBçš„16ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTBµÄ16Î»ÊäÈë¶Ë¿Ú
 #define PTB_W0_IN        PT_WORD(B,0,PDIR)
 #define PTB_W1_IN        PT_WORD(B,1,PDIR)
 
-//å®šä¹‰PTCçš„16ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTCµÄ16Î»ÊäÈë¶Ë¿Ú
 #define PTC_W0_IN        PT_WORD(C,0,PDIR)
 #define PTC_W1_IN        PT_WORD(C,1,PDIR)
 
 
-//å®šä¹‰PTDçš„16ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTDµÄ16Î»ÊäÈë¶Ë¿Ú
 #define PTD_W0_IN        PT_WORD(D,0,PDIR)
 #define PTD_W1_IN        PT_WORD(D,1,PDIR)
 
 
-//å®šä¹‰PTEçš„16ä½è¾“å…¥ç«¯å£
+//¶¨ÒåPTEµÄ16Î»ÊäÈë¶Ë¿Ú
 #define PTE_W0_IN        PT_WORD(E,0,PDIR)
 #define PTE_W1_IN        PT_WORD(E,1,PDIR)
 
 
-//å®šä¹‰PTAçš„16ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTAµÄ16Î»Êä³ö·´×ª
 #define PTA_W0_T        PT_WORD(A,0,PTOR)
 #define PTA_W1_T        PT_WORD(A,1,PTOR)
 
-//å®šä¹‰PTBçš„16ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTBµÄ16Î»Êä³ö·´×ª
 #define PTB_W0_T        PT_WORD(B,0,PTOR)
 #define PTB_W1_T        PT_WORD(B,1,PTOR)
 
-//å®šä¹‰PTCçš„16ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTCµÄ16Î»Êä³ö·´×ª
 #define PTC_W0_T        PT_WORD(C,0,PTOR)
 #define PTC_W1_T        PT_WORD(C,1,PTOR)
 
 
-//å®šä¹‰PTDçš„16ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTDµÄ16Î»Êä³ö·´×ª
 #define PTD_W0_T        PT_WORD(D,0,PTOR)
 #define PTD_W1_T        PT_WORD(D,1,PTOR)
 
 
-//å®šä¹‰PTEçš„16ä½è¾“å‡ºåè½¬
+//¶¨ÒåPTEµÄ16Î»Êä³ö·´×ª
 #define PTE_W0_T        PT_WORD(E,0,PTOR)
 #define PTE_W1_T        PT_WORD(E,1,PTOR)
 
 
-//å®šä¹‰32ä½ç«¯å£è¾“å‡º
+//¶¨Òå32Î»¶Ë¿ÚÊä³ö
 #define PTA_OUT          PT_DWORD(A,PDOR)
 #define PTB_OUT          PT_DWORD(B,PDOR)
 #define PTC_OUT          PT_DWORD(C,PDOR)
 #define PTD_OUT          PT_DWORD(D,PDOR)
 #define PTE_OUT          PT_DWORD(E,PDOR)
 
-//å®šä¹‰32ä½ç«¯å£è¾“å…¥
+//¶¨Òå32Î»¶Ë¿ÚÊäÈë
 #define PTA_IN          PT_DWORD(A,PDIR)
 #define PTB_IN          PT_DWORD(B,PDIR)
 #define PTC_IN          PT_DWORD(C,PDIR)
 #define PTD_IN          PT_DWORD(D,PDIR)
 #define PTE_IN          PT_DWORD(E,PDIR)
 
-//å®šä¹‰32ä½ç«¯å£è¾“å‡ºè¾“å‡ºæ–¹å‘
+//¶¨Òå32Î»¶Ë¿ÚÊä³öÊä³ö·½Ïò
 #define PTA_DDR          PT_DWORD(A,PDDR)
 #define PTB_DDR          PT_DWORD(B,PDDR)
 #define PTC_DDR          PT_DWORD(C,PDDR)
 #define PTD_DDR          PT_DWORD(D,PDDR)
 #define PTE_DDR          PT_DWORD(E,PDDR)
 
-//å®šä¹‰32ä½è¾“å‡ºåè½¬
+//¶¨Òå32Î»Êä³ö·´×ª
 #define PTA_T          PT_DWORD(A,PTOR)
 #define PTB_T          PT_DWORD(B,PTOR)
 #define PTC_T          PT_DWORD(C,PTOR)

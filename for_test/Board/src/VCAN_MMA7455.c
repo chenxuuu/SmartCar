@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       VCAN_MMA7455.c
- * @brief      MMA7455é©±åŠ¨å‡½æ•°å®ç°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      MMA7455Çı¶¯º¯ÊıÊµÏÖ
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.0
  * @date       2013-07-9
  */
@@ -19,33 +19,33 @@
 #include "MK60_i2c.h"
 #include "VCAN_MMA7455.h"
 
-//å®å®šä¹‰è°ƒç”¨åº•å±‚çš„I2Cæ¥å£
+//ºê¶¨Òåµ÷ÓÃµ×²ãµÄI2C½Ó¿Ú
 #define MMA7455_OPEN(baud)      i2c_init(MMA7455_DEVICE,baud)
-#define MMA7455_WR(reg,value)   i2c_write_reg(MMA7455_DEVICE,MMA7455_ADRESS,reg,value)  //mma7455 å†™å¯„å­˜å™¨
-#define MMA7455_RD(reg)         i2c_read_reg(MMA7455_DEVICE,MMA7455_ADRESS,reg)         //mma7455 è¯»å¯„å­˜å™¨
+#define MMA7455_WR(reg,value)   i2c_write_reg(MMA7455_DEVICE,MMA7455_ADRESS,reg,value)  //mma7455 Ğ´¼Ä´æÆ÷
+#define MMA7455_RD(reg)         i2c_read_reg(MMA7455_DEVICE,MMA7455_ADRESS,reg)         //mma7455 ¶Á¼Ä´æÆ÷
 
 /*!
- *  @brief      MMA7455åˆå§‹åŒ–ï¼Œè¿›å…¥ 2g é‡ç¨‹æµ‹è¯•æ¨¡å¼
+ *  @brief      MMA7455³õÊ¼»¯£¬½øÈë 2g Á¿³Ì²âÊÔÄ£Ê½
  *  @since      v5.0
- *  Sample usage:            mma7455_init();    //åˆå§‹åŒ– MMA7455
+ *  Sample usage:            mma7455_init();    //³õÊ¼»¯ MMA7455
  */
 void mma7455_init(void)
 {
-    MMA7455_OPEN(400 * 1000);           //åˆå§‹åŒ–mma7455æ¥å£ï¼Œè®¾ç½®æ³¢ç‰¹ç‡ 400k
+    MMA7455_OPEN(400 * 1000);           //³õÊ¼»¯mma7455½Ó¿Ú£¬ÉèÖÃ²¨ÌØÂÊ 400k
 
-    /*MMAè¿›å…¥ 2g é‡ç¨‹æµ‹è¯•æ¨¡å¼*/
+    /*MMA½øÈë 2g Á¿³Ì²âÊÔÄ£Ê½*/
     MMA7455_WR(MMA7455_MCTL, 0x05);
 
-    /*DRDYæ ‡ç½®ä½,ç­‰å¾…æµ‹è¯•å®Œæ¯•*/
+    /*DRDY±êÖÃÎ»,µÈ´ı²âÊÔÍê±Ï*/
     while(!(MMA7455_RD(MMA7455_STATUS) & 0x01));
 }
 
 /*!
- *  @brief      MMA7455å†™å¯„å­˜å™¨
- *  @param      reg         å¯„å­˜å™¨
- *  @param      dat         éœ€è¦å†™å…¥çš„æ•°æ®çš„å¯„å­˜å™¨åœ°å€
+ *  @brief      MMA7455Ğ´¼Ä´æÆ÷
+ *  @param      reg         ¼Ä´æÆ÷
+ *  @param      dat         ĞèÒªĞ´ÈëµÄÊı¾İµÄ¼Ä´æÆ÷µØÖ·
  *  @since      v5.0
- *  Sample usage:       mma7455_write_reg(MMA7455_XOFFL,0);   // å†™å¯„å­˜å™¨ MMA7455_XOFFL ä¸º 0
+ *  Sample usage:       mma7455_write_reg(MMA7455_XOFFL,0);   // Ğ´¼Ä´æÆ÷ MMA7455_XOFFL Îª 0
  */
 void mma7455_write_reg(uint8 reg, uint8 Data)
 {
@@ -53,11 +53,11 @@ void mma7455_write_reg(uint8 reg, uint8 Data)
 }
 
 /*!
- *  @brief      MMA7455è¯»å¯„å­˜å™¨
- *  @param      reg         å¯„å­˜å™¨
- *  @param      dat         éœ€è¦è¯»å–æ•°æ®çš„å¯„å­˜å™¨åœ°å€
+ *  @brief      MMA7455¶Á¼Ä´æÆ÷
+ *  @param      reg         ¼Ä´æÆ÷
+ *  @param      dat         ĞèÒª¶ÁÈ¡Êı¾İµÄ¼Ä´æÆ÷µØÖ·
  *  @since      v5.0
- *  Sample usage:       uint8 data = mma7455_read_reg(MMA7455_XOFFL);    // è¯»å¯„å­˜å™¨ MMA7455_XOFFL
+ *  Sample usage:       uint8 data = mma7455_read_reg(MMA7455_XOFFL);    // ¶Á¼Ä´æÆ÷ MMA7455_XOFFL
  */
 uint8 mma7455_read_reg(uint8 reg)
 {

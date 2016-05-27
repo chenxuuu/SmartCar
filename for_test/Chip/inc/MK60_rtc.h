@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,å±±å¤–ç§‘æŠ€
+ *     Copyright (c) 2013,É½Íâ¿Æ¼¼
  *     All rights reserved.
- *     æŠ€æœ¯è®¨è®ºï¼šå±±å¤–è®ºå› http://www.vcan123.com
+ *     ¼¼ÊõÌÖÂÛ£ºÉ½ÍâÂÛÌ³ http://www.vcan123.com
  *
- *     é™¤æ³¨æ˜å‡ºå¤„å¤–ï¼Œä»¥ä¸‹æ‰€æœ‰å†…å®¹ç‰ˆæƒå‡å±å±±å¤–ç§‘æŠ€æ‰€æœ‰ï¼Œæœªç»å…è®¸ï¼Œä¸å¾—ç”¨äºå•†ä¸šç”¨é€”ï¼Œ
- *     ä¿®æ”¹å†…å®¹æ—¶å¿…é¡»ä¿ç•™å±±å¤–ç§‘æŠ€çš„ç‰ˆæƒå£°æ˜ã€‚
+ *     ³ı×¢Ã÷³ö´¦Íâ£¬ÒÔÏÂËùÓĞÄÚÈİ°æÈ¨¾ùÊôÉ½Íâ¿Æ¼¼ËùÓĞ£¬Î´¾­ÔÊĞí£¬²»µÃÓÃÓÚÉÌÒµÓÃÍ¾£¬
+ *     ĞŞ¸ÄÄÚÈİÊ±±ØĞë±£ÁôÉ½Íâ¿Æ¼¼µÄ°æÈ¨ÉùÃ÷¡£
  *
  * @file       MK60_rtc.h
- * @brief      rtcæ¨¡å—å‡½æ•°
- * @author     å±±å¤–ç§‘æŠ€
+ * @brief      rtcÄ£¿éº¯Êı
+ * @author     É½Íâ¿Æ¼¼
  * @version    v5.1
  * @date       2014-04-25
  */
@@ -18,27 +18,27 @@
 #define _MK60_RTC_H_
 
 
-#define rtc_alarm_irq_en()      RTC_IER |= RTC_IER_TAIE_MASK      //ä½¿èƒ½é—¹é’Ÿä¸­æ–­
-#define rtc_alarm_irq_dis()     RTC_IER &= ~RTC_IER_TAIE_MASK     //ç¦æ­¢é—¹é’Ÿä¸­æ–­
+#define rtc_alarm_irq_en()      RTC_IER |= RTC_IER_TAIE_MASK      //Ê¹ÄÜÄÖÖÓÖĞ¶Ï
+#define rtc_alarm_irq_dis()     RTC_IER &= ~RTC_IER_TAIE_MASK     //½ûÖ¹ÄÖÖÓÖĞ¶Ï
 
 
-#define rtc_overflow_irq_en()   RTC_IER |= RTC_IER_TOIE_MASK      //ä½¿èƒ½æº¢å‡ºä¸­æ–­
-#define rtc_overflow_irq_dis()  RTC_IER &= ~RTC_IER_TOIE_MASK     //ç¦æ­¢æº¢å‡ºä¸­æ–­
+#define rtc_overflow_irq_en()   RTC_IER |= RTC_IER_TOIE_MASK      //Ê¹ÄÜÒç³öÖĞ¶Ï
+#define rtc_overflow_irq_dis()  RTC_IER &= ~RTC_IER_TOIE_MASK     //½ûÖ¹Òç³öÖĞ¶Ï
 
-#define rtc_invalid_irq_en()    RTC_IER |= RTC_IER_TIIE_MASK      //ä½¿èƒ½æ— æ•ˆè®¾ç½®ä¸­æ–­
-#define rtc_invalid_irq_dis()   RTC_IER &= ~RTC_IER_TIIE_MASK     //ç¦æ­¢æ— æ•ˆè®¾ç½®ä¸­æ–­
+#define rtc_invalid_irq_en()    RTC_IER |= RTC_IER_TIIE_MASK      //Ê¹ÄÜÎŞĞ§ÉèÖÃÖĞ¶Ï
+#define rtc_invalid_irq_dis()   RTC_IER &= ~RTC_IER_TIIE_MASK     //½ûÖ¹ÎŞĞ§ÉèÖÃÖĞ¶Ï
 
 
 
-extern void     rtc_init(void);                         //åˆå§‹åŒ–
+extern void     rtc_init(void);                         //³õÊ¼»¯
 
-extern void     rtc_set_time(uint32 seconds);           //è®¾ç½®æ—¶é—´
-extern uint32   rtc_get_time(void);                     //è·å–æ—¶é—´
+extern void     rtc_set_time(uint32 seconds);           //ÉèÖÃÊ±¼ä
+extern uint32   rtc_get_time(void);                     //»ñÈ¡Ê±¼ä
 
-extern uint8    rtc_set_alarm(uint32 alarm);            //è®¾ç½®é—¹é’Ÿ
-extern void     rtc_close_alarm(void);                  //å…³é—­é—¹é’Ÿ
+extern uint8    rtc_set_alarm(uint32 alarm);            //ÉèÖÃÄÖÖÓ
+extern void     rtc_close_alarm(void);                  //¹Ø±ÕÄÖÖÓ
 
-extern void     rtc_test_handler(void);                 //å¯ä¾›å‚è€ƒçš„ RTCä¸­æ–­æœåŠ¡ä¾‹ç¨‹
+extern void     rtc_test_handler(void);                 //¿É¹©²Î¿¼µÄ RTCÖĞ¶Ï·şÎñÀı³Ì
 
 
 #endif
