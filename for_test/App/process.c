@@ -34,20 +34,8 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
         if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
 
-        left = get_camere_left(img, i);                     //获取最左最右
-        right = get_camere_right(img, i);
-
-//        if(left <= min_left && left != 0)
-//            min_left = left;
-//        else
-//            left = 0;
-//
-//        if(right >= min_right && right != OV7725_EAGLE_W)
-//            min_right = right;
-//        else
-//            right = OV7725_EAGLE_W;
-
-
+        // left = get_camere_left(img, i);                     //获取最左最右
+        // right = get_camere_right(img, i);
 
         if(left != 0)                                       //如果未丢线
         {
