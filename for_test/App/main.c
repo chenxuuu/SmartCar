@@ -20,7 +20,41 @@ uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图�
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //定义存储解压图像的数组
 float speed = 0.2, duoji = 0, duoji1 = 0, way = 0;
 
+
+
+/*******************PI**************************/
+#define SPEED_CONTROL_P 	0.00022//0.0025//-0.0023//-0.00016          //待定
+#define SPEED_CONTROL_I		0//0.00055//-0.00008        //待定
+#define SPEED_CONTROL_PERIOD	     100
+/*************编码器测得脉冲值***************/
+int g_nLeftMotorPulse=0;
+int g_nRightMotorPulse=0;		//编码器单位时间内的值
+int g_nLeftMotorPulseSigma=0;	//编码器积分值
+int g_nRightMotorPulseSigma=0;
+/*************速度参数******************/
+float g_fCar_speed_L=0;
+float g_fCar_speed_R=0;
+float g_fCar_speed_set=0;
+float g_fSpeed_control_integral_L=0;
+float g_fSpeed_control_integral_R=0;
+float g_fSpeed_control_out_old_L=0;
+float g_fSpeed_control_out_new_L=0;
+float g_fSpeed_control_out_old_R=0;
+float g_fSpeed_control_out_new_R=0;
 float out[5];
+extern uint8 g_nSpeed_control_period=0;         //20次累加平均
+extern int16 g_fLeftVoltageSigma = 0;
+extern int16 g_fRightVoltageSigma = 0;
+extern float g_fCarSpeed_R=0;                   //速度控制参数
+extern float g_fCarSpeed_L=0;                   //速度控制参数
+float g_fSpeed_control_out_L;		//速度控制电机输出量	预设
+float g_fSpeed_control_out_R;		//速度控制电机输出量	预设
+/******************************************************/
+    float fDelta_L,fDelta_R;
+    float fP_R,fP_L,fI_L,fI_R;
+    float fValue_L,fValue_R;
+
+
 
 struct _slope slope;
 
@@ -155,6 +189,121 @@ void oled_display_key()
     OLED_P14x16Str(110, oled_place * 2, "←");
 }
 
+/*****************************PI速度闭环***********************************************/
+
+
+void GetMotorPulse(void)
+{
+    int16 Pulse_L,Pulse_R;
+
+    Pulse_L = ftm_quad_get(FTM2);          //获取FTM 正交解码 的脉冲数(负数表示反方向)
+    ftm_quad_clean(FTM2);	           //FTM 清零
+
+    Pulse_R = ftm_quad_get(FTM1);
+	ftm_quad_clean(FTM1);
+
+    g_nLeftMotorPulse = -Pulse_L;
+    g_nRightMotorPulse = -Pulse_R;
+    g_nLeftMotorPulseSigma = g_nLeftMotorPulse;
+    g_nRightMotorPulseSigma = g_nRightMotorPulse;
+    Pulse_L=Pulse_R=0;
+}
+/**************电机死驱处理函数********************/
+/*void MotorSpeedOut(void)
+{
+    float fLeftVal, fRightVal;
+    fLeftVal = g_fLeft_motor_out;
+    fRightVal = g_fRight_motor_out;
+
+    if(fLeftVal > 0)
+        fLeftVal += MOTOR_OUT_DEAD_VAL;
+    else if(fLeftVal < 0)
+        fLeftVal -= MOTOR_OUT_DEAD_VAL;
+    if(fRightVal > 0)
+        fRightVal += MOTOR_OUT_DEAD_VAL;                //+0.012;     // 死区  不对称处理+0.01
+    else if(fRightVal < 0)
+        fRightVal -= MOTOR_OUT_DEAD_VAL;                //+0.012;   //死区   不对称处理+0.013
+
+    if(fLeftVal > MOTOR_OUT_MAX)
+        fLeftVal = MOTOR_OUT_MAX;
+    if(fLeftVal < MOTOR_OUT_MIN)
+        fLeftVal = MOTOR_OUT_MIN;
+    if(fRightVal > MOTOR_OUT_MAX)
+        fRightVal = MOTOR_OUT_MAX;
+    if(fRightVal < MOTOR_OUT_MIN)
+        fRightVal = MOTOR_OUT_MIN;//饱和处理
+
+    SetMotorVoltage(fLeftVal,fRightVal);
+
+} */
+
+/*******************PI速度闭环叠加********************/
+
+void SpeedControl(void)              //速度控制函数
+{
+    //float fDelta_L,fDelta_R;
+    //float fP_R,fP_L,fI;
+
+    g_fCarSpeed_R = (float)g_nRightMotorPulseSigma ;//计算左右电机脉冲的平均值
+    g_fCarSpeed_L = (float)g_nLeftMotorPulseSigma ;//计算左右电机脉冲的平均值
+    g_nLeftMotorPulseSigma = g_nRightMotorPulseSigma = 0;  //清零
+    //g_fCarSpeed_R *= 1000.0/100/500;       //单位的换算 单位：转/秒
+    //g_fCarSpeed_L *= 1000.0/100/500;       //单位的换算 单位：转/秒
+
+    fDelta_R =g_fCar_speed_set - g_fCarSpeed_R;
+    fDelta_L =g_fCar_speed_set - g_fCarSpeed_L;
+    fP_R=fDelta_R * (float)SPEED_CONTROL_P;
+    fP_L=fDelta_L * (float)SPEED_CONTROL_P;
+    fI_R=fDelta_R * (float)SPEED_CONTROL_I;
+    fI_L=fDelta_L * (float)SPEED_CONTROL_I;
+
+    g_fSpeed_control_integral_L += fI_L;//积分
+    g_fSpeed_control_integral_R += fI_R;//积分
+
+    g_fSpeed_control_out_old_R = g_fSpeed_control_out_new_R;
+    g_fSpeed_control_out_new_R = fP_R + g_fSpeed_control_integral_R;
+
+
+    g_fSpeed_control_out_old_L = g_fSpeed_control_out_new_L;
+    g_fSpeed_control_out_new_L = fP_L + g_fSpeed_control_integral_L;
+
+
+
+    if(g_fSpeed_control_integral_L > 1000)
+	g_fSpeed_control_integral_L =1000;
+    if(g_fSpeed_control_integral_L < -1000)
+	g_fSpeed_control_integral_L = -1000;
+
+
+    if(g_fSpeed_control_integral_R > 1000)
+	g_fSpeed_control_integral_R =1000;
+    if(g_fSpeed_control_integral_R < -1000)
+	g_fSpeed_control_integral_R = -1000;
+}
+
+void SpeedControlOutput(void)             //速度控制函数
+{
+    //float fValue_L,fValue_R;
+    fValue_L = g_fSpeed_control_out_new_L - g_fSpeed_control_out_old_L;
+    g_fSpeed_control_out_L = fValue_L * (g_nSpeed_control_period + 1) / SPEED_CONTROL_PERIOD + g_fSpeed_control_out_old_L;
+    fValue_R = g_fSpeed_control_out_new_R - g_fSpeed_control_out_old_R;
+    g_fSpeed_control_out_R = fValue_R * (g_nSpeed_control_period + 1) / SPEED_CONTROL_PERIOD + g_fSpeed_control_out_old_R;
+    if(g_fSpeed_control_out_L > 1)
+	g_fSpeed_control_out_L = 1;
+    if(g_fSpeed_control_out_L < -1)
+	g_fSpeed_control_out_L = -1;
+
+
+    if(g_fSpeed_control_out_R > 1)
+	g_fSpeed_control_out_R = 1;
+    if(g_fSpeed_control_out_R < -1)
+	g_fSpeed_control_out_R = -1;
+}
+
+
+
+/********************************************************************/
+
 
 /*!
  *  @brief      main函数
@@ -179,6 +328,9 @@ void  main(void)
     pid_tune( &actuator_pid, p_gain, i_gain, d_gain, dead_band, integral_val );
 
     mk60int();
+
+    //g_fCar_speed_set=1000;
+
     while(1)
     {
         camera_get_img();  //摄像头获取图像
@@ -189,81 +341,28 @@ void  main(void)
 
         get_slope(img, &slope);  //获取斜率信息
 
-//        if(slope.left_count<10 && slope.right_count<10)
-//            control_actuator(0);
-//        else if(slope.left_count>slope.right_count)
-//            control_actuator(-slope.left*11);
-//        else
-//            control_actuator(-slope.right*11);
-
-//        if( ( slope.left_count > 55 ||  slope.right_count > 55 ) && ( slope.left < 0.2 && slope.left > -0.2  slope.right < 0.2 && slope.right > -0.2 )
-//
-//            /*|| (get_camere_center_20(img) > 30 && get_camere_center_20(img) < -30) */)
-//
-//        //if( slope.left < 0.2 && slope.left > -0.2 )
-//        {
-            //led(LED0, LED_ON);
             duoji = (float)get_camere_center_5(img);
 
             if(duoji > 0)
                 duoji = pow(duoji, 2) / 900;
             else
                 duoji = -pow(duoji, 2) / 900;
-//
-//            duoji1 = (float)get_camere_center(img,1);
-//
-//            if(duoji1 > 0)
-//                duoji1 = pow(duoji1, 2) / 900;
-//            else
-//                duoji1 = -pow(duoji1, 2) / 900;
-            //control_actuator(duoji);
-
-//
-//        }else
-//        {
-            //led(LED0, LED_OFF);
-            if(slope.left_count>slope.right_count /*&& ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 )*/)
+            if(slope.left_count>slope.right_count)
                 actuator_pid.pv = (int)(slope.left*1000);
-            else if(slope.left_count<slope.right_count /*&& ( (slope.left_count>5 && slope.right_count>5) || slope.right_count + slope.left_count > 50 )*/)
+            else if(slope.left_count<slope.right_count)
                 actuator_pid.pv = (int)(slope.right*1000);
             else
                 actuator_pid.pv = 0;
-
-            pid_setinteg( &actuator_pid, 0.0 );
-            pid_bumpless( &actuator_pid );
-
-//        }
-
-
-
-//        if(slope.left_count>slope.right_count)
-//            out[0] = slope.left;
-//        else
-//            out[0] = slope.right;
-
-        way = pid_calc( &actuator_pid ) * 0.001;
-//
-//        if(way > 0.1 || way < 0.1)
-//        {
-//            if(duoji > 0.2 || duoji < -0.2)
-//                duoji *=3;
-//            smart_control_actuator(way + duoji, 0.3, 0.3);
-//        }
-//        else
-            smart_control_actuator(way + duoji*1, 0.25, 0.25);
-
-        //get_camere_ok(img);
-
-        //SetMotorVoltage(0.3,0.3);
-
-//        out[0] = slope.left;
-//        out[1] = slope.right;
-//        out[2] = (float)slope.left_count / 10;
-//        out[3] = (float)slope.right_count / 10;
-//        out[4] = pid_calc( &actuator_pid );
-//        vcan_sendware(out, sizeof(out));    //示波器
-        //vcan_sendimg(imgbuff, CAMERA_SIZE); //摄像头串口显示
-        //android_sendimg(img);
+                
+            g_fCar_speed_set=1650;
+            /*g_nSpeed_control_period++;
+            SpeedControlOutput();
+            if(g_nSpeed_control_period++ >= 20)
+            {
+                GetMotorPulse();
+                SpeedControl();
+            } */
+            smart_control_actuator(duoji, g_fSpeed_control_out_L, g_fSpeed_control_out_R);
 
     }
 }
@@ -306,6 +405,13 @@ void PORTA_IRQHandler()
 void DMA0_IRQHandler()
 {
     camera_dma();
+
+    g_nSpeed_control_period++;
+    SpeedControlOutput();
+    if(g_nSpeed_control_period >= 20)
+        g_nSpeed_control_period = 0;
+    GetMotorPulse();
+    SpeedControl();
 }
 
 
