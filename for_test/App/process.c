@@ -29,13 +29,13 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
         left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H],
         min_left=OV7725_EAGLE_W/2,min_right=OV7725_EAGLE_W/2;      //定义，不解释，看后面就懂了
 
-    for(i = 1; i < OV7725_EAGLE_H - 25 + 1; i++) //算高度-25行，待定
+    for(i = 1; i < OV7725_EAGLE_H - 35 + 1; i++) //算高度-25行，待定
     {
         if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
             break;
 
-        // left = get_camere_left(img, i);                     //获取最左最右
-        // right = get_camere_right(img, i);
+        left = get_camere_left(img, i);                     //获取最左最右
+        right = get_camere_right(img, i);
 
         if(left != 0)                                       //如果未丢线
         {
