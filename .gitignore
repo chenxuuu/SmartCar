@@ -4,8 +4,23 @@
 #*.ldb
 #*.sln
 #*.config
+*.tmp
+*.bak
+*.dep
+*.sfr
+Backup*
+*.tmp.c
+
 
 #过滤文件夹 Debug,Release,obj  
 Debug/
 obj/
 .vscode/
+settings/
+Release/
+FN15_Debug/
+FN15_Release/
+FX15_Debug/
+FX15_Release/
+DZ10_Debug/
+DZ10_Release/
