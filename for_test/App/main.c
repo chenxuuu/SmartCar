@@ -345,9 +345,9 @@ void  main(void)
             else
                 duoji = -pow(duoji, 2) / 900;
             if(slope.left_count>slope.right_count)
-                actuator_pid.pv = (int)(slope.left*1000 + duoji);
+                actuator_pid.pv = (int)(slope.left*1000 - duoji);
             else if(slope.left_count<slope.right_count)
-                actuator_pid.pv = (int)(slope.right*1000 + duoji);
+                actuator_pid.pv = (int)(slope.right*1000 - duoji);
             else
                 actuator_pid.pv = 0;
                 
@@ -359,7 +359,7 @@ void  main(void)
                 GetMotorPulse();
                 SpeedControl();
             } */
-            smart_control_actuator(actuator_pid.pv, g_fSpeed_control_out_L, g_fSpeed_control_out_R);
+            smart_control_actuator(-actuator_pid.pv, g_fSpeed_control_out_L, g_fSpeed_control_out_R);
 
     }
 }
