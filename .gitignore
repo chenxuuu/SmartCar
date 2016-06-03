@@ -1,0 +1,11 @@
+[plain] view plaincopy
+#过滤数据库文件、sln 解决方案文件、配置文件
+#*.mdb
+#*.ldb
+#*.sln
+#*.config
+
+#过滤文件夹 Debug,Release,obj  
+Debug/
+obj/
+.vscode/
