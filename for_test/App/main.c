@@ -19,7 +19,7 @@
 uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //定义存储解压图像的数组
 float speed = 0.2, duoji = 0, duoji1 = 0, way = 0;
-
+float ware[4];
 
 
 /*******************PI**************************/
@@ -334,6 +334,11 @@ void  main(void)
 
         img_extract(img, imgbuff, CAMERA_SIZE); //解压到img中
 
+        if(!gpio_get (PTB19))      //拨码
+        {
+            vcan_sendimg(imgbuff,CAMERA_SIZE);   //串口显示图像
+        }
+
         oled_display_key();   //OLED显示
 
         get_slope(img, &slope);  //获取斜率信息
@@ -361,6 +366,12 @@ void  main(void)
             } */
             smart_control_actuator(-actuator_pid.pv, g_fSpeed_control_out_L, g_fSpeed_control_out_R);
 
+            if(!gpio_get (PTB18))   //拨码
+            {
+                ware[0] = slope.left;
+                ware[1] = slope.right;
+                vcan_sendware(ware, sizeof(ware));
+            }
     }
 }
 

@@ -14,7 +14,7 @@
  * @date       2016-3-29
  */
 #include"include.h"
-
+// 255为白 0为黑
 /*!
  *  @brief      求斜率
  *  @since      v1.0
@@ -27,16 +27,170 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 {
     int i, left, right, left_count = 0, right_count = 0,
         left_x[OV7725_EAGLE_H], left_y[OV7725_EAGLE_H], right_x[OV7725_EAGLE_H], right_y[OV7725_EAGLE_H],
-        min_left=OV7725_EAGLE_W/2,min_right=OV7725_EAGLE_W/2;      //定义，不解释，看后面就懂了
+        left_temp, right_temp, shit;     
+    bool left_turn = true, right_turn = true; //定义，不解释，看后面就懂了
 
-    for(i = 1; i < OV7725_EAGLE_H - 35 + 1; i++) //算高度-25行，待定
+
+    //判断拐的方向：
+    for(shit = 0; shit < OV7725_EAGLE_W - 1; shit++)        //左边
     {
-        if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
+        if(img[OV7725_EAGLE_H - 1][shit] == 255)
+        {
+            left_temp = left = shit;
             break;
+        }
+    }
+    for(shit = 0; shit < OV7725_EAGLE_W - 1; shit++)
+    {
+        if(img[OV7725_EAGLE_H - 10][shit] == 255)
+        {
+            if(left - shit > 0)
+            {
+                left_turn = false;
+            }
+            else
+            {
+                left_turn = true;
+            }
+            //printf("%d,%d;", left, shit);
+            break;
+        }
+    }
 
-        left = get_camere_left(img, i);                     //获取最左最右
-        right = get_camere_right(img, i);
+    for(shit = OV7725_EAGLE_W - 1; shit > 0; shit--)        //右边
+    {
+        if(img[OV7725_EAGLE_H - 1][shit] == 255)
+        {
+            right_temp = right = shit;
+            break;
+        }
+    }
+    for(shit = OV7725_EAGLE_W - 1; shit > 0; shit--)
+    {
+        if(img[OV7725_EAGLE_H - 10][shit] == 255)
+        {
+            if(right - shit < 0)
+            {
+                right_turn = false;
+            }
+            else
+            {
+                right_turn = true;
+            }
+            //printf("%d,%d;", right, shit);
+            break;
+        }
+    }
 
+//显示方向
+if(!gpio_get (PTB16))
+{
+    printf("%d,%d\n", (int)left_turn, (int)right_turn);
+}
+
+/**********************************************************/
+
+    for(i = 2; i < OV7725_EAGLE_H - 35 + 1; i++) //算高度-25行，待定
+    {
+        // if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
+        //     break;
+
+        // left = get_camere_left(img, i);                     //获取最左最右
+        // right = get_camere_right(img, i);
+        
+        //寻边部分：
+        left = 0;
+        right = OV7725_EAGLE_W;
+
+        if(left_turn)                                  //左边"/"偏情况
+        {
+            if(img[OV7725_EAGLE_H - i][left_temp] == 255)
+            {
+                //没东西
+            }
+            else
+            {
+                for(shit = left_temp; shit < left_temp + 5; shit++)
+                {
+                    if(img[OV7725_EAGLE_H - i][shit] == 255)
+                    {
+                        left = left_temp = shit;
+                        break;
+                    }
+                }
+            }
+        }
+        else                                                 //左边"\"偏情况
+        {
+            if(img[OV7725_EAGLE_H - i][left_temp] == 0)
+            {
+                //没东西
+            }
+            else
+            {
+                for(shit = left_temp; shit < left_temp - 5; shit--)
+                {
+                    if(shit < 0)
+                    {
+                        break;
+                    }
+                    if(img[OV7725_EAGLE_H - i][shit] == 0)
+                    {
+                        left = left_temp = shit;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(right_turn)                                  //右边"\"偏情况
+        {
+            if(img[OV7725_EAGLE_H - i][right_temp] == 255)
+            {
+                //没东西
+            }
+            else
+            {
+                for(shit = right_temp; shit > right_temp - 5; shit--)
+                {
+                    if(img[OV7725_EAGLE_H - i][shit] == 255)
+                    {
+                        right = right_temp = shit;
+                        break;
+                    }
+                }
+            }
+        }
+        else                                                 //右边"/"偏情况
+        {
+            if(img[OV7725_EAGLE_H - i][right_temp] == 0)
+            {
+                //没东西
+            }
+            else
+            {
+                for(shit = right_temp; shit < right_temp + 5; shit++)
+                {
+                    if(shit > OV7725_EAGLE_W - 1)
+                    {
+                        break;
+                    }
+                    if(img[OV7725_EAGLE_H - i][shit] == 0)
+                    {
+                        right = right_temp = shit;
+                        break;
+                    }
+                }
+            }
+        }
+
+//显示数值
+if(!gpio_get (PTB17))
+{
+    printf("i:%d.left:%d(%d),right:%d(%d).\n", i, left,left_temp, right, right_temp);
+}
+        
+        //计算斜率部分：
         if(left != 0)                                       //如果未丢线
         {
             left_x[left_count] = (int)((float)(left - OV7725_EAGLE_W / 2) * (float)slope->left_initial_value[0] / (float)slope->left_initial_value[i - 1]); //保留这个点，存入数组
