@@ -83,10 +83,10 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
     }
 
 //显示方向
-if(!gpio_get (PTB16))
-{
-    printf("%d,%d\n", (int)left_turn, (int)right_turn);
-}
+// if(!gpio_get (PTB16))
+// {
+//     printf("%d,%d\n", (int)left_turn, (int)right_turn);
+// }
 
 /**********************************************************/
 
@@ -104,13 +104,13 @@ if(!gpio_get (PTB16))
 
         if(left_turn)                                  //左边"/"偏情况
         {
-            if(img[OV7725_EAGLE_H - i][left_temp] == 255)
+            if(img[OV7725_EAGLE_H - i][left_temp - 1] == 255)
             {
                 //没东西
             }
             else
             {
-                for(shit = left_temp; shit < left_temp + 5; shit++)
+                for(shit = left_temp - 1; shit < left_temp + 5; shit++)
                 {
                     if(img[OV7725_EAGLE_H - i][shit] == 255)
                     {
@@ -122,13 +122,13 @@ if(!gpio_get (PTB16))
         }
         else                                                 //左边"\"偏情况
         {
-            if(img[OV7725_EAGLE_H - i][left_temp] == 0)
+            if(img[OV7725_EAGLE_H - i][left_temp + 1] == 0)
             {
                 //没东西
             }
             else
             {
-                for(shit = left_temp; shit < left_temp - 5; shit--)
+                for(shit = left_temp + 1; shit < left_temp - 5; shit--)
                 {
                     if(shit < 0)
                     {
@@ -145,13 +145,13 @@ if(!gpio_get (PTB16))
 
         if(right_turn)                                  //右边"\"偏情况
         {
-            if(img[OV7725_EAGLE_H - i][right_temp] == 255)
+            if(img[OV7725_EAGLE_H - i][right_temp + 1] == 255)
             {
                 //没东西
             }
             else
             {
-                for(shit = right_temp; shit > right_temp - 5; shit--)
+                for(shit = right_temp + 1; shit > right_temp - 5; shit--)
                 {
                     if(img[OV7725_EAGLE_H - i][shit] == 255)
                     {
@@ -163,13 +163,13 @@ if(!gpio_get (PTB16))
         }
         else                                                 //右边"/"偏情况
         {
-            if(img[OV7725_EAGLE_H - i][right_temp] == 0)
+            if(img[OV7725_EAGLE_H - i][right_temp - 1] == 0)
             {
                 //没东西
             }
             else
             {
-                for(shit = right_temp; shit < right_temp + 5; shit++)
+                for(shit = right_temp - 1; shit < right_temp + 5; shit++)
                 {
                     if(shit > OV7725_EAGLE_W - 1)
                     {

@@ -56,7 +56,7 @@ void mk60int()
 
     port_init(PTB19, ALT1 | IRQ_FALLING | PULLUP );     //8	摄像头串口   //拨码
     port_init(PTB17, ALT1 | IRQ_FALLING | PULLUP );     //7	每行采点
-    port_init(PTB16, ALT1 | IRQ_FALLING | PULLUP );     //6 左右偏方向
+    port_init(PTB16, ALT1 | IRQ_FALLING | PULLUP );     //6 显示收集的数组
     port_init(PTB18, ALT1 | IRQ_FALLING | PULLUP );     //3 斜率虚拟示波器
 }
 
