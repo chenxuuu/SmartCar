@@ -346,60 +346,60 @@ void  main(void)
 
         get_slope(img, &slope);  //获取斜率信息
 
-            duoji = (float)get_camere_center_5(img);
+        duoji = (float)get_camere_center_5(img);
 
-            if(duoji > 0)
-                duoji = pow(duoji, 2) / 900;
-            else
-                duoji = -pow(duoji, 2) / 900;
-            if(slope.left_count>slope.right_count)
-                actuator_pid.pv = (int)(slope.left*1000 - duoji);
-            else if(slope.left_count<slope.right_count)
-                actuator_pid.pv = (int)(slope.right*1000 - duoji);
-            else
-                actuator_pid.pv = 0;
+        if(duoji > 0)
+            duoji = pow(duoji, 2) / 900;
+        else
+            duoji = -pow(duoji, 2) / 900;
+        if(slope.left_count>slope.right_count)
+            actuator_pid.pv = (int)(slope.left*1000 - duoji);
+        else if(slope.left_count<slope.right_count)
+            actuator_pid.pv = (int)(slope.right*1000 - duoji);
+        else
+            actuator_pid.pv = 0;
                 
-            g_fCar_speed_set=1650;
-            /*g_nSpeed_control_period++;
-            SpeedControlOutput();
-            if(g_nSpeed_control_period++ >= 20)
-            {
-                GetMotorPulse();
-                SpeedControl();
-            } */
-            smart_control_actuator(-actuator_pid.pv, g_fSpeed_control_out_L, g_fSpeed_control_out_R);
+        g_fCar_speed_set=1650;
+        /*g_nSpeed_control_period++;
+        SpeedControlOutput();
+        if(g_nSpeed_control_period++ >= 20)
+        {
+            GetMotorPulse();
+            SpeedControl();
+        } */
+        smart_control_actuator(-actuator_pid.pv, g_fSpeed_control_out_L, g_fSpeed_control_out_R);
 
-            if(!gpio_get (PTB18))   //拨码
+        if(!gpio_get (PTB18))   //拨码
+        {
+            ware[0] = slope.left;
+            ware[1] = slope.right;
+            if(slope.left_count >= slope.right_count)
+                ware[2] = slope.left;
+            else
+                ware[2] = slope.right;
+            vcan_sendware(ware, sizeof(ware));
+            printf("\n================\n%d/10000\n====================\n", (int)(ware[2] * 10000));
+        }
+
+        if(!gpio_get (PTB16))     //获取数组
+        {
+            get_initial_value(img, &slope);
+
+            printf("const int left_initial[110] ={");
+            for(i = 0; i < 110; i++)
             {
-                ware[0] = slope.left;
-                ware[1] = slope.right;
-                if(slope.left_count >= slope.right_count)
-                    ware[2] = slope.left;
-                else
-                    ware[2] = slope.right;
-                vcan_sendware(ware, sizeof(ware));
-                printf("\n================\n%d/10000\n====================\n", (int)(ware[2] * 10000));
+                printf("%d, ", slope.left_initial_value[i]);
+                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
             }
-
-            if(!gpio_get (PTB16))     //获取数组
+            printf("};\nconst int right_initial[110] ={");
+            for(i = 0; i < 110; i++)
             {
-                get_initial_value(img, &slope);
-
-                printf("const int left_initial[110] ={");
-                for(i = 0; i < 110; i++)
-                {
-                    printf("%d, ", slope.left_initial_value[i]);
-                    //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
-                }
-                printf("};\nconst int right_initial[110] ={");
-                for(i = 0; i < 110; i++)
-                {
-                    printf("%d, ", slope.right_initial_value[i]);
-                    //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
-                }
-                printf("};//注意删掉最后的逗号\n");
-                //initial_value_get=1;
+                printf("%d, ", slope.right_initial_value[i]);
+                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
             }
+            printf("};//注意删掉最后的逗号\n");
+            //initial_value_get=1;
+        }
     }
 }
 
