@@ -1,421 +1,295 @@
-/*!
+/*!    比赛用程序
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,山外科技
+ *     Copyright (c) 2013,野火科技
  *     All rights reserved.
- *     技术讨论：山外论坛 http://www.vcan123.com
+ *     技术讨论：野火初学论坛 http://www.chuxue123.com
  *
- *     除注明出处外，以下所有内容版权均属山外科技所有，未经允许，不得用于商业用途，
- *     修改内容时必须保留山外科技的版权声明。
+ *     除注明出处外，以下所有内容版权均属野火科技所有，未经允许，不得用于商业用途，
+ *     修改内容时必须保留野火科技的版权声明。
  *
  * @file       main.c
- * @brief      山外K60 平台主程序
- * @author     山外科技
+ * @brief      野火K60 平台主程序
+ * @author     野火科技
  * @version    v5.0
  * @date       2013-08-28
  */
-
 #include "include.h"
 
 uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //定义存储解压图像的数组
-float speed = 0.2, duoji = 0, duoji1 = 0, way = 0;
-float ware[4];
 
-
-/*******************PI**************************/
-#define SPEED_CONTROL_P 	0.00022//0.0025//-0.0023//-0.00016          //待定
-#define SPEED_CONTROL_I		0//0.00055//-0.00008        //待定
-#define SPEED_CONTROL_PERIOD	     100
-/*************编码器测得脉冲值***************/
-int g_nLeftMotorPulse=0;
-int g_nRightMotorPulse=0;		//编码器单位时间内的值
-int g_nLeftMotorPulseSigma=0;	//编码器积分值
-int g_nRightMotorPulseSigma=0;
-/*************速度参数******************/
-float g_fCar_speed_L=0;
-float g_fCar_speed_R=0;
-float g_fCar_speed_set=0;
-float g_fSpeed_control_integral_L=0;
-float g_fSpeed_control_integral_R=0;
-float g_fSpeed_control_out_old_L=0;
-float g_fSpeed_control_out_new_L=0;
-float g_fSpeed_control_out_old_R=0;
-float g_fSpeed_control_out_new_R=0;
-float out[5];
-extern uint8 g_nSpeed_control_period=0;         //20次累加平均
-extern int16 g_fLeftVoltageSigma = 0;
-extern int16 g_fRightVoltageSigma = 0;
-extern float g_fCarSpeed_R=0;                   //速度控制参数
-extern float g_fCarSpeed_L=0;                   //速度控制参数
-float g_fSpeed_control_out_L;		//速度控制电机输出量	预设
-float g_fSpeed_control_out_R;		//速度控制电机输出量	预设
-/******************************************************/
-    float fDelta_L,fDelta_R;
-    float fP_R,fP_L,fI_L,fI_R;
-    float fValue_L,fValue_R;
-
-
-
-struct _slope slope;
-
-struct _pid actuator_pid;
-int process_point  = 0,      // pv 实际值
-    set_point      = 0,      // sp 设定值
-    dead_band      = 0;       // 死区
-float p_gain       = 14,
-      i_gain       = 0.0,
-      d_gain       = 0.01,
-      integral_val = 0.01,    //积分值
-      new_integ;
-
-int oled_place = 0,initial_value_get=0,i;
-
-
-const int left_initial[110] ={-72, -71, -70, -70, -70, -69, -69, -68, -68, -67,
- -67, -66, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -60, -60,
- -60, -59, -59, -58, -58, -57, -57, -56, -56, -55, -55, -54, -54, -53, -53, -52,
- -51, -51, -50, -50, -49, -49, -48, -47, -47, -47, -46, -46, -45, -44, -44, -43,
- -43, -42, -42, -41, -41, -40, -40, -39, -39, -38, -37, -37, -36, -36, -35, -35,
- -34, -34, -33, -33, -33, -33, -32, -32, -31, -31, -30, -30, -29, -29, -28, -28,
- -27, -27, -26, -26, -25, -24, -24, -23, -23, -22, -22, -21, -21, -21, -20, -20,
- -19, -19, -18, -17};
-const int right_initial[110] ={73, 72, 72, 71, 71, 70, 70, 69, 69, 68, 68, 68,
- 67, 66, 66, 66, 65, 65, 64, 64, 63, 63, 62, 62, 61, 61, 60, 60, 59, 59, 58, 58,
- 57, 57, 56, 55, 55, 54, 54, 53, 53, 52, 52, 51, 51, 51, 50, 50, 49, 48, 48, 47,
- 47, 46, 46, 45, 45, 44, 44, 44, 43, 43, 42, 42, 41, 41, 40, 40, 39, 39, 38, 38,
- 37, 36, 35, 34, 34, 33, 32, 32, 31, 31, 30, 30, 29, 29, 11, 10, 27, 27, 26, 26,
- 25, 25, 24, 24, 23, 23, 22, 21, 21, 20, 19, 19, 18, 18, 17, 17, 16, 16};
+uint8  left_diuxian1, right_diuxian1, shuang_diuxian1, left_diuxian2, right_diuxian2; //丢线行计算
+uint8 diuxian2;                   //两边总共丢线行数;
+int16 LastError = 0, Error = 0;
+int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
+int8 slope1, slope2, slope3, slope4;
+int stop_done = 0;
+float P, D;
 
 //函数声明
 void PORTA_IRQHandler();
 void DMA0_IRQHandler();
-
-
-/*!
- *  @brief      扫键函数
- *  @since
- *  @note
- */
-void oled_display_key()
-{
-    switch(oled_place)
-    {
-      case 0 :
-        if(key_check(KEY_R) == KEY_DOWN)
-            duoji-=0.01;
-        if(key_check(KEY_L) == KEY_DOWN)
-            duoji+=0.01;
-        if(key_check(KEY_A) == KEY_DOWN)
-        {
-            printf("舵机：%d/100，左斜率：%d/1000,右斜率：%d/1000，左有效：%d，右有效：%d\n",
-                   (int)(duoji*100),
-                   (int)(slope.left*1000),
-                   (int)(slope.right*1000),
-                   slope.left_count,
-                   slope.right_count);
-        }
-
-        break;
-
-      case 1 :
-
-        break;
-
-      case 2 :
-        if(key_check(KEY_A) == KEY_DOWN)
-        {
-            get_initial_value(img, &slope);
-
-            printf("const int left_initial[110] ={");
-            for(i = 0; i < 110; i++)
-            {
-                printf("%d, ", slope.left_initial_value[i]);
-                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
-            }
-            printf("};\nconst int right_initial[110] ={");
-            for(i = 0; i < 110; i++)
-            {
-                printf("%d, ", slope.right_initial_value[i]);
-                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
-            }
-            printf("};//注意删掉最后的逗号\n");
-            //initial_value_get=1;
-        }
-        break;
-
-      default:
-        break;
-    }
-//        OLED_P8x16Str(0,0,"Actuator:");
-//        Display_number(80,0,(int32)(dj*100));
-//
-//        OLED_P14x16Str(0,2,"摄像头偏差：");
-//        Display_number(80,2,get_camere_center(img,10));
-//        Display_number(80,3,get_camere_center(img,40));
-//
-
-
-    OLED_P14x16Str(0, 0, "斜率：");
-    DisplayFloat(42, 0, slope.left);
-    DisplayFloat(42, 1, slope.right);
-
-    OLED_P14x16Str(0, 2, "有效点：");
-    OLED_P6x8fig3(56, 2, slope.left_count);
-    OLED_P6x8fig3(56, 3, slope.right_count);
-
-//    OLED_P14x16Str(0, 4, "赛道信息：");
-//    if(initial_value_get)
-//        OLED_P14x16Str(70, 4, "已提取");
-//    else
-//        OLED_P14x16Str(70, 4, "未提取");
-    OLED_P14x16Str(0, 4, "更新赛道信息");
-
-    DisplayFloat(0, 6, duoji);
-
-    if(key_check(KEY_U) == KEY_DOWN)
-    {
-        oled_place--;
-        if(oled_place < 0)
-            oled_place = 3;
-    }
-    if(key_check(KEY_D) == KEY_DOWN)
-    {
-        oled_place++;
-        if(oled_place > 3)
-            oled_place = 0;
-        OLED_Init();
-    }
-    OLED_P14x16Str(110, 0, "　");
-    OLED_P14x16Str(110, 2, "　");
-    OLED_P14x16Str(110, 4, "　");
-    OLED_P14x16Str(110, 6, "　");
-    OLED_P14x16Str(110, oled_place * 2, "←");
-}
-
-/*****************************PI速度闭环***********************************************/
-
-
-void GetMotorPulse(void)
-{
-    int16 Pulse_L,Pulse_R;
-
-    Pulse_L = ftm_quad_get(FTM2);          //获取FTM 正交解码 的脉冲数(负数表示反方向)
-    ftm_quad_clean(FTM2);	           //FTM 清零
-
-    Pulse_R = ftm_quad_get(FTM1);
-	ftm_quad_clean(FTM1);
-
-    g_nLeftMotorPulse = -Pulse_L;
-    g_nRightMotorPulse = -Pulse_R;
-    g_nLeftMotorPulseSigma = g_nLeftMotorPulse;
-    g_nRightMotorPulseSigma = g_nRightMotorPulse;
-    Pulse_L=Pulse_R=0;
-}
-/**************电机死驱处理函数********************/
-/*void MotorSpeedOut(void)
-{
-    float fLeftVal, fRightVal;
-    fLeftVal = g_fLeft_motor_out;
-    fRightVal = g_fRight_motor_out;
-
-    if(fLeftVal > 0)
-        fLeftVal += MOTOR_OUT_DEAD_VAL;
-    else if(fLeftVal < 0)
-        fLeftVal -= MOTOR_OUT_DEAD_VAL;
-    if(fRightVal > 0)
-        fRightVal += MOTOR_OUT_DEAD_VAL;                //+0.012;     // 死区  不对称处理+0.01
-    else if(fRightVal < 0)
-        fRightVal -= MOTOR_OUT_DEAD_VAL;                //+0.012;   //死区   不对称处理+0.013
-
-    if(fLeftVal > MOTOR_OUT_MAX)
-        fLeftVal = MOTOR_OUT_MAX;
-    if(fLeftVal < MOTOR_OUT_MIN)
-        fLeftVal = MOTOR_OUT_MIN;
-    if(fRightVal > MOTOR_OUT_MAX)
-        fRightVal = MOTOR_OUT_MAX;
-    if(fRightVal < MOTOR_OUT_MIN)
-        fRightVal = MOTOR_OUT_MIN;//饱和处理
-
-    SetMotorVoltage(fLeftVal,fRightVal);
-
-} */
-
-/*******************PI速度闭环叠加********************/
-
-void SpeedControl(void)              //速度控制函数
-{
-    //float fDelta_L,fDelta_R;
-    //float fP_R,fP_L,fI;
-
-    g_fCarSpeed_R = (float)g_nRightMotorPulseSigma ;//计算左右电机脉冲的平均值
-    g_fCarSpeed_L = (float)g_nLeftMotorPulseSigma ;//计算左右电机脉冲的平均值
-    g_nLeftMotorPulseSigma = g_nRightMotorPulseSigma = 0;  //清零
-    //g_fCarSpeed_R *= 1000.0/100/500;       //单位的换算 单位：转/秒
-    //g_fCarSpeed_L *= 1000.0/100/500;       //单位的换算 单位：转/秒
-
-    fDelta_R =g_fCar_speed_set - g_fCarSpeed_R;
-    fDelta_L =g_fCar_speed_set - g_fCarSpeed_L;
-    fP_R=fDelta_R * (float)SPEED_CONTROL_P;
-    fP_L=fDelta_L * (float)SPEED_CONTROL_P;
-    fI_R=fDelta_R * (float)SPEED_CONTROL_I;
-    fI_L=fDelta_L * (float)SPEED_CONTROL_I;
-
-    g_fSpeed_control_integral_L += fI_L;//积分
-    g_fSpeed_control_integral_R += fI_R;//积分
-
-    g_fSpeed_control_out_old_R = g_fSpeed_control_out_new_R;
-    g_fSpeed_control_out_new_R = fP_R + g_fSpeed_control_integral_R;
-
-
-    g_fSpeed_control_out_old_L = g_fSpeed_control_out_new_L;
-    g_fSpeed_control_out_new_L = fP_L + g_fSpeed_control_integral_L;
+void DMA0_IRQHandl();
 
 
 
-    if(g_fSpeed_control_integral_L > 1000)
-	g_fSpeed_control_integral_L =1000;
-    if(g_fSpeed_control_integral_L < -1000)
-	g_fSpeed_control_integral_L = -1000;
+void boundary_detection();//扫描边界
+void picture_analysis();//求中心线
+void Crosscurve();//十字弯
+void Rampway();
+void boundary_detection1();
+void GetMotorPulse();
+void SpeedControl();
+void GetMotorPulse();
+void SpeedControlOutput();
+void both_motor();
 
+int16 black_centre , dajiao = 0;
+int16 left_bianjie[120];		     //左边界数组			x坐标图像左边为0
+int16 right_bianjie[120];		//右边界数组
+int8 youxiao = 0 ;
+float add_err;
+int16 vall, valr;
+int16 both_e;
 
-    if(g_fSpeed_control_integral_R > 1000)
-	g_fSpeed_control_integral_R =1000;
-    if(g_fSpeed_control_integral_R < -1000)
-	g_fSpeed_control_integral_R = -1000;
-}
-
-void SpeedControlOutput(void)             //速度控制函数
-{
-    //float fValue_L,fValue_R;
-    fValue_L = g_fSpeed_control_out_new_L - g_fSpeed_control_out_old_L;
-    g_fSpeed_control_out_L = fValue_L * (g_nSpeed_control_period + 1) / SPEED_CONTROL_PERIOD + g_fSpeed_control_out_old_L;
-    fValue_R = g_fSpeed_control_out_new_R - g_fSpeed_control_out_old_R;
-    g_fSpeed_control_out_R = fValue_R * (g_nSpeed_control_period + 1) / SPEED_CONTROL_PERIOD + g_fSpeed_control_out_old_R;
-    if(g_fSpeed_control_out_L > 1)
-	g_fSpeed_control_out_L = 1;
-    if(g_fSpeed_control_out_L < -1)
-	g_fSpeed_control_out_L = -1;
-
-
-    if(g_fSpeed_control_out_R > 1)
-	g_fSpeed_control_out_R = 1;
-    if(g_fSpeed_control_out_R < -1)
-	g_fSpeed_control_out_R = -1;
-}
-
-
+/**********两侧电机共同控制********/
+float both_P, both_I;
+int speed1;
+float speed;                        //电机PID输出量
+float InSet;                       //电机转速设置值
 
 /*!
- *  @brief      main函数
- *  @since
- *  @note
+ *  @brief      检测停车
+ *  @since      v1.0
+ *  @note       输入值范围：摄像头数组，请先解压
+ *  Sample usage:           do_camere_stop(img);
  */
+void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
+{
+    int count = 0, count_temp = 0, i, shit;
+    for(shit = 10; shit < 50; shit++)
+    {
+        count_temp = 0;
+        for(i = 0; i < OV7725_EAGLE_W - 1; i++)
+        {
+            if(img[OV7725_EAGLE_H - shit][i] == 0 && img[OV7725_EAGLE_H - shit][i + 1] == 255)
+                count_temp++;
+            if(count_temp >= 3)
+            {
+                count++;
+                break;
+            }
+        }
+        if(count >= 2)
+        {
+            stop_done = 1;
+            return;
+        }    
+    }
+}
+
+/*******************************************************************************/
+/***********************************主函数**************************************/
 void  main(void)
 {
-
-    for(i = 0; i < 110; i++)
-    {
-        slope.left_initial_value[i] = left_initial[i];
-        slope.right_initial_value[i] = right_initial[i];
-    }
-    camera_init(imgbuff);
-
+    camera_init(imgbuff);						//初始化摄像头
     //配置中断服务函数
     set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //设置LPTMR的中断服务函数为 PORTA_IRQHandler
     set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //设置LPTMR的中断服务函数为 PORTA_IRQHandler
 
-    pid_init( &actuator_pid, process_point, set_point );
-    pid_tune( &actuator_pid, p_gain, i_gain, d_gain, dead_band, integral_val );
-
     mk60int();
-
-    //g_fCar_speed_set=1000;
+    both_P=0.01;
+    both_I=0;
+    
+    InSet=75;
 
     while(1)
     {
-        camera_get_img();  //摄像头获取图像
-
-        img_extract(img, imgbuff, CAMERA_SIZE); //解压到img中
-
-        if(!gpio_get (PTB19))      //拨码
+        camera_get_img();						//摄像头获取图像
+        img_extract(img, imgbuff, CAMERA_SIZE);	//解压图像
+        boundary_detection();//扫描图像获取边界
+        picture_analysis();//获取中线
+        if(!gpio_get (PTB19))
         {
-            vcan_sendimg(imgbuff,CAMERA_SIZE);   //串口显示图像
+            vcan_sendimg(imgbuff,CAMERA_SIZE);//摄像头看图像
         }
+        //printf("%d\n", vall);
+        //printf("%d,",valr);
+        //printf("%d\n",speed1);
 
-        oled_display_key();   //OLED显示
+        //printf("%d,",slope1);
 
-        get_slope(img, &slope);  //获取斜率信息
+        //printf("%d\n",slope3);
 
-        duoji = (float)get_camere_center_5(img);
+        //printf("%d,",shuang_diuxian1);
 
-        if(duoji > 0)
-            duoji = pow(duoji, 2) / 900;
-        else
-            duoji = -pow(duoji, 2) / 900;
-        if(slope.left_count>slope.right_count)
-            actuator_pid.pv = (int)(slope.left*1000 - duoji);
-        else if(slope.left_count<slope.right_count)
-            actuator_pid.pv = (int)(slope.right*1000 - duoji);
-        else
-            actuator_pid.pv = 0;
-                
-        g_fCar_speed_set=1650;
-        /*g_nSpeed_control_period++;
-        SpeedControlOutput();
-        if(g_nSpeed_control_period++ >= 20)
+        //printf("%d,",m);
+        //printf("%d\n",a);
+        /*
+        for(l=0;l<120;l++)
         {
-            GetMotorPulse();
-            SpeedControl();
-        } */
-        smart_control_actuator(-actuator_pid.pv, g_fSpeed_control_out_L, g_fSpeed_control_out_R);
-
-        if(!gpio_get (PTB18))   //拨码
-        {
-            ware[0] = slope.left;
-            ware[1] = slope.right;
-            if(slope.left_count >= slope.right_count)
-                ware[2] = slope.left;
-            else
-                ware[2] = slope.right;
-            vcan_sendware(ware, sizeof(ware));
-            printf("\n================\n%d/10000\n====================\n", (int)(ware[2] * 10000));
+            printf("%d,",left_bianjie[l]);
         }
-
-        if(!gpio_get (PTB16))     //获取数组
-        {
-            get_initial_value(img, &slope);
-
-            printf("const int left_initial[110] ={");
-            for(i = 0; i < 110; i++)
-            {
-                printf("%d, ", slope.left_initial_value[i]);
-                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
-            }
-            printf("};\nconst int right_initial[110] ={");
-            for(i = 0; i < 110; i++)
-            {
-                printf("%d, ", slope.right_initial_value[i]);
-                //printf("[%d]=%d\n", i, slope.right_initial_value[i]);
-            }
-            printf("};//注意删掉最后的逗号\n");
-            //initial_value_get=1;
-        }
+        printf("\n");
+        */
     }
 }
+/*******************************************************************************/
+/*********************************边界采集**************************************/
+void boundary_detection()
+{
+    int16 i, j;
+    left_diuxian1 = 0;
+    right_diuxian1 = 0;
+    shuang_diuxian1 = 0;
+    diuxian2 = 0;
+    for(i = 119; i > 1; i--)
+    {
+        for(j = 78; j >= 0; j--) //扫描左边线
+        {
+            if(img[i][j] == 0)//黑点
+            {
+                left_bianjie[119 - i] = j - 79;
+                break;
+            }
+            else
+            {
+                if(j == 0)
+                {
+                    left_bianjie[119 - i] = -80; //左边丢线
+                }
+            }
+        }
 
+        for(j = 79; j <= 159; j++) //扫描右边线
+        {
+            if(img[i][j] == 0)
+            {
+                right_bianjie[119 - i] = j - 80;
+                break;
+            }
+            else
+            {
+                if(j == 159)
+                {
+                    right_bianjie[119 - i] = 80;
+                }
+            }
+        }
 
+        if(( right_bianjie[119 - i] != 80) && (left_bianjie[119 - i] == -80)) //计算左丢线行数
+            left_diuxian1++;
+        if(( right_bianjie[119 - i] == 80) && (left_bianjie[119 - i] != -80)) //计算右丢线行数
+            right_diuxian1++;
+        if(( right_bianjie[119 - i] == 80) && (left_bianjie[119 - i] == -80)) //计算双丢线行数
+            shuang_diuxian1++;
+        if(( right_bianjie[119 - i] == 80) || (left_bianjie[119 - i] == -80)) //计算丢线行数
+            diuxian2++;
+    }
+    Crosscurve();//十字弯
+}
+/*******************************************************************************/
+/*******************************图像分析****************************************/
+void picture_analysis()//前90行求平均中线
+{
+    int16 buffer = 0;
+    int i;
+    for(i = 0; i < 90; i++)
+    {
+        buffer = buffer + left_bianjie[i] + right_bianjie[i];
+    }
+    black_centre = (buffer / youxiao);
+}
+/*******************************************************************************/
+/********************************十字弯*****************************************/
+void Crosscurve()
+{
+    if(shuang_diuxian1 > 40)
+    {
+        youxiao = 60;
+    }
+    else
+        youxiao = 119 - diuxian2; //有效行等于总行数减去双边丢线行数
+}
 
+void both_motor()//双电机PID控制，在转弯时使用，起到差速效果
+{
+    int16 both_var;//两侧编码器平均值
+    both_var = (vall + valr) / 2;
+    both_e = ((int)InSet - both_var);//计算这次偏差
+    
+	add_err+=both_e;
+    
+    speed = (  both_P * both_e   +   both_I * add_err  );//右轮输出量
+    
+    if(speed > 1)
+        speed = 1;
+    if(speed < -1)
+        speed = -1;
+       
+}
+
+/*******************************************************************************/
+/********************************舵机PD控制*************************************/
+void PDkongzhi()
+{
+    
+    if( diuxian2 > 20 )
+    {
+        P = 4, D = 0;
+    }
+    
+    else 
+    {
+        P = 3, D = 0;
+    }
+    
+    LastError = Error; //上一次偏差
+
+    Error = black_centre ; //平均中点和理论中点0之间的偏差
+
+    dajiao = 1386 - (int)P * Error - (int)D * (Error - LastError);//舵机打角
+
+    if(dajiao > 1540) //左最大
+        dajiao = 1540;
+    else if(dajiao < 1241) //右最大
+        dajiao = 1241;
+
+    ftm_pwm_duty(S3010_FTM, S3010_CH, (uint32)dajiao);
+    //SetMotorVoltage(speed , speed );
+    if(stop_done == 1)
+    {
+        SetMotorVoltage(0, 0);
+    }
+    else
+    {
+        SetMotorVoltage(speed + 0.0015 * Error, speed - 0.0015 * Error);
+    }
+}
+/*******************************************************************************/
+/********************************10ms定时器*************************************/
+void PIT0_IRQHandler(void)
+{
+    PDkongzhi();//舵机PD控制
+    both_motor();
+	do_camere_stop(img);  //检测停车
+    vall = - ( ftm_quad_get(FTM1) );          //获取FTM 正交解码 的脉冲数(负数表示反方向)
+    ftm_quad_clean(FTM1);
+    valr = - ( ftm_quad_get(FTM2) );         //获取FTM 正交解码 的脉冲数(负数表示反方向)
+    ftm_quad_clean(FTM2);
+
+    PIT_Flag_Clear(PIT0);//清中断标志位
+}
 /*!
  *  @brief      PORTA中断服务函数
  *  @since      v5.0
  */
+/*******************************************************************************/
+/********************************图像采集中断***********************************/
 void PORTA_IRQHandler()
 {
-    uint8  n;    //引脚号
-    uint32 flag;
-
-    while(!PORTA_ISFR);
-    flag = PORTA_ISFR;
+    uint8  n = 0;    //引脚号
+    uint32 flag = PORTA_ISFR;
     PORTA_ISFR  = ~0;                                   //清中断标志位
 
     n = 29;                                             //场中断
@@ -423,17 +297,14 @@ void PORTA_IRQHandler()
     {
         camera_vsync();
     }
-#if ( CAMERA_USE_HREF == 1 )                            //使用行中断
+#if 0             //鹰眼直接全速采集，不需要行中断
     n = 28;
     if(flag & (1 << n))                                 //PTA28触发中断
     {
         camera_href();
     }
 #endif
-
-
 }
-
 /*!
  *  @brief      DMA0中断服务函数
  *  @since      v5.0
@@ -441,13 +312,4 @@ void PORTA_IRQHandler()
 void DMA0_IRQHandler()
 {
     camera_dma();
-
-    g_nSpeed_control_period++;
-    SpeedControlOutput();
-    if(g_nSpeed_control_period >= 20)
-        g_nSpeed_control_period = 0;
-    GetMotorPulse();
-    SpeedControl();
 }
-
-

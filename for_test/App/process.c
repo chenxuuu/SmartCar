@@ -90,7 +90,7 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 
 /**********************************************************/
 
-    for(i = 2; i < OV7725_EAGLE_H - 35 + 1; i++) //算高度-25行，待定
+    for(i = 2; i < OV7725_EAGLE_H - 50 + 1; i++) //算高度-50行，待定
     {
         // if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
         //     break;
