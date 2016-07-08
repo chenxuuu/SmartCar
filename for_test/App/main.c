@@ -79,7 +79,7 @@ void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
     for(shit = 10; shit < 50; shit++)
     {
         count_temp = 0;
-        for(i = left_bianjie[shit]; i < right_bianjie[shit] - 1; i++)
+        for(i = 10; i < OV7725_EAGLE_W - 10 - 1; i++)
         {
             if(img[OV7725_EAGLE_H - shit][i] == 0 && img[OV7725_EAGLE_H - shit][i + 1] == 255)
                 count_temp++;
