@@ -24,7 +24,7 @@ int16 LastError = 0, Error = 0;
 int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
 int stop_done = 0;
-float P, D;
+float P, D, speedl, speedr;
 struct _slope slope;
 const int left_initial[110] ={-72, -71, -70, -70, -70, -69, -69, -68, -68, -67,
  -67, -66, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -60, -60,
@@ -57,7 +57,7 @@ void GetMotorPulse();
 void SpeedControl();
 void GetMotorPulse();
 void SpeedControlOutput();
-void both_motor();
+void PID_count();
 
 int16 black_centre , dajiao = 0;
 int16 left_bianjie[120];		     //左边界数组			x坐标图像左边为0
@@ -65,13 +65,7 @@ int16 right_bianjie[120];		//右边界数组
 int8 youxiao = 0 ;
 float add_err;
 int16 vall, valr;
-int16 both_e;
 
-/**********两侧电机共同控制********/
-float both_P, both_I;
-int speed1;
-float speed;                        //电机PID输出量
-float InSet;                       //电机转速设置值
 
 /*!
  *  @brief      检测停车
@@ -85,7 +79,7 @@ void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
     for(shit = 10; shit < 50; shit++)
     {
         count_temp = 0;
-        for(i = 0; i < OV7725_EAGLE_W - 1; i++)
+        for(i = left_bianjie[shit]; i < right_bianjie[shit] - 1; i++)
         {
             if(img[OV7725_EAGLE_H - shit][i] == 0 && img[OV7725_EAGLE_H - shit][i + 1] == 255)
                 count_temp++;
@@ -103,6 +97,77 @@ void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
     }
 }
 
+
+typedef struct PID 
+{
+	int16 Setpoint;     //设定值
+	float Pl;            //比例系数
+	float Il;            //积分系数
+	float Dl;	 //微分系数
+	int16 Errorl;         //当前误差
+	int16 LastErrorl;	 //上一次误差
+	int16 PreErrorl;      //上上一次误差
+    float Pr;            //比例系数
+	float Ir;            //积分系数
+	float Dr;	 //微分系数
+	int16 Errorr;         //当前误差
+	int16 LastErrorr;	 //上一次误差
+	int16 PreErrorr;      //上上一次误差
+}
+	PID;
+	PID vPID;     //定义结构体变量名称
+void init_PID()
+{
+	vPID.Pl=0.00000001;
+	vPID.Il=0.00005;
+	vPID.Dl=0;
+	vPID.Errorl=0;
+	vPID.LastErrorl=0;
+	vPID.PreErrorl=0;
+    
+    vPID.Pr=0.00000001;
+	vPID.Ir=0.00005;
+	vPID.Dr=0;
+	vPID.Errorr=0;
+	vPID.LastErrorr=0;
+	vPID.PreErrorr=0;
+    
+    
+	vPID.Setpoint=40;//速度
+}
+
+int16 add_errorl=0;
+int16 add_errorr=0;
+void PID_count()
+{
+	vPID.PreErrorl=vPID.LastErrorl;
+	vPID.LastErrorl=vPID.Errorl;
+	vPID.Errorl=vPID.Setpoint-vall;
+	add_errorl+=vPID.Errorl;
+	speedl+=(vPID.Pl*add_errorl+((vPID.Il)*(vPID.Errorl))+vPID.Dl*(vPID.Errorl-2*vPID.LastErrorl+vPID.PreErrorl));
+    
+    
+	if(speedl>1)
+	speedl=1;
+    if(speedl<-1)
+    speedl=-1;
+    
+    
+    vPID.PreErrorr=vPID.LastErrorr;
+	vPID.LastErrorr=vPID.Errorr;
+	vPID.Errorr=vPID.Setpoint-valr;
+	add_errorr+=vPID.Errorr;
+	speedr+=(vPID.Pr*add_errorr+((vPID.Ir)*(vPID.Errorr))+vPID.Dr*(vPID.Errorr-2*vPID.LastErrorr+vPID.PreErrorr));
+    
+    
+	if(speedr>1)
+	speedr=1;
+    if(speedr<-1)
+    speedr=-1;
+}
+
+
+
 /*******************************************************************************/
 /***********************************主函数**************************************/
 void  main(void)
@@ -119,10 +184,7 @@ void  main(void)
     set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //设置LPTMR的中断服务函数为 PORTA_IRQHandler
 
     mk60int();
-    both_P=0.01;
-    both_I=0;
-    
-    InSet=75;    //速度
+	init_PID();
 
     while(1)
     {
@@ -245,23 +307,6 @@ void Crosscurve()
         youxiao = 119 - diuxian2; //有效行等于总行数减去双边丢线行数
 }
 
-void both_motor()//双电机PID控制，在转弯时使用，起到差速效果
-{
-    int16 both_var;//两侧编码器平均值
-    both_var = (vall + valr) / 2;
-    both_e = ((int)InSet - both_var);//计算这次偏差
-    
-	add_err+=both_e;
-    
-    speed = (  both_P * both_e   +   both_I * add_err  );//右轮输出量
-    
-    if(speed > 1)
-        speed = 1;
-    if(speed < -1)
-        speed = -1;
-       
-}
-
 /*******************************************************************************/
 /********************************舵机PD控制*************************************/
 void PDkongzhi()
@@ -279,7 +324,7 @@ void PDkongzhi()
     
     LastError = Error; //上一次偏差
 
-    Error = black_centre + (int)(slope.slope * 100); //平均中点和理论中点0之间的偏差 + 斜率
+    Error = black_centre/* + (int)(slope.slope * 100)*/; //平均中点和理论中点0之间的偏差 + 斜率
 
     dajiao = 1386 - (int)P * Error - (int)D * (Error - LastError);//舵机打角
 
@@ -290,13 +335,13 @@ void PDkongzhi()
 
     ftm_pwm_duty(S3010_FTM, S3010_CH, (uint32)dajiao);
     //SetMotorVoltage(speed , speed );
-    if(stop_done == 1)
+    if(stop_done >= 1)
     {
-        SetMotorVoltage(0, 0);
+        SetMotorVoltage(-0.07, -0.07);
     }
     else
     {
-        SetMotorVoltage(speed + 0.0015 * Error, speed - 0.0015 * Error);
+        SetMotorVoltage(speedl + 0.0015 * Error, speedr - 0.0015 * Error);
     }
 }
 /*******************************************************************************/
@@ -304,7 +349,7 @@ void PDkongzhi()
 void PIT0_IRQHandler(void)
 {
     PDkongzhi();//舵机PD控制
-    both_motor();
+    PID_count();
 	do_camere_stop(img);  //检测停车
     vall = - ( ftm_quad_get(FTM1) );          //获取FTM 正交解码 的脉冲数(负数表示反方向)
     ftm_quad_clean(FTM1);
