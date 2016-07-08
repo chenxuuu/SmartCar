@@ -20,6 +20,7 @@ struct _slope
 {
 	float left;
 	float right;
+    float slope;
     int left_count;
     int right_count;
     int left_initial_value[110];

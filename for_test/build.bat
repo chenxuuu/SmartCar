@@ -14,5 +14,8 @@ cls
 echo ↓↓↓↓↓↓↓↓↓↓↓↓编译信息↓↓↓↓↓↓↓↓↓↓↓↓
 IarBuild.exe Prj\IAR\vcan_Kinetis.ewp -make FN15_Debug -log info
 echo ↑↑↑↑↑↑↑↑↑↑↑↑编译结束↑↑↑↑↑↑↑↑↑↑↑↑
+set d=%date:~0,10%
+set t=%time:~0,8%
+echo 命令执行时间： %d% %t%
 echo .
 goto build

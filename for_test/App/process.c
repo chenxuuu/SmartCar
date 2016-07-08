@@ -90,7 +90,7 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
 
 /**********************************************************/
 
-    for(i = 2; i < OV7725_EAGLE_H - 50 + 1; i++) //算高度-50行，待定
+    for(i = 2; i < OV7725_EAGLE_H - 55 + 1; i++) //算高度-55行，待定
     {
         // if(img[OV7725_EAGLE_H - i][OV7725_EAGLE_W / 2] == 0)
         //     break;
@@ -184,11 +184,11 @@ void get_slope(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W], struct _slope *slope)
             }
         }
 
-//显示数值
-if(!gpio_get (PTB17))
-{
-    printf("i:%d.left:%d(%d),right:%d(%d).\n", i, left,left_temp, right, right_temp);
-}
+        //显示数值 for debug
+        // if(!gpio_get (PTB17))
+        // {
+        //     printf("i:%d.left:%d(%d),right:%d(%d).\n", i, left,left_temp, right, right_temp);
+        // } 
         
         //计算斜率部分：
         if(left != 0)                                       //如果未丢线
@@ -219,6 +219,13 @@ if(!gpio_get (PTB17))
         slope->right = 0;
     else
         slope->right = fitting_slope(right_y, right_x, right_count);        //给结构体赋值，输出数据
+
+    if(slope->left_count > slope->right_count)
+        slope->slope = slope->left;
+    else if(slope->left_count < slope->right_count)
+        slope->slope = slope->right;
+    else
+        slope->slope = (slope->left + slope->right) / 2;
 }
 
 

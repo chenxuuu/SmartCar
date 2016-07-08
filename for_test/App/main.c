@@ -17,7 +17,7 @@
 
 uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //定义存储解压图像的数组
-
+float ware[4];  //示波器
 uint8  left_diuxian1, right_diuxian1, shuang_diuxian1, left_diuxian2, right_diuxian2; //丢线行计算
 uint8 diuxian2;                   //两边总共丢线行数;
 int16 LastError = 0, Error = 0;
@@ -25,6 +25,21 @@ int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
 int stop_done = 0;
 float P, D;
+struct _slope slope;
+const int left_initial[110] ={-72, -71, -70, -70, -70, -69, -69, -68, -68, -67,
+ -67, -66, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -60, -60,
+ -60, -59, -59, -58, -58, -57, -57, -56, -56, -55, -55, -54, -54, -53, -53, -52,
+ -51, -51, -50, -50, -49, -49, -48, -47, -47, -47, -46, -46, -45, -44, -44, -43,
+ -43, -42, -42, -41, -41, -40, -40, -39, -39, -38, -37, -37, -36, -36, -35, -35,
+ -34, -34, -33, -33, -33, -33, -32, -32, -31, -31, -30, -30, -29, -29, -28, -28,
+ -27, -27, -26, -26, -25, -24, -24, -23, -23, -22, -22, -21, -21, -21, -20, -20,
+ -19, -19, -18, -17};
+const int right_initial[110] ={73, 72, 72, 71, 71, 70, 70, 69, 69, 68, 68, 68,
+ 67, 66, 66, 66, 65, 65, 64, 64, 63, 63, 62, 62, 61, 61, 60, 60, 59, 59, 58, 58,
+ 57, 57, 56, 55, 55, 54, 54, 53, 53, 52, 52, 51, 51, 51, 50, 50, 49, 48, 48, 47,
+ 47, 46, 46, 45, 45, 44, 44, 44, 43, 43, 42, 42, 41, 41, 40, 40, 39, 39, 38, 38,
+ 37, 36, 35, 34, 34, 33, 32, 32, 31, 31, 30, 30, 29, 29, 11, 10, 27, 27, 26, 26,
+ 25, 25, 24, 24, 23, 23, 22, 21, 21, 20, 19, 19, 18, 18, 17, 17, 16, 16};
 
 //函数声明
 void PORTA_IRQHandler();
@@ -92,6 +107,12 @@ void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 /***********************************主函数**************************************/
 void  main(void)
 {
+    int i;
+    for(i = 0; i < 110; i++)
+    {
+        slope.left_initial_value[i] = left_initial[i];
+        slope.right_initial_value[i] = right_initial[i];
+    }
     camera_init(imgbuff);						//初始化摄像头
     //配置中断服务函数
     set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //设置LPTMR的中断服务函数为 PORTA_IRQHandler
@@ -101,17 +122,28 @@ void  main(void)
     both_P=0.01;
     both_I=0;
     
-    InSet=75;
+    InSet=75;    //速度
 
     while(1)
     {
         camera_get_img();						//摄像头获取图像
         img_extract(img, imgbuff, CAMERA_SIZE);	//解压图像
+        get_slope(img, &slope); //获取斜率
         boundary_detection();//扫描图像获取边界
         picture_analysis();//获取中线
         if(!gpio_get (PTB19))
         {
             vcan_sendimg(imgbuff,CAMERA_SIZE);//摄像头看图像
+        }
+        if(!gpio_get (PTB18))   //示波器
+        {
+            ware[0] = slope.left;
+            ware[1] = slope.right;
+            if(slope.left_count >= slope.right_count)
+                ware[2] = slope.left;
+            else
+                ware[2] = slope.right;
+            vcan_sendware(ware, sizeof(ware));
         }
         //printf("%d\n", vall);
         //printf("%d,",valr);
@@ -207,6 +239,7 @@ void Crosscurve()
     if(shuang_diuxian1 > 40)
     {
         youxiao = 60;
+        slope.slope = 0;   //十字弯斜率会出错
     }
     else
         youxiao = 119 - diuxian2; //有效行等于总行数减去双边丢线行数
@@ -246,7 +279,7 @@ void PDkongzhi()
     
     LastError = Error; //上一次偏差
 
-    Error = black_centre ; //平均中点和理论中点0之间的偏差
+    Error = black_centre + (int)(slope.slope * 100); //平均中点和理论中点0之间的偏差 + 斜率
 
     dajiao = 1386 - (int)P * Error - (int)D * (Error - LastError);//舵机打角
 
