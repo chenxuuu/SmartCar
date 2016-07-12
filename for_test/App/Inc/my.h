@@ -50,7 +50,7 @@
 
 
 /*************************************
-                舵机
+                舵机参数
 **************************************/
 #define S3010_FTM   FTM3                        //舵机通道     需改
 #define S3010_CH    FTM_CH3
@@ -59,9 +59,11 @@
 #define CAR_NUMBER 1       //定义车号
 
 #if ( CAR_NUMBER == 1 )                            //1A车
-#define control_actuator_center 1392
-#define control_actuator_min 1229
-#define control_actuator_max 1549
+#define control_actuator_center 1410
+#define control_actuator_min 1268
+#define control_actuator_max 1609
+#define actuator_P 2.60
+#define actuator_D 0
 #endif
 
 #if ( CAR_NUMBER == 2 )                            //2B车
@@ -72,9 +74,19 @@
 /*************************************
                 电机
 **************************************/
-#define	PERIOD				1000				//电压转换PWM比例
+#define PERIOD				1000				//电压转换PWM比例
 
 
+/*************************************
+              超声波模块
+**************************************/
+// #define ultrasonic_waves_D0 PTE25
+// #define ultrasonic_waves_D1 PTE24
+
+
+/*************************************
+               函数声明
+**************************************/
 
 void smart_control_actuator(float Voltage,float fLeftVoltage, float fRightVoltage);
 void SetMotorVoltage(float fLeftVoltage,float fRightVoltage);

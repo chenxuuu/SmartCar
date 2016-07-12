@@ -18,13 +18,15 @@
 uint8 imgbuff[CAMERA_SIZE];                             //定义存储接收图像的数组
 uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W];              //定义存储解压图像的数组
 float ware[4];  //示波器
+int16 ware1[1];
 uint8  left_diuxian1, right_diuxian1, shuang_diuxian1, left_diuxian2, right_diuxian2; //丢线行计算
 uint8 diuxian2;                   //两边总共丢线行数;
 int16 LastError = 0, Error = 0;
 int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
 int stop_done = 0;
-float P, D, speedl, speedr;
+float P, D ,speed;
+int distance;   //超声波距离
 struct _slope slope;
 const int left_initial[110] ={-72, -71, -70, -70, -70, -69, -69, -68, -68, -67,
  -67, -66, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -60, -60,
@@ -47,7 +49,7 @@ void DMA0_IRQHandler();
 void DMA0_IRQHandl();
 
 
-
+void PDkongzhi();
 void boundary_detection();//扫描边界
 void picture_analysis();//求中心线
 void Crosscurve();//十字弯
@@ -58,6 +60,9 @@ void SpeedControl();
 void GetMotorPulse();
 void SpeedControlOutput();
 void PID_count();
+void Fliter_noise();
+void PORTE_IRQHandler();
+void distance_time();
 
 int16 black_centre , dajiao = 0;
 int16 left_bianjie[120];		     //左边界数组			x坐标图像左边为0
@@ -93,87 +98,116 @@ void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
         {
             stop_done = 1;
             return;
-        }    
+        }
     }
 }
 
+/*!
+ *  @brief      OLED显示
+ *  @since      v1.0
+ *  @note       没啥
+ *  Sample usage:           oled_display();
+ */
+void oled_display()
+{
+    //第一行显示拨码开关状态
 
-typedef struct PID 
+    OLED_P6x8Str(0, 0, "12345678");
+    if(!gpio_get (PTE1))
+        OLED_P6x8Str(0, 1, "^");
+    else
+
+    if(!gpio_get (PTE1))
+        OLED_P6x8Str(0, 1, "^");
+    else
+        OLED_P6x8Str(0, 1, " ");
+
+    if(!gpio_get (PTE2))
+        OLED_P6x8Str(6, 1, "^");
+    else
+        OLED_P6x8Str(6, 1, " ");
+
+    if(!gpio_get (PTE3))
+        OLED_P6x8Str(12, 1, "^");
+    else
+        OLED_P6x8Str(12, 1, " ");
+
+    if(!gpio_get (PTE4))
+        OLED_P6x8Str(18, 1, "^");
+    else
+        OLED_P6x8Str(18, 1, " ");
+
+    if(!gpio_get (PTE5))
+        OLED_P6x8Str(24, 1, "^");
+    else
+        OLED_P6x8Str(24, 1, " ");
+
+    if(!gpio_get (PTE6))
+        OLED_P6x8Str(30, 1, "^");
+    else
+        OLED_P6x8Str(30, 1, " ");
+
+    if(!gpio_get (PTE7))
+        OLED_P6x8Str(36, 1, "^");
+    else
+        OLED_P6x8Str(36, 1, " ");
+
+    if(!gpio_get (PTE8))
+        OLED_P6x8Str(42, 1, "^");
+    else
+        OLED_P6x8Str(42, 1, " ");
+
+
+
+
+}
+
+typedef struct PID
 {
 	int16 Setpoint;     //设定值
-	float Pl;            //比例系数
-	float Il;            //积分系数
-	float Dl;	 //微分系数
-	int16 Errorl;         //当前误差
-	int16 LastErrorl;	 //上一次误差
-	int16 PreErrorl;      //上上一次误差
-    float Pr;            //比例系数
-	float Ir;            //积分系数
-	float Dr;	 //微分系数
-	int16 Errorr;         //当前误差
-	int16 LastErrorr;	 //上一次误差
-	int16 PreErrorr;      //上上一次误差
+	float P;            //比例系数
+	float I;            //积分系数
+	float D;	 //微分系数
+	int16 Error;         //当前误差
+	int16 LastError;	 //上一次误差
+	int16 PreError;      //上上一次误差
 }
 	PID;
 	PID vPID;     //定义结构体变量名称
 void init_PID()
 {
-	vPID.Pl=0.00000001;
-	vPID.Il=0.00005;
-	vPID.Dl=0;
-	vPID.Errorl=0;
-	vPID.LastErrorl=0;
-	vPID.PreErrorl=0;
-    
-    vPID.Pr=0.00000001;
-	vPID.Ir=0.00005;
-	vPID.Dr=0;
-	vPID.Errorr=0;
-	vPID.LastErrorr=0;
-	vPID.PreErrorr=0;
-    
-    
+	vPID.P=0.00000001;
+	vPID.I=0.00005;
+	vPID.D=0.0001;
+	vPID.Error=0;
+	vPID.LastError=0;
+	vPID.PreError=0;
+
 	vPID.Setpoint=40;//速度
 }
 
-int16 add_errorl=0;
-int16 add_errorr=0;
+int16 add_error=0;
 void PID_count()
 {
-	vPID.PreErrorl=vPID.LastErrorl;
-	vPID.LastErrorl=vPID.Errorl;
-	vPID.Errorl=vPID.Setpoint-vall;
-	add_errorl+=vPID.Errorl;
-	speedl+=(vPID.Pl*add_errorl+((vPID.Il)*(vPID.Errorl))+vPID.Dl*(vPID.Errorl-2*vPID.LastErrorl+vPID.PreErrorl));
-    
-    
-	if(speedl>1)
-	speedl=1;
-    if(speedl<-1)
-    speedl=-1;
-    
-    
-    vPID.PreErrorr=vPID.LastErrorr;
-	vPID.LastErrorr=vPID.Errorr;
-	vPID.Errorr=vPID.Setpoint-valr;
-	add_errorr+=vPID.Errorr;
-	speedr+=(vPID.Pr*add_errorr+((vPID.Ir)*(vPID.Errorr))+vPID.Dr*(vPID.Errorr-2*vPID.LastErrorr+vPID.PreErrorr));
-    
-    
-	if(speedr>1)
-	speedr=1;
-    if(speedr<-1)
-    speedr=-1;
+	vPID.PreError=vPID.LastError;
+	vPID.LastError=vPID.Error;
+	vPID.Error=vPID.Setpoint-((vall+valr)/2);
+	add_error+=vPID.Error;
+	speed+=(vPID.P*add_error+((vPID.I)*(vPID.Error))+vPID.D*(vPID.Error-2*vPID.LastError+vPID.PreError));
+
+
+	if(speed>1)
+	speed=1;
+    if(speed<-1)
+    speed=-1;
+
 }
-
-
-
 /*******************************************************************************/
 /***********************************主函数**************************************/
 void  main(void)
 {
     int i;
-    for(i = 0; i < 110; i++)
+    for(i = 0; i < 110; i++)   //装载摄像头边线初值
     {
         slope.left_initial_value[i] = left_initial[i];
         slope.right_initial_value[i] = right_initial[i];
@@ -183,21 +217,28 @@ void  main(void)
     set_vector_handler(PORTA_VECTORn , PORTA_IRQHandler);   //设置LPTMR的中断服务函数为 PORTA_IRQHandler
     set_vector_handler(DMA0_VECTORn , DMA0_IRQHandler);     //设置LPTMR的中断服务函数为 PORTA_IRQHandler
 
+    set_vector_handler(PORTE_VECTORn ,PORTE_IRQHandler);    //设置PORTE的中断服务函数为 PORTE_IRQHandler
+    enable_irq (PORTE_IRQn);                                //使能PORTE中断
+
     mk60int();
 	init_PID();
 
     while(1)
     {
+        oled_display();
         camera_get_img();						//摄像头获取图像
         img_extract(img, imgbuff, CAMERA_SIZE);	//解压图像
+        //Fliter_noise();
         get_slope(img, &slope); //获取斜率
         boundary_detection();//扫描图像获取边界
         picture_analysis();//获取中线
-        if(!gpio_get (PTB19))
+        //SetMotorVoltage(0.2,0.2);
+        if(!gpio_get (PTE1))
         {
-            vcan_sendimg(imgbuff,CAMERA_SIZE);//摄像头看图像
+           vcan_sendimg(imgbuff,CAMERA_SIZE);//摄像头看图像
         }
-        if(!gpio_get (PTB18))   //示波器
+
+        if(!gpio_get (PTE2))   //示波器
         {
             ware[0] = slope.left;
             ware[1] = slope.right;
@@ -207,6 +248,11 @@ void  main(void)
                 ware[2] = slope.right;
             vcan_sendware(ware, sizeof(ware));
         }
+        /*
+        ware1[0]=Error;
+        vcan_sendware(ware1, sizeof(Error));
+        */
+
         //printf("%d\n", vall);
         //printf("%d,",valr);
         //printf("%d\n",speed1);
@@ -239,7 +285,7 @@ void boundary_detection()
     diuxian2 = 0;
     for(i = 119; i > 1; i--)
     {
-        for(j = 78; j >= 0; j--) //扫描左边线
+        for(j = 40; j >= 0; j--) //扫描左边线
         {
             if(img[i][j] == 0)//黑点
             {
@@ -255,7 +301,7 @@ void boundary_detection()
             }
         }
 
-        for(j = 79; j <= 159; j++) //扫描右边线
+        for(j = 120; j <= 159; j++) //扫描右边线
         {
             if(img[i][j] == 0)
             {
@@ -266,7 +312,7 @@ void boundary_detection()
             {
                 if(j == 159)
                 {
-                    right_bianjie[119 - i] = 80;
+                    right_bianjie[119 - i] = 80; //右边丢线
                 }
             }
         }
@@ -281,6 +327,22 @@ void boundary_detection()
             diuxian2++;
     }
     Crosscurve();//十字弯
+}
+/*********************去噪声**********************/
+/*************************************************/
+void Fliter_noise()
+{
+    uint8 i, j;
+    for(i = 0; i < 119; i++)
+    {
+        for(j = 0; j < 159 - 3; j++)
+        {
+            if(img[i][j] > img[i][j + 1] && img[i][j + 1] < img[i][j + 2])
+            img[i][j + 1] = img[i][j] > img[i][j + 2] ? img[i][j] : img[i][j + 2] ;
+            else if(img[i][j] < img[i][j + 1] && img[i][j + 1] > img[i][j + 2])
+            img[i][j + 1] = img[i][j] < img[i][j + 2] ? img[i][j] : img[i][j + 2] ;
+        }
+    }
 }
 /*******************************************************************************/
 /*******************************图像分析****************************************/
@@ -306,51 +368,57 @@ void Crosscurve()
     else
         youxiao = 119 - diuxian2; //有效行等于总行数减去双边丢线行数
 }
-
 /*******************************************************************************/
 /********************************舵机PD控制*************************************/
 void PDkongzhi()
 {
-    
-    if( diuxian2 > 20 )
-    {
-        P = 4, D = 0;
-    }
-    
-    else 
-    {
-        P = 3, D = 0;
-    }
-    
+
+    P = actuator_P, D = actuator_D;
+
     LastError = Error; //上一次偏差
 
-    Error = black_centre/* + (int)(slope.slope * 100)*/; //平均中点和理论中点0之间的偏差 + 斜率
+    Error = black_centre  + (int)(slope.slope * 160); //平均中点和理论中点0之间的偏差 + 斜率
 
-    dajiao = 1386 - (int)P * Error - (int)D * (Error - LastError);//舵机打角
+    dajiao = control_actuator_center - (int)(P * (float)Error) - (int)(D * (float)(Error - LastError));//舵机打角
 
-    if(dajiao > 1540) //左最大
-        dajiao = 1540;
-    else if(dajiao < 1241) //右最大
-        dajiao = 1241;
+    if(dajiao > control_actuator_max) //左最大
+        dajiao = control_actuator_max;
+    else if(dajiao < control_actuator_min) //右最大
+        dajiao = control_actuator_min;
+
+    if(Error>35)
+        Error=35;
+    if(Error<-35)
+        Error=-35;
+
 
     ftm_pwm_duty(S3010_FTM, S3010_CH, (uint32)dajiao);
-    //SetMotorVoltage(speed , speed );
-    if(stop_done >= 1)
+    //SetMotorVoltage(speedl , speedr );
+
+    if(stop_done == 1)
     {
-        SetMotorVoltage(-0.07, -0.07);
+        SetMotorVoltage(0, 0);
     }
+
     else
     {
-        SetMotorVoltage(speedl + 0.0015 * Error, speedr - 0.0015 * Error);
+        SetMotorVoltage(speed + 0.003 * Error, speed - 0.003 * Error);
+        //SetMotorVoltage(speedl + 0.0015 * Error, speedr - 0.0015 * Error);
     }
 }
 /*******************************************************************************/
-/********************************10ms定时器*************************************/
+/********************************5ms定时器*************************************/
 void PIT0_IRQHandler(void)
 {
     PDkongzhi();//舵机PD控制
-    PID_count();
-	do_camere_stop(img);  //检测停车
+    SetMotorVoltage(0.2, 0.2);
+
+    //PID_count();
+    if(gpio_get (PTE3))  //拨码3
+    {
+	    do_camere_stop(img);  //检测停车
+    }
+
     vall = - ( ftm_quad_get(FTM1) );          //获取FTM 正交解码 的脉冲数(负数表示反方向)
     ftm_quad_clean(FTM1);
     valr = - ( ftm_quad_get(FTM2) );         //获取FTM 正交解码 的脉冲数(负数表示反方向)
@@ -390,4 +458,25 @@ void PORTA_IRQHandler()
 void DMA0_IRQHandler()
 {
     camera_dma();
+}
+
+/*!
+ *  @brief      超声波中断服务函数
+ *  @since      v1.0
+ */
+void distance_time()
+{
+    if(gpio_get (PTE25))
+    {
+        lptmr_time_start_us();
+    }
+    else
+    {
+        distance = lptmr_time_get_us();
+        lptmr_time_close();
+    }
+}
+void PORTE_IRQHandler(void)
+{
+    PORT_FUNC(E, 25, distance_time);
 }

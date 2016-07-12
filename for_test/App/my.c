@@ -54,10 +54,23 @@ void mk60int()
     led_init(LED0);                         //初始化LED0
     led_init(LED1);                         //初始化LED1
 
-    port_init(PTB19, ALT1 | IRQ_FALLING | PULLUP );     //8	摄像头串口   //拨码
-    port_init(PTB17, ALT1 | IRQ_FALLING | PULLUP );     //7	每行采点
-    port_init(PTB16, ALT1 | IRQ_FALLING | PULLUP );     //6 显示收集的数组
-    port_init(PTB18, ALT1 | IRQ_FALLING | PULLUP );     //3 斜率虚拟示波器
+    //超声波引脚初始化
+    port_init(PTE24, ALT1 | PULLUP );
+
+    port_init(PTE25, ALT1 | IRQ_FALLING | IRQ_RISING | PULLUP );
+    //初始化 PTE25 管脚，复用功能为GPIO ，下降沿触发中断，上拉电阻
+
+
+    //拨码
+    port_init(PTE1, ALT1 | PULLUP );     //1  摄像头串口输出图像
+    port_init(PTE2, ALT1 | PULLUP );     //2  示波器
+    port_init(PTE3, ALT1 | PULLUP );     //3  检测停车
+    port_init(PTE4, ALT1 | PULLUP );     //4  未用
+    port_init(PTE5, ALT1 | PULLUP );     //5  未用
+    port_init(PTE6, ALT1 | PULLUP );     //6  未用
+    port_init(PTE7, ALT1 | PULLUP );     //7  未用
+    port_init(PTE8, ALT1 | PULLUP );     //8  未用
+
 }
 
 
