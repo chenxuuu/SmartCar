@@ -62,7 +62,7 @@
 #define control_actuator_center 1410
 #define control_actuator_min 1268
 #define control_actuator_max 1609
-#define actuator_P 2.60
+#define actuator_P 2.50
 #define actuator_D 0
 #endif
 

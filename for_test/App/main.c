@@ -499,7 +499,7 @@ void PDkongzhi()
 
     else
     {
-        SetMotorVoltage(speed + 0.003 * Error, speed - 0.003 * Error);
+        SetMotorVoltage(speed + 0.006 * Error, speed - 0.006 * Error);
         //SetMotorVoltage(speedl + 0.0015 * Error, speedr - 0.0015 * Error);
     }
 }
