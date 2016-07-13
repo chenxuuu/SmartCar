@@ -1130,14 +1130,14 @@ void DisplayFloat(uint8 x,uint8 y,float i)
 
 void DisplayFloatpid(uint8 x,uint8 y,float i)
 {
-  int in = (int32)(i*100);
+  int in = (int)(i*100);
       int8 a[6]={0};
 
       a[0]=in/100;
       a[1]='.';
-      a[2]=in%1000/1000;
-      a[3]=in%10000/100;
-      for(uint8 j=0;j<3;j++)
+      a[2]=in/10%10;
+      a[3]=in%10;
+      for(uint8 j=0;j<4;j++)
       {
          switch(a[j])
          {

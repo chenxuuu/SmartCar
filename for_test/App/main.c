@@ -26,9 +26,9 @@ int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
 int stop_done = 0;
 float P, D ,speed;
-int distance = 0;   //超声波距离
+int distance = 0, bluetooth = 0;   //超声波距离
 struct _slope slope;
-
+char ch = 'o';
 #if ( CAR_NUMBER == 1 ) 
 const int left_initial[110] ={-70, -70, -70, -69, -69, -68, -68, -68, -67,
  -67, -66, -66, -65, -65, -65, -64, -64, -63, -63, -62, -62, -62, -61, -61,
@@ -87,7 +87,7 @@ void distance_time();
 int16 black_centre , dajiao = 0;
 int16 left_bianjie[120];		     //左边界数组			x坐标图像左边为0
 int16 right_bianjie[120];		//右边界数组
-int8 youxiao = 0 ;
+int8 youxiao = 0;
 float add_err;
 int16 vall, valr;
 int i;
@@ -114,7 +114,7 @@ typedef struct PID
 void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
     int count = 0, count_temp = 0, i, shit;
-    for(shit = 10; shit < 50; shit++)
+    for(shit = 10; shit < 60; shit++)
     {
         count_temp = 0;
         for(i = 10; i < OV7725_EAGLE_W - 10 - 1; i++)
@@ -151,7 +151,14 @@ void oled_display()
     OLED_P6x8Str(80, 2, "P:");	        DisplayFloatpid(92, 2, actuator_P);
     OLED_P6x8Str(0, 3, "Distance:");	Display_number(54, 3, distance);
     OLED_P6x8Str(86, 3, "D:");	        DisplayFloatpid(98, 3, actuator_D);
-
+    OLED_P6x8Str(0, 4, "Bluetooth:");   
+    if(bluetooth == 1)
+        OLED_P6x8Str(60, 4, "connected ");
+    else if(bluetooth == 0)
+        OLED_P6x8Str(60, 4, "disconnect");
+    else
+        OLED_P6x8Str(60, 4, "off       ");
+ 
     #if ( CAR_NUMBER == 1 )
         OLED_P6x8Str(0, 7, "Interesting");
         OLED_P6x8Str(91, 7, "Car:1A");
@@ -273,6 +280,37 @@ void  main(void)
 
     set_vector_handler(PORTE_VECTORn ,PORTE_IRQHandler);    //设置PORTE的中断服务函数为 PORTE_IRQHandler
     enable_irq (PORTE_IRQn);                                //使能PORTE中断
+
+    port_init(PTE5, ALT1 | PULLUP );     //5  蓝牙同时发车
+    if(!gpio_get (PTE5))   //蓝牙通讯同时发车
+    {
+        key_init(KEY_A);
+        OLED_Init();
+        while(1)
+        {
+            #if ( CAR_NUMBER == 2 )
+                OLED_P6x8Str(0, 6, "Press K6 to start!");
+                if(key_check(KEY_A) == KEY_DOWN)   //按K3发车
+                {
+                    uart_putchar(VCAN_PORT, ch);
+                    OLED_P6x8Str(0, 6, "                  ");
+                    bluetooth = 1;
+                    break;
+                }
+            #endif
+            #if ( CAR_NUMBER == 1 )
+                OLED_P6x8Str(0, 6, "Start 2B to start!");
+                while(uart_query (VCAN_PORT) == 0);
+                OLED_P6x8Str(0, 6, "                  ");
+                bluetooth = 1;
+                break;
+            #endif
+        }
+    }
+    else
+    {
+        bluetooth = 2;
+    }
 
     mk60int();
 	init_PID();
