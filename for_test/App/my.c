@@ -45,11 +45,11 @@ void mk60int()
     //set_vector_handler(UART4_RX_TX_VECTORn,uart4_handler);   // 设置中断服务函数到中断向量表里
     //uart_rx_irq_en (UART4);                                 //开串口接收中断
 
-    key_init(KEY_U);
-    key_init(KEY_D);
-    key_init(KEY_L);
-    key_init(KEY_R);
-    key_init(KEY_A);
+    key_init(KEY_U);    //K2
+    key_init(KEY_D);    //K3
+    key_init(KEY_L);    //K4
+    key_init(KEY_R);    //K5
+    key_init(KEY_A);    //K6
 
     led_init(LED0);                         //初始化LED0
     led_init(LED1);                         //初始化LED1
