@@ -70,6 +70,8 @@
 #define control_actuator_center 1386
 #define control_actuator_min 1241
 #define control_actuator_max 1540
+#define actuator_P 2.60
+#define actuator_D 0
 #endif
 /*************************************
                 电机

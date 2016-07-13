@@ -42,6 +42,7 @@ void DisplayFloat3(uint8 x,uint8 y,int32 i);
 
 void Displayvoid (uint8 x,uint8 y,int16 i);
 void DisplayFloat(uint8 x,uint8 y,float i);
+void DisplayFloatpid(uint8 x,uint8 y,float i);
 /********************************************************************/
 
 #endif

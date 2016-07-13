@@ -1128,6 +1128,37 @@ void DisplayFloat(uint8 x,uint8 y,float i)
     DisplayFloat3(x+6,y,(int32)(i*1000));
 }
 
+void DisplayFloatpid(uint8 x,uint8 y,float i)
+{
+  int in = (int32)(i*100);
+      int8 a[6]={0};
+
+      a[0]=in/100;
+      a[1]='.';
+      a[2]=in%1000/1000;
+      a[3]=in%10000/100;
+      for(uint8 j=0;j<3;j++)
+      {
+         switch(a[j])
+         {
+           case 0:{OLED_P6x8Str(x,y,"0");}break;
+           case 1:{OLED_P6x8Str(x,y,"1");}break;
+           case 2:{OLED_P6x8Str(x,y,"2");}break;
+           case 3:{OLED_P6x8Str(x,y,"3");}break;
+           case 4:{OLED_P6x8Str(x,y,"4");}break;
+           case 5:{OLED_P6x8Str(x,y,"5");}break;
+           case 6:{OLED_P6x8Str(x,y,"6");}break;
+           case 7:{OLED_P6x8Str(x,y,"7");}break;
+           case 8:{OLED_P6x8Str(x,y,"8");}break;
+           case 9:{OLED_P6x8Str(x,y,"9");}break;
+           case '.':{OLED_P6x8Str(x,y,".");}break;
+           default:break;
+          }
+         x+=6;
+//         if(x==90)
+//           x=20;
+         }
+}
 
 //==============================================================
 //函数名： void Draw_BMP(uint8 x,uint8 y)

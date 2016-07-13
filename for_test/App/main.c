@@ -26,7 +26,7 @@ int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
 int stop_done = 0;
 float P, D ,speed;
-int distance;   //超声波距离
+int distance = 0;   //超声波距离
 struct _slope slope;
 const int left_initial[110] ={-72, -71, -70, -70, -70, -69, -69, -68, -68, -67,
  -67, -66, -66, -66, -65, -65, -64, -64, -63, -63, -62, -62, -61, -61, -60, -60,
@@ -72,6 +72,19 @@ float add_err;
 int16 vall, valr;
 
 
+typedef struct PID
+{
+	int16 Setpoint;     //设定值
+	float P;            //比例系数
+	float I;            //积分系数
+	float D;	 //微分系数
+	int16 Error;         //当前误差
+	int16 LastError;	 //上一次误差
+	int16 PreError;      //上上一次误差
+}
+	PID;
+	PID vPID;     //定义结构体变量名称
+
 /*!
  *  @brief      检测停车
  *  @since      v1.0
@@ -111,11 +124,22 @@ void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 void oled_display()
 {
     //第一行显示拨码开关状态
-
     OLED_P6x8Str(0, 0, "12345678");
-    if(!gpio_get (PTE1))
-        OLED_P6x8Str(0, 1, "^");
-    else
+    OLED_P6x8Str(50, 0, "speed:");	    Display_number(86, 0, vPID.Setpoint);
+    OLED_P6x8Str(50, 1, "Error:");	    Display_number(86, 1, Error);
+    OLED_P6x8Str(0, 2, "slope:");	    DisplayFloat(36, 2, slope.slope);
+    OLED_P6x8Str(80, 2, "P:");	        DisplayFloatpid(92, 2, actuator_P);
+    OLED_P6x8Str(0, 3, "Distance:");	Display_number(54, 3, distance);
+    OLED_P6x8Str(86, 3, "D:");	        DisplayFloatpid(98, 3, actuator_D);
+
+    #if ( CAR_NUMBER == 1 )
+        OLED_P6x8Str(0, 7, "Interesting");
+        OLED_P6x8Str(91, 7, "Car:1A");
+    #endif
+    #if ( CAR_NUMBER == 2 )
+        OLED_P6x8Str(0, 7, "Interesting");
+        OLED_P6x8Str(91, 7, "Car:2B");
+    #endif
 
     if(!gpio_get (PTE1))
         OLED_P6x8Str(0, 1, "^");
@@ -157,23 +181,15 @@ void oled_display()
     else
         OLED_P6x8Str(42, 1, " ");
 
-
+    if(key_check(KEY_A) == KEY_DOWN)
+    {
+        OLED_Init();    //OLED初始化  防花屏
+    }
 
 
 }
 
-typedef struct PID
-{
-	int16 Setpoint;     //设定值
-	float P;            //比例系数
-	float I;            //积分系数
-	float D;	 //微分系数
-	int16 Error;         //当前误差
-	int16 LastError;	 //上一次误差
-	int16 PreError;      //上上一次误差
-}
-	PID;
-	PID vPID;     //定义结构体变量名称
+
 void init_PID()
 {
 	vPID.P=0.00000001;
@@ -411,9 +427,9 @@ void PDkongzhi()
 void PIT0_IRQHandler(void)
 {
     PDkongzhi();//舵机PD控制
-    SetMotorVoltage(0.2, 0.2);
+    //SetMotorVoltage(0.2, 0.2);
 
-    //PID_count();
+    PID_count();
     if(gpio_get (PTE3))  //拨码3
     {
 	    do_camere_stop(img);  //检测停车
@@ -472,7 +488,10 @@ void distance_time()
     }
     else
     {
-        distance = lptmr_time_get_us();
+        if(gpio_get (PTE24))  //D1高电平表示数据有效
+        {
+            distance = lptmr_time_get_us();
+        }
         lptmr_time_close();
     }
 }
