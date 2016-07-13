@@ -63,9 +63,9 @@ void mk60int()
 
     //拨码
     port_init(PTE1, ALT1 | PULLUP );     //1  摄像头串口输出图像
-    port_init(PTE2, ALT1 | PULLUP );     //2  示波器
+    port_init(PTE2, ALT1 | PULLUP );     //2  斜率示波器
     port_init(PTE3, ALT1 | PULLUP );     //3  检测停车
-    port_init(PTE4, ALT1 | PULLUP );     //4  未用
+    port_init(PTE4, ALT1 | PULLUP );     //4  距离示波器
     port_init(PTE5, ALT1 | PULLUP );     //5  未用
     port_init(PTE6, ALT1 | PULLUP );     //6  未用
     port_init(PTE7, ALT1 | PULLUP );     //7  未用
