@@ -199,7 +199,7 @@ void init_PID()
 	vPID.LastError=0;
 	vPID.PreError=0;
 
-	vPID.Setpoint=40;//速度
+	vPID.Setpoint=45;//速度
 }
 
 int16 add_error=0;
@@ -437,9 +437,16 @@ void PIT0_IRQHandler(void)
 
     vall = - ( ftm_quad_get(FTM1) );          //获取FTM 正交解码 的脉冲数(负数表示反方向)
     ftm_quad_clean(FTM1);
+
+    #if ( CAR_NUMBER == 1 )
     valr = - ( ftm_quad_get(FTM2) );         //获取FTM 正交解码 的脉冲数(负数表示反方向)
     ftm_quad_clean(FTM2);
-
+    #endif
+    #if ( CAR_NUMBER == 2 )
+    valr = ftm_quad_get(FTM2);         //获取FTM 正交解码 的脉冲数(负数表示反方向)
+    ftm_quad_clean(FTM2);
+    #endif
+    
     PIT_Flag_Clear(PIT0);//清中断标志位
 }
 /*!
