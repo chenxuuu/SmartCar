@@ -24,7 +24,7 @@ uint8 diuxian2;                   //两边总共丢线行数;
 int16 LastError = 0, Error = 0;
 int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
-int stop_done = 0;
+int stop_done = 0, stop_do = 0, stop_count = 0;
 float P, D ,speed;
 int distance = 0, bluetooth = 0;   //超声波距离
 struct _slope slope;
@@ -114,23 +114,26 @@ typedef struct PID
 void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
     int count = 0, count_temp = 0, i, shit;
-    for(shit = 10; shit < 40; shit++)
+    if(stop_do)
     {
-        count_temp = 0;
-        for(i = 10; i < OV7725_EAGLE_W - 10 - 1; i++)
+        for(shit = 10; shit < 40; shit++)
         {
-            if(img[OV7725_EAGLE_H - shit][i] == 0 && img[OV7725_EAGLE_H - shit][i + 1] == 255)
-                count_temp++;
-            if(count_temp >= 3)
+            count_temp = 0;
+            for(i = 10; i < OV7725_EAGLE_W - 10 - 1; i++)
             {
-                count++;
-                break;
+                if(img[OV7725_EAGLE_H - shit][i] == 0 && img[OV7725_EAGLE_H - shit][i + 1] == 255)
+                    count_temp++;
+                if(count_temp >= 3)
+                {
+                    count++;
+                    break;
+                }
             }
-        }
-        if(count >= 2)
-        {
-            stop_done = 1;
-            return;
+            if(count >= 2)
+            {
+                stop_done = 1;
+                return;
+            }
         }
     }
 }
@@ -245,7 +248,7 @@ void init_PID()
 	vPID.LastError=0;
 	vPID.PreError=0;
 
-	vPID.Setpoint=52;//速度
+	vPID.Setpoint=45;//速度
 }
 
 int16 add_error=0;
@@ -565,6 +568,22 @@ void PIT0_IRQHandler(void)
     ftm_quad_clean(FTM2);
     #endif
     
+    if(stop_do)
+    {
+        //检测停车延时，防止第一次检测到之后停车
+    }
+    else
+    {
+        if(stop_count > 1000)
+        {
+            stop_do = 1;
+        }
+        else
+        {
+            stop_count++;
+        }
+    }
+
     PIT_Flag_Clear(PIT0);//清中断标志位
 }
 /*!
