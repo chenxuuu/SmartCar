@@ -24,7 +24,8 @@ uint8 diuxian2;                   //两边总共丢线行数;
 int16 LastError = 0, Error = 0;
 int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
-int stop_done = 0, stop_do = 0, stop_count = 0;
+bool stop_done = 0, stop_do = 0;
+int stop_count = 0;
 float P, D ,speed;
 int distance = 0, bluetooth = 0;   //超声波距离
 struct _slope slope;
@@ -161,7 +162,14 @@ void oled_display()
         OLED_P6x8Str(60, 4, "disconnect");
     else
         OLED_P6x8Str(60, 4, "off       ");
- 
+    OLED_P6x8Str(0, 5, "stop?");
+    if(stop_done)
+        OLED_P6x8Str(36, 5, "yes");
+    else
+        OLED_P6x8Str(36, 5, "no");
+
+
+
     #if ( CAR_NUMBER == 1 )
         OLED_P6x8Str(0, 7, "Interesting");
         OLED_P6x8Str(91, 7, "Car:1A");
