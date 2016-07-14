@@ -28,7 +28,7 @@ int stop_done = 0;
 float P, D ,speed;
 int distance = 0, bluetooth = 0;   //超声波距离
 struct _slope slope;
-char ch = 'o';
+char ch = 'o', ch_stop = 's';
 #if ( CAR_NUMBER == 1 ) 
 const int left_initial[110] ={-70, -70, -70, -69, -69, -68, -68, -68, -67,
  -67, -66, -66, -65, -65, -65, -64, -64, -63, -63, -62, -62, -62, -61, -61,
@@ -114,7 +114,7 @@ typedef struct PID
 void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
 {
     int count = 0, count_temp = 0, i, shit;
-    for(shit = 10; shit < 60; shit++)
+    for(shit = 10; shit < 40; shit++)
     {
         count_temp = 0;
         for(i = 10; i < OV7725_EAGLE_W - 10 - 1; i++)
@@ -345,6 +345,28 @@ void  main(void)
            ware1[0] = distance;
            vcan_sendware(ware1, sizeof(ware1));
         }
+        if(!gpio_get (PTE5))  //双车模式
+        {
+            #if ( CAR_NUMBER == 1 )
+                if(uart_querychar (VCAN_PORT, &ch) != 0)
+                {
+                    if(ch == 's')
+                    {
+                        stop_done = 1;
+                    }
+                }
+            #endif
+            #if ( CAR_NUMBER == 2 )
+                if(stop_done)
+                {
+                    lptmr_delay_ms(1000);    //延时确保后车过线
+                    while(1)
+                    {
+                        uart_putchar(VCAN_PORT, ch_stop);
+                    }
+                }
+            #endif
+        }
         /*
         ware1[0]=Error;
         vcan_sendware(ware1, sizeof(Error));
@@ -462,6 +484,10 @@ void Crosscurve()
         youxiao = 60;
         slope.slope = 0;   //十字弯斜率会出错
     }
+    // else if( (left_diuxian1 > 10 || right_diuxian1 > 10) && (slope.slope < 0.01 && slope.slope > -0.01))
+    // {
+    //     youxiao = 60;
+    // }
     else
         youxiao = 119 - diuxian2; //有效行等于总行数减去双边丢线行数
 }
@@ -479,7 +505,7 @@ void PDkongzhi()
     dajiao = control_actuator_center - (int)(P * (float)Error) - (int)(D * (float)(Error - LastError));//舵机打角
 
     if(dajiao > control_actuator_max) //左最大
-        dajiao = control_actuator_max;
+        dajiao = control_actuator_max; 
     else if(dajiao < control_actuator_min) //右最大
         dajiao = control_actuator_min;
 
@@ -494,7 +520,11 @@ void PDkongzhi()
 
     if(stop_done == 1)
     {
+        #if ( CAR_NUMBER == 2 )
+        lptmr_delay_ms(1000);    //延时防撞
+        #endif
         SetMotorVoltage(0, 0);
+        
     }
 
     else
@@ -513,7 +543,14 @@ void PIT0_IRQHandler(void)
     PID_count();
     if(gpio_get (PTE3))  //拨码3
     {
+        #if ( CAR_NUMBER == 1 )
+            if(gpio_get (PTE5))
+            {
+        #endif
 	    do_camere_stop(img);  //检测停车
+        #if ( CAR_NUMBER == 1 )
+            }
+        #endif
     }
 
     vall = - ( ftm_quad_get(FTM1) );          //获取FTM 正交解码 的脉冲数(负数表示反方向)
