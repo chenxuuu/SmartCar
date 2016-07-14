@@ -245,7 +245,7 @@ void init_PID()
 	vPID.LastError=0;
 	vPID.PreError=0;
 
-	vPID.Setpoint=45;//速度
+	vPID.Setpoint=52;//速度
 }
 
 int16 add_error=0;
@@ -359,7 +359,7 @@ void  main(void)
             #if ( CAR_NUMBER == 2 )
                 if(stop_done)
                 {
-                    lptmr_delay_ms(1000);    //延时确保后车过线
+                    lptmr_delay_ms(500);    //延时确保后车过线
                     while(1)
                     {
                         uart_putchar(VCAN_PORT, ch_stop);
@@ -520,9 +520,9 @@ void PDkongzhi()
 
     if(stop_done == 1)
     {
-        #if ( CAR_NUMBER == 2 )
-        lptmr_delay_ms(1000);    //延时防撞
-        #endif
+        // #if ( CAR_NUMBER == 2 )
+        // lptmr_delay_ms(1000);    //延时防撞
+        // #endif
         SetMotorVoltage(0, 0);
         
     }
