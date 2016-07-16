@@ -60,9 +60,9 @@
 
 #if ( CAR_NUMBER == 1 )                            //1A车
 #define control_actuator_center 1410
-#define control_actuator_min 1268
-#define control_actuator_max 1609
-#define actuator_P 2.70
+#define control_actuator_min 1234
+#define control_actuator_max 1587
+#define actuator_P 2.80
 #define actuator_D 0
 #endif
 
