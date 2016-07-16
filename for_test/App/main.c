@@ -24,10 +24,10 @@ uint8 diuxian2;                   //两边总共丢线行数;
 int16 LastError = 0, Error = 0;
 int16 vall, valr, m, n, a, l, left_bianjie1, right_bianjie1;
 int8 slope1, slope2, slope3, slope4;
-bool stop_done = 0, stop_do = 0, wide_check = 0;
+bool stop_done = 0, stop_do = 0;
 int stop_count = 0;
 float P, D ,speed;
-int distance = 0, bluetooth = 0;   //超声波距离
+int distance = 0, bluetooth = 0,left_chazi,right_chazi;   //超声波距离
 struct _slope slope;
 char ch = 'o', ch_stop = 's';
 #if ( CAR_NUMBER == 1 ) 
@@ -84,15 +84,15 @@ void PID_count();
 void Fliter_noise();
 void PORTE_IRQHandler();
 void distance_time();
-void check_wide();
+bool wide_check();
 
 int16 black_centre , dajiao = 0;
 int16 left_bianjie[120];		     //左边界数组			x坐标图像左边为0
 int16 right_bianjie[120];		//右边界数组
 int8 youxiao = 0;
-float add_err;
+float add_err,xielv=0;
 int16 vall, valr;
-int i;
+int i,t=0,tt=0,ttt=0,s=0,ss=0,sss=0;
 
 typedef struct PID
 {
@@ -118,10 +118,10 @@ void do_camere_stop(uint8 img[OV7725_EAGLE_H][OV7725_EAGLE_W])
     int count = 0, count_temp = 0, i, shit;
     if(stop_do)
     {
-        for(shit = 10; shit < 20; shit++)
+        for(shit = 10; shit < 40; shit++)
         {
             count_temp = 0;
-            for(i = 0; i < OV7725_EAGLE_W - 1; i++)
+            for(i = 10; i < OV7725_EAGLE_W - 10 - 1; i++)
             {
                 if(img[OV7725_EAGLE_H - shit][i] == 0 && img[OV7725_EAGLE_H - shit][i + 1] == 255)
                     count_temp++;
@@ -156,7 +156,7 @@ void oled_display()
     OLED_P6x8Str(80, 2, "P:");	        DisplayFloatpid(92, 2, actuator_P);
     OLED_P6x8Str(0, 3, "Distance:");	Display_number(54, 3, distance);
     OLED_P6x8Str(86, 3, "D:");	        DisplayFloatpid(98, 3, actuator_D);
-    OLED_P6x8Str(0, 4, "Bluetooth:");
+    OLED_P6x8Str(0, 4, "Bluetooth:");   
     if(bluetooth == 1)
         OLED_P6x8Str(60, 4, "connected ");
     else if(bluetooth == 0)
@@ -168,10 +168,6 @@ void oled_display()
         OLED_P6x8Str(36, 5, "yes");
     else
         OLED_P6x8Str(36, 5, "no");
-    if(wide_check)
-        OLED_P6x8Str(0, 6, "yes");
-    else
-        OLED_P6x8Str(0, 6, "no");
 
     #if ( CAR_NUMBER == 1 )
         OLED_P6x8Str(0, 7, "Interesting");
@@ -306,7 +302,6 @@ void  main(void)
                 OLED_P6x8Str(0, 6, "Press K6 to start!");
                 if(key_check(KEY_A) == KEY_DOWN)   //按K3发车
                 {
-                    lptmr_delay_ms(2000);  //延时~~
                     uart_putchar(VCAN_PORT, ch);
                     OLED_P6x8Str(0, 6, "                  ");
                     bluetooth = 1;
@@ -335,7 +330,6 @@ void  main(void)
         oled_display();
         camera_get_img();						//摄像头获取图像
         img_extract(img, imgbuff, CAMERA_SIZE);	//解压图像
-        //Fliter_noise();
         get_slope(img, &slope); //获取斜率
         boundary_detection();//扫描图像获取边界
         picture_analysis();//获取中线
@@ -382,31 +376,34 @@ void  main(void)
                 }
             #endif
         }
+        
+        //ware1[0]=xielv;
+        //vcan_sendware(ware1, sizeof(xielv));
         /*
-        ware1[0]=Error;
-        vcan_sendware(ware1, sizeof(Error));
+        Display_number(36, 6, ttt);
+        Display_number(0, 6, sss);
+        printf("%d,", left_diuxian1);
+        printf("%d\n",tt-t);
         */
-
-        //printf("%d\n", vall);
-        //printf("%d,",valr);
         //printf("%d\n",speed1);
 
-        //printf("%d,",slope1);
+        //printf("%d,",left_diuxian1);
 
         //printf("%d\n",slope3);
 
-        //printf("%d,",shuang_diuxian1);
-
+        //printf("%d,",left_chazi);
+        //printf("%d\n",right_chazi);
         //printf("%d,",m);
         //printf("%d\n",a);
-        /*
-        for(l=0;l<120;l++)
+        if(!gpio_get (PTE8))
         {
-            printf("%d,",left_bianjie[l]);
+            for(l=0;l<120;l++)
+            {
+                printf("%d,",left_bianjie[l]);
+            }
+            printf("\n");
         }
-        printf("\n");
-        */
-    }
+   }
 }
 /*******************************************************************************/
 /*********************************边界采集**************************************/
@@ -459,120 +456,8 @@ void boundary_detection()
             shuang_diuxian1++;
         if(( right_bianjie[119 - i] == 80) || (left_bianjie[119 - i] == -80)) //计算丢线行数
             diuxian2++;
-    }
-    Crosscurve();//十字弯
-    // check_wide();
-}
-// /*****************过滤超车区加宽*******************/（失败）
-// /*************************************************/
-// void check_wide()
-// {
-//     uint8 i, mode = 0;
-//     if(shuang_diuxian1 > 1)  //十字弯跳过
-//     {
-//         return;
-//     }
-//     if(( right_bianjie[0] != 80) && (left_bianjie[0] == -80))	    //左边第一行丢线
-//     {
-//         if(left_diuxian1 > 50 && slope.right < 0.02 && slope.right > -0.02)
-//         {
-//             mode = 1;
-//         }
-//         for(i = 2; i < 100; i++)
-//         {
-//             if(left_bianjie[i] - left_bianjie[i - 2] > 8 && left_bianjie[i] != -39)	    //加宽区直角
-//             {
-//                 mode = 1;
-//                 break;
-//             }
-//         }
-//     }
-//     else if(( right_bianjie[0] == 80) && (left_bianjie[0] != -80))	//右边第一行丢线
-//     {
-//         if(right_diuxian1 > 50 && slope.left < 0.02 && slope.left > -0.02)
-//         {
-//             mode = 2;
-//         }
-//         for(i = 2; i < 100; i++)
-//         {
-//             if(right_bianjie[i - 2] - right_bianjie[i] > 8 && right_bianjie[i] != 40)	//加宽区直角
-//             {
-//                 mode = 2;
-//                 break;
-//             }
-//         }
-//     }
-//     else
-//     {
-//         for(i = 2; i < 100; i++)
-//         {
-//             if(left_bianjie[i - 2] - left_bianjie[i] > 8 && left_bianjie[i] != -39)      //加宽区直角
-//             {
-//                 mode = 1;
-//                 break;
-//             }
-//         }
-//         for(i = 2; i < 100; i++)
-//         {
-//             if(right_bianjie[i] - right_bianjie[i - 2] > 8 && right_bianjie[i] != 40)	//加宽区直角
-//             {
-//                 mode = 2;
-//                 break;
-//             }
-//         }
-//     }
-//     switch(mode)
-//     {
-//         case 1:
-//                 for(i = 0; i < 100; i++)
-//                 {
-//                     left_bianjie[i] = left_initial[i] + (right_bianjie[i] - right_initial[i]);
-//                     if(left_bianjie[i] > 80)
-//                     {
-//                         left_bianjie[i] = 80;
-//                     }
-//                     if(left_bianjie[i] < -80)
-//                     {
-//                         left_bianjie[i] = -80;
-//                     }
-//                 }
-//                 wide_check = 1;
-//                 break;
-//         case 2:
-//                 for(i = 0; i < 100; i++)
-//                 {
-//                     right_bianjie[i] = right_initial[i] + (left_bianjie[i] - left_initial[i]);
-//                     if(right_bianjie[i] > 80)
-//                     {
-//                         right_bianjie[i] = 80;
-//                     }
-//                     if(right_bianjie[i] < -80)
-//                     {
-//                         right_bianjie[i] = -80;
-//                     }
-//                 }
-//                 wide_check = 1;
-//                 break;
-//         default:
-//                 wide_check = 0;
-//                 return;
-//     }
-// }
-/*********************去噪声**********************/
-/*************************************************/
-void Fliter_noise()
-{
-    uint8 i, j;
-    for(i = 0; i < 119; i++)
-    {
-        for(j = 0; j < 159 - 3; j++)
-        {
-            if(img[i][j] > img[i][j + 1] && img[i][j + 1] < img[i][j + 2])
-            img[i][j + 1] = img[i][j] > img[i][j + 2] ? img[i][j] : img[i][j + 2] ;
-            else if(img[i][j] < img[i][j + 1] && img[i][j + 1] > img[i][j + 2])
-            img[i][j + 1] = img[i][j] < img[i][j + 2] ? img[i][j] : img[i][j + 2] ;
-        }
-    }
+    }    
+    Crosscurve();//十字弯    
 }
 /*******************************************************************************/
 /*******************************图像分析****************************************/
@@ -599,6 +484,20 @@ void Crosscurve()
         youxiao = 119 - diuxian2; //有效行等于总行数减去双边丢线行数
 }
 /*******************************************************************************/
+/********************************超车区*****************************************/
+bool wide_check()
+{
+    int shit;
+    for(shit = 0; shit < 110; shit ++)
+    {
+        if(img[OV7725_EAGLE_H - shit][OV7725_EAGLE_W / 2] == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+/*******************************************************************************/
 /********************************舵机PD控制*************************************/
 void PDkongzhi()
 {
@@ -606,8 +505,35 @@ void PDkongzhi()
     P = actuator_P, D = actuator_D;
 
     LastError = Error; //上一次偏差
-
-    Error = black_centre  + (int)(slope.slope * 160); //平均中点和理论中点0之间的偏差 + 斜率
+    // if(left_diuxian1 > 10 && right_diuxian1 < 10 &&
+    //  shuang_diuxian1 < 10 && slope.right > -0.01 &&
+    //   slope.right < 0.01 && slope.right!=0)
+    // {
+    //        Error = 15;
+    //        led(LED1,LED_ON);
+    // }
+    // else if(right_diuxian1 > 10 && left_diuxian1 < 10 &&
+    //         shuang_diuxian1 < 10 && slope.left > -0.01 &&
+    //         slope.left < 0.01 && slope.left!=0)
+    // {
+    //        Error = -15;
+    //        led(LED1,LED_ON);
+    // }
+    if(left_diuxian1 > 10 && right_diuxian1 < 10 && wide_check())
+    {
+           Error = 0;
+           led(LED1,LED_ON);
+    }
+    else if(right_diuxian1 > 10 && left_diuxian1 < 10 && wide_check())
+    {
+           Error = 0;
+           led(LED1,LED_ON);
+    }
+    else
+    {
+       Error = black_centre  + (int)(slope.slope * 160); //平均中点和理论中点0之间的偏差 + 斜率
+       led(LED1,LED_OFF);
+    }
 
     dajiao = control_actuator_center - (int)(P * (float)Error) - (int)(D * (float)(Error - LastError));//舵机打角
 
@@ -622,7 +548,7 @@ void PDkongzhi()
         Error=-35;
 
 
-        ftm_pwm_duty(S3010_FTM, S3010_CH, (uint32)dajiao);
+    ftm_pwm_duty(S3010_FTM, S3010_CH, (uint32)dajiao);
     //SetMotorVoltage(speedl , speedr );
 
     if(stop_done == 1)
