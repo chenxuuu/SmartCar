@@ -485,6 +485,21 @@ void Crosscurve()
 }
 /*******************************************************************************/
 /********************************超车区*****************************************/
+// #if ( CAR_NUMBER == 2 )
+// bool wide_check()
+// {
+//     int shit;
+//     for(shit = 0; shit < 110; shit ++)
+//     {
+//         if(img[OV7725_EAGLE_H - shit][OV7725_EAGLE_W / 2] == 0)
+//         {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
+// #endif
+// #if ( CAR_NUMBER == 1 )
 bool wide_check()
 {
     int shit;
@@ -492,11 +507,16 @@ bool wide_check()
     {
         if(img[OV7725_EAGLE_H - shit][OV7725_EAGLE_W / 2] == 0)
         {
-            return false;
+            if(get_camere_right(img, shit + 1) == OV7725_EAGLE_W
+            || get_camere_left(img, shit + 1) == 0)
+            {
+                return false;
+            }
         }
     }
     return true;
 }
+// #endif
 /*******************************************************************************/
 /********************************舵机PD控制*************************************/
 void PDkongzhi()
