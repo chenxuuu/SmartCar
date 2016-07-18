@@ -376,7 +376,18 @@ void  main(void)
                 }
             #endif
         }
-        
+        if(!gpio_get (PTE6))   //速度40
+        {
+           vPID.Setpoint = 40;
+        }
+        if(!gpio_get (PTE6))   //速度45
+        {
+           vPID.Setpoint = 45;
+        }
+        if(!gpio_get (PTE6))   //速度50
+        {
+           vPID.Setpoint = 50;
+        }
         //ware1[0]=xielv;
         //vcan_sendware(ware1, sizeof(xielv));
         /*
