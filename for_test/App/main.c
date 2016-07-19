@@ -255,7 +255,7 @@ void init_PID()
 	vPID.LastError=0;
 	vPID.PreError=0;
 
-	vPID.Setpoint=45;//速度
+	vPID.Setpoint=36;//默认速度36
 }
 
 int16 add_error=0;
@@ -339,22 +339,7 @@ void  main(void)
            vcan_sendimg(imgbuff,CAMERA_SIZE);//摄像头看图像
         }
 
-        if(!gpio_get (PTE2))   //斜率示波器
-        {
-            ware[0] = slope.left;
-            ware[1] = slope.right;
-            if(slope.left_count >= slope.right_count)
-                ware[2] = slope.left;
-            else
-                ware[2] = slope.right;
-            vcan_sendware(ware, sizeof(ware));
-        }
-        if(!gpio_get (PTE4))   //距离示波器
-        {
-           ware1[0] = distance;
-           vcan_sendware(ware1, sizeof(ware1));
-        }
-        if(!gpio_get (PTE5))  //双车模式
+        if(!gpio_get (PTE2))   //蓝牙同时发车
         {
             #if ( CAR_NUMBER == 1 )
                 if(uart_querychar (VCAN_PORT, &ch) != 0)
@@ -376,17 +361,30 @@ void  main(void)
                 }
             #endif
         }
-        if(!gpio_get (PTE6))   //速度40
+
+        if(!gpio_get (PTE3))   //速度40
         {
-           vPID.Setpoint = 40;
+            vPID.Setpoint = 40;
         }
-        if(!gpio_get (PTE6))   //速度45
+        if(!gpio_get (PTE4))  //速度45
         {
-           vPID.Setpoint = 45;
+            vPID.Setpoint = 45;
         }
-        if(!gpio_get (PTE6))   //速度50
+        if(!gpio_get (PTE5))   //速度50
         {
-           vPID.Setpoint = 50;
+            vPID.Setpoint = 50;
+        }
+        if(!gpio_get (PTE6))   //速度47
+        {
+            vPID.Setpoint = 47;
+        }
+        if(!gpio_get (PTE7))   //速度48
+        {
+            vPID.Setpoint = 48;
+        }
+        if(!gpio_get (PTE8))   //速度49
+        {
+            vPID.Setpoint = 49;
         }
         //ware1[0]=xielv;
         //vcan_sendware(ware1, sizeof(xielv));
@@ -406,14 +404,14 @@ void  main(void)
         //printf("%d\n",right_chazi);
         //printf("%d,",m);
         //printf("%d\n",a);
-        if(!gpio_get (PTE8))
-        {
-            for(l=0;l<120;l++)
-            {
-                printf("%d,",left_bianjie[l]);
-            }
-            printf("\n");
-        }
+        // if(!gpio_get (PTE8))
+        // {
+        //     for(l=0;l<120;l++)
+        //     {
+        //         printf("%d,",left_bianjie[l]);
+        //     }
+        //     printf("\n");
+        // }
    }
 }
 /*******************************************************************************/
@@ -514,7 +512,7 @@ void Crosscurve()
 bool wide_check()
 {
     int shit;
-    for(shit = 0; shit < 110; shit ++)
+    for(shit = 0; shit < 105; shit ++)
     {
         if(img[OV7725_EAGLE_H - shit][OV7725_EAGLE_W / 2] == 0)
         {

@@ -56,7 +56,7 @@
 #define S3010_CH    FTM_CH3
 #define S3010_HZ    (100)
 
-#define CAR_NUMBER 1       //定义车号
+#define CAR_NUMBER 2       //定义车号
 
 #if ( CAR_NUMBER == 1 )                            //1A车
 #define control_actuator_center 1410

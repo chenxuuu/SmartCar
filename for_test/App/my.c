@@ -63,13 +63,13 @@ void mk60int()
 
     //拨码
     port_init(PTE1, ALT1 | PULLUP );     //1  摄像头串口输出图像
-    port_init(PTE2, ALT1 | PULLUP );     //2  斜率示波器
-    port_init(PTE3, ALT1 | PULLUP );     //3  检测停车
-    port_init(PTE4, ALT1 | PULLUP );     //4  距离示波器
-    port_init(PTE5, ALT1 | PULLUP );     //5  蓝牙同时发车
-    port_init(PTE6, ALT1 | PULLUP );     //6  速度40
-    port_init(PTE7, ALT1 | PULLUP );     //7  速度45
-    port_init(PTE8, ALT1 | PULLUP );     //8  速度50
+    port_init(PTE2, ALT1 | PULLUP );     //2  蓝牙同时发车
+    port_init(PTE3, ALT1 | PULLUP );     //3  速度40
+    port_init(PTE4, ALT1 | PULLUP );     //4  速度45
+    port_init(PTE5, ALT1 | PULLUP );     //5  速度50
+    port_init(PTE6, ALT1 | PULLUP );     //6  速度47
+    port_init(PTE7, ALT1 | PULLUP );     //7  速度48
+    port_init(PTE8, ALT1 | PULLUP );     //8  速度49
 
 }
 
