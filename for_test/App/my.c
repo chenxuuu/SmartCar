@@ -67,9 +67,9 @@ void mk60int()
     port_init(PTE3, ALT1 | PULLUP );     //3  速度40
     port_init(PTE4, ALT1 | PULLUP );     //4  速度45
     port_init(PTE5, ALT1 | PULLUP );     //5  速度50
-    port_init(PTE6, ALT1 | PULLUP );     //6  速度47
-    port_init(PTE7, ALT1 | PULLUP );     //7  速度48
-    port_init(PTE8, ALT1 | PULLUP );     //8  速度49
+    port_init(PTE6, ALT1 | PULLUP );     //6  速度46
+    port_init(PTE7, ALT1 | PULLUP );     //7  速度47
+    port_init(PTE8, ALT1 | PULLUP );     //8  速度48
 
 }
 

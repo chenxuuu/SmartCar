@@ -291,8 +291,8 @@ void  main(void)
     set_vector_handler(PORTE_VECTORn ,PORTE_IRQHandler);    //设置PORTE的中断服务函数为 PORTE_IRQHandler
     enable_irq (PORTE_IRQn);                                //使能PORTE中断
 
-    port_init(PTE5, ALT1 | PULLUP );     //5  蓝牙同时发车
-    if(!gpio_get (PTE5))   //蓝牙通讯同时发车
+    port_init(PTE2, ALT1 | PULLUP );     //5  蓝牙同时发车
+    if(!gpio_get (PTE2))   //蓝牙通讯同时发车
     {
         key_init(KEY_A);
         OLED_Init();
@@ -376,15 +376,15 @@ void  main(void)
         }
         if(!gpio_get (PTE6))   //速度47
         {
-            vPID.Setpoint = 47;
+            vPID.Setpoint = 46;
         }
         if(!gpio_get (PTE7))   //速度48
         {
-            vPID.Setpoint = 48;
+            vPID.Setpoint = 47;
         }
         if(!gpio_get (PTE8))   //速度49
         {
-            vPID.Setpoint = 49;
+            vPID.Setpoint = 48;
         }
         //ware1[0]=xielv;
         //vcan_sendware(ware1, sizeof(xielv));
@@ -603,17 +603,17 @@ void PIT0_IRQHandler(void)
     //SetMotorVoltage(0.2, 0.2);
 
     PID_count();
-    if(gpio_get (PTE3))  //拨码3
-    {
-        #if ( CAR_NUMBER == 1 )
-            if(gpio_get (PTE5))
-            {
-        #endif
-	    do_camere_stop(img);  //检测停车
-        #if ( CAR_NUMBER == 1 )
-            }
-        #endif
-    }
+    // if(gpio_get (PTE3))  //拨码3
+    // {
+    //     #if ( CAR_NUMBER == 1 )
+    //         if(gpio_get (PTE5))
+    //         {
+    //     #endif
+	//     do_camere_stop(img);  //检测停车
+    //     #if ( CAR_NUMBER == 1 )
+    //         }
+    //     #endif
+    // }
 
     vall = - ( ftm_quad_get(FTM1) );          //获取FTM 正交解码 的脉冲数(负数表示反方向)
     ftm_quad_clean(FTM1);
