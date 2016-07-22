@@ -7,5 +7,6 @@ Intersting队
 基于山外库
 希望能对大家有帮助。
 工程网址：
-[http://git.oschina.net/chenxuuu/SmartCar]
-[http://git.oschina.net/interestingcar/SmartCar]
+http://git.oschina.net/chenxuuu/SmartCar
+https://github.com/chenxuuu/SmartCar
+http://git.oschina.net/interestingcar/SmartCar
